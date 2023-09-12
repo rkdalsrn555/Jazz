@@ -15,14 +15,31 @@ const Home = () => {
   }, [isDark]);
 
   const quizContainerFeature: innerContainerProps = {
-    width: "5rem",
-    height: "5rem",
+    width: "95%",
+    height: "35%",
     theme: theme,
   };
 
   const studyContainerFeature: innerContainerProps = {
-    width: "10rem",
-    height: "15rem",
+    width: "95%",
+    height: "25%",
+    theme: theme,
+  };
+
+  const etcContainerFeature: innerContainerProps = {
+    width: "95%",
+    height: "25%",
+    theme: theme,
+  };
+
+  const profileContainerFeature: innerContainerProps = {
+    width: "95%",
+    height: "45%",
+    theme: theme,
+  };
+  const rankContainerFeature: innerContainerProps = {
+    width: "95%",
+    height: "45%",
     theme: theme,
   };
 
@@ -31,8 +48,12 @@ const Home = () => {
       <S.LeftContainer>
         <Inner {...quizContainerFeature}></Inner>
         <Inner {...studyContainerFeature}></Inner>
+        <Inner {...etcContainerFeature}></Inner>
       </S.LeftContainer>
-      <S.RightContainer></S.RightContainer>
+      <S.RightContainer>
+        <Inner {...profileContainerFeature}></Inner>
+        <Inner {...rankContainerFeature}></Inner>
+      </S.RightContainer>
     </S.Container>
   );
 };

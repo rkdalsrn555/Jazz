@@ -23,47 +23,13 @@ const GlobalStyle = css`
     src: url("/fonts/woff2/Pretendard-Bold.woff2") format("woff2"),
       url("/fonts/woff/Pretendard-Bold.woff") format("woff");
   }
-
   html,
   body {
     display: flex;
     width: 100%;
     height: 100%;
-    min-width: 75rem;
-    min-height: 45rem;
-    /* border: solid yellow 5px !important; */
+    border: solid yellow 5px !important;
   }
-  ::-webkit-scrollbar {
-    width: 0.7rem;
-    background-color: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: rgb(208, 208, 208);
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 3px solid transparent;
-  }
-  ::-webkit-scrollbar-track {
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px transparent;
-    /* background-color: transparent; */
-    /* display: none; */
-    background: transparent;
-  }
-  body {
-    font-family: "Pretendard";
-    font-size: 10px;
-    font-weight: 400;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  }
-  * {
-    box-sizing: border-box;
-    font-family: "Pretendard";
-  }
-  p {
-    all: unset;
-  }
-
   html,
   body,
   div,

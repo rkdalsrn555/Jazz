@@ -28,7 +28,7 @@ const GlobalStyle = css`
     display: flex;
     width: 100%;
     height: 100%;
-    border: solid yellow 5px !important;
+    /* border: solid yellow 5px !important; */
   }
   html,
   body,

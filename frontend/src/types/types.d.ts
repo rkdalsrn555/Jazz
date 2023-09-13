@@ -1,16 +1,20 @@
 import { themeProps } from "@emotion/react";
 
 type btnProps = {
+  title: string;
   content: string;
   color: string;
-  img: string;
+  img: React.HTMLAttributes;
   width: string;
-  height: string;
   destination: string;
 };
 
 type innerContainerProps = {
+  title: string;
   width: string;
   height: string;
-  theme: themeProps;
+  minWidth: string;
+  minHeight: string;
+  backgroundColor: string;
+  content: React.HTMLAttributes;
 };

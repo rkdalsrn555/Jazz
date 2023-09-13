@@ -3,16 +3,19 @@ import { themeProps } from "@emotion/react";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 
-export const Btn = styled.button``;
-
-export const LightModeIconStyled = styled(LightModeIcon)<{
-  theme: themeProps;
-}>`
-  color: ${(props) => props.theme.font.light};
+export const BtnBox = styled.div`
+  /* border: solid green; */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: fit-content;
+  gap: 0.2rem;
+  width: 20%;
+  padding-top: 3rem;
+  padding-right: 3rem;
 `;
 
-export const DarkModeIconStyled = styled(DarkModeIcon)<{
-  theme: themeProps;
-}>`
-  color: ${(props) => props.theme.font.light};
-`;
+export const LightModeIconStyled = styled(LightModeIcon)``;
+
+export const DarkModeIconStyled = styled(DarkModeIcon)``;

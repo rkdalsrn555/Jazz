@@ -8,6 +8,7 @@ declare module "@emotion/react" {
       deep: string;
       mid: string;
       light: string;
+      shadow: string;
     };
     font: {
       deep: string;

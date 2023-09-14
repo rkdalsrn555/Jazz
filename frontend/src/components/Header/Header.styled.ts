@@ -9,7 +9,7 @@ export const Container = styled.div<{ theme: themeProps }>`
   align-items: center;
   position: relative;
   height: 15%;
-  min-height: 5rem;
+  min-height: 3rem;
   box-shadow: 0px 0px 5px 0.1px ${(props) => props.theme.bg.shadow};
 `;
 

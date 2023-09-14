@@ -8,7 +8,7 @@ import GlobalStyle from "../../styles/GlobalStyle";
 import Router from "Router";
 import { BrowserRouter } from "react-router-dom";
 import { useEffect } from "react";
-import Header from "components/Header";
+import Header from "components/utils/Header/index";
 
 function Main() {
   const isDark = useRecoilValue(IsDark);

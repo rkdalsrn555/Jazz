@@ -132,15 +132,9 @@ const GlobalStyle = css`
   main,
   menu,
   nav,
-  section {
-    display: block;
-  }
   /* HTML5 hidden-attribute fix for newer browsers */
   *[hidden] {
     display: none;
-  }
-  body {
-    line-height: 1;
   }
   menu,
   ol,
@@ -169,7 +163,6 @@ const GlobalStyle = css`
     font-weight: 300;
     font-family: "Source Sans Pro", sans-serif;
     color: black;
-    line-height: 1.2;
   }
   a {
     text-decoration: none;

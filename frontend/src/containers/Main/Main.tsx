@@ -30,16 +30,16 @@ function Main() {
 }
 
 const Container = styled.div<{ theme: boolean }>`
-  border: solid black;
+  /* border: solid black; */
   display: flex;
   flex-direction: column;
   background-color: ${(props) =>
     props.theme ? darkTheme.bg.mid : lightTheme.bg.mid};
   width: 100%;
   height: 100%;
-  min-height: fit-content;
+  min-height: 33rem;
   min-width: 40rem;
-  transition: all 0.5s;
+  transition: all 0.2s;
 `;
 
 export default Main;

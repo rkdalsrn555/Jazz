@@ -16,7 +16,7 @@ export const Container = styled.div<{
   min-width: ${(props) => props.feature.minWidth};
   min-height: ${(props) => props.feature.minHeight};
   background-color: ${(props) => props.feature.backgroundColor};
-  transition: all 0.5s;
+  transition: all 0.2s;
   box-shadow: 0.5px 1px 5px 0px ${(props) => props.theme.bg.shadow};
   padding: 1.2rem;
 `;

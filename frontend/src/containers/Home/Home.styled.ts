@@ -9,6 +9,8 @@ export const Container = styled.div`
   flex-direction: row;
   align-items: flex-end;
   padding: 2rem;
+  min-width: 75rem;
+  min-height: 30rem;
 `;
 
 export const LeftContainer = styled.div`
@@ -19,6 +21,7 @@ export const LeftContainer = styled.div`
   align-items: center;
   width: 60%;
   height: 100%;
+  gap: 1rem;
 `;
 
 export const RightContainer = styled.div`

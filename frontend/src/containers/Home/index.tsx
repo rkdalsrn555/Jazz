@@ -12,6 +12,8 @@ import Eye from "asset/img/icons8-eye-100.png";
 import DotMessage from "asset/img/icons8-chat-bubble-100.png";
 import Message from "asset/img/icons8-topic-100.png";
 import Envelop from "asset/img/icons8-open-envelope-100.png";
+import Bot from "asset/img/icons8-message-bot-100.png";
+import Note from "asset/img/icons8-note-100.png";
 
 const Home = () => {
   const theme: themeProps = useTheme();
@@ -60,6 +62,22 @@ const Home = () => {
     width: "31.6%",
     destination: "",
   };
+  const financialDictFeature: btnProps = {
+    title: "금융 사전",
+    content: "모르는 금융 단어들을 물어보세요!",
+    color: "#EBCBFF",
+    img: <S.ButtonImg src={Bot} />,
+    width: "48%",
+    destination: "",
+  };
+  const companySearchFeature: btnProps = {
+    title: "기업 정보 검색",
+    content: "복잡한 정보를 쉽게 정리해줄게요!",
+    color: "#CBD7FF",
+    img: <S.ButtonImg src={Note} />,
+    width: "48%",
+    destination: "",
+  };
 
   ///////////////////////////////////////////////////////////////
   const quizContainerFeature: innerContainerProps = {
@@ -87,7 +105,12 @@ const Home = () => {
     minHeight: "9rem",
     minWidth: "42rem",
     backgroundColor: theme.bg.light,
-    content: null,
+    content: (
+      <S.ButtonGroup>
+        <Button {...financialDictFeature} />
+        <Button {...companySearchFeature} />
+      </S.ButtonGroup>
+    ),
   };
 
   const battleContainerFeature: innerContainerProps = {

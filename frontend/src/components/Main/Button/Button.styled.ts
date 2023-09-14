@@ -12,6 +12,10 @@ export const BtnBox = styled(motion.div)<{ prop: btnProps }>`
   height: 5rem;
   /* margin: 0.5rem 0.5rem 0 0; */
   border-radius: 0.3rem;
+  transition: all 0.2s;
+  &:hover {
+    filter: brightness(95%);
+  }
 `;
 
 export const InnerBox = styled.div`

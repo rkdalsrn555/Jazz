@@ -1,8 +1,8 @@
-import { themeProps } from "@emotion/react";
-import * as S from "./Header.styled";
-import { useTheme } from "@mui/material";
-import DarkSwitch from "components/DarkModeSwitch/index";
-import BrandLogo from "asset/JazzLogo.png";
+import { themeProps } from '@emotion/react';
+import * as S from './Header.styled';
+import { useTheme } from '@mui/material';
+import DarkSwitch from 'components/utils/DarkModeSwitch';
+import BrandLogo from "assets/JazzLogo.png";
 
 const Header = () => {
   const theme: themeProps = useTheme();

@@ -1,8 +1,8 @@
-import React from "react";
-import * as S from "./QuestionBox.styled";
-import { useState } from "react";
+import React from 'react';
+import * as S from './QuestionBox.styled';
+import { useState } from 'react';
 
-type QuizType = {
+type QuestionBoxProps = {
   quizId: number;
   question: string;
   content: string[] | string;
@@ -12,14 +12,14 @@ type QuizType = {
   questionNumber: number;
 };
 
-export const QuestionBox = (props: QuizType) => {
+export const QuestionBox = (props: QuestionBoxProps) => {
   const { quizId, question, content, caseNum, isMulti, kind, questionNumber } =
     props;
-  const [answer, setAnswer] = useState<string | number>("");
+  const [answer, setAnswer] = useState<string | number>('');
 
   const handleChangeSubjectQuestion = (
     e: React.ChangeEvent<HTMLInputElement>
-  ) => (e.target.value === "" ? setAnswer("") : setAnswer(e.target.value));
+  ) => (e.target.value === '' ? setAnswer('') : setAnswer(e.target.value));
 
   const handleChangeMultipleQuestion = (index: number) => {
     setAnswer(index + 1);
@@ -46,7 +46,7 @@ export const QuestionBox = (props: QuizType) => {
                     }}
                   >{`${index + 1}. ${item}`}</S.MultipleQuestionLi>
                 ))
-              : ""}
+              : ''}
           </S.MultipleQuestionUl>
         ) : (
           <S.SubjectiveInput

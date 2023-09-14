@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "containers/Home/index";
+import Home from "pages/Home/index";
 
 const Router = () => {
   return (

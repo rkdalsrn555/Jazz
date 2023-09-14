@@ -1,9 +1,9 @@
-import { themeProps } from "@emotion/react";
-import { useTheme } from "@mui/material";
-import Toggle from "react-styled-toggle";
-import { IsDark } from "atoms/atoms";
-import * as S from "components/DarkModeSwitch/Switch.styled";
-import { useRecoilState } from "recoil";
+import { themeProps } from '@emotion/react';
+import { useTheme } from '@mui/material';
+import Toggle from 'react-styled-toggle';
+import { IsDark } from 'atoms/atoms';
+import * as S from './Switch.styled';
+import { useRecoilState } from 'recoil';
 
 const ToggleSwitch = () => {
   const [isDark, setIsDark] = useRecoilState(IsDark);

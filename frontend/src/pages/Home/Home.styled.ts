@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { themeProps } from "@emotion/react";
+import styled from '@emotion/styled';
+import { themeProps } from '@emotion/react';
 
 export const Container = styled.div`
   /* border: solid green; */
@@ -35,7 +35,7 @@ export const RightContainer = styled.div`
 `;
 
 export const EtcContainer = styled.div`
-  border: solid black;
+  /* border: solid black; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -64,4 +64,14 @@ export const ButtonGroup = styled.div`
 export const ButtonImg = styled.img`
   width: 4.5rem;
   height: 4.5rem;
+`;
+
+export const BattleImg = styled.img`
+  width: 6rem;
+  height: 6rem;
+`;
+
+export const ShopImg = styled.img`
+  width: 4rem;
+  height: 4rem;
 `;

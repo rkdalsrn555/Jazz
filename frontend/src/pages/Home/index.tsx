@@ -14,6 +14,8 @@ import Message from 'assets/img/icons8-topic-100.png';
 import Envelop from 'assets/img/icons8-open-envelope-100.png';
 import Bot from 'assets/img/icons8-message-bot-100.png';
 import Note from 'assets/img/icons8-note-100.png';
+import Battle from 'assets/img/icons8-battle-96.png';
+import Shop from 'assets/img/icons8-shop-64.png';
 
 const Home = () => {
   const theme: themeProps = useTheme();
@@ -78,6 +80,22 @@ const Home = () => {
     width: '48%',
     destination: '',
   };
+  const battleFeature: btnProps = {
+    title: '금융 배틀',
+    content: '',
+    color: 'black',
+    img: <S.BattleImg src={Battle} />,
+    width: '68%',
+    destination: '',
+  };
+  const shopFeature: btnProps = {
+    title: '상점',
+    content: '',
+    color: 'pink',
+    img: <S.ShopImg src={Shop} />,
+    width: '30%',
+    destination: '',
+  };
 
   ///////////////////////////////////////////////////////////////
   const quizContainerFeature: innerContainerProps = {
@@ -113,26 +131,6 @@ const Home = () => {
     ),
   };
 
-  const battleContainerFeature: innerContainerProps = {
-    title: '',
-    width: '59%',
-    height: '',
-    minHeight: '',
-    minWidth: '',
-    backgroundColor: 'black',
-    content: null,
-  };
-
-  const shopContainerFeature: innerContainerProps = {
-    title: '',
-    width: '39%',
-    height: '',
-    minHeight: '',
-    minWidth: '',
-    backgroundColor: 'pink',
-    content: null,
-  };
-
   const profileContainerFeature: innerContainerProps = {
     title: '프로필',
     width: '95%',
@@ -159,8 +157,8 @@ const Home = () => {
         <Inner {...quizContainerFeature} />
         <Inner {...studyContainerFeature} />
         <S.EtcContainer>
-          <Inner {...battleContainerFeature} />
-          <Inner {...shopContainerFeature} />
+          <Button {...battleFeature} />
+          <Button {...shopFeature} />
         </S.EtcContainer>
       </S.LeftContainer>
       <S.RightContainer>

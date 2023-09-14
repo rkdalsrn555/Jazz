@@ -6,7 +6,7 @@ const MainButton = (feature: btnProps) => {
   return (
     <S.BtnBox
       prop={feature}
-      whileHover={{ scale: 1.05 }}
+      whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 1 }}
     >
       <Link

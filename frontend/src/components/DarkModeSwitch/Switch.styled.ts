@@ -12,7 +12,7 @@ export const BtnBox = styled.div`
   width: fit-content;
   gap: 0.2rem;
   width: 20%;
-  padding-top: 3rem;
+  /* padding-top: 3rem; */
   padding-right: 3rem;
 `;
 

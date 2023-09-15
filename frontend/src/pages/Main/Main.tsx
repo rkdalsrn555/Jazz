@@ -37,7 +37,7 @@ const Container = styled.div<{ theme: boolean }>`
     props.theme ? darkTheme.bg.mid : lightTheme.bg.mid};
   width: 100%;
   height: 100%;
-  min-height: 33rem;
+  min-height: 37rem;
   min-width: 40rem;
   transition: all 0.2s;
 `;

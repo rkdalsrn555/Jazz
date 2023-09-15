@@ -5,7 +5,11 @@ import { IsDark } from 'atoms/atoms';
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Inner from 'components/features/Main/InnerContainer';
-import { btnProps, innerContainerProps } from 'types/types';
+import {
+  btnProps,
+  innerContainerProps,
+  profileBlockInfoProps,
+} from 'types/types';
 import Button from 'components/features/Main/Button';
 import Heart from 'assets/img/icons8-heart-100.png';
 import Eye from 'assets/img/icons8-eye-100.png';
@@ -16,6 +20,7 @@ import Bot from 'assets/img/icons8-message-bot-100.png';
 import Note from 'assets/img/icons8-note-100.png';
 import Battle from 'assets/img/icons8-battle-96.png';
 import Shop from 'assets/img/icons8-shop-64.png';
+import ProfileInfo from 'components/features/Main/ProfileInfo/ProfileInfo';
 
 const Home = () => {
   const theme: themeProps = useTheme();
@@ -131,21 +136,37 @@ const Home = () => {
     ),
   };
 
+  const tempInfo: profileBlockInfoProps = {
+    marathon: 16,
+    correctRate: 72,
+    solved: 173,
+    favorite: 21,
+  };
   const profileContainerFeature: innerContainerProps = {
     title: '프로필',
     width: '95%',
     height: '48%',
-    minHeight: '',
+    minHeight: '15rem',
     minWidth: '',
     backgroundColor: theme.bg.light,
-    content: <S.Line />,
+    content: (
+      <S.ProfileContainer>
+        <S.Line />
+        <S.ProfileContent>
+          <S.ProfileLeft></S.ProfileLeft>
+          <S.ProfileRight>
+            <ProfileInfo {...tempInfo} />
+          </S.ProfileRight>
+        </S.ProfileContent>
+      </S.ProfileContainer>
+    ),
   };
 
   const rankContainerFeature: innerContainerProps = {
     title: '랭크',
     width: '95%',
     height: '48%',
-    minHeight: '',
+    minHeight: '15rem',
     minWidth: '',
     backgroundColor: theme.bg.light,
     content: <S.Line />,

@@ -24,16 +24,6 @@ export const LeftContainer = styled.div`
   gap: 1rem;
 `;
 
-export const RightContainer = styled.div`
-  /* border: solid blue; */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: 40%;
-  height: 100%;
-`;
-
 export const EtcContainer = styled.div`
   /* border: solid black; */
   display: flex;
@@ -74,4 +64,51 @@ export const BattleImg = styled.img`
 export const ShopImg = styled.img`
   width: 4rem;
   height: 4rem;
+`;
+export const RightContainer = styled.div`
+  /* border: solid blue; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 40%;
+  height: 100%;
+  gap: 1rem;
+`;
+
+export const ProfileContainer = styled.div`
+  border: solid green;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
+export const ProfileContent = styled.div`
+  border: solid white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
+export const ProfileLeft = styled.div`
+  border: solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  width: 45%;
+`;
+
+export const ProfileRight = styled.div`
+  border: solid yellow;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 55%;
 `;

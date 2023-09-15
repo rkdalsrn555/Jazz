@@ -1,0 +1,28 @@
+import styled from '@emotion/styled';
+import * as S from './ProfileInfo.styled';
+import { profileBlockInfoProps } from 'types/types';
+
+const ProfileInfo = (info: profileBlockInfoProps) => {
+  return (
+    <S.OuterContainer>
+      <S.Block>
+        <S.BlockTitle>마라톤</S.BlockTitle>
+        <S.BlockContent>{info.marathon}</S.BlockContent>
+      </S.Block>
+      <S.Block>
+        <S.BlockTitle>정답률</S.BlockTitle>
+        <S.BlockContent>{info.correctRate}</S.BlockContent>
+      </S.Block>
+      <S.Block>
+        <S.BlockTitle>푼 문제 수</S.BlockTitle>
+        <S.BlockContent>{info.solved}</S.BlockContent>
+      </S.Block>
+      <S.Block>
+        <S.BlockTitle>즐겨찾기</S.BlockTitle>
+        <S.BlockContent>{info.favorite}</S.BlockContent>
+      </S.Block>
+    </S.OuterContainer>
+  );
+};
+
+export default ProfileInfo;

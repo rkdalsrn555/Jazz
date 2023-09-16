@@ -77,7 +77,7 @@ export const RightContainer = styled.div`
 `;
 
 export const ProfileContainer = styled.div`
-  border: solid green;
+  /* border: solid green; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -86,7 +86,7 @@ export const ProfileContainer = styled.div`
 `;
 
 export const ProfileContent = styled.div`
-  border: solid white;
+  /* border: solid white; */
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -96,7 +96,7 @@ export const ProfileContent = styled.div`
 `;
 
 export const ProfileLeft = styled.div`
-  border: solid black;
+  /* border: solid black; */
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -106,9 +106,10 @@ export const ProfileLeft = styled.div`
 `;
 
 export const ProfileRight = styled.div`
-  border: solid yellow;
+  /* border: solid yellow; */
   display: flex;
   flex-direction: row;
+  justify-content: center;
   height: 100%;
   width: 55%;
 `;

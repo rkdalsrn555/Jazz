@@ -1,6 +1,6 @@
-import { themeProps } from "@emotion/react";
-import styled from "@emotion/styled";
-import { innerContainerProps } from "types/types";
+import { themeProps } from '@emotion/react';
+import styled from '@emotion/styled';
+import { innerContainerProps } from 'types/types';
 
 export const Container = styled.div<{
   feature: innerContainerProps;
@@ -22,6 +22,7 @@ export const Container = styled.div<{
 `;
 
 export const Title = styled.div`
+  /* border: solid black; */
   display: flex;
   flex-direction: row;
   font-size: large;
@@ -30,4 +31,10 @@ export const Title = styled.div`
   margin-bottom: 0.5rem;
 `;
 
-export const ContentContainer = styled.div``;
+export const ContentContainer = styled.div`
+  /* border: solid purple; */
+  flex-direction: column;
+  justify-content: space-around;
+  display: flex;
+  height: 80%;
+`;

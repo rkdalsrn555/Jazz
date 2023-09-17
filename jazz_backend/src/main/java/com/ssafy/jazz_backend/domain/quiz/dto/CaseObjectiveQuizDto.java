@@ -1,25 +1,17 @@
-package com.ssafy.jazz_backend.domain.quiz.entity;
+package com.ssafy.jazz_backend.domain.quiz.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import jakarta.persistence.*;
-import java.util.List;
+import java.util.*;
 
-@Entity
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Quiz {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class CaseObjectiveQuizDto {
+    private Long quizId;
     private String question;
-    @ElementCollection
     private List<String> content;
     private int caseNum;
     private boolean isMulti;

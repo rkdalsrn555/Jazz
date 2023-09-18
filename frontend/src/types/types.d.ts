@@ -1,4 +1,4 @@
-import { themeProps } from "@emotion/react";
+import { themeProps } from '@emotion/react';
 
 type btnProps = {
   title: string;
@@ -17,4 +17,11 @@ type innerContainerProps = {
   minHeight: string;
   backgroundColor: string;
   content: React.HTMLAttributes;
+};
+
+type profileBlockInfoProps = {
+  marathon: number;
+  correctRate: number;
+  solved: number;
+  favorite: number;
 };

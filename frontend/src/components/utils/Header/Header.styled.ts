@@ -8,7 +8,7 @@ export const Container = styled.div<{ theme: themeProps }>`
   justify-content: space-between;
   align-items: center;
   position: relative;
-  height: 10%;
+  height: 5rem;
   min-height: 3rem;
   box-shadow: 0px 0px 5px 0.1px ${(props) => props.theme.bg.shadow};
 `;

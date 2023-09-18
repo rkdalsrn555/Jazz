@@ -145,15 +145,20 @@ const Home = () => {
   const profileContainerFeature: innerContainerProps = {
     title: '프로필',
     width: '95%',
-    height: '48%',
+    height: '38%',
     minHeight: '15rem',
     minWidth: '',
     backgroundColor: theme.bg.light,
     content: (
       <S.ProfileContainer>
-        <S.Line />
         <S.ProfileContent>
-          <S.ProfileLeft></S.ProfileLeft>
+          <S.ProfileLeft>
+            <S.ProfileLeftPrefix>금융 초보자</S.ProfileLeftPrefix>
+            <S.ProfileLeftTitle>새싹이 나버린 감자</S.ProfileLeftTitle>
+            <S.Box>
+              <S.ProfileLeftImg />
+            </S.Box>
+          </S.ProfileLeft>
           <S.ProfileRight>
             <ProfileInfo {...tempInfo} />
           </S.ProfileRight>
@@ -165,11 +170,11 @@ const Home = () => {
   const rankContainerFeature: innerContainerProps = {
     title: '랭크',
     width: '95%',
-    height: '48%',
+    height: '55%',
     minHeight: '15rem',
     minWidth: '',
     backgroundColor: theme.bg.light,
-    content: <S.Line />,
+    content: '',
   };
 
   return (

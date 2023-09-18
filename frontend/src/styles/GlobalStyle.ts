@@ -1,33 +1,60 @@
-import "normalize.css";
-import { css } from "@emotion/react";
+import 'normalize.css';
+import { css } from '@emotion/react';
+import { themeProps } from '@emotion/react';
 
 const GlobalStyle = css`
   @font-face {
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-weight: 400;
     font-style: normal;
-    src: url("/fonts/woff2/Pretendard-Regular.woff2") format("woff2"),
-      url("/fonts/woff/Pretendard-Regular.woff") format("woff");
+    src:
+      url('/fonts/woff2/Pretendard-Regular.woff2') format('woff2'),
+      url('/fonts/woff/Pretendard-Regular.woff') format('woff');
   }
   @font-face {
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-weight: 500;
     font-style: normal;
-    src: url("/fonts/woff2/Pretendard-Medium.woff2") format("woff2"),
-      url("/fonts/woff/Pretendard-Medium.woff") format("woff");
+    src:
+      url('/fonts/woff2/Pretendard-Medium.woff2') format('woff2'),
+      url('/fonts/woff/Pretendard-Medium.woff') format('woff');
   }
   @font-face {
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-weight: 700;
     font-style: normal;
-    src: url("/fonts/woff2/Pretendard-Bold.woff2") format("woff2"),
-      url("/fonts/woff/Pretendard-Bold.woff") format("woff");
+    src:
+      url('/fonts/woff2/Pretendard-Bold.woff2') format('woff2'),
+      url('/fonts/woff/Pretendard-Bold.woff') format('woff');
   }
-  html,
-  body {
+  * ::-webkit-scrollbar {
+    width: 0.4rem;
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgb(208, 208, 208);
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 3px solid transparent;
+  }
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px transparent;
+    /* background-color: transparent; */
+    /* display: none; */
+    background: transparent;
+  }
+  html {
     display: flex;
     width: 100%;
     height: 100%;
+    /* border: solid yellow 5px !important; */
+  }
+  body {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    min-width: 50rem;
     /* border: solid yellow 5px !important; */
   }
   html,
@@ -149,7 +176,7 @@ const GlobalStyle = css`
   blockquote:after,
   q:before,
   q:after {
-    content: "";
+    content: '';
     content: none;
   }
   table {
@@ -161,7 +188,7 @@ const GlobalStyle = css`
   }
   body {
     font-weight: 300;
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     color: black;
   }
   a {

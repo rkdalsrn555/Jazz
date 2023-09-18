@@ -1,19 +1,27 @@
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 
 export const GreyBackground = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(56.43, 56.43, 56.43, 0.7);
+  background: #aaaaaa2e;
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
 `;
 
-export const ModalContainer = styled.div`
-  margin: 0 auto;
+export const ModalContainer = styled(motion.div)`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+  z-index: 9999;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   gap: 32px;
   width: 618px;
   min-height: 252px;

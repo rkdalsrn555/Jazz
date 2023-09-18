@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class DuplicatedCheckIdResponseDto {
+
     private boolean isDuplicated;
 
     public DuplicatedCheckIdResponseDto(boolean isDuplicated) {

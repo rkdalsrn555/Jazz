@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter
 public class DuplicatedCheckIdRequestDto {
+
     private String userId;
 
     public DuplicatedCheckIdRequestDto(String userId) {

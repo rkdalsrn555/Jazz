@@ -12,29 +12,31 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 public class MemberController {
-    @Autowired
-    MemberService memberService;
 
-    @PostMapping
-    public ResponseEntity<?> joinMember(@RequestBody JoinMemberRequestDto joinMemberRequestDto) {
-        memberService.joinMember(joinMemberRequestDto);
-        return null;
+  @Autowired
+  MemberService memberService;
 
+  @PostMapping
+  public ResponseEntity<?> joinMember(@RequestBody JoinMemberRequestDto joinMemberRequestDto) {
+    memberService.joinMember(joinMemberRequestDto);
+    return null;
+
+  }
+
+  @GetMapping("/duplicate/")
+  public ResponseEntity<?> duplicateCheckId(@RequestParam(name = "userId") String userId) {
+    DuplicatedCheckIdRequestDto duplicatedCheckIdRequestDto = new DuplicatedCheckIdRequestDto(
+        userId);
+    DuplicatedCheckIdResponseDto duplicatedCheckIdResponseDto =
+        memberService.duplicatedCheckId(duplicatedCheckIdRequestDto);
+
+    if (duplicatedCheckIdResponseDto.isDuplicated()) {
+      // 중복이 없는 것
+      return new ResponseEntity<>(duplicatedCheckIdResponseDto, HttpStatus.OK);
+    } else {
+      // 중복이 있는 것
+      // 근데 중복이 있는게 BAD_REQUEST 인가
+      return new ResponseEntity<>(duplicatedCheckIdResponseDto, HttpStatus.BAD_REQUEST);
     }
-
-    @GetMapping("/duplicate/")
-    public ResponseEntity<?> duplicateCheckId(@RequestParam(name = "userId") String userId) {
-        DuplicatedCheckIdRequestDto duplicatedCheckIdRequestDto = new DuplicatedCheckIdRequestDto(userId);
-        DuplicatedCheckIdResponseDto duplicatedCheckIdResponseDto =
-                memberService.duplicatedCheckId(duplicatedCheckIdRequestDto);
-
-        if (duplicatedCheckIdResponseDto.isDuplicated()) {
-            // 중복이 없는 것
-            return new ResponseEntity<>(duplicatedCheckIdResponseDto, HttpStatus.OK);
-        } else {
-            // 중복이 있는 것
-            // 근데 중복이 있는게 BAD_REQUEST 인가
-            return new ResponseEntity<>(duplicatedCheckIdResponseDto, HttpStatus.BAD_REQUEST);
-        }
-    }
+  }
 }

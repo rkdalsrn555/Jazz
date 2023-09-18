@@ -17,9 +17,11 @@ import lombok.NoArgsConstructor;
 public class Profile extends BaseEntity {
 
     @Id
+    private String memberId;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member memberId;
+    private Member member;
 
     @Column(name = "nickname")
     private String nickname;

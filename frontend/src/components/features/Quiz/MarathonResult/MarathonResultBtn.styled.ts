@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const QuizResultBtn = styled.button`
+export const MarathonResultBtn = styled.button`
   width: 1156px;
   height: 110px;
   border: none;

@@ -1,31 +1,42 @@
 import React from 'react';
+import QuizResultIcon from '../../../../assets/svgs/Quiz/marathonResult.svg';
+import { ReactComponent as DiamondIcon } from '../../../../assets/svgs/Quiz/diamondIcon.svg';
+import ButtonBg from '../../../../assets/img/Quiz/ok_btn.png';
 import * as S from './QuizResult.styled';
-import conguratulationIcon from '../../../../assets/img/Quiz/conguratulation.png';
-import shineBg from '../../../../assets/img/Quiz/shine.png';
 
 type OwnProps = {
   correctNum: number;
+  diamondCnt: number;
+  exp: number;
 };
 
 const QuizResult = (props: OwnProps) => {
-  const { correctNum } = props;
+  const { correctNum, diamondCnt, exp } = props;
 
   return (
-    <S.ResultContainer>
-      <img
-        src={conguratulationIcon}
-        alt="축하합니다!"
-        style={{ paddingBottom: '60px' }}
-      />
-      <S.QuizResultContainer>
-        <S.QuizResultContent>연속으로</S.QuizResultContent>
-        <S.QuizResultTitle>
-          <p>{correctNum}</p>
-          <img src={shineBg} alt="빛나는 배경" />
-        </S.QuizResultTitle>
-        <S.QuizResultContent>문제를 맞추셨습니다!</S.QuizResultContent>
-      </S.QuizResultContainer>
-    </S.ResultContainer>
+    <S.QuizContainer>
+      <S.QuizResultIcon src={QuizResultIcon} />
+      <S.ResultBox>
+        <S.AwardTitle style={{ marginTop: '40px' }}>결과</S.AwardTitle>
+        <S.AwardBox>
+          <S.AwardBoxLi>{correctNum}/10</S.AwardBoxLi>
+        </S.AwardBox>
+        <S.AwardTitle>보상</S.AwardTitle>
+        <S.AwardBox>
+          <S.AwardBoxLi>
+            <DiamondIcon />
+            {`+${diamondCnt}`}
+          </S.AwardBoxLi>
+          <S.AwardBoxLi>
+            <span style={{ color: 'black' }}>EXP</span> +{exp}
+          </S.AwardBoxLi>
+        </S.AwardBox>
+        <S.OkBtn>
+          <S.OkBtnTitle>끝내기</S.OkBtnTitle>
+          <S.OkBtnBgImg src={ButtonBg} alt="버튼" />
+        </S.OkBtn>
+      </S.ResultBox>
+    </S.QuizContainer>
   );
 };
 

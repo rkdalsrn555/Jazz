@@ -1,5 +1,5 @@
 import { StoryObj, Meta } from '@storybook/react';
-import MarathonResult from 'components/features/Quiz/MarathonResult/MarathonResult';
+import MarathonResult from '../components/features/Quiz/MarathonResult/MarathonResult';
 
 export default { component: MarathonResult };
 export const meta: Meta<typeof MarathonResult> = {
@@ -11,18 +11,21 @@ type Story = StoryObj<typeof MarathonResult>;
 
 const Template: Story = {
   name: 'Default',
+  args: {},
+};
+
+export const CorrectNumTen: Story = {
+  ...Template,
+  name: '맞춘개수 10개',
   args: {
-    diamondCnt: 10,
-    exp: 10,
+    correctNum: 10,
   },
 };
 
-export const MarathonResultStory: Story = {
+export const CorrectNumOneHundred: Story = {
   ...Template,
-  name: '마라톤 결과',
+  name: '맞춘개수 100개',
   args: {
-    correctNum: 5,
-    diamondCnt: 10,
-    exp: 10,
+    correctNum: 100,
   },
 };

@@ -1,0 +1,109 @@
+package com.ssafy.jazz_backend.domain.quiz.service;
+
+import com.ssafy.jazz_backend.domain.quiz.dto.ObjectiveQuizResponseDto;
+import com.ssafy.jazz_backend.domain.quiz.dto.ObjectiveQuizResponseList;
+import com.ssafy.jazz_backend.domain.quiz.dto.SubjectiveQuizResponseDto;
+import com.ssafy.jazz_backend.domain.quiz.entity.Case;
+import com.ssafy.jazz_backend.domain.quiz.entity.Quiz;
+import com.ssafy.jazz_backend.domain.quiz.repository.QuizRepository;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class QuizServiceImpl implements QuizService {
+
+    @Autowired
+    private QuizRepository quizRepository;
+
+    private Map<String, Object> generateQuizMap(Quiz quiz) {
+        Map<String, Object> quizMap = new HashMap<>();
+        quizMap.put("quizId", quiz.getId());
+        quizMap.put("question", quiz.getQuestion());
+        quizMap.put("kind", quiz.getKind());
+
+        List<String> contentList = new ArrayList<>();
+        for (Case c : quiz.getCases()) {
+            contentList.add(c.getContent());
+        }
+
+        int answerIndex = contentList.indexOf(quiz.getCases().stream()
+            .filter(c -> c.getId().getCaseNum() == 1L)
+            .findFirst().get().getContent());
+        quizMap.put("caseNum", answerIndex + 1);
+
+        Collections.shuffle(contentList);
+        quizMap.put("content", contentList);
+        quizMap.put("isMulti", true);
+
+        return quizMap;
+    }
+
+    public List<Map<String, Object>> getRandomObjectiveQuizzes() {
+        List<Quiz> quizzes = quizRepository.findRandomQuizzesByKind(1);
+        List<Map<String, Object>> responseList = new ArrayList<>();
+
+        for (Quiz quiz : quizzes) {
+            responseList.add(generateQuizMap(quiz));
+        }
+
+        return responseList;
+    }
+
+    public List<SubjectiveQuizResponseDto> getRandomSubjectiveQuizzes() {
+        List<Quiz> quizzes = quizRepository.findRandomQuizzesByKind(2);  // kind=2인 문제를 가져옴
+        List<SubjectiveQuizResponseDto> responseList = new ArrayList<>();
+
+        for (Quiz quiz : quizzes) {
+            // 주관식 문제의 경우 보기는 1개만 있으므로, 첫 번째 보기의 content를 가져옴
+            String content = quiz.getCases().stream()
+                .filter(c -> c.getId().getCaseNum() == 1L)
+                .findFirst()
+                .map(Case::getContent)
+                .orElse(null);  // 혹시나 해당하는 case가 없을 때를 위한 fallback
+
+            SubjectiveQuizResponseDto dto = new SubjectiveQuizResponseDto();
+            dto.setQuizId(quiz.getId());
+            dto.setQuestion(quiz.getQuestion());
+            dto.setContent(content);
+            dto.setMulti(false);  // 항상 false로 설정
+            dto.setKind(quiz.getKind());
+
+            responseList.add(dto);
+        }
+
+        return responseList;
+    }
+
+
+    public List<Map<String, Object>> getRandomCaseObjectiveQuizzes() {
+        List<Quiz> quizzes = quizRepository.findRandomQuizzesByKind(3);
+        List<Map<String, Object>> responseList = new ArrayList<>();
+        List<ObjectiveQuizResponseDto> list = new ArrayList<>();
+
+        ObjectiveQuizResponseList response = new ObjectiveQuizResponseList();
+        response.setList(list);
+
+        for (Quiz quiz : quizzes) {
+            responseList.add(generateQuizMap(quiz));
+        }
+
+        return responseList;
+    }
+
+    public List<?> getQuizByKind(int kind) {
+        return switch (kind) {
+            case 1 -> getRandomObjectiveQuizzes();
+            case 2 -> getRandomSubjectiveQuizzes();
+            case 3 -> getRandomCaseObjectiveQuizzes();
+            default -> throw new IllegalArgumentException("Invalid kind value");
+        };
+    }
+
+}

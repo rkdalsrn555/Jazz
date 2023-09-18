@@ -1,12 +1,12 @@
 package com.ssafy.jazz_backend.domain.quiz.entity;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 @Data
@@ -14,14 +14,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Quiz {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(mappedBy = "quiz")
+    private List<Case> cases;
+
+    @OneToMany(mappedBy = "quiz")
+    private List<QuizManagement> quizManagements;
+
     private String question;
-    @ElementCollection
-    private List<String> content;
-    private int caseNum;
-    private boolean isMulti;
     private int kind;
 }

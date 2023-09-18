@@ -4,24 +4,35 @@ import { themeProps } from '@emotion/react';
 export const Container = styled.div`
   /* border: solid green; */
   width: 100%;
-  height: 90%;
+  height: 100%;
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
-  padding: 2rem;
-  min-width: 75rem;
-  min-height: 30rem;
+  flex-wrap: wrap-reverse;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 5rem);
+  /* padding: 2rem; */
+  /* min-width: 75rem; */
+  /* min-height: 30rem; */
+`;
+
+export const InnerContainer = styled.div`
+  border: solid 5px;
 `;
 
 export const LeftContainer = styled.div`
   /* border: solid red; */
+  flex: 1.7;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   width: 60%;
-  height: 100%;
+  height: calc(100vh - 7rem);
+  min-height: 32rem;
+  min-width: 43rem;
   gap: 1rem;
+  padding: 1rem 0 1rem 0;
 `;
 
 export const EtcContainer = styled.div`
@@ -67,13 +78,17 @@ export const ShopImg = styled.img`
 `;
 export const RightContainer = styled.div`
   /* border: solid blue; */
+  flex: 1.3;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   width: 40%;
-  height: 100%;
+  height: calc(100vh - 7rem);
+  min-width: 35rem;
+  min-height: 32rem;
   gap: 1rem;
+  padding: 1rem 0 1rem 0;
 `;
 
 export const ProfileContainer = styled.div`
@@ -99,10 +114,45 @@ export const ProfileLeft = styled.div`
   /* border: solid black; */
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   height: 100%;
   width: 45%;
+  min-width: fit-content;
+`;
+
+export const ProfileLeftPrefix = styled.div`
+  font-weight: 600;
+`;
+
+export const ProfileLeftTitle = styled.div`
+  font-size: 1.3rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+`;
+
+export const Box = styled.div`
+  /* border: solid red; */
+  position: relative;
+  width: 45%;
+  max-width: 7rem;
+  /* background-color: skyblue; */
+  &::after {
+    display: block;
+    content: '';
+    padding-bottom: 100%;
+  }
+`;
+export const ProfileLeftImg = styled.img`
+  border: solid green;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 `;
 
 export const ProfileRight = styled.div`
@@ -111,5 +161,5 @@ export const ProfileRight = styled.div`
   flex-direction: row;
   justify-content: center;
   height: 100%;
-  width: 55%;
+  width: 65%;
 `;

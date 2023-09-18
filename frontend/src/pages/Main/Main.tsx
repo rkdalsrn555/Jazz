@@ -1,19 +1,19 @@
-import { Global } from "@emotion/react";
-import styled from "@emotion/styled";
-import { ThemeProvider } from "@emotion/react";
-import { IsDark } from "atoms/atoms";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { darkTheme, lightTheme } from "../../styles/ColorSystem";
-import GlobalStyle from "../../styles/GlobalStyle";
-import Router from "Router";
-import { BrowserRouter } from "react-router-dom";
-import { useEffect } from "react";
-import Header from "components/utils/Header/index";
+import { Global } from '@emotion/react';
+import styled from '@emotion/styled';
+import { ThemeProvider } from '@emotion/react';
+import { IsDark } from 'atoms/atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { darkTheme, lightTheme } from '../../styles/ColorSystem';
+import GlobalStyle from '../../styles/GlobalStyle';
+import Router from 'Router';
+import { BrowserRouter } from 'react-router-dom';
+import { useEffect } from 'react';
+import Header from 'components/utils/Header/index';
 
 function Main() {
   const isDark = useRecoilValue(IsDark);
   useEffect(() => {
-    console.log("다크모드 여부", isDark);
+    console.log('다크모드 여부', isDark);
   }, []);
 
   return (
@@ -37,8 +37,7 @@ const Container = styled.div<{ theme: boolean }>`
     props.theme ? darkTheme.bg.mid : lightTheme.bg.mid};
   width: 100%;
   height: 100%;
-  min-height: 37rem;
-  min-width: 40rem;
+  min-height: 100vh;
   transition: all 0.2s;
 `;
 

@@ -9,17 +9,30 @@ export const OuterContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 1rem;
+  padding-bottom: 0rem;
   gap: 1rem;
+  width: 100%;
 `;
 
 export const Block = styled.div`
-  border: solid red;
+  /* border: solid red; */
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
   width: 45%;
   height: 45%;
+  border-radius: 0.3rem;
+  border: solid 1px rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.5);
 `;
 
-export const BlockTitle = styled.div``;
+export const BlockTitle = styled.div`
+  color: #6a6a6a;
+  font-weight: bold;
+`;
 
-export const BlockContent = styled.div``;
+export const BlockContent = styled.div`
+  font-weight: 900;
+  font-size: 1.4rem;
+`;

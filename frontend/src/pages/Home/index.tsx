@@ -83,7 +83,7 @@ const Home = () => {
     color: '#CBD7FF',
     img: <S.ButtonImg src={Note} />,
     width: '48%',
-    destination: '',
+    destination: '/companySearch',
   };
   const battleFeature: btnProps = {
     title: '금융 배틀',

@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import TalkBlock from './TalkBlock';
-import SockJS from 'sockjs-client';
 import * as StompJs from '@stomp/stompjs';
 
 const TextBox = styled.div`
@@ -34,15 +33,6 @@ const TextInput = styled.input`
 `;
 
 const SocketTest = () => {
-  // 소켓 프록시 설정
-  const { createProxyMiddleware } = require('http-proxy-middleware');
-  module.exports = (app: any) => {
-    app.use(
-      '/ws',
-      createProxyMiddleware({ target: 'http://localhost:8787', ws: true })
-    );
-  };
-
   // 채널 구독, 구독중인 채널에서 메시지가 왔을 때 처리하는 코드
   const [talkList, setTalkList] = useState<string[]>([]); // 화면에 표시될 채팅 기록
   const { apply_id } = useParams(); // 채널을 구분하는 식별자를 URL 파라미터로 받는다.

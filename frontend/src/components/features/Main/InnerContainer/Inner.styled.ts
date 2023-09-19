@@ -129,7 +129,7 @@ export const RankHeaderBottom = styled.div`
   padding-left: 0.5rem;
 `;
 
-export const RankSort = styled.button`
+export const RankSort = styled(motion.button)`
   /* border: solid blue; */
   font-size: 0.8rem;
   font-weight: 600;
@@ -154,6 +154,25 @@ export const RankTimerContainer = styled.div<{ theme: themeProps }>`
   box-shadow: inset 0.5px 1px 5px 0px ${(props) => props.theme.bg.shadow};
   background-color: ${(props) => props.theme.bg.mid};
   transition: all 0.2s;
+`;
+
+export const TimerReturnContainer = styled.div<{ theme: themeProps }>`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.font.text};
+`;
+
+export const TimerTitle = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8rem;
+`;
+
+export const TimerContent = styled.div`
+  font-weight: 900;
 `;
 
 export const RankOuterContainer = styled.div<{ theme: themeProps }>`

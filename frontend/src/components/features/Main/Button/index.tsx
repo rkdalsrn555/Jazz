@@ -23,7 +23,7 @@ const MainButton = (feature: btnProps) => {
       {BigButton ? (
         <S.BigBtnBox
           prop={feature}
-          whileHover={{ scale: 1.03 }}
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 1 }}
           transition={{ duration: 0.05 }}
           onMouseEnter={() => setGlow({ display: 'flex' })}
@@ -66,7 +66,7 @@ const MainButton = (feature: btnProps) => {
       ) : (
         <S.BtnBox
           prop={feature}
-          whileHover={{ scale: 1.03 }}
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 1 }}
           transition={{ duration: 0.05 }}
         >

@@ -14,10 +14,12 @@ import java.util.List;
 @Getter
 @Setter
 public class CaseObjectiveQuizResponseDto {
-    Long quizId;
+
+    int quizId;
     String question;
     List<String> content;
     int caseNum;
     boolean isMulti;
+    boolean isBookmark;
     int kind;
 }

@@ -17,14 +17,15 @@ public class Quiz {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @OneToMany(mappedBy = "quiz")
-    private List<Case> cases;
+    private List<Choice> cases;
 
     @OneToMany(mappedBy = "quiz")
     private List<QuizManagement> quizManagements;
 
+    private int financialType;
     private String question;
     private int kind;
 }

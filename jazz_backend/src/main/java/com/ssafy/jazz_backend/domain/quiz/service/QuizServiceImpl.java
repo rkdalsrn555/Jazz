@@ -3,7 +3,7 @@ package com.ssafy.jazz_backend.domain.quiz.service;
 import com.ssafy.jazz_backend.domain.quiz.dto.ObjectiveQuizResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.ObjectiveQuizResponseList;
 import com.ssafy.jazz_backend.domain.quiz.dto.SubjectiveQuizResponseDto;
-import com.ssafy.jazz_backend.domain.quiz.entity.Case;
+import com.ssafy.jazz_backend.domain.quiz.entity.Choice;
 import com.ssafy.jazz_backend.domain.quiz.entity.Quiz;
 import com.ssafy.jazz_backend.domain.quiz.repository.QuizRepository;
 import java.util.ArrayList;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class QuizServiceImpl implements QuizService {
@@ -24,21 +23,36 @@ public class QuizServiceImpl implements QuizService {
 
     private Map<String, Object> generateQuizMap(Quiz quiz) {
         Map<String, Object> quizMap = new HashMap<>();
+
+        // 퀴즈의 기본 정보를 추가
         quizMap.put("quizId", quiz.getId());
         quizMap.put("question", quiz.getQuestion());
         quizMap.put("kind", quiz.getKind());
+        if (quiz.getKind() == 1) {
+            quizMap.put("financialType", quiz.getFinancialType());
+        }
 
+        // 퀴즈의 선택사항 내용 추가
         List<String> contentList = new ArrayList<>();
-        for (Case c : quiz.getCases()) {
+        for (Choice c : quiz.getCases()) {
             contentList.add(c.getContent());
         }
 
-        int answerIndex = contentList.indexOf(quiz.getCases().stream()
-            .filter(c -> c.getId().getCaseNum() == 1L)
-            .findFirst().get().getContent());
+        // 정답 선택사항의 내용을 저장
+        String answer = quiz.getCases().stream()
+            .filter(c -> c.getId().getCaseNum() == 1)
+            .findFirst()
+            .map(Choice::getContent)
+            .orElse(null);
+
+        // 선택사항을 셔플
+        Collections.shuffle(contentList);
+
+        // 셔플된 선택사항 목록에서 정답 선택사항의 위치 찾기
+        int answerIndex = contentList.indexOf(answer);
         quizMap.put("caseNum", answerIndex + 1);
 
-        Collections.shuffle(contentList);
+        // 셔플된 선택사항 목록과 추가 정보를 맵에 추가
         quizMap.put("content", contentList);
         quizMap.put("isMulti", true);
 
@@ -63,17 +77,18 @@ public class QuizServiceImpl implements QuizService {
         for (Quiz quiz : quizzes) {
             // 주관식 문제의 경우 보기는 1개만 있으므로, 첫 번째 보기의 content를 가져옴
             String content = quiz.getCases().stream()
-                .filter(c -> c.getId().getCaseNum() == 1L)
+                .filter(c -> c.getId().getCaseNum() == 1)
                 .findFirst()
-                .map(Case::getContent)
+                .map(Choice::getContent)
                 .orElse(null);  // 혹시나 해당하는 case가 없을 때를 위한 fallback
 
             SubjectiveQuizResponseDto dto = new SubjectiveQuizResponseDto();
             dto.setQuizId(quiz.getId());
             dto.setQuestion(quiz.getQuestion());
             dto.setContent(content);
-            dto.setMulti(false);  // 항상 false로 설정
+            dto.setIsMulti(false);  // 항상 false로 설정
             dto.setKind(quiz.getKind());
+            dto.setFinancialType((quiz.getFinancialType()));
 
             responseList.add(dto);
         }
@@ -85,10 +100,6 @@ public class QuizServiceImpl implements QuizService {
     public List<Map<String, Object>> getRandomCaseObjectiveQuizzes() {
         List<Quiz> quizzes = quizRepository.findRandomQuizzesByKind(3);
         List<Map<String, Object>> responseList = new ArrayList<>();
-        List<ObjectiveQuizResponseDto> list = new ArrayList<>();
-
-        ObjectiveQuizResponseList response = new ObjectiveQuizResponseList();
-        response.setList(list);
 
         for (Quiz quiz : quizzes) {
             responseList.add(generateQuizMap(quiz));

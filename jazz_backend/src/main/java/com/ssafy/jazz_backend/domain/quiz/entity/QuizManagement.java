@@ -21,9 +21,11 @@ public class QuizManagement {
     private QuizManangementId id;
 
     @ManyToOne
-    @JoinColumn(name = "quiz_id", insertable = false, updatable = false)
+    @JoinColumn(name = "quizId", insertable = false, updatable = false)
     private Quiz quiz;
 
-    private boolean is_correct;
-    private boolean is_bookmark;
+    @Builder.Default
+    private Boolean isCorrect = false;
+    @Builder.Default
+    private Boolean isBookmark = false;
 }

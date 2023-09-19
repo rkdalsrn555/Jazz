@@ -2,10 +2,12 @@ package com.ssafy.jazz_backend.domain.quiz.entity;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,15 +16,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Case {
+public class Choice {
 
     @EmbeddedId
-    private CaseId id;
+    private ChoiceId id;
 
-    @ManyToOne
-    @JoinColumn(name = "quiz_id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "quizId", insertable = false, updatable = false)
     private Quiz quiz;
 
     private String content;
-    private boolean is_multi;
+
+    @Builder.Default
+    private Boolean isMulti = false;
 }

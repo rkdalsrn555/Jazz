@@ -17,8 +17,7 @@ public class QuizController {
     private QuizService quizService;
 
     @GetMapping("/{kind}")
-    private ResponseEntity<?> getQuizByKind(@PathVariable int kind,
-        @RequestHeader("accessToken") String accessToken) {
+    private ResponseEntity<?> getQuizByKind(@PathVariable int kind) {
         // accessToken 검증 예정
 
         List<?> quizzes = quizService.getQuizByKind(kind);

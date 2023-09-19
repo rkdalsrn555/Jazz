@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Explanation {
 
     @Id
-    private Long id;
+    private int id;
 
     private String word;
     private String description;

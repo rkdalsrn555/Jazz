@@ -12,9 +12,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SubjectiveQuizResponseDto {
-    Long quizId;
+
+    int quizId;
     String question;
     String content;
-    boolean isMulti;
+    Boolean isMulti;
+    Boolean isBookmark;
+    int financialType;
     int kind;
 }

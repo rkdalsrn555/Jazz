@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
 
-    @Query(value = "SELECT * FROM Quiz q WHERE q.kind = ?1 ORDER BY RAND() LIMIT 10", nativeQuery = true)
+    @Query(value = "SELECT * FROM quiz q WHERE q.kind = ?1 ORDER BY RAND() LIMIT 10", nativeQuery = true)
     List<Quiz> findRandomQuizzesByKind(int kind);
 
 

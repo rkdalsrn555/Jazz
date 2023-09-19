@@ -9,5 +9,4 @@ import lombok.Setter;
 public class ObjectiveQuizResponseList {
 
     List<ObjectiveQuizResponseDto> list;
-
 }

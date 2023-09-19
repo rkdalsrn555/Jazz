@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class QuizManangementId implements Serializable {
 
-    private String member_id;
-    private Long quiz_id;
+    private String memberId;
+    private int quizId;
 
 }

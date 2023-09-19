@@ -7,7 +7,6 @@ import Modify from 'assets/img/writing.png';
 import Bell from 'assets/img/bell.png';
 import Diamond from 'assets/img/diamond.png';
 import { useEffect, useRef, useState } from 'react';
-import { color } from 'framer-motion';
 
 const Inner = (feature: innerContainerProps) => {
   const theme: themeProps = useTheme();
@@ -202,8 +201,6 @@ const Inner = (feature: innerContainerProps) => {
   };
 
   const today = new Date();
-  const month = today.getMonth() + 1;
-  const date = today.getDate();
   const day = today.getDay();
 
   const tierTimer = () => {

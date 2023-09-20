@@ -2,14 +2,9 @@ package com.ssafy.jazz_backend.domain.websocket.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 @Configuration
@@ -27,7 +22,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // '/game-websocket' 경로를 STOMP 엔드포인트로 등록
-        registry.addEndpoint("/game-websocket").withSockJS();
+        registry.addEndpoint("/game-websocket")
+            .setAllowedOrigins("*")
+            .withSockJS();
     }
 
 }

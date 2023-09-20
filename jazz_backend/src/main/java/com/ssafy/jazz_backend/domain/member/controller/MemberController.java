@@ -2,7 +2,9 @@ package com.ssafy.jazz_backend.domain.member.controller;
 
 import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdResponseDto;
+import com.ssafy.jazz_backend.domain.member.dto.DuplicatedNicknameRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberRequestDto;
+import com.ssafy.jazz_backend.domain.member.dto.ModifyNicknameRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.UserLoginRequestDto;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -92,6 +95,30 @@ public class MemberController {
             // 근데 중복이 있는게 BAD_REQUEST 인가
             return new ResponseEntity<>(duplicatedCheckIdResponseDto, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PatchMapping("/nickname")
+    public ResponseEntity<?> modifyNickname(@RequestHeader("accessToken") String accessToken,
+        @RequestBody ModifyNicknameRequestDto modifyNicknameRequestDto) {
+        System.out.println(accessToken);
+        try {
+            return new ResponseEntity<>(
+                memberService.modifyNickname(modifyNicknameRequestDto, accessToken), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/nickname/{nickname}")
+    public ResponseEntity<?> duplicatedNicknameCheck(@PathVariable("nickname") String nickname) {
+        // 리턴이 false가 중복을 안한다는 것
+        // 리턴이 true면 중복한다는 것임
+        return new ResponseEntity<>(
+            memberService.duplicatedNicknameCheck(DuplicatedNicknameRequestDto
+                .builder()
+                .nickname(nickname)
+                .build()
+            ), HttpStatus.OK);
     }
 
 }

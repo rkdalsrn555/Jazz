@@ -3,8 +3,12 @@ package com.ssafy.jazz_backend.domain.member.service.serviceImpl;
 import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
 import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdResponseDto;
+import com.ssafy.jazz_backend.domain.member.dto.DuplicatedNicknameRequestDto;
+import com.ssafy.jazz_backend.domain.member.dto.DuplicatedNicknameResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberResponseDto;
+import com.ssafy.jazz_backend.domain.member.dto.ModifyNicknameRequestDto;
+import com.ssafy.jazz_backend.domain.member.dto.ModifyNicknameResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.UserLoginRequestDto;
@@ -28,6 +32,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MemberServiceImpl implements MemberService {
+
     @Autowired
     MemberRepository memberRepository;
     @Autowired
@@ -151,6 +156,58 @@ public class MemberServiceImpl implements MemberService {
             // 중복인 사람이 있다는 것
             return new DuplicatedCheckIdResponseDto(true);
         }
+    }
+
+    @Override
+    public ModifyNicknameResponseDto modifyNickname(
+        ModifyNicknameRequestDto modifyNicknameRequestDto, String accessToken) {
+        // 닉네임 수정을 하려면 닉네임 중복 체크를 해야함
+        String UUID = getUUID(accessToken);
+
+        // 오.. 중복 체크하는 로직을 MongoDB를 써도 좋을 것 같네
+        // 키가 닉네임, 밸류가 지금 사용 여부
+
+        // 닉네임 중복 체크
+        if (duplicatedCheckNickname(modifyNicknameRequestDto.getNickname())) {
+            // 닉네임 변경해주기
+            Profile profile = profileRepository.findById(UUID).orElse(null);
+            profile.setNickname(modifyNicknameRequestDto.getNickname());
+            profileRepository.save(profile);
+
+            return ModifyNicknameResponseDto
+                .builder()
+                .avail(true)
+                .build();
+        } else {
+            // 닉네임을 변경 못해서 false로 해서 리턴하기
+            return ModifyNicknameResponseDto
+                .builder()
+                .avail(false)
+                .build();
+        }
+    }
+
+    @Override
+    public DuplicatedNicknameResponseDto duplicatedNicknameCheck(
+        DuplicatedNicknameRequestDto duplicatedNicknameRequestDto) {
+        if (duplicatedCheckNickname(duplicatedNicknameRequestDto.getNickname())) {
+            // 해당 닉네임을 쓰는 사람이 없음
+            return DuplicatedNicknameResponseDto.builder().isDuplicated(false).build();
+        } else {
+            // 해당 닉네임을 쓰는 사람이 있음
+            return DuplicatedNicknameResponseDto.builder().isDuplicated(true).build();
+        }
+    }
+
+    boolean duplicatedCheckNickname(String nickname) {
+        Profile profile = profileRepository.findByNickname(nickname).orElse(null);
+
+        if (profile == null) {
+            // 해당 닉네임을 사용하는 유저가 없음
+            return true;
+        }
+        // 해당 닉네임을 사용하는 유저가 있음
+        return false;
     }
 
     String[] hashingPw(String pw) {

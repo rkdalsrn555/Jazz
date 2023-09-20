@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface QuizService {
 
-    List<?> getQuizByKind(int kind);
+    List<?> getQuizByKind(String userUUID, int kind);
 }

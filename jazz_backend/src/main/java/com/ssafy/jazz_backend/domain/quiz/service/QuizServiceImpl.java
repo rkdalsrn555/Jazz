@@ -1,10 +1,10 @@
 package com.ssafy.jazz_backend.domain.quiz.service;
 
-import com.ssafy.jazz_backend.domain.quiz.dto.ObjectiveQuizResponseDto;
-import com.ssafy.jazz_backend.domain.quiz.dto.ObjectiveQuizResponseList;
 import com.ssafy.jazz_backend.domain.quiz.dto.SubjectiveQuizResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.entity.Choice;
 import com.ssafy.jazz_backend.domain.quiz.entity.Quiz;
+import com.ssafy.jazz_backend.domain.quiz.entity.QuizManagement;
+import com.ssafy.jazz_backend.domain.quiz.repository.BookmarkRepository;
 import com.ssafy.jazz_backend.domain.quiz.repository.QuizRepository;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +20,9 @@ public class QuizServiceImpl implements QuizService {
 
     @Autowired
     private QuizRepository quizRepository;
+
+    @Autowired
+    private BookmarkRepository bookmarkRepository;
 
     private Map<String, Object> generateQuizMap(Quiz quiz) {
         Map<String, Object> quizMap = new HashMap<>();
@@ -108,13 +111,33 @@ public class QuizServiceImpl implements QuizService {
         return responseList;
     }
 
-    public List<?> getQuizByKind(int kind) {
-        return switch (kind) {
+    private boolean checkBookmarkStatus(String userUUID, int quizId) {
+        QuizManagement quizManagement = bookmarkRepository.findByMemberIdAndQuizId(userUUID,
+            quizId);
+        return quizManagement != null && quizManagement.getIsBookmark();
+    }
+
+    public List<?> getQuizByKind(String userUUID, int kind) {
+        List<?> quizzes = switch (kind) {
             case 1 -> getRandomObjectiveQuizzes();
             case 2 -> getRandomSubjectiveQuizzes();
             case 3 -> getRandomCaseObjectiveQuizzes();
             default -> throw new IllegalArgumentException("Invalid kind value");
         };
+        for (Object quizObj : quizzes) {
+            if (quizObj instanceof Map) {
+                Map<String, Object> quizMap = (Map<String, Object>) quizObj;
+                int quizId = (int) quizMap.get("quizId");
+                boolean isBookmarked = checkBookmarkStatus(userUUID, quizId);
+                quizMap.put("isBookmark", isBookmarked);
+            } else if (quizObj instanceof SubjectiveQuizResponseDto) {
+                SubjectiveQuizResponseDto dto = (SubjectiveQuizResponseDto) quizObj;
+                boolean isBookmarked = checkBookmarkStatus(userUUID, dto.getQuizId());
+                dto.setIsBookmark(isBookmarked);
+            }
+        }
+
+        return quizzes;
     }
 
 }

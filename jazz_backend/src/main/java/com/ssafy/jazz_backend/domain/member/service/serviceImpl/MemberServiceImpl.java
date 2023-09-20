@@ -3,6 +3,8 @@ package com.ssafy.jazz_backend.domain.member.service.serviceImpl;
 import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberResponseDto;
+import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueRequestDto;
+import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.UserLoginRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.UserLoginResponseDto;
 import com.ssafy.jazz_backend.domain.member.entity.Member;
@@ -170,6 +172,24 @@ public class MemberServiceImpl implements MemberService {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public TokenReIssueResponseDto reIssue(TokenReIssueRequestDto tokenReIssueRequestDto) {
+        // refresh token 검증
+        String refreshToken = tokenReIssueRequestDto.getRefreshToken();
+        if (jwtService.checkToken(refreshToken)) {
+            String account = jwtService.getInfo("account", refreshToken);
+            // accessToken 재 발급
+            return TokenReIssueResponseDto.builder()
+                .accessToken(
+                    jwtService.createAccessToken("account", account)
+                )
+                .build();
+        }
+        // 검증 통과 못했다면 재 로그인 요청.
+        // refreshToken의 유효기간이 끝났다는 이야기
+        throw new NullPointerException();
     }
 
     String makeUUID() {

@@ -51,7 +51,7 @@ export const darkTheme: themeProps = {
   },
   point: {
     deep: palette.pink_500,
-    mid: palette.pink_400,
+    mid: '#5D5DA1',
     light: palette.pink_300,
   },
 };
@@ -71,7 +71,7 @@ export const lightTheme: themeProps = {
   },
   point: {
     deep: palette.pink_500,
-    mid: palette.pink_400,
+    mid: '#A3A3E1',
     light: palette.pink_300,
   },
 };

@@ -27,7 +27,7 @@ public class GameService {
 
     private static final Logger logger = LoggerFactory.getLogger(GameService.class);
     private Map<GameRequest, DeferredResult<GameResponse>> waitingUsers;
-    // <Session, GameRoomId>의 정보를 저장
+    // <WebSocketSession, GameRoomId>의 정보를 저장
     private Map<String, String> connectedUsers;
     private ReentrantReadWriteLock lock;
 
@@ -52,6 +52,8 @@ public class GameService {
     public void joinGameRoom(GameRequest request, DeferredResult<GameResponse> deferredResult) {
         logger.info("## Join game room request. {}[{}]", Thread.currentThread().getName(),
             Thread.currentThread().getId());
+        System.out.println(request.toString());
+        System.out.println(deferredResult.toString());
         if (request == null || deferredResult == null) {
             return;
         }
@@ -87,12 +89,15 @@ public class GameService {
 
     public void establishGameRoom() {
         try {
+            logger.info("--> 게임룸 생성 검사 중");
             // readLock 설정
             lock.readLock().lock();
             // 대기유저 2명이상을 만족하지 않는다면 return
             if (waitingUsers.size() < 2) {
+                logger.info("대기 유저 만족 X ... 계속 대기합니다. [waitingUsers = " + waitingUsers.size() + "]");
                 return;
             }
+            logger.info("매칭 완료 곧 게임이 시작됩니다.");
             // waitingUsers Map을 Iterator로 조회 it.next()값이 null이 아님을 보장한다.
             Iterator<GameRequest> it = waitingUsers.keySet().iterator();
             GameRequest user1 = it.next();
@@ -103,6 +108,9 @@ public class GameService {
             // user1, user2를 waitingUsers에서 제거 후 userResult로 저장
             DeferredResult<GameResponse> user1Result = waitingUsers.remove(user1);
             DeferredResult<GameResponse> user2Result = waitingUsers.remove(user2);
+
+            logger.info("user1 : " + user1Result.getResult());
+            logger.info("user2 : " + user2Result.getResult());
 
             user1Result.setResult(
                 new GameResponse(ResponseResult.SUCCESS, uuid, user1.getSession()));
@@ -126,6 +134,7 @@ public class GameService {
         connectedUsers.put(webSocketSessionId, gameRoomId);
     }
 
+    // GameMessage 수정해야 함
     public void disConnectUser(String webSocketSessionId) {
         String gameRoomId = connectedUsers.get(webSocketSessionId);
         GameMessage gameMessage = new GameMessage();
@@ -133,6 +142,7 @@ public class GameService {
         gameMessage.setMessageType(MessageType.DISCONNECTED);
         sendMessage(gameRoomId, gameMessage);
     }
+    // --------------------------------------------
 
     private String getDestination(String gameRoomId) {
         return "/topic/game/" + gameRoomId;

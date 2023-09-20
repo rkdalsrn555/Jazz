@@ -25,3 +25,10 @@ type profileBlockInfoProps = {
   solved: number;
   favorite: number;
 };
+
+type companyProps = {
+  name: string;
+  totalValue: number;
+  totalSale: number;
+  starred: boolean;
+};

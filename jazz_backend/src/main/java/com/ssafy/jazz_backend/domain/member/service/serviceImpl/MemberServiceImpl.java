@@ -68,6 +68,10 @@ public class MemberServiceImpl implements MemberService {
             .memberId(member.getId())
             .nickname(nickname)
             .diamond(0)
+            .win(0)
+            .draw(0)
+            .lose(0)
+            .expPoint(0)
             .build();
 
         // member table에 저장해줌

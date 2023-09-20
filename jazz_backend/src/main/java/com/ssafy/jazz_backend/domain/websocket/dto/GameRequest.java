@@ -30,6 +30,6 @@ public class GameRequest {
 
     @Override
     public int hashCode() {
-        return session.hashCode();
+        return session != null ? session.hashCode() : 0;
     }
 }

@@ -1,11 +1,16 @@
 package com.ssafy.jazz_backend.domain.member.service.serviceImpl;
 
+import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberResponseDto;
+import com.ssafy.jazz_backend.domain.member.dto.UserLoginRequestDto;
+import com.ssafy.jazz_backend.domain.member.dto.UserLoginResponseDto;
 import com.ssafy.jazz_backend.domain.member.entity.Member;
+import com.ssafy.jazz_backend.domain.member.entity.Token;
 import com.ssafy.jazz_backend.domain.member.profile.entity.Profile;
 import com.ssafy.jazz_backend.domain.member.profile.repository.ProfileRepository;
 import com.ssafy.jazz_backend.domain.member.repository.MemberRepository;
+import com.ssafy.jazz_backend.domain.member.repository.TokenRepository;
 import com.ssafy.jazz_backend.domain.member.service.MemberService;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -20,6 +25,10 @@ public class MemberServiceImpl implements MemberService {
     MemberRepository memberRepository;
     @Autowired
     ProfileRepository profileRepository;
+    @Autowired
+    JwtService jwtService;
+    @Autowired
+    TokenRepository tokenRepository;
 
     @Override
     public JoinMemberResponseDto joinMember(JoinMemberRequestDto joinMemberRequestDto) {
@@ -58,6 +67,52 @@ public class MemberServiceImpl implements MemberService {
         return JoinMemberResponseDto
             .builder()
             .message("회원가입 성공")
+            .build();
+    }
+
+    @Override
+    public UserLoginResponseDto login(UserLoginRequestDto userLoginRequestDto) {
+        /*
+                절차
+            1. 아이디가 있는지 확인
+            => 없다면 예외 발생 후 종료
+            2. 비번이 맞는지 확인
+            => 틀리다면 예외 발생 후 종료
+            3. accessToken과 refreshToken 발급
+         */
+        String userId = userLoginRequestDto.getUserId();
+        String userPw = userLoginRequestDto.getPw();
+        Member member = memberRepository.findByUserId(userId).orElse(null);
+
+        if (member == null) {
+            // 아이디가 없는 경우
+            throw new NullPointerException();
+        }
+        if (!hashingPw(userPw, member.getSalt()).equals(member.getPw())) {
+            // 비번 틀림
+            throw new NullPointerException();
+        }
+
+        // Token 발급
+        String accessToken = jwtService.createAccessToken("account", member.getId());
+        String refreshToken = jwtService.createRefreshToken("account", member.getId());
+
+        // member랑 memberId를 둘 다 저장해줘야함
+        // 안 그러면 아래의 에러가 뜸
+        // A different object with the same identifier value was already associated with the session
+        Token token = Token.builder()
+            .refreshToken(refreshToken)
+            .member(member)
+            .memberId(member.getId())
+            .build();
+
+        tokenRepository.save(token);
+
+        return UserLoginResponseDto.builder()
+            .userId(userId)
+            .pw(userPw)
+            .accessToken(accessToken)
+            .refreshToken(refreshToken)
             .build();
     }
 

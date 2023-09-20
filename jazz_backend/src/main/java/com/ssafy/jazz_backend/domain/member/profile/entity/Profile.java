@@ -42,5 +42,17 @@ public class Profile extends BaseEntity {
         위 2가지 방법중에서 뭐가 더 빠른지 몰라서 이번에는 2번 방법을 사용할 예정
      */
     private int diamond;
+
+    @Column(name = "win")
+    private int win;
+
+    @Column(name = "draw")
+    private int draw;
+
+    @Column(name = "lose")
+    private int lose;
+
+    @Column(name = "exp_point")
+    private int expPoint;
 }
 

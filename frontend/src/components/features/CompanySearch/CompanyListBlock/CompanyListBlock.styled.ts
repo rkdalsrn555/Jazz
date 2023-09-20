@@ -12,6 +12,11 @@ export const Container = styled.div<{ theme: themeProps }>`
   background-color: ${(props) => props.theme.bg.light};
   box-shadow: 0.5px 1px 5px 0px ${(props) => props.theme.bg.shadow};
   position: relative;
+  transition: all 0.2s;
+  &:hover {
+    filter: brightness(90%);
+    cursor: pointer;
+  }
 `;
 
 export const NameContainer = styled.div`

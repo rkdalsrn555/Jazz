@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './ThirtyCountDown.styled';
 
-const ThirtyCountDown = () => {
+type OwnProps = {
+  startRound: () => void;
+  endRound: () => void;
+  isPlaying: boolean;
+};
+
+const ThirtyCountDown = (props: OwnProps) => {
+  const { isPlaying, startRound, endRound } = props;
   const [num, setNum] = useState<number>(30);
 
   useEffect(() => {

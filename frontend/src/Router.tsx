@@ -1,12 +1,13 @@
 import { Route, Routes } from 'react-router-dom';
 import Home from 'pages/Home/index';
-import SocketGame from 'pages/SocketGame/SocketGame';
+import BattleGame from 'pages/BattleGame/BattleGame';
 
 const Router = () => {
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/game" element={<SocketGame />} />
+      <Route path="/battle-game" element={<BattleGame />} />
     </Routes>
   );
 };

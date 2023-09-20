@@ -5,6 +5,7 @@ export default { component: ThirtyCountDown };
 export const meta: Meta<typeof ThirtyCountDown> = {
   title: 'default',
   component: ThirtyCountDown,
+  args: {},
 };
 
 type Story = StoryObj<typeof ThirtyCountDown>;

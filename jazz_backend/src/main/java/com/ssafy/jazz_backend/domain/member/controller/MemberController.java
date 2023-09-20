@@ -5,6 +5,8 @@ import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.UserLoginRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.UserLoginResponseDto;
+import com.ssafy.jazz_backend.domain.member.dto.UserLogoutRequestDto;
+import com.ssafy.jazz_backend.domain.member.dto.UserLogoutResponseDto;
 import com.ssafy.jazz_backend.domain.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,6 +51,24 @@ public class MemberController {
             );
             return new ResponseEntity<>(reIssueResponseDto, HttpStatus.OK);
         } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("accessToken") String accessToken) {
+        UserLogoutRequestDto userLogoutRequestDto = UserLogoutRequestDto
+            .builder()
+            .accessToken(accessToken)
+            .build();
+        try {
+            UserLogoutResponseDto userLogoutResponseDto = memberService.logout(
+                userLogoutRequestDto);
+            return new ResponseEntity<>(userLogoutResponseDto, HttpStatus.OK);
+        } catch (NullPointerException npe) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

@@ -7,6 +7,8 @@ import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.UserLoginRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.UserLoginResponseDto;
+import com.ssafy.jazz_backend.domain.member.dto.UserLogoutRequestDto;
+import com.ssafy.jazz_backend.domain.member.dto.UserLogoutResponseDto;
 import com.ssafy.jazz_backend.domain.member.entity.Member;
 import com.ssafy.jazz_backend.domain.member.entity.Token;
 import com.ssafy.jazz_backend.domain.member.profile.entity.Profile;
@@ -17,6 +19,7 @@ import com.ssafy.jazz_backend.domain.member.service.MemberService;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Map;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -118,6 +121,21 @@ public class MemberServiceImpl implements MemberService {
             .build();
     }
 
+    @Override
+    public UserLogoutResponseDto logout(UserLogoutRequestDto userLogoutRequestDto) {
+        String UUID = getUUID(userLogoutRequestDto.getAccessToken());
+        Member member = memberRepository.findById(UUID).orElse(null);
+        if (member == null) {
+            throw new NullPointerException();
+        }
+        Token token = tokenRepository.findById(member.getId()).orElse(null);
+//        tokenRepository.deleteById(member.getId());
+        System.out.println(token);
+        tokenRepository.delete(token);
+        UserLogoutResponseDto userLogoutResponseDto = new UserLogoutResponseDto("로그아웃 성공");
+        return userLogoutResponseDto;
+    }
+
     String[] hashingPw(String pw) {
         String salt = getSalt();
         String newPw = getEncrypt(pw, salt);
@@ -194,6 +212,11 @@ public class MemberServiceImpl implements MemberService {
 
     String makeUUID() {
         return UUID.randomUUID().toString();
+    }
+
+    public String getUUID(String accessToken) {
+        Map<String, Object> tmp = jwtService.getUserInfoFromToken(accessToken);
+        return (String) tmp.get("account");
     }
 
 }

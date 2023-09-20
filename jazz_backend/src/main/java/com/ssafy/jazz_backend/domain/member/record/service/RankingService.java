@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface RankingService {
 
-    public List<LevelRankingResponseDto> getLevelRankingTopTen();
+    public List<LevelRankingResponseDto> getLevelRankingTopTen(String accessTocken);
 }

@@ -1,5 +1,7 @@
 package com.ssafy.jazz_backend.domain.member.controller;
 
+import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdRequestDto;
+import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueResponseDto;
@@ -11,6 +13,8 @@ import com.ssafy.jazz_backend.domain.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -70,6 +74,23 @@ public class MemberController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/duplicate/{userId}")
+    public ResponseEntity<?> duplicateCheckId(@PathVariable(name = "userId") String userId) {
+        DuplicatedCheckIdRequestDto duplicatedCheckIdRequestDto = new DuplicatedCheckIdRequestDto(
+            userId);
+        DuplicatedCheckIdResponseDto duplicatedCheckIdResponseDto =
+            memberService.duplicatedCheckId(duplicatedCheckIdRequestDto);
+
+        if (duplicatedCheckIdResponseDto.isDuplicated()) {
+            // 중복이 없는 것
+            return new ResponseEntity<>(duplicatedCheckIdResponseDto, HttpStatus.OK);
+        } else {
+            // 중복이 있는 것
+            // 근데 중복이 있는게 BAD_REQUEST 인가
+            return new ResponseEntity<>(duplicatedCheckIdResponseDto, HttpStatus.BAD_REQUEST);
         }
     }
 

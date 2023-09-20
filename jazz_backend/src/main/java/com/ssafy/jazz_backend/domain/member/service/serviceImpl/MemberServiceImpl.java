@@ -1,6 +1,8 @@
 package com.ssafy.jazz_backend.domain.member.service.serviceImpl;
 
 import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
+import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdRequestDto;
+import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueRequestDto;
@@ -134,6 +136,21 @@ public class MemberServiceImpl implements MemberService {
         tokenRepository.delete(token);
         UserLogoutResponseDto userLogoutResponseDto = new UserLogoutResponseDto("로그아웃 성공");
         return userLogoutResponseDto;
+    }
+
+    @Override
+    public DuplicatedCheckIdResponseDto duplicatedCheckId(
+        DuplicatedCheckIdRequestDto duplicatedCheckIdRequestDto) {
+        String userId = duplicatedCheckIdRequestDto.getUserId();
+        Member member = memberRepository.findByUserId(userId).orElse(null);
+
+        if (member == null) {
+            // 중복인 사람이 없다는 것!
+            return new DuplicatedCheckIdResponseDto(false);
+        } else {
+            // 중복인 사람이 있다는 것
+            return new DuplicatedCheckIdResponseDto(true);
+        }
     }
 
     String[] hashingPw(String pw) {

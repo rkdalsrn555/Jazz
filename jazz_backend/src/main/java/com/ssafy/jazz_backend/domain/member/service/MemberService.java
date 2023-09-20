@@ -1,5 +1,7 @@
 package com.ssafy.jazz_backend.domain.member.service;
 
+import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdRequestDto;
+import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueRequestDto;
@@ -15,5 +17,8 @@ public interface MemberService {
     UserLoginResponseDto login(UserLoginRequestDto userLoginRequestDto);
     TokenReIssueResponseDto reIssue(TokenReIssueRequestDto tokenReIssueRequestDto);
     UserLogoutResponseDto logout(UserLogoutRequestDto userLogoutRequestDto);
+
+    DuplicatedCheckIdResponseDto duplicatedCheckId(
+        DuplicatedCheckIdRequestDto duplicatedCheckIdRequestDto);
 
 }

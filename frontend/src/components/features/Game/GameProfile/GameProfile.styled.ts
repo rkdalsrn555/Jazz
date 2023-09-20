@@ -8,6 +8,7 @@ export const GameProfileContainerOut = styled.div`
   position: relative;
   width: 431px;
   height: 741px;
+  border-radius: 16px;
   background: rgba(0, 0, 0);
   color: #fff;
   font-size: 32px;
@@ -23,6 +24,7 @@ export const GameProfileContainerOut = styled.div`
     left: -3px;
     width: calc(100% + 6px);
     height: calc(100% + 6px);
+    border-radius: 16px;
     background: linear-gradient(
       45deg,
       red,
@@ -68,9 +70,19 @@ export const borderBg = keyframes`
  }
 `;
 
+export const UserCharactorContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const UserContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const HeartGuageContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  height: 150px;
 `;

@@ -25,7 +25,7 @@ export const ModalContainer = styled(motion.div)`
   gap: 32px;
   width: 1156px;
   height: 731px;
-  box-shadow: 5px 5px 30px 10px #fff;
+  box-shadow: 0px 0px 30px 7px #fff;
   border-radius: 12px;
   text-align: center;
   padding: 24px 32px;
@@ -54,6 +54,7 @@ export const AcceptButton = styled.button`
   width: 370px;
   height: 70px;
   padding: 18px 32px;
+  border: none;
   border-radius: 30px;
   color: #fff;
   font-size: 24px;

@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { themeProps } from "@emotion/react";
+import styled from '@emotion/styled';
+import { themeProps } from '@emotion/react';
 
 export const Container = styled.div<{ theme: themeProps }>`
   /* border: solid blue; */
@@ -19,5 +19,6 @@ export const Blank = styled.div`
 `;
 
 export const Logo = styled.img`
-  height: 50%;
+  /* border: solid green; */
+  height: 3rem;
 `;

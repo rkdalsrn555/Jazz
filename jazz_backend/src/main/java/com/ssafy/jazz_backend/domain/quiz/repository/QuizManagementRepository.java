@@ -5,6 +5,7 @@ import com.ssafy.jazz_backend.domain.quiz.entity.Quiz;
 import com.ssafy.jazz_backend.domain.quiz.entity.QuizManagement;
 import com.ssafy.jazz_backend.domain.quiz.entity.QuizManangementId;
 import io.lettuce.core.dynamic.annotation.Param;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +17,7 @@ public interface QuizManagementRepository extends JpaRepository<QuizManagement, 
         @Param("quizId") int quizId);
 
     Optional<QuizManagement> findByIdMemberAndIdQuiz(Member member, Quiz quiz);
+
+    List<QuizManagement> findAllByIdMember(Member member);
 
 }

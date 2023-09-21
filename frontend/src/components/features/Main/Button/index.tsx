@@ -29,7 +29,11 @@ const MainButton = (feature: btnProps) => {
           onMouseLeave={() => setGlow({ display: 'none' })}
         >
           {Battle ? (
-            <S.AnimDiv id="forAnimation" style={glow}>
+            <S.AnimDiv
+              id="forAnimation"
+              style={glow}
+              onClick={feature.onClickEvent}
+            >
               <S.GlowDiv1 id="animationDiv"></S.GlowDiv1>
               <S.GlowDiv2 id="animationDiv"></S.GlowDiv2>
             </S.AnimDiv>

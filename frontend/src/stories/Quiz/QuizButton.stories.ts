@@ -1,5 +1,5 @@
 import { StoryObj, Meta } from '@storybook/react';
-import QuizButton from 'components/features/Quiz/QuizButton/QuizButton';
+import QuizButton from '../../components/features/Quiz/QuizButton/QuizButton';
 
 export default { component: QuizButton };
 export const meta: Meta<typeof QuizButton> = {

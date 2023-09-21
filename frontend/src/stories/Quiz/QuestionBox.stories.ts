@@ -1,5 +1,5 @@
 import { StoryObj, Meta } from '@storybook/react';
-import { QuestionBox } from '../components/features/Quiz/QuestionBox/QuestionBox';
+import { QuestionBox } from '../../components/features/Quiz/QuestionBox/QuestionBox';
 
 export default { component: QuestionBox };
 export const meta: Meta<typeof QuestionBox> = {

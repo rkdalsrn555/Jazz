@@ -1,17 +1,28 @@
 import { StoryObj, Meta } from '@storybook/react';
-import Modal from '../components/utils/Modal/Modal';
+import Modal from '../../components/utils/Modal/Modal';
 
 export default { component: Modal };
 export const meta: Meta<typeof Modal> = {
   title: 'default',
   component: Modal,
+  args: {
+    data: {
+      title: '😥',
+      message: `문제를 그만 풀면 다이아를 못받아요. 그래도 끝내시겠어요?`,
+    },
+  },
 };
 
 type Story = StoryObj<typeof Modal>;
 
 const Template: Story = {
   name: 'Default',
-  args: {},
+  args: {
+    data: {
+      title: '😥',
+      message: `문제를 그만 풀면 다이아를 못받아요. 그래도 끝내시겠어요?`,
+    },
+  },
 };
 
 export const WarningModal: Story = {

@@ -4,7 +4,7 @@ import com.ssafy.jazz_backend.domain.quiz.dto.SubjectiveQuizResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.entity.Choice;
 import com.ssafy.jazz_backend.domain.quiz.entity.Quiz;
 import com.ssafy.jazz_backend.domain.quiz.entity.QuizManagement;
-import com.ssafy.jazz_backend.domain.quiz.repository.BookmarkRepository;
+import com.ssafy.jazz_backend.domain.quiz.repository.QuizManagementRepository;
 import com.ssafy.jazz_backend.domain.quiz.repository.QuizRepository;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +22,7 @@ public class QuizServiceImpl implements QuizService {
     private QuizRepository quizRepository;
 
     @Autowired
-    private BookmarkRepository bookmarkRepository;
+    private QuizManagementRepository quizManagementRepository;
 
     private Map<String, Object> generateQuizMap(Quiz quiz) {
         Map<String, Object> quizMap = new HashMap<>();
@@ -112,7 +112,7 @@ public class QuizServiceImpl implements QuizService {
     }
 
     private boolean checkBookmarkStatus(String userUUID, int quizId) {
-        QuizManagement quizManagement = bookmarkRepository.findByMemberIdAndQuizId(userUUID,
+        QuizManagement quizManagement = quizManagementRepository.findByMemberIdAndQuizId(userUUID,
             quizId);
         return quizManagement != null && quizManagement.getIsBookmark();
     }

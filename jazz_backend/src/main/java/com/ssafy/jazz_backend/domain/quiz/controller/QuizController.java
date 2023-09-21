@@ -3,7 +3,9 @@ package com.ssafy.jazz_backend.domain.quiz.controller;
 
 import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
 import com.ssafy.jazz_backend.domain.quiz.dto.AddToQuizManagementResponseDto;
+import com.ssafy.jazz_backend.domain.quiz.dto.QuizCorrectionRequestDto;
 import com.ssafy.jazz_backend.domain.quiz.service.AddToQuizManagementService;
+import com.ssafy.jazz_backend.domain.quiz.service.QuizCorrectionService;
 import com.ssafy.jazz_backend.domain.quiz.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,9 @@ public class QuizController {
     @Autowired
     private JwtService jwtService;
 
+    @Autowired
+    private QuizCorrectionService quizCorrectionService;
+
     @GetMapping("/{kind}")
     private ResponseEntity<?> getQuizByKind(@RequestHeader("accessToken") String accessToken,
         @PathVariable int kind) {
@@ -31,9 +36,10 @@ public class QuizController {
         return new ResponseEntity<>(quizzes, HttpStatus.OK);
     }
 
+    @Autowired
     private AddToQuizManagementService addToQuizManagementService;
 
-    @PostMapping("/management/{quizId}")
+    @PutMapping("/management/{quizId}")
     public ResponseEntity<?> addToQuizManagement(@RequestHeader("accessToken") String accessToken,
         @PathVariable int quizId) {
         String userUUID = jwtService.getInfo("account", accessToken);
@@ -45,5 +51,15 @@ public class QuizController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PatchMapping("/correction")
+    public ResponseEntity<?> updateCorrection(
+        @RequestHeader("accessToken") String accessToken,
+        @RequestBody QuizCorrectionRequestDto requestDto) {
+        String userUUID = jwtService.getInfo("account", accessToken);
+        quizCorrectionService.updateIsCorrect(userUUID, requestDto.getQuizId(),
+            requestDto.getIsCorrect());
+
+        return ResponseEntity.ok().build();
+    }
 }
 

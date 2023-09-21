@@ -6,16 +6,20 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
 
 @Embeddable
+@Getter
+@Setter
 public class QuizManangementId implements Serializable {
 
-    @OneToOne
-    @JoinColumn(name = "memberId", insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "memberId")
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "quizId", insertable = false, updatable = false)
+    @JoinColumn(name = "quizId")
     private Quiz quiz;
 
 }

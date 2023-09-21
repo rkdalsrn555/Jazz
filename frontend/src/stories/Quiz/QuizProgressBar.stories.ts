@@ -1,5 +1,5 @@
 import { StoryObj, Meta } from '@storybook/react';
-import QuizProgressBar from 'components/features/Quiz/QuizProgressBar/QuizProgressBar';
+import QuizProgressBar from '../../components/features/Quiz/QuizProgressBar/QuizProgressBar';
 
 export default { component: QuizProgressBar };
 export const meta: Meta<typeof QuizProgressBar> = {

@@ -1,5 +1,5 @@
 import { StoryObj, Meta } from '@storybook/react';
-import MarathonResult from '../components/features/Quiz/MarathonResult/MarathonResult';
+import MarathonResult from '../../components/features/Quiz/MarathonResult/MarathonResult';
 
 export default { component: MarathonResult };
 export const meta: Meta<typeof MarathonResult> = {

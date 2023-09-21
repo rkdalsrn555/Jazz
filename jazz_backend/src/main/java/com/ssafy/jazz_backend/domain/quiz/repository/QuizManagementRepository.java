@@ -20,4 +20,5 @@ public interface QuizManagementRepository extends JpaRepository<QuizManagement, 
 
     List<QuizManagement> findAllByIdMember(Member member);
 
+    List<QuizManagement> findAllByMemberAndIsBookmark(Member member, Boolean isBookmark);
 }

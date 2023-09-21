@@ -1,5 +1,8 @@
 package com.ssafy.jazz_backend.domain.member.record.repository;
 
-public interface SeasonJpaRepository {
+import com.ssafy.jazz_backend.domain.member.record.entity.Season;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SeasonJpaRepository extends JpaRepository<Season, Long> {
 
 }

@@ -26,7 +26,7 @@ const Home = () => {
   const theme: themeProps = useTheme();
   const isDark = useRecoilValue(IsDark);
   useEffect(() => {
-    console.log('isDark', isDark);
+    // console.log('isDark', isDark);
   }, []);
   ///////////////////////////////////////////////////////////////
   const marathonFeature: btnProps = {

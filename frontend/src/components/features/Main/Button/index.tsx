@@ -8,7 +8,6 @@ const MainButton = (feature: btnProps) => {
   let Battle = false;
   let Shop = false;
   if (feature.title === '금융 배틀' || feature.title === '상점') {
-    console.log(feature.title);
     BigButton = true;
     if (feature.title === '금융 배틀') {
       Battle = true;

@@ -115,7 +115,7 @@ const CompanySearch = () => {
   const [companies, setCompanies] = useState(sampleCompanies);
 
   const handleInput = (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     const searchWord = e.target.value;
     let newCompanies: companyProps[] = [];
     sampleCompanies.forEach((element) => {

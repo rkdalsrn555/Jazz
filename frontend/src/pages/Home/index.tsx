@@ -2,7 +2,7 @@ import * as S from './Home.styled';
 import { themeProps } from '@emotion/react';
 import { useTheme } from '@mui/material';
 import { IsDark } from 'atoms/atoms';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Inner from 'components/features/Main/InnerContainer';
 import {
@@ -21,13 +21,29 @@ import Note from 'assets/img/icons8-note-100.png';
 import Battle from 'assets/img/icons8-battle-96.png';
 import Shop from 'assets/img/icons8-shop-64.png';
 import ProfileInfo from 'components/features/Main/ProfileInfo/ProfileInfo';
+import GameMatchingModal from 'components/features/Game/GameMatchingModal/GameMatchingModal';
 
 const Home = () => {
   const theme: themeProps = useTheme();
   const isDark = useRecoilValue(IsDark);
+  const [isToggled, setIsToggled] = useState<boolean>(false);
+
   useEffect(() => {
     console.log('isDark', isDark);
   }, []);
+
+  ///////////////////////게임 매칭시 나타나는 모달//////////////////////////
+  const gameMatchingModalFeature = {
+    me: {
+      level: 15,
+      nickname: '재린이',
+      charactor: 'triangle.png',
+      bgColor: '#FFC702',
+    },
+    isMatching: false,
+    isToggled: isToggled,
+    closeModal: () => setIsToggled(false),
+  };
   ///////////////////////////////////////////////////////////////
   const marathonFeature: btnProps = {
     title: '마라톤',
@@ -92,6 +108,7 @@ const Home = () => {
     img: <S.BattleImg src={Battle} />,
     width: '68%',
     destination: '',
+    onClickEvent: () => setIsToggled(true),
   };
   const shopFeature: btnProps = {
     title: '상점',
@@ -179,6 +196,7 @@ const Home = () => {
 
   return (
     <S.Container>
+      <GameMatchingModal {...gameMatchingModalFeature} />
       <S.LeftContainer>
         <Inner {...quizContainerFeature} />
         <Inner {...studyContainerFeature} />

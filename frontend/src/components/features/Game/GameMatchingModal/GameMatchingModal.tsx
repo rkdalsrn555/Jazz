@@ -15,16 +15,15 @@ type Client = {
 };
 
 type OwnProps = {
-  // isToggled: boolean;
-  // setIsToggled: React.Dispatch<React.SetStateAction<boolean>>;
   me: Client;
-  other: Client | null;
+  other?: Client | null;
   isMatching: boolean;
+  isToggled: boolean;
+  closeModal: () => void;
 };
 
 const GameMatchingModal = (props: OwnProps) => {
-  const { me, other, isMatching } = props;
-  const [isToggled, setIsToggled] = useState<boolean>(true);
+  const { me, other, isMatching, isToggled, closeModal } = props;
 
   return (
     <AnimatePresence>
@@ -36,12 +35,7 @@ const GameMatchingModal = (props: OwnProps) => {
             animate={{ y: 50, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
           >
-            <CloseIcon
-              onClick={() => {
-                setIsToggled(!isToggled);
-              }}
-              className="closeIcon"
-            ></CloseIcon>
+            <CloseIcon onClick={closeModal} className="closeIcon"></CloseIcon>
             <S.ModalContent>
               <MatchingProfile
                 level={me.level}

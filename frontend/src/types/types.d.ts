@@ -7,6 +7,7 @@ type btnProps = {
   img: React.HTMLAttributes;
   width: string;
   destination: string;
+  onClickEvent?: () => void;
 };
 
 type innerContainerProps = {

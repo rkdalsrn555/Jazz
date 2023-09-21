@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Modify from 'assets/img/writing.png';
 import Bell from 'assets/img/bell.png';
 import Diamond from 'assets/img/diamond.png';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const Inner = (feature: innerContainerProps) => {
   const theme: themeProps = useTheme();
@@ -284,10 +284,13 @@ const Inner = (feature: innerContainerProps) => {
 
   const [timeLeft, setTimeLeft] = useState(tierTimer());
   const [timerType, setTimerType] = useState('tier');
-
+  const [timerCheck, setTimerCheck] = useState(true);
+  // 랜더링 후 1초마다 timerCheck(boolean값)를 반대값으로 설정
   useEffect(() => {
-    const timeId = setInterval(() => tierTimer(), 1000);
-    console.log('setInterval');
+    setInterval(() => setTimerCheck(!timerCheck), 1000);
+  });
+  // 1초마다 timerCheck값이 바뀔때마다 timer를 변경
+  useEffect(() => {
     if (timerType === 'tier') {
       setTimeLeft(tierTimer());
     } else if (timerType === 'dailyMarathon') {
@@ -295,11 +298,8 @@ const Inner = (feature: innerContainerProps) => {
     } else if (timerType === 'monthlyMarathon') {
       setTimeLeft(mmTimer());
     }
-    return () => {
-      clearInterval(timeId);
-      console.log('clearInterval');
-    };
-  });
+  }, [timerCheck]);
+
   const tierRef = useRef<HTMLButtonElement>(null);
   const dmRef = useRef<HTMLButtonElement>(null);
   const mmRef = useRef<HTMLButtonElement>(null);

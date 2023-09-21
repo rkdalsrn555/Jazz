@@ -68,7 +68,7 @@ const Home = () => {
     color: '#FFCBCB',
     img: <S.ButtonImg src={DotMessage} />,
     width: '31.6%',
-    destination: '',
+    destination: '/short-answer-question',
   };
   const shortAnswerChoiceFeature: btnProps = {
     title: '단답형 객관식',

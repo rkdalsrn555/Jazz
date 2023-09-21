@@ -7,6 +7,10 @@ import MatchingProfile from '../MatchingProfile/MatchingProfile';
 import { ReactComponent as CloseIcon } from '../../../../assets/svgs/Game/close.svg';
 import LoadingBar from '../LoadingBar/LoadingBar';
 
+import StompJs from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
+import axios from 'axios';
+
 type Client = {
   level: number;
   nickname: string;
@@ -24,6 +28,42 @@ type OwnProps = {
 
 const GameMatchingModal = (props: OwnProps) => {
   const { me, other, isMatching, isToggled, closeModal } = props;
+
+  const getGameInfo = async () => {
+    await axios.get(`${process.env.REACT_APP_BASE_URL}/game/play`, {
+      headers: {
+        // accessToken: process.env.REACT_APP_ACCESS_TOKEN,
+      },
+    });
+  };
+
+  const getMatching = async () => {
+    await axios.get(`${process.env.REACT_APP_BASE_URL}/game/join`, {
+      headers: {
+        // accessToken: process.env.REACT_APP_ACCESS_TOKEN,
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (isToggled) {
+      getMatching()
+        .then((res) => {
+          console.log('매칭성공!');
+          getGameInfo()
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log('매칭실패!');
+        });
+      console.log('요청보냈다!');
+    }
+  }, [isToggled]);
 
   return (
     <AnimatePresence>

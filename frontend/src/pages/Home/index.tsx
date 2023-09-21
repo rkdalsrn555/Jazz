@@ -40,6 +40,7 @@ const Home = () => {
       charactor: 'triangle.png',
       bgColor: '#FFC702',
     },
+    other: null,
     isMatching: false,
     isToggled: isToggled,
     closeModal: () => setIsToggled(false),

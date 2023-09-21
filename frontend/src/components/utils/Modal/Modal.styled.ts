@@ -14,7 +14,7 @@ export const GreyBackground = styled.div`
 
 export const ModalContainer = styled(motion.div)`
   position: absolute;
-  top: 0;
+  top: 20%;
   left: 50%;
   transform: translate3d(-50%, 0, 0);
   z-index: 9999;

@@ -8,8 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class GameInitResponse {
-    private String userId;
-    private int expPoint;
-    private int rankPoint;
+    private MyInfo myInfo;
+    private UserInfo userInfo;
     private GameMessage initGameMessage;
 }

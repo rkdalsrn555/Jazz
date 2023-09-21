@@ -7,9 +7,7 @@ const Statement = () => {
   // url에서 parmeter로 어떤 company 받아올건지??
   return (
     <S.Container>
-      <S.CompanyLabelContainer>
-
-      </S.CompanyLabelContainer>
+      <S.CompanyLabelContainer>ADFS</S.CompanyLabelContainer>
     </S.Container>
   );
 };

@@ -87,14 +87,7 @@ public class MemberController {
         DuplicatedCheckIdResponseDto duplicatedCheckIdResponseDto =
             memberService.duplicatedCheckId(duplicatedCheckIdRequestDto);
 
-        if (duplicatedCheckIdResponseDto.isDuplicated()) {
-            // 중복이 없는 것
-            return new ResponseEntity<>(duplicatedCheckIdResponseDto, HttpStatus.OK);
-        } else {
-            // 중복이 있는 것
-            // 근데 중복이 있는게 BAD_REQUEST 인가
-            return new ResponseEntity<>(duplicatedCheckIdResponseDto, HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(duplicatedCheckIdResponseDto, HttpStatus.OK);
     }
 
     @PatchMapping("/nickname")

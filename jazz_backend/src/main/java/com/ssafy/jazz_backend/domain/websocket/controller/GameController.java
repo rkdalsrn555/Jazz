@@ -7,6 +7,10 @@ import com.ssafy.jazz_backend.domain.websocket.dto.GameRequest;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameResponse;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameUserInfo;
 import com.ssafy.jazz_backend.domain.websocket.dto.MessageType;
+import com.ssafy.jazz_backend.domain.websocket.dto.MyInfo;
+import com.ssafy.jazz_backend.domain.websocket.dto.UserInfo;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +19,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.ssafy.jazz_backend.domain.websocket.service.GameService;
@@ -38,9 +43,10 @@ public class GameController {
 
     @GetMapping("/join")
     @ResponseBody
-    public DeferredResult<GameResponse> joinRequest() {
-        SimpMessageHeaderAccessor accessor = SimpMessageHeaderAccessor.create();
-        String session = accessor.getSessionId();
+    public DeferredResult<GameResponse> joinRequest(@RequestHeader("accessToken") String accessToken, HttpServletRequest request) {
+        String session = request.getSession().getId();
+//        SimpMessageHeaderAccessor accessor = SimpMessageHeaderAccessor.create();
+//        String session = accessor.getSessionId();
         logger.info(">> Join request. session : {}", session);
 
         final GameRequest user = new GameRequest(session);
@@ -56,7 +62,7 @@ public class GameController {
 
     @GetMapping("/cancel")
     @ResponseBody
-    public ResponseEntity<Void> cancelRequest() {
+    public ResponseEntity<Void> cancelRequest(@RequestHeader("accessToken") String accessToken) {
         SimpMessageHeaderAccessor accessor = SimpMessageHeaderAccessor.create();
         String session = accessor.getSessionId();
         logger.info(">> Cancel request. session : {}", session);
@@ -72,9 +78,10 @@ public class GameController {
      */
     @GetMapping("/play")
     @ResponseBody
-    public GameInitResponse startGame(@RequestHeader("accessToken") String accessToken) {
-        SimpMessageHeaderAccessor accessor = SimpMessageHeaderAccessor.create();
-        String session = accessor.getSessionId();
+    public GameInitResponse startGame(@RequestHeader("accessToken") String accessToken, HttpServletRequest request) {
+        String session = request.getSession().getId();
+//        SimpMessageHeaderAccessor accessor = SimpMessageHeaderAccessor.create();
+//        String session = accessor.getSessionId();
 //        String userUUID = jwtService.getInfo("account", accessToken);
         /*
         JpaRepository로 user 정보 갖고오기
@@ -84,11 +91,13 @@ public class GameController {
         #
          */
 
-        GameMyInfo myInfo = new GameMyInfo("userUUID", session, 5);
-        GameUserInfo userInfo = new GameUserInfo(5);
-        GameMessage initGameMessage = new GameMessage(session, "init Message", MessageType.GAME, 1, myInfo, userInfo);
+        MyInfo myInfo = new MyInfo("유저1", 300, 400);
+        UserInfo userInfo = new UserInfo("유저2", 400, 600);
+        GameMyInfo gameMyInfo = new GameMyInfo("userUUID", session, 5);
+        GameUserInfo gameUserInfo = new GameUserInfo(5);
+        GameMessage initGameMessage = new GameMessage(session, "init Message", MessageType.GAME, 1, gameMyInfo, gameUserInfo);
 
-        GameInitResponse gameInitResponse = new GameInitResponse("김싸피", 500, 30, initGameMessage);
+        GameInitResponse gameInitResponse = new GameInitResponse(myInfo, userInfo, initGameMessage);
 
         return gameInitResponse;
     }

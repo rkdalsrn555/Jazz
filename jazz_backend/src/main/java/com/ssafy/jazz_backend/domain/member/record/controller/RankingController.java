@@ -1,7 +1,7 @@
 package com.ssafy.jazz_backend.domain.member.record.controller;
 
 
-import com.ssafy.jazz_backend.domain.member.record.dto.LevelRankingResponseDto;
+import com.ssafy.jazz_backend.domain.member.record.dto.responseDto.RankingTopTenResponseDto;
 import com.ssafy.jazz_backend.domain.member.record.service.RankingService;
 
 import java.util.Collections;
@@ -28,7 +28,7 @@ public class RankingController {
     private ResponseEntity<?> getLevelRankingTopTen(
         @RequestHeader String accessTocken) {
         try {
-            List<LevelRankingResponseDto> levelRankingTopTen = rankingService.getLevelRankingTopTen(
+            List<RankingTopTenResponseDto> levelRankingTopTen = rankingService.getLevelRankingTopTen(
                 accessTocken);
             return new ResponseEntity<>(levelRankingTopTen,
                 HttpStatus.OK);
@@ -40,5 +40,40 @@ public class RankingController {
 
 
     }
+
+    @GetMapping("/tier")
+    private ResponseEntity<?> getTierRankingTopTen(
+        @RequestHeader String accessTocken) {
+        try {
+            List<RankingTopTenResponseDto> tierRankingTopTen = rankingService.getTierRankingTopTen(
+                accessTocken);
+            return new ResponseEntity<>(tierRankingTopTen,
+                HttpStatus.OK);
+        } catch (Exception e) {
+
+            return new ResponseEntity<>(Collections.singletonList(e.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+    }
+
+    @GetMapping("/marathon")
+    private ResponseEntity<?> getMarathonRankingTopTen(
+        @RequestHeader String accessTocken) {
+        try {
+            List<RankingTopTenResponseDto> marathonRankingTopTen = rankingService.getMarathonRankingTopTen(
+                accessTocken);
+            return new ResponseEntity<>(marathonRankingTopTen,
+                HttpStatus.OK);
+        } catch (Exception e) {
+
+            return new ResponseEntity<>(Collections.singletonList(e.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+    }
+
 
 }

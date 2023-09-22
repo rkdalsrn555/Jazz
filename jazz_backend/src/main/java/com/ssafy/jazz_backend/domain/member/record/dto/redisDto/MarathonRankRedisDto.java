@@ -1,7 +1,5 @@
-package com.ssafy.jazz_backend.domain.member.record.dto;
+package com.ssafy.jazz_backend.domain.member.record.dto.redisDto;
 
-import jakarta.persistence.criteria.CriteriaBuilder.In;
-import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,23 +7,21 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 
-@RedisHash(timeToLive = 86400) //TTL 하루로 설정
+@RedisHash(timeToLive = 31536000) //TTL 1년으로 설정
 @AllArgsConstructor
 @Getter
 @Setter
-public class LevelRankRedisDto implements Serializable {
+public class MarathonRankRedisDto {
 
     @Id
     private String memberId;
 
-    private Integer expPoint;
+    private Integer quizRecord;
 
-    public static LevelRankRedisDto convertToLevelRankRedisDto(TypedTuple<String> tuple) {
+    public static MarathonRankRedisDto convertToMarathonRankRedisDto(TypedTuple<String> tuple) {
         String memberId = tuple.getValue();
         Integer score = tuple.getScore().intValue();
-        return new LevelRankRedisDto(memberId, score);
+        return new MarathonRankRedisDto(memberId, score);
 
     }
-
-
 }

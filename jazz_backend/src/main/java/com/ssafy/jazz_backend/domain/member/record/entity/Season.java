@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Season {
 
     @Builder.Default
-    private Integer maratonSeason = 0;
+    private Integer marathonSeason = 0;
     @Builder.Default
     private Integer tierSeason = 0;
 

@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Maraton {
+public class Marathon {
 
     @Id
-    private MaratonId id;
+    private MarathonId id;
 
     private Integer quizRecord;
 

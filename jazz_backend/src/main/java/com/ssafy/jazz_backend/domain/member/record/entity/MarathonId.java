@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MaratonId {
+public class MarathonId {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

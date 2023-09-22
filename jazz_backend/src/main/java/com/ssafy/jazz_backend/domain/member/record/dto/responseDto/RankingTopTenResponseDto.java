@@ -1,4 +1,4 @@
-package com.ssafy.jazz_backend.domain.member.record.dto;
+package com.ssafy.jazz_backend.domain.member.record.dto.responseDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class LevelRankingResponseDto {
+public class RankingTopTenResponseDto {
 
     private String nickname;
     private String rank;

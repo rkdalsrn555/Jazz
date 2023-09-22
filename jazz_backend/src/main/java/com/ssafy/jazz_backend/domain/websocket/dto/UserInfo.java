@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GameMyInfo {
-    private String userUUID;
-    private String session;
-    private int lives;
+public class UserInfo {
+    private String userId;
+    private int expPoint;
+    private int rankPoint;
 }

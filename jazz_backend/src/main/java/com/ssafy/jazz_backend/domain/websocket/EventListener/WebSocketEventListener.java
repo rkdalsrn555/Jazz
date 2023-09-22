@@ -26,6 +26,7 @@ public class WebSocketEventListener {
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
+        logger.info("connecting..");
         MessageHeaderAccessor accessor = NativeMessageHeaderAccessor.getAccessor(event.getMessage(),
             SimpMessageHeaderAccessor.class);
         GenericMessage<?> generic = (GenericMessage<?>) accessor.getHeader("simpConnectMessage");

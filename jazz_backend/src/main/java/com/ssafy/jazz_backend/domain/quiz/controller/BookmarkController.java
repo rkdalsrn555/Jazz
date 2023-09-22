@@ -1,9 +1,11 @@
 package com.ssafy.jazz_backend.domain.quiz.controller;
 
 import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
+import com.ssafy.jazz_backend.domain.quiz.dto.BookmarkRandomQuizResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.BookmarkRequestDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.BookmarkResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.GetAllBookmarkResponseDto;
+import com.ssafy.jazz_backend.domain.quiz.service.BookmarkRandomQuizService;
 import com.ssafy.jazz_backend.domain.quiz.service.BookmarkService;
 import com.ssafy.jazz_backend.domain.quiz.service.GetAllBookmarkService;
 import java.util.List;
@@ -23,6 +25,9 @@ public class BookmarkController {
     private GetAllBookmarkService getAllBookmarkService;
 
     @Autowired
+    private BookmarkRandomQuizService bookmarkRandomQuizService;
+
+    @Autowired
     private JwtService jwtService;
 
     @GetMapping
@@ -32,5 +37,10 @@ public class BookmarkController {
         return getAllBookmarkService.getAllBookmark(userUUID);
     }
 
-
+    @GetMapping("/random")
+    public List<BookmarkRandomQuizResponseDto> bookmarkRandomQuiz(
+        @RequestHeader("accessToken") String accessToken) {
+        String userUUID = jwtService.getInfo("account", accessToken);
+        return bookmarkRandomQuizService.bookmarkRandomQuiz(userUUID);
+    }
 }

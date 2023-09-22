@@ -8,6 +8,7 @@ export const ProgressBarContainer = styled.div`
   background-color: #e1ebfa;
   padding: 10px;
   box-sizing: border-box;
+  margin: 0 auto;
 `;
 
 export const ProgressBarText = styled.p`

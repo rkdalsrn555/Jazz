@@ -1,25 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './QuizProgress.css';
 import * as S from './QuizProgressBar.styled';
 import { motion } from 'framer-motion';
 
-const QuizProgressBar = () => {
-  const [value, setValue] = useState<number>(10);
+type OwnProps = {
+  questionCnt: number;
+  gauge: number;
+};
 
-  const handleClick = () => setValue(value + 10);
+const QuizProgressBar = (props: OwnProps) => {
+  const { questionCnt, gauge } = props;
+
+  useEffect(() => {});
 
   return (
     <S.ProgressBarContainer>
       <motion.div
         className="bar"
         animate={{
-          width: `${value}%`,
+          width: `${gauge}%`,
         }}
       ></motion.div>
-      <S.ProgressBarText>{`${value / 10}/10`}</S.ProgressBarText>
-      <button onClick={handleClick} style={{ marginTop: '100px' }}>
-        버튼
-      </button>
+      <S.ProgressBarText>{`${gauge / 10}/${questionCnt}`}</S.ProgressBarText>
     </S.ProgressBarContainer>
   );
 };

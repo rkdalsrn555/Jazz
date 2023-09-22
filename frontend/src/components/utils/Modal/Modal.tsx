@@ -3,18 +3,20 @@ import * as S from './Modal.styled';
 import { motion, AnimatePresence } from 'framer-motion';
 
 type OwnProps = {
-  // isToggled: boolean;
-  // setIsToggled: React.Dispatch<React.SetStateAction<boolean>>;
+  isToggled: boolean;
+  setIsToggled: React.Dispatch<React.SetStateAction<boolean>>;
   data: {
     title: string;
     message: string;
   };
-  children: ReactNode | null;
+  children?: ReactNode | null;
+  noBtnClick?: () => void | null;
+  yesBtnClick?: () => void | null;
 };
 
 const Modal = (props: OwnProps) => {
-  const [isToggled, setIsToggled] = useState<boolean>(true);
-  const { data, children } = props;
+  const { isToggled, setIsToggled, data, children, noBtnClick, yesBtnClick } =
+    props;
 
   return (
     <AnimatePresence>
@@ -41,17 +43,25 @@ const Modal = (props: OwnProps) => {
               )}
             </S.ModalContent>
             <div style={{ display: 'flex', gap: '16px' }}>
+              {noBtnClick ? (
+                <S.ModalBtn
+                  onClick={() => {
+                    noBtnClick();
+                  }}
+                  result={false}
+                >
+                  아니오
+                </S.ModalBtn>
+              ) : (
+                ''
+              )}
               <S.ModalBtn
                 onClick={() => {
-                  setIsToggled((prev) => !prev);
-                }}
-                result={false}
-              >
-                아니오
-              </S.ModalBtn>
-              <S.ModalBtn
-                onClick={() => {
-                  setIsToggled((prev) => !prev);
+                  if (yesBtnClick) {
+                    yesBtnClick();
+                  } else {
+                    setIsToggled((prev) => !prev);
+                  }
                 }}
                 result={true}
               >

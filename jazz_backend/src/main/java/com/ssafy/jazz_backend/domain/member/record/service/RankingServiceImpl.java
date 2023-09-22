@@ -15,7 +15,7 @@ import com.ssafy.jazz_backend.domain.member.record.entity.TierId;
 import com.ssafy.jazz_backend.domain.member.record.repository.MarathonJpaRepository;
 import com.ssafy.jazz_backend.domain.member.record.repository.SeasonJpaRepository;
 import com.ssafy.jazz_backend.domain.member.record.repository.TierJpaRepository;
-import com.ssafy.jazz_backend.domain.member.record.repository.redisRepository.LevelRankRedisRepository;
+
 import com.ssafy.jazz_backend.domain.member.repository.MemberRepository;
 import com.ssafy.jazz_backend.global.Util;
 import java.util.ArrayList;
@@ -24,9 +24,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.stereotype.Service;
 
 
 @RequiredArgsConstructor
+@Service
 public class RankingServiceImpl implements RankingService {
 
     //JPA repository
@@ -36,7 +38,7 @@ public class RankingServiceImpl implements RankingService {
     private final MarathonJpaRepository marathonJpaRepository;
     private final TierJpaRepository tierJpaRepository;
     private final MemberRepository memberRepository;
-    
+
     //Sorted Set 을 위한 DI
     //키 : String , Value : String, 스코어는 Double로 고정임
     private final ZSetOperations<String, String> zSetOperations;
@@ -136,7 +138,7 @@ public class RankingServiceImpl implements RankingService {
 
     //현재 시즌 가져오기
     private Season getCurrentSeason() {
-        return seasonJpaRepository.findById(1L)
+        return seasonJpaRepository.findById(1)
             .orElseThrow(() -> new RuntimeException("Season 테이블에 값이 존재하지 않습니다."));
     }
 

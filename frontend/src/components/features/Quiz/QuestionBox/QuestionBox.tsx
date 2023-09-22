@@ -14,6 +14,7 @@ export const QuestionBox = (props: QuestionBoxProps) => {
     caseNum,
     kind,
     questionNumber,
+    isJudge,
   } = props;
   const [answer, setAnswer] = useState<string | number>('');
 
@@ -28,9 +29,9 @@ export const QuestionBox = (props: QuestionBoxProps) => {
 
   return (
     <S.QuestionContainer>
-      <S.QuestionTitle kind={kind}>{`${
-        questionNumber + 1
-      }. ${question}`}</S.QuestionTitle>
+      <S.QuestionTitle
+        kind={kind}
+      >{`${questionNumber}. ${question}`}</S.QuestionTitle>
       <S.QuestionContent>
         {kind === 1 || kind === 3 ? (
           <S.MultipleQuestionUl>

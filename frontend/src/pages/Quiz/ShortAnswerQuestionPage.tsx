@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import QuizProgressBar from 'components/features/Quiz/QuizProgressBar/QuizProgressBar';
 import { QuestionBox } from 'components/features/Quiz/QuestionBox/QuestionBox';
+import QuizButton from 'components/features/Quiz/QuizButton/QuizButton';
 import * as S from './ShortAnswerQuestionPage.styled';
 import axios from 'axios';
 import { QuestionBoxProps } from 'types/types';
 import { QuizData as mockData } from './QuizData';
+import Enlarge from 'components/Effect/Enlarge/Enlarge';
 
 const ShortAnswerQuestionPage = () => {
-  const [gauge, setGauge] = useState<number>(10);
-  const [nowQuizNumber, setNowQuizNumber] = useState<number>(0);
+  // 지금 문제 번호
+  const [nowQuizNumber, setNowQuizNumber] = useState<number>(1);
+  // 퀴즈 리스트 (10개)
   const [quizList, setQuizList] = useState<QuestionBoxProps[] | null>(null);
-  const handleClick = () => setGauge((prev) => prev + 10);
+  // 정답 체크중일때의 상태
+  const [isJudge, setIsJudge] = useState<boolean>(false);
+  // 다음 문제로 가는 함수
+  const nextQuestion = () => setNowQuizNumber((prev) => prev + 1);
+
+  const checkAnswer = () => setIsJudge(true);
 
   const getQuiz = async () => {
     await axios
@@ -34,7 +42,7 @@ const ShortAnswerQuestionPage = () => {
 
   return (
     <S.Container>
-      <QuizProgressBar questionCnt={10} gauge={gauge} />
+      <QuizProgressBar questionCnt={10} gauge={nowQuizNumber * 10} />
       {quizList ? (
         <QuestionBox
           quizId={quizList[nowQuizNumber].quizId}
@@ -49,6 +57,32 @@ const ShortAnswerQuestionPage = () => {
         />
       ) : (
         '퀴즈를 불러오는 중이에요'
+      )}
+      {isJudge ? (
+        <S.ButtonContainer isJudge={true}>
+          <Enlarge>
+            <QuizButton title="그만풀기" kind="stop" />
+          </Enlarge>
+          <Enlarge>
+            <QuizButton title="즐겨찾기" kind="favorite" />
+          </Enlarge>
+          <Enlarge>
+            <QuizButton title="다음문제" kind="next" />
+          </Enlarge>
+        </S.ButtonContainer>
+      ) : (
+        <S.ButtonContainer isJudge={false}>
+          <Enlarge>
+            <QuizButton title="힌트보기" kind="hint" />
+          </Enlarge>
+          <Enlarge>
+            <QuizButton
+              title="정답보기"
+              kind="answerCheck"
+              handleClick={checkAnswer}
+            />
+          </Enlarge>
+        </S.ButtonContainer>
       )}
     </S.Container>
   );

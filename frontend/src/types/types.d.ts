@@ -1,3 +1,4 @@
+import { QuestionBoxProps } from 'types/types';
 import { themeProps } from '@emotion/react';
 
 type btnProps = {
@@ -34,6 +35,18 @@ type companyProps = {
   starred: boolean;
 };
 
+type QuestionListProps = {
+  quizId: number;
+  question: string;
+  content: string[] | string;
+  isMulti: boolean;
+  isBookmark?: boolean | null;
+  finiancialType: number;
+  caseNum?: number | null;
+  kind: number;
+  questionNumber: number;
+};
+
 type QuestionBoxProps = {
   quizId: number;
   question: string;
@@ -44,4 +57,5 @@ type QuestionBoxProps = {
   caseNum?: number | null;
   kind: number;
   questionNumber: number;
+  isJudge?: boolean;
 };

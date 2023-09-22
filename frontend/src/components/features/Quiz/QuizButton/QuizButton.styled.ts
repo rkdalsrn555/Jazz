@@ -11,8 +11,8 @@ export const ButtonContainer = styled.button<{ kind: string }>`
   background-color: ${(props) => (props.kind === 'hint' ? '#FFAEAE' : '')};
   background-color: ${(props) =>
     props.kind === 'answerCheck' ? '#638EF3' : ''};
-  background-color: ${(props) =>
-    props.kind === 'stop' || props.kind === 'next' ? '#B0B0B0' : ''};
+  background-color: ${(props) => (props.kind === 'next' ? '#638EF3' : '')};
+  background-color: ${(props) => (props.kind === 'stop' ? '#B0B0B0' : '')};
   background-color: ${(props) => (props.kind === 'favorite' ? '#FF9D57' : '')};
 `;
 

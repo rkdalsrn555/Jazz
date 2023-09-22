@@ -44,6 +44,7 @@ public class GetAllBookmarkServiceImpl implements GetAllBookmarkService {
 
             GetAllBookmarkResponseDto responseDto = GetAllBookmarkResponseDto.builder()
                 .quizId(quiz.getId())
+                .question(quiz.getQuestion())
                 .content(choice.getContent())
                 .kind(quiz.getKind())
                 .build();

@@ -1,5 +1,6 @@
 package com.ssafy.jazz_backend.domain.quiz.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,10 +12,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetAllBookmarkResponseDto {
+public class BookmarkRandomQuizResponseDto {
 
-    private int quizId;
-    private String question;
-    private String content;
-    private int kind;
+    int quizId;
+    String question;
+    List<String> content;
+    int caseNum;
+    boolean isMulti;
+    boolean isBookmark;
+    int financialType;
+    int kind;
 }

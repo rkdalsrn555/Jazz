@@ -145,7 +145,7 @@ public class GameService {
     // --------------------------------------------
 
     private String getDestination(String gameRoomId) {
-        return "/topic/game/" + gameRoomId;
+        return "/sub/game/" + gameRoomId;
     }
 
     private void setJoinResult(DeferredResult<GameResponse> result, GameResponse response) {

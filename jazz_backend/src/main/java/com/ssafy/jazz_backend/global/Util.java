@@ -42,4 +42,16 @@ public class Util {
         return (win / total) * 100;
 
     }
+
+    public String getLevelRankKeyName() {
+        return "level-ranking";
+    }
+
+    public String getTierRankKeyName() {
+        return "tier-ranking";
+    }
+
+    public String getMarathonRankKeyName() {
+        return "marathon-ranking";
+    }
 }

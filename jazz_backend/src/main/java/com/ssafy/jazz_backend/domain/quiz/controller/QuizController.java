@@ -3,13 +3,15 @@ package com.ssafy.jazz_backend.domain.quiz.controller;
 
 import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
 import com.ssafy.jazz_backend.domain.quiz.dto.AddToQuizManagementResponseDto;
+import com.ssafy.jazz_backend.domain.quiz.dto.BookmarkRequestDto;
+import com.ssafy.jazz_backend.domain.quiz.dto.BookmarkResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.QuizCorrectionRequestDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.QuizStatsResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.service.AddToQuizManagementService;
+import com.ssafy.jazz_backend.domain.quiz.service.BookmarkService;
 import com.ssafy.jazz_backend.domain.quiz.service.QuizCorrectionService;
 import com.ssafy.jazz_backend.domain.quiz.service.QuizService;
 import com.ssafy.jazz_backend.domain.quiz.service.QuizStatsService;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,9 @@ public class QuizController {
 
     @Autowired
     private QuizStatsService quizStatsService;
+
+    @Autowired
+    private BookmarkService bookmarkService;
 
     @GetMapping("/{kind}")
     private ResponseEntity<?> getQuizByKind(@RequestHeader("accessToken") String accessToken,
@@ -75,6 +80,21 @@ public class QuizController {
             requestDto.getIsCorrect());
 
         return ResponseEntity.ok().build();
+    }
+
+
+    @PatchMapping("/bookmark/registration")
+    public BookmarkResponseDto registerBookmark(@RequestHeader("accessToken") String accessToken,
+        @RequestBody BookmarkRequestDto request) {
+        String userUUID = jwtService.getInfo("account", accessToken);
+        return bookmarkService.registerBookmark(userUUID, request);
+    }
+
+    @PatchMapping("/bookmark/release")
+    public BookmarkResponseDto releaseBookmark(@RequestHeader("accessToken") String accessToken,
+        @RequestBody BookmarkRequestDto request) {
+        String userUUID = jwtService.getInfo("account", accessToken);
+        return bookmarkService.releaseBookmark(userUUID, request);
     }
 }
 

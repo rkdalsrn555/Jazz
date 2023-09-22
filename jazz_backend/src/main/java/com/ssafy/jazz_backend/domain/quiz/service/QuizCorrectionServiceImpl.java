@@ -2,7 +2,6 @@ package com.ssafy.jazz_backend.domain.quiz.service;
 
 import com.ssafy.jazz_backend.domain.quiz.entity.Quiz;
 import com.ssafy.jazz_backend.domain.quiz.entity.QuizManagement;
-import com.ssafy.jazz_backend.domain.quiz.entity.QuizManangementId;
 import com.ssafy.jazz_backend.domain.quiz.repository.QuizManagementRepository;
 import com.ssafy.jazz_backend.domain.member.entity.Member;
 import com.ssafy.jazz_backend.domain.member.repository.MemberRepository;

@@ -3,7 +3,7 @@ package com.ssafy.jazz_backend.domain.quiz.service;
 import com.ssafy.jazz_backend.domain.quiz.dto.AddToQuizManagementResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.entity.Quiz;
 import com.ssafy.jazz_backend.domain.quiz.entity.QuizManagement;
-import com.ssafy.jazz_backend.domain.quiz.entity.QuizManangementId;
+import com.ssafy.jazz_backend.domain.quiz.entity.QuizManagementId;
 import com.ssafy.jazz_backend.domain.quiz.repository.QuizManagementRepository;
 import com.ssafy.jazz_backend.domain.member.entity.Member;
 import com.ssafy.jazz_backend.domain.member.repository.MemberRepository;
@@ -42,12 +42,12 @@ public class AddToQuizManagementServiceImpl implements AddToQuizManagementServic
                 "이미 등록된 퀴즈입니다");
         }
 
-        QuizManangementId quizManangementId = new QuizManangementId();
-        quizManangementId.setMember(member);
-        quizManangementId.setQuiz(quiz);
+        QuizManagementId quizManagementId = new QuizManagementId();
+        quizManagementId.setMember(member);
+        quizManagementId.setQuiz(quiz);
 
         QuizManagement quizManagement = QuizManagement.builder()
-            .id(quizManangementId)
+            .id(quizManagementId)
             .build();
 
         quizManagementRepository.save(quizManagement);

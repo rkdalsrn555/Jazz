@@ -6,6 +6,7 @@ import com.ssafy.jazz_backend.domain.quiz.dto.BookmarkResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.GetAllBookmarkResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.service.BookmarkService;
 import com.ssafy.jazz_backend.domain.quiz.service.GetAllBookmarkService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,10 +26,10 @@ public class BookmarkController {
     private JwtService jwtService;
 
     @GetMapping
-    public GetAllBookmarkResponseDto getAllBookmark(
+    public List<GetAllBookmarkResponseDto> getAllBookmark(
         @RequestHeader("accessToken") String accessToken) {
         String userUUID = jwtService.getInfo("account", accessToken);
-        return (GetAllBookmarkResponseDto) getAllBookmarkService.getAllBookmark(userUUID);
+        return getAllBookmarkService.getAllBookmark(userUUID);
     }
 
 

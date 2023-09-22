@@ -4,7 +4,6 @@ import com.ssafy.jazz_backend.domain.member.entity.Member;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +11,7 @@ import lombok.Setter;
 @Embeddable
 @Getter
 @Setter
-public class QuizManangementId implements Serializable {
+public class QuizManagementId implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "memberId")

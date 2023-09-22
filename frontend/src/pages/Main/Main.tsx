@@ -6,12 +6,13 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { darkTheme, lightTheme } from '../../styles/ColorSystem';
 import GlobalStyle from '../../styles/GlobalStyle';
 import Router from 'Router';
-import { BrowserRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Header from 'components/utils/Header/index';
 
 function Main() {
   const isDark = useRecoilValue(IsDark);
+  const location = useLocation();
   useEffect(() => {
     // console.log('다크모드 여부', isDark);
   }, []);
@@ -19,12 +20,14 @@ function Main() {
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <Global styles={GlobalStyle} />
-      <BrowserRouter>
-        <Container theme={isDark}>
+      <Container theme={isDark}>
+        {location.pathname === '/login' || location.pathname === '/sign-up' ? (
+          ''
+        ) : (
           <Header />
-          <Router />
-        </Container>
-      </BrowserRouter>
+        )}
+        <Router />
+      </Container>
     </ThemeProvider>
   );
 }

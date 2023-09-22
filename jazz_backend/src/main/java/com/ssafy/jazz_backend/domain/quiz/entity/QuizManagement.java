@@ -7,13 +7,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Data
 @Builder
 @Getter
 @Setter
@@ -22,7 +20,7 @@ import lombok.Setter;
 public class QuizManagement {
 
     @EmbeddedId
-    private QuizManangementId id;
+    private QuizManagementId id;
 
     @ManyToOne
     @JoinColumn(name = "quizId", insertable = false, updatable = false)

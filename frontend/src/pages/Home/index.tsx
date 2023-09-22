@@ -29,7 +29,7 @@ const Home = () => {
   const [isToggled, setIsToggled] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log('isDark', isDark);
+    // console.log('isDark', isDark);
   }, []);
 
   ///////////////////////게임 매칭시 나타나는 모달//////////////////////////

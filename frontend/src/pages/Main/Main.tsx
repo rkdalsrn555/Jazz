@@ -13,7 +13,7 @@ import Header from 'components/utils/Header/index';
 function Main() {
   const isDark = useRecoilValue(IsDark);
   useEffect(() => {
-    console.log('다크모드 여부', isDark);
+    // console.log('다크모드 여부', isDark);
   }, []);
 
   return (

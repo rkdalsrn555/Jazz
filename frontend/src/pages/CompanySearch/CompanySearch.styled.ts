@@ -260,6 +260,7 @@ export const CompanyOutline = styled.div<{ theme: themeProps }>`
   background-color: ${(props) => props.theme.bg.light};
   box-shadow: inset 0.5px 1px 5px 0px ${(props) => props.theme.bg.shadow};
   overflow-y: scroll;
+  min-width: fit-content;
   transition: all 0.2s;
   position: relative;
 `;
@@ -302,10 +303,6 @@ export const BlankBanner = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  width: 24rem;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 100%;
   color: grey;
 `;

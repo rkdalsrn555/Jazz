@@ -28,8 +28,14 @@ type profileBlockInfoProps = {
 };
 
 type companyProps = {
+  id: number;
   name: string;
   totalValue: number;
   totalSale: number;
   starred: boolean;
 };
+
+type StatementType = {
+  name: string;
+  ref: RefObject<HTMLDivElement>;
+}

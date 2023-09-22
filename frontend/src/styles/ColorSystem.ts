@@ -42,6 +42,7 @@ export const darkTheme: themeProps = {
     mid: '#636A7A',
     light: '#B7B7B7',
     shadow: '#292C32',
+    selected: 'rgb(255, 253, 213)',
   },
   font: {
     deep: palette.neutral_800,
@@ -62,6 +63,7 @@ export const lightTheme: themeProps = {
     mid: '#DBE5FF',
     light: 'white',
     shadow: '#636A7A',
+    selected: 'rgb(255, 253, 213)',
   },
   font: {
     deep: palette.neutral_800,

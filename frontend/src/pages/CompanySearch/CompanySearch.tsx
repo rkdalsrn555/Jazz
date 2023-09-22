@@ -15,96 +15,70 @@ const CompanySearch = () => {
   // 추후 company 타입도 갱신해야함(types.d.ts)
   const sampleCompanies: companyProps[] = [
     {
+      id: 1,
       name: '삼성전자',
       totalValue: 65465465,
       totalSale: 654654654,
       starred: true,
     },
     {
+      id: 2,
       name: 'LG',
       totalValue: 465465,
       totalSale: 4654654,
       starred: false,
     },
     {
+      id: 1,
       name: '삼성전자',
       totalValue: 65465465,
       totalSale: 654654654,
       starred: true,
     },
     {
+      id: 2,
       name: 'LG',
       totalValue: 465465,
       totalSale: 4654654,
       starred: false,
     },
     {
+      id: 1,
       name: '삼성전자',
       totalValue: 65465465,
       totalSale: 654654654,
       starred: true,
     },
     {
+      id: 2,
       name: 'LG',
       totalValue: 465465,
       totalSale: 4654654,
       starred: false,
     },
     {
+      id: 1,
       name: '삼성전자',
       totalValue: 65465465,
       totalSale: 654654654,
       starred: true,
     },
     {
+      id: 2,
       name: 'LG',
       totalValue: 465465,
       totalSale: 4654654,
       starred: false,
     },
     {
+      id: 1,
       name: '삼성전자',
       totalValue: 65465465,
       totalSale: 654654654,
       starred: true,
     },
     {
-      name: 'LG',
-      totalValue: 465465,
-      totalSale: 4654654,
-      starred: false,
-    },
-    {
-      name: '삼성전자',
-      totalValue: 65465465,
-      totalSale: 654654654,
-      starred: true,
-    },
-    {
-      name: 'LG',
-      totalValue: 465465,
-      totalSale: 4654654,
-      starred: false,
-    },
-    {
-      name: '삼성전자',
-      totalValue: 65465465,
-      totalSale: 654654654,
-      starred: true,
-    },
-    {
-      name: 'LG',
-      totalValue: 465465,
-      totalSale: 4654654,
-      starred: false,
-    },
-    {
-      name: '삼성전자',
-      totalValue: 65465465,
-      totalSale: 654654654,
-      starred: true,
-    },
-    {
+      id: 2,
       name: 'LG',
       totalValue: 465465,
       totalSale: 4654654,
@@ -164,7 +138,7 @@ const CompanySearch = () => {
           transition={{ duration: 0.05 }}
         >
           {clickedCompany ? (
-            <Link to={`/statement/${clickedCompany.name}`}>
+            <Link to={`/statement/${clickedCompany.id}`}>
               <S.StatementBtn theme={theme}>재무제표 확인하기</S.StatementBtn>
             </Link>
           ) : null}

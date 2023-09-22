@@ -105,7 +105,7 @@ public class RankingServiceImpl implements RankingService {
 
     private List<MarathonRankRedisDto> getTopTenMarathonRanks() {
         Set<ZSetOperations.TypedTuple<String>> topTenMemberIds = zSetOperations.reverseRangeWithScores(
-            "marathon-ranking", 0, 9);
+            util.getMarathonRankKeyName(), 0, 9);
         //<ZSetOperations.TypedTuple<String>> 는 Set에 저장되는 타입
         //  ZSetOperations.TypedTuple 는 redis zset의 멤버(value)와 score 를 포함하는 튜플 인터페이스
         //      String은 zset에 저장되는 value가 String 타입이다 를 의미
@@ -115,7 +115,7 @@ public class RankingServiceImpl implements RankingService {
 
     private List<TierRankRedisDto> getTopTenTierRanks() {
         Set<ZSetOperations.TypedTuple<String>> topTenMemberIds = zSetOperations.reverseRangeWithScores(
-            "tier-ranking", 0, 9);
+            util.getTierRankKeyName(), 0, 9);
         //<ZSetOperations.TypedTuple<String>> 는 Set에 저장되는 타입
         //  ZSetOperations.TypedTuple 는 redis zset의 멤버(value)와 score 를 포함하는 튜플 인터페이스
         //      String은 zset에 저장되는 value가 String 타입이다 를 의미
@@ -126,7 +126,7 @@ public class RankingServiceImpl implements RankingService {
     //redis에서 score기준으로 top 10 뽑아옴
     private List<LevelRankRedisDto> getTopTenLevelRanks() {
         Set<ZSetOperations.TypedTuple<String>> topTenMemberIds = zSetOperations.reverseRangeWithScores(
-            "level-ranking", 0, 9);
+            util.getLevelRankKeyName(), 0, 9);
         //<ZSetOperations.TypedTuple<String>> 는 Set에 저장되는 타입
         //  ZSetOperations.TypedTuple 는 redis zset의 멤버(value)와 score 를 포함하는 튜플 인터페이스
         //      String은 zset에 저장되는 value가 String 타입이다 를 의미

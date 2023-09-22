@@ -75,6 +75,8 @@ public class BookmarkRandomQuizServiceImpl implements BookmarkRandomQuizService 
             responseList.add(dto);
         }
 
+        Collections.shuffle(responseList);
+
         return responseList;
     }
 }

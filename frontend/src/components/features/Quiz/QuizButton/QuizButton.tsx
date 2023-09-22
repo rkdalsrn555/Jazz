@@ -8,16 +8,23 @@ import { ReactComponent as FavoriteIcon } from '../../../../assets/svgs/Quiz/sta
 type QuizButtonProps = {
   kind: 'hint' | 'answerCheck' | 'stop' | 'next' | 'favorite';
   title: '힌트보기' | '정답보기' | '그만풀기' | '즐겨찾기' | '다음문제';
+  handleClick?: () => void;
 };
 
 const QuizButton = (props: QuizButtonProps) => {
-  const { kind, title } = props;
+  const { kind, title, handleClick } = props;
   const [isClick, setIsClick] = useState<boolean>(false);
 
-  const handleClick = () => setIsClick(!isClick);
-
   return (
-    <S.ButtonContainer kind={kind} onClick={handleClick}>
+    <S.ButtonContainer
+      kind={kind}
+      onClick={() => {
+        if (handleClick) {
+          handleClick();
+        }
+        setIsClick((prev) => !prev);
+      }}
+    >
       {kind === 'hint' ? <HintIcon></HintIcon> : ''}
       {kind === 'answerCheck' ? <NextIcon></NextIcon> : ''}
       {kind === 'stop' ? <StopIcon></StopIcon> : ''}

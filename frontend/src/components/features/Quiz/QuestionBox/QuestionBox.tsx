@@ -1,20 +1,21 @@
 import React from 'react';
 import * as S from './QuestionBox.styled';
 import { useState } from 'react';
-
-type QuestionBoxProps = {
-  quizId: number;
-  question: string;
-  content: string[] | string;
-  caseNum: number;
-  isMulti: boolean;
-  kind: number;
-  questionNumber: number;
-};
+import { QuestionBoxProps } from 'types/types';
 
 export const QuestionBox = (props: QuestionBoxProps) => {
-  const { quizId, question, content, caseNum, isMulti, kind, questionNumber } =
-    props;
+  const {
+    quizId,
+    question,
+    content,
+    isMulti,
+    isBookmark,
+    finiancialType,
+    caseNum,
+    kind,
+    questionNumber,
+    isJudge,
+  } = props;
   const [answer, setAnswer] = useState<string | number>('');
 
   const handleChangeSubjectQuestion = (
@@ -28,9 +29,9 @@ export const QuestionBox = (props: QuestionBoxProps) => {
 
   return (
     <S.QuestionContainer>
-      <S.QuestionTitle kind={kind}>{`${
-        questionNumber + 1
-      }. ${question}`}</S.QuestionTitle>
+      <S.QuestionTitle
+        kind={kind}
+      >{`${questionNumber}. ${question}`}</S.QuestionTitle>
       <S.QuestionContent>
         {kind === 1 || kind === 3 ? (
           <S.MultipleQuestionUl>

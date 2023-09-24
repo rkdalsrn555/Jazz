@@ -1,14 +1,21 @@
 package com.ssafy.jazz_backend.global;
 
 import com.ssafy.jazz_backend.domain.member.record.entity.Tier;
-import java.util.List;
-import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ssafy.jazz_backend.domain.quiz.entity.Choice;
+import com.ssafy.jazz_backend.domain.quiz.entity.Quiz;
+import com.ssafy.jazz_backend.domain.quiz.repository.QuizRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class Util {
+    private final QuizRepository quizRepository;
+
 
     public String makeRank(int rankPoint) {
         if (rankPoint < 100) {
@@ -43,9 +50,7 @@ public class Util {
 
     }
 
-    public String getLevelRankKeyName() {
-        return "level-ranking";
-    }
+    public String getLevelRankKeyName() { return "level-ranking"; }
 
     public String getTierRankKeyName() {
         return "tier-ranking";
@@ -54,4 +59,21 @@ public class Util {
     public String getMarathonRankKeyName() {
         return "marathon-ranking";
     }
+
+    //chiceList를 통해 contentList(보기내용) 구현
+    public List<String> getContentList(List<Choice> choiceList){
+        List<String> contentList = new ArrayList<>();
+        for(Choice choice : choiceList){
+            contentList.add(choice.getContent());
+        }
+        return contentList;
+    }
+    //해당 quiz의 정답 보기내용(content)이 뭔지 저장 -> caseNum 1번에 들어있는 content 가져옴
+    public String getCorrectAnswer(Quiz quiz){
+        return quiz.getCases().stream()
+                .filter(choice -> choice.getId().getCaseNum() == 1)
+                .findFirst()
+                .map(Choice::getContent).orElseThrow(()->new NullPointerException("해당 문제의 1번 보기가 없습니다. 즉, 정답이 없습니다."));
+    }
+
 }

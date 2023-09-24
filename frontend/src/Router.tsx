@@ -6,6 +6,7 @@ import Statement from 'pages/Statement/Statement';
 import ShortAnswerQuestionPage from 'pages/Quiz/ShortAnswerQuestionPage';
 import Login from 'pages/Login/Login';
 import Signup from 'pages/Signup/Signup';
+import Result from 'pages/Quiz/Result';
 
 const Router = () => {
   return (
@@ -19,7 +20,7 @@ const Router = () => {
         path="/short-answer-question"
         element={<ShortAnswerQuestionPage />}
       />
-
+      <Route path="/result" element={<Result />} />
       {/* 로그인, 회원가입 */}
       <Route path="/login" element={<Login />} />
       <Route path="/sign-up" element={<Signup />} />

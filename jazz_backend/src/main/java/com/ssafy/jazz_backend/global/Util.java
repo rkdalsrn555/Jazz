@@ -3,6 +3,7 @@ package com.ssafy.jazz_backend.global;
 import com.ssafy.jazz_backend.domain.member.record.entity.Tier;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.ssafy.jazz_backend.domain.quiz.entity.Choice;
@@ -60,12 +61,14 @@ public class Util {
         return "marathon-ranking";
     }
 
-    //chiceList를 통해 contentList(보기내용) 구현
-    public List<String> getContentList(List<Choice> choiceList){
+    //chiceList를 통해 contentList(보기내용)을 랜덤 처리해서 retrun
+    public List<String> getRandomContentList(List<Choice> choiceList){
         List<String> contentList = new ArrayList<>();
         for(Choice choice : choiceList){
             contentList.add(choice.getContent());
         }
+        //랜덤으로 돌림
+        Collections.shuffle(contentList);
         return contentList;
     }
     //해당 quiz의 정답 보기내용(content)이 뭔지 저장 -> caseNum 1번에 들어있는 content 가져옴

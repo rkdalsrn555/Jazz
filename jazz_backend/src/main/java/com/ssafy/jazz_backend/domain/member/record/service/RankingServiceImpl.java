@@ -43,6 +43,7 @@ public class RankingServiceImpl implements RankingService {
     //키 : String , Value : String, 스코어는 Double로 고정임
     private final ZSetOperations<String, String> zSetOperations;
 
+    //level 랭크 top 10 조회
     @Override
     public List<RankingTopTenResponseDto> getLevelRankingTopTen(String accessToken) {
         //top 10을 LevelRankRedisDto 리스트로 만듦
@@ -62,7 +63,7 @@ public class RankingServiceImpl implements RankingService {
 
         return responseDtoList;
     }
-
+    //티어 랭크 top 10 조회
     @Override
     public List<RankingTopTenResponseDto> getTierRankingTopTen(String accessTocken) {
         //redis에서 top 10 가져옴
@@ -82,7 +83,7 @@ public class RankingServiceImpl implements RankingService {
 
         return responseDtoList;
     }
-
+    //마라톤 랭크 top 10 조회
     @Override
     public List<RankingTopTenResponseDto> getMarathonRankingTopTen(String accessTocken) {
         //redis에서 top 10 가져옴
@@ -139,7 +140,7 @@ public class RankingServiceImpl implements RankingService {
     //현재 시즌 가져오기
     private Season getCurrentSeason() {
         return seasonJpaRepository.findById(1)
-            .orElseThrow(() -> new RuntimeException("Season 테이블에 값이 존재하지 않습니다."));
+            .orElseThrow(() -> new NullPointerException("Season 테이블에 값이 존재하지 않습니다."));
     }
 
     private Member findMemberById(String memberId) {

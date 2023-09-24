@@ -75,4 +75,7 @@ export const RightContainer = styled.div`
 export const ReturnContainer = styled.div`
   border: solid red;
   display: flex;
+  width: 100%;
 `;
+
+

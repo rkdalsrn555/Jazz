@@ -7,9 +7,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public class MarathonResultResponseDto {
     private Integer solveCount;
+    private Integer diamondCount;
 
-    public static MarathonResultResponseDto create(Integer solveCount){
+    public static MarathonResultResponseDto create(Integer solveCount, Integer diamondCount){
 
-        return new MarathonResultResponseDto(solveCount);
+        return new MarathonResultResponseDto(solveCount, diamondCount);
     }
 }

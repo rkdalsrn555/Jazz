@@ -1,16 +1,26 @@
 package com.ssafy.jazz_backend.domain.quiz.service;
 
 import com.ssafy.jazz_backend.domain.jwt.service.serviceImpl.JwtServiceImpl;
+import com.ssafy.jazz_backend.domain.member.entity.Member;
+import com.ssafy.jazz_backend.domain.member.profile.entity.Profile;
+import com.ssafy.jazz_backend.domain.member.profile.repository.ProfileRepository;
+import com.ssafy.jazz_backend.domain.member.record.entity.Marathon;
+import com.ssafy.jazz_backend.domain.member.record.entity.MarathonId;
+import com.ssafy.jazz_backend.domain.member.record.entity.Season;
 import com.ssafy.jazz_backend.domain.member.record.repository.MarathonJpaRepository;
+import com.ssafy.jazz_backend.domain.member.record.repository.SeasonJpaRepository;
+import com.ssafy.jazz_backend.domain.member.repository.MemberRepository;
 import com.ssafy.jazz_backend.domain.quiz.dto.MarathonQuizResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.MarathonResultRequestDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.MarathonResultResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.entity.Choice;
 import com.ssafy.jazz_backend.domain.quiz.entity.Quiz;
 import com.ssafy.jazz_backend.domain.quiz.repository.QuizRepository;
+import com.ssafy.jazz_backend.global.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -18,9 +28,14 @@ import java.util.*;
 @RequiredArgsConstructor
 public class MarathonServiceImpl implements MarathonService {
 
+    private final Util util;
     private final QuizRepository quizRepository;
     private final JwtServiceImpl jwtService;
     private final MarathonJpaRepository marathonJpaRepository;
+    private final SeasonJpaRepository seasonJpaRepository;
+    private final MemberRepository memberRepository;
+    private final ProfileRepository profileRepository;
+
 
     //Sorted Set 을 위한 DI
     //키 : String , Value : String, 스코어는 Double로 고정임
@@ -70,19 +85,53 @@ public class MarathonServiceImpl implements MarathonService {
 
 
     //마라톤 결과 DB에 적용
+    @Transactional
     @Override
     public MarathonResultResponseDto applyMarathonQuizResult(String accessToken, List<MarathonResultRequestDto> marathonResultRequestDtoList) {
         String userUUID = jwtService.getInfo("account", accessToken);
+        Member member = findMemberById(userUUID);
+        Season nowSeason = getNowSeason();
+        Marathon marathon = findMarathonByMemberAndNowSeason(member,nowSeason);
+
         int solveCount = marathonResultRequestDtoList.size();
 
+        if(solveCount > marathon.getQuizRecord()){
+            //marathon 정보 DB에 저장
+            updateQuizRecord(marathon,solveCount);
+            //redis에도 등록
+            zSetOperations.add(util.getMarathonRankKeyName(),userUUID,solveCount);
+        }
+
+        // 다이아 증정 - 한 문제당 10개
+        Profile profile = findProfileById(userUUID);
+        updateDiamond(profile,solveCount*10);
+
+
+        return MarathonResultResponseDto.create(solveCount, solveCount*10);
+    }
 
 
 
+    private void updateDiamond(Profile profile, int diamondCount){
+        profile.setDiamond(diamondCount);
+        profileRepository.save(profile);
 
+    }
 
+    private Profile findProfileById(String userUUID){
+        return profileRepository.findById(userUUID).orElseThrow(()->new NullPointerException("uuid에 해당하는 profile이 없습니다."));
+    }
 
+    private void updateQuizRecord(Marathon marathon, int solveCount){
 
-        return MarathonResultResponseDto.create(solveCount);
+        marathon.setQuizRecord(solveCount);
+        marathonJpaRepository.save(marathon);
+    }
+    private Marathon findMarathonByMemberAndNowSeason(Member member, Season nowSeason){
+        return marathonJpaRepository.findById(new MarathonId(member,nowSeason.getMarathonSeason())).orElseThrow(()->new NullPointerException("Marathon 테이블에 현재 season과 member에 해당하는 marathon이 없습니다."));
+    }
+    private Member findMemberById(String userUUID){
+        return memberRepository.findById(userUUID).orElseThrow(()->new NullPointerException("uuid에 해당하는 member가 없습니다."));
     }
 
     //DB에 있는 퀴즈 id 중 max 값 하나 뽑음
@@ -117,7 +166,8 @@ public class MarathonServiceImpl implements MarathonService {
                 .findFirst()
                 .map(Choice::getContent).orElseThrow(()->new NullPointerException("해당 문제의 1번 보기가 없습니다. 즉, 정답이 없습니다."));
     }
-
-
+    private Season getNowSeason(){
+       return seasonJpaRepository.findById(1).orElseThrow(()-> new NullPointerException("Season 테이블에 값이 존재하지 않습니다."));
+    }
 
 }

@@ -9,25 +9,36 @@ import Signup from 'pages/Signup/Signup';
 import Dictionary from 'pages/Dictionary/Dictionary';
 import DictionaryResult from 'pages/DictionaryResult/DictionaryResult';
 import Result from 'pages/Quiz/Result';
+import PrivateRoute from 'hooks/PrivateRoute';
+
+const route = [
+  { path: '/', component: <Home /> },
+  { path: '/home', component: <Home /> },
+  { path: '/battle-game', component: <BattleGame /> },
+  { path: '/companySearch', component: <CompanySearch /> },
+  { path: '/statement/:companyId', component: <Statement /> },
+  { path: '/dictionary', component: <Dictionary /> },
+  { path: '/dictionaryResult/:searchWord', component: <DictionaryResult /> },
+  { path: '/short-answer-question', component: <ShortAnswerQuestionPage /> },
+  { path: '/result', component: <Result /> },
+];
 
 const Router = () => {
+  const userAccessToken = window.localStorage.getItem('userAccessToken');
+
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/home" element={<Home />} />
-      <Route path="/battle-game" element={<BattleGame />} />
-      <Route path="/companySearch" element={<CompanySearch />} />
-      <Route path="/statement/:companyId" element={<Statement />} />
-      <Route path="/dictionary" element={<Dictionary />} />
-      <Route
-        path="/dictionaryResult/:searchWord"
-        element={<DictionaryResult />}
-      />
-      <Route
-        path="/short-answer-question"
-        element={<ShortAnswerQuestionPage />}
-      />
-      <Route path="/result" element={<Result />} />
+      {route.map((item) => (
+        <Route
+          path={item.path}
+          element={
+            <PrivateRoute
+              component={item.component}
+              authenticated={userAccessToken}
+            />
+          }
+        />
+      ))}
       {/* 로그인, 회원가입 */}
       <Route path="/login" element={<Login />} />
       <Route path="/sign-up" element={<Signup />} />

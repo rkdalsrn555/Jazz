@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { userAccessAtom, userRefreshAtom } from 'atoms/atoms';
-import { useSetRecoilState } from 'recoil';
 import axios from 'axios';
 import * as S from './Login.styled';
 import jazzlogo from '../../assets/JazzLogo.png';
@@ -11,8 +9,6 @@ import Modal from 'components/utils/Modal/Modal';
 
 const Login = () => {
   const navigate = useNavigate();
-  const setUserAccessAtom = useSetRecoilState(userAccessAtom);
-  const setUserRefreshAtom = useSetRecoilState(userRefreshAtom);
 
   const [userId, setUserId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
@@ -36,8 +32,8 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
-        setUserAccessAtom(res.data.accessToken);
-        setUserRefreshAtom(res.data.refreshToken);
+        window.localStorage.setItem('userAccessToken', res.data.accessToken);
+        window.localStorage.setItem('userRefreshToken', res.data.refreshToken);
         navigate('/');
       })
       .catch((err) => {

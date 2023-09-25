@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useBeforeunload } from 'react-beforeunload';
 import * as S from './ShortAnswerQuestionPage.styled';
 import { userAccessAtom, userRefreshAtom } from 'atoms/atoms';
 import { useRecoilValue } from 'recoil';
@@ -14,6 +15,8 @@ import Enlarge from 'components/Effect/Enlarge/Enlarge';
 import FadeInOut from 'components/Effect/FadeInOut/FadeInOut';
 
 const ShortAnswerQuestionPage = () => {
+  // 새로고침 막기
+  useBeforeunload((event: any) => event.preventDefault());
   const userAccessToken = useRecoilValue(userAccessAtom);
   const navigate = useNavigate();
   const [isToggled, setIsToggled] = useState<boolean>(false); // 모달 창 toggle

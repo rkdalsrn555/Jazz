@@ -92,7 +92,7 @@ const Home = () => {
     color: '#EBCBFF',
     img: <S.ButtonImg src={Bot} />,
     width: '48%',
-    destination: '',
+    destination: '/dictionary',
   };
   const companySearchFeature: btnProps = {
     title: '기업 정보 검색',

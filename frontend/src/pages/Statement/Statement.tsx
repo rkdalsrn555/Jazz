@@ -55,6 +55,10 @@ const Statement = () => {
 
   // RightContainer에 들어갈 수 있는 각각의 표를 리턴하는 함수들
   const renderFP = () => {
+    // 1. api 통신해서 정보 받아오고
+    // 2. 배열로 들어온 항목들 개수 구하고
+    // 3. map 이용해서 테이블 만들기
+    // 4. 디자인은 추후 적용
     return <S.ReturnContainer></S.ReturnContainer>;
   };
 
@@ -75,6 +79,7 @@ const Statement = () => {
   };
 
   const renderChart = () => {
+    // 차트 그리는 라이브러리 구해서 넣어야 함
     return <S.ReturnContainer></S.ReturnContainer>;
   };
 
@@ -102,6 +107,10 @@ const Statement = () => {
       type.ref.current.style.filter = 'brightness(100%)';
     }
   };
+
+  useEffect(() => {
+    if (fpRef.current) fpRef.current.style.filter = 'sepia(90%)';
+  }, [fpRef]);
 
   return (
     <S.Container>

@@ -76,7 +76,7 @@ const Home = () => {
     color: '#FFDECB',
     img: <S.ButtonImg src={Message} />,
     width: '31.6%',
-    destination: '',
+    destination: '/short-answer-multiple-question',
   };
   const essayChoiceFeature: btnProps = {
     title: '서술형 객관식',

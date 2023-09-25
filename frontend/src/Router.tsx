@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import PrivateRoute from 'hooks/PrivateRoute';
 import Home from 'pages/Home/index';
 import BattleGame from 'pages/BattleGame/BattleGame';
 import CompanySearch from 'pages/CompanySearch/CompanySearch';
@@ -9,7 +10,7 @@ import Signup from 'pages/Signup/Signup';
 import Dictionary from 'pages/Dictionary/Dictionary';
 import DictionaryResult from 'pages/DictionaryResult/DictionaryResult';
 import Result from 'pages/Quiz/Result';
-import PrivateRoute from 'hooks/PrivateRoute';
+import ShortAnswerMultipleQuestionPage from 'pages/Quiz/ShortAnswerMultipleQuestionPage';
 
 const route = [
   { path: '/', component: <Home /> },
@@ -20,6 +21,10 @@ const route = [
   { path: '/dictionary', component: <Dictionary /> },
   { path: '/dictionaryResult/:searchWord', component: <DictionaryResult /> },
   { path: '/short-answer-question', component: <ShortAnswerQuestionPage /> },
+  {
+    path: '/short-answer-multiple-question',
+    component: <ShortAnswerMultipleQuestionPage />,
+  },
   { path: '/result', component: <Result /> },
 ];
 

@@ -14,6 +14,7 @@ export const ButtonContainer = styled.button<{ kind: string }>`
   background-color: ${(props) => (props.kind === 'next' ? '#638EF3' : '')};
   background-color: ${(props) => (props.kind === 'stop' ? '#B0B0B0' : '')};
   background-color: ${(props) => (props.kind === 'favorite' ? '#FF9D57' : '')};
+  background-color: ${(props) => (props.kind === 'result' ? '#F36397' : '')};
 `;
 
 export const ButtonTitle = styled.p`

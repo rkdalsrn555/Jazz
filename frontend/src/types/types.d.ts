@@ -39,7 +39,7 @@ type companyProps = {
 type StatementType = {
   name: string;
   ref: RefObject<HTMLDivElement>;
-}
+};
 type QuestionListProps = {
   quizId: number;
   question: string;
@@ -61,6 +61,9 @@ type QuestionBoxProps = {
   finiancialType: number;
   caseNum?: number | null;
   kind: number;
-  questionNumber: number;
+  questionNumber?: number;
   isJudge?: boolean;
+  answer?: string | number;
+  setAnswer?: (arg: string | number) => void;
+  isCorrect?: boolean | null;
 };

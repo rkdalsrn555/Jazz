@@ -19,7 +19,8 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
             .excludePathPatterns("/user") // 적용 URL 중 제외할 URL 명시
             .excludePathPatterns("/user/login")
             .excludePathPatterns("/user/duplicate/*")
-            .excludePathPatterns("/user/nickname/*");
+            .excludePathPatterns("/user/nickname/*")
+            .excludePathPatterns("/user/token");
     }
 }
 

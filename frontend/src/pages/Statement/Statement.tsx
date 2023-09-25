@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { StatementType, companyProps } from 'types/types';
 import StatementTypeBtn from 'components/features/Statement/StatementType/StatementTypeBtn';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const Statement = () => {
   const theme: themeProps = useTheme();
@@ -24,7 +24,7 @@ const Statement = () => {
   const cfRef = useRef<HTMLDivElement>(null);
   const ceRef = useRef<HTMLDivElement>(null);
   const isRef = useRef<HTMLDivElement>(null);
-  const charReft = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<HTMLDivElement>(null);
 
   const StatementTypes: StatementType[] = [
     {
@@ -49,7 +49,7 @@ const Statement = () => {
     },
     {
       name: '과거 5년 차트',
-      ref: charReft,
+      ref: chartRef,
     },
   ];
 
@@ -93,7 +93,26 @@ const Statement = () => {
       element.ref.current.style.filter = 'none';
     });
     type.ref.current.style.filter = 'sepia(100%)';
-    // setRightContainerContent()
+    switch (type.name) {
+      case '재무상태표':
+        setRightContainerContent(renderFP);
+        break;
+      case '손익계산서':
+        setRightContainerContent(renderCI);
+        break;
+      case '포괄손익계산서':
+        setRightContainerContent(renderCF);
+        break;
+      case '자본변동표':
+        setRightContainerContent(renderCE);
+        break;
+      case '현금흐름표':
+        setRightContainerContent(renderIS);
+        break;
+      case '과거 5년 차트':
+        setRightContainerContent(renderChart);
+        break;
+    }
   };
 
   const handleHoverType = (type: StatementType) => {

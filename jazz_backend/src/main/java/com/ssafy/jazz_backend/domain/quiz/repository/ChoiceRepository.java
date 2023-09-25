@@ -13,4 +13,6 @@ public interface ChoiceRepository extends JpaRepository<Choice, Integer> {
 
     List<Choice> findAllByQuiz(Quiz quiz);
 
+    Choice findByQuizIdAndIdCaseNum(int quizId, int caseNum);
+
 }

@@ -1,5 +1,6 @@
 package com.ssafy.jazz_backend.domain.quiz.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +16,8 @@ public class SubjectiveQuizResponseDto {
 
     int quizId;
     String question;
-    String content;
+    List<String> content;
+    int caseNum;
     Boolean isMulti;
     Boolean isBookmark;
     int financialType;

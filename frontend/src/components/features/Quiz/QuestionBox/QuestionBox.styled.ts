@@ -64,6 +64,20 @@ export const AnswerIconContainer = styled.div`
   text-align: center;
 `;
 
+export const AnswerContaier = styled.div`
+  height: 84px;
+  background-color: #dbe8f9;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 50px;
+  font-weight: 800;
+  padding: 14px;
+  box-sizing: border-box;
+  caret-color: #638ef3;
+`;
+
 export const SubjectiveInput = styled.input`
   height: 84px;
   background-color: #dbe8f9;

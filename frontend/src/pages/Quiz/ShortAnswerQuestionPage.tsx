@@ -13,11 +13,11 @@ import { QuizData as mockData } from './QuizData';
 import Modal from 'components/utils/Modal/Modal';
 import Enlarge from 'components/Effect/Enlarge/Enlarge';
 import FadeInOut from 'components/Effect/FadeInOut/FadeInOut';
+import { userApis } from 'hooks/api/userApis';
 
 const ShortAnswerQuestionPage = () => {
   // 새로고침 막기
   useBeforeunload((event: any) => event.preventDefault());
-  const userAccessToken = useRecoilValue(userAccessAtom);
   const navigate = useNavigate();
   const [isToggled, setIsToggled] = useState<boolean>(false); // 모달 창 toggle
   // 지금 문제 번호
@@ -52,18 +52,10 @@ const ShortAnswerQuestionPage = () => {
     setAnswer('');
   };
 
-  const putTryQuiz = () => {
+  const putTryQuiz = async () => {
     if (quizList) {
-      axios
-        .put(
-          `${process.env.REACT_APP_BASE_URL}/quiz/management/${quizList[nowQuizNumber].quizId}`,
-          {},
-          {
-            headers: {
-              accessToken: userAccessToken,
-            },
-          }
-        )
+      await userApis
+        .put(`/quiz/management/${quizList[nowQuizNumber].quizId}`)
         .then((res) => {
           console.log(res);
         })
@@ -73,21 +65,13 @@ const ShortAnswerQuestionPage = () => {
     }
   };
 
-  const patchTryQuiz = () => {
+  const patchTryQuiz = async (isCorrect: boolean) => {
     if (quizList) {
-      axios
-        .patch(
-          `${process.env.REACT_APP_BASE_URL}/quiz/correction`,
-          {
-            quizId: quizList[nowQuizNumber].quizId,
-            isCorrect: isCorrect,
-          },
-          {
-            headers: {
-              accessToken: userAccessToken,
-            },
-          }
-        )
+      await userApis
+        .patch(`/quiz/correction`, {
+          quizId: quizList[nowQuizNumber].quizId,
+          isCorrect: isCorrect,
+        })
         .then((res) => {
           console.log(res);
         })
@@ -97,16 +81,14 @@ const ShortAnswerQuestionPage = () => {
     }
   };
 
-  const checkAnswer = () => {
+  const checkAnswer = async () => {
     if (quizList) {
       // 적은 답과 content의 내용이 일치하면 정답!
       let ans = null;
       let correctAns = null;
       if (typeof answer === 'string') {
         ans = answer.replace(/\s+/g, '');
-        correctAns = quizList[nowQuizNumber].content[
-          quizList[nowQuizNumber].caseNum ?? 0
-        ].replace(/\s+/g, '');
+        correctAns = quizList[nowQuizNumber].content[0].replace(/\s+/g, '');
       } else {
         ans = answer;
         correctAns =
@@ -117,56 +99,42 @@ const ShortAnswerQuestionPage = () => {
         // 정답 갯수 하나 세기
         setAnswerCnt((prev) => prev + 1);
         // 문제 답 적은거 axios 요청 보내기
-        // putTryQuiz();
-        // patchTryQuiz();
+        await putTryQuiz();
+        await patchTryQuiz(true);
       } else {
         setIsCorrect(false);
-        // putTryQuiz();
-        // patchTryQuiz();
+        await putTryQuiz();
+        await patchTryQuiz(false);
       }
       setIsJudge(true);
       if (quizList[nowQuizNumber].content.length === 1) {
-        setAnswer(
-          quizList[nowQuizNumber].content[quizList[nowQuizNumber].caseNum ?? 0]
-        );
+        setAnswer(quizList[nowQuizNumber].content[0]);
       }
     }
   };
 
   const getQuiz = async () => {
-    // await axios
-    //   .get(`${process.env.REACT_APP_BASE_URL}/quiz/2`, {
-    //     headers: {
-    //       accessToken: userAccessToken,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     setQuizList(res.data);
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log('문제를 불러오지 못했어요');
-    //   });
-    setQuizList(mockData);
+    await userApis
+      .get('/quiz/2')
+      .then((res) => {
+        setQuizList(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log('문제를 불러오지 못했어요');
+      });
+    // setQuizList(mockData);
   };
 
   const patchFavoriteQuiz = async () => {
     setIsDisabled(true);
     if (quizList) {
       if (!quizList[nowQuizNumber].isBookmark) {
-        await axios
-          .patch(
-            `${process.env.REACT_APP_BASE_URL}/quiz/bookmark/registration`,
-            {
-              quizId: quizList[nowQuizNumber].quizId,
-              isBookmark: true,
-            },
-            {
-              headers: {
-                accessToken: userAccessToken,
-              },
-            }
-          )
+        await userApis
+          .patch(`/quiz/bookmark/registration`, {
+            quizId: quizList[nowQuizNumber].quizId,
+            isBookmark: true,
+          })
           .then((res) => {
             quizList[nowQuizNumber].isBookmark = res.data.isBookmark;
             setIsDisabled(false);
@@ -175,19 +143,11 @@ const ShortAnswerQuestionPage = () => {
             setIsDisabled(false);
           });
       } else {
-        await axios
-          .patch(
-            `${process.env.REACT_APP_BASE_URL}/quiz/bookmark/release`,
-            {
-              quizId: quizList[nowQuizNumber].quizId,
-              isBookmark: false,
-            },
-            {
-              headers: {
-                accessToken: userAccessToken,
-              },
-            }
-          )
+        await userApis
+          .patch(`/quiz/bookmark/release`, {
+            quizId: quizList[nowQuizNumber].quizId,
+            isBookmark: false,
+          })
           .then((res) => {
             quizList[nowQuizNumber].isBookmark = res.data.isBookmark;
             setIsDisabled(false);
@@ -200,18 +160,10 @@ const ShortAnswerQuestionPage = () => {
   };
 
   const patchQuizResult = async () => {
-    await axios
-      .patch(
-        `${process.env.REACT_APP_BASE_URL}/quiz/result`,
-        {
-          correctCount: answerCnt,
-        },
-        {
-          headers: {
-            accessToken: userAccessToken,
-          },
-        }
-      )
+    await userApis
+      .patch(`/quiz/result`, {
+        correctCount: answerCnt,
+      })
       .then((res) => {
         const responseData = {
           answerCnt: answerCnt,

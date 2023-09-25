@@ -6,6 +6,8 @@ import Statement from 'pages/Statement/Statement';
 import ShortAnswerQuestionPage from 'pages/Quiz/ShortAnswerQuestionPage';
 import Login from 'pages/Login/Login';
 import Signup from 'pages/Signup/Signup';
+import Dictionary from 'pages/Dictionary/Dictionary';
+import DictionaryResult from 'pages/DictionaryResult/DictionaryResult';
 import Result from 'pages/Quiz/Result';
 import PrivateRoute from 'hooks/PrivateRoute';
 
@@ -15,6 +17,8 @@ const route = [
   { path: '/battle-game', component: <BattleGame /> },
   { path: '/companySearch', component: <CompanySearch /> },
   { path: '/statement/:companyId', component: <Statement /> },
+  { path: '/dictionary', component: <Dictionary /> },
+  { path: '/dictionaryResult/:searchWord', component: <DictionaryResult /> },
   { path: '/short-answer-question', component: <ShortAnswerQuestionPage /> },
   { path: '/result', component: <Result /> },
 ];

@@ -10,7 +10,7 @@ import com.ssafy.jazz_backend.domain.member.record.entity.Season;
 import com.ssafy.jazz_backend.domain.member.record.repository.MarathonJpaRepository;
 import com.ssafy.jazz_backend.domain.member.record.repository.SeasonJpaRepository;
 import com.ssafy.jazz_backend.domain.member.repository.MemberRepository;
-import com.ssafy.jazz_backend.domain.quiz.dto.MarathonQuizResponseDto;
+import com.ssafy.jazz_backend.domain.quiz.dto.MarathonAndTierQuizResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.MarathonResultRequestDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.MarathonResultResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.entity.Choice;
@@ -42,7 +42,7 @@ public class MarathonServiceImpl implements MarathonService {
     private final ZSetOperations<String, String> zSetOperations;
     // 마라톤 퀴즈 하나 뽑아서 주기
     @Override
-    public MarathonQuizResponseDto getMarathonQuiz(String accessToken) {
+    public MarathonAndTierQuizResponseDto getMarathonQuiz(String accessToken) {
         Integer quizMaxId = getQuizMaxId();
         Integer quizMinId = getQuizMinId();
         Integer randomQuizId = getRandomQuizId(quizMinId,quizMaxId);
@@ -65,7 +65,7 @@ public class MarathonServiceImpl implements MarathonService {
             List<Choice> choiceList = quiz.getCases();
             //주관식이니까 1개 짜리 리스트임
             List<String> contentList = getContentList(choiceList);
-            return MarathonQuizResponseDto.create(quiz.getId(),quiz.getQuestion(),contentList,1,false,quiz.getKind());
+            return MarathonAndTierQuizResponseDto.create(quiz.getId(),quiz.getQuestion(),contentList,1,false,quiz.getKind());
 
         }else{
             //퀴즈에 대한 보기들 리스트에 담음
@@ -79,7 +79,7 @@ public class MarathonServiceImpl implements MarathonService {
             //정답 번호 저장
             int correctAnswerIndex = contentList.indexOf(correctAnswer)+1;
 
-            return MarathonQuizResponseDto.create(quiz.getId(),quiz.getQuestion(),contentList,correctAnswerIndex,true,quiz.getKind());
+            return MarathonAndTierQuizResponseDto.create(quiz.getId(),quiz.getQuestion(),contentList,correctAnswerIndex,true,quiz.getKind());
         }
     }
 

@@ -5,12 +5,17 @@ import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
 import com.ssafy.jazz_backend.domain.quiz.dto.AddToQuizManagementResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.BookmarkRequestDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.BookmarkResponseDto;
+import com.ssafy.jazz_backend.domain.quiz.dto.ExplanationCorrectAnswerRequestDto;
+import com.ssafy.jazz_backend.domain.quiz.dto.ExplanationCorrectAnswerResponseDto;
+import com.ssafy.jazz_backend.domain.quiz.dto.ExplanationWrongAnswerRequestDto;
+import com.ssafy.jazz_backend.domain.quiz.dto.ExplanationWrongAnswerResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.QuizCorrectionRequestDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.QuizResultRequestDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.QuizResultResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.QuizStatsResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.service.AddToQuizManagementService;
 import com.ssafy.jazz_backend.domain.quiz.service.BookmarkService;
+import com.ssafy.jazz_backend.domain.quiz.service.ExplanationService;
 import com.ssafy.jazz_backend.domain.quiz.service.QuizCorrectionService;
 import com.ssafy.jazz_backend.domain.quiz.service.QuizResultService;
 import com.ssafy.jazz_backend.domain.quiz.service.QuizService;
@@ -46,6 +51,9 @@ public class QuizController {
 
     @Autowired
     private QuizResultService quizResultService;
+
+    @Autowired
+    private ExplanationService explanationService;
 
     @GetMapping("/{kind}")
     private ResponseEntity<?> getQuizByKind(@RequestHeader("accessToken") String accessToken,
@@ -120,6 +128,22 @@ public class QuizController {
         }
 
 
+    }
+
+    @GetMapping("/explanation/correct-answer")
+    private ExplanationCorrectAnswerResponseDto getCorrectExplanation(
+        @RequestHeader("accessToken") String accessToken,
+        @RequestBody ExplanationCorrectAnswerRequestDto request) {
+        String userUUID = jwtService.getInfo("account", accessToken);
+        return explanationService.getCorrectExplanation(userUUID, request);
+    }
+
+    @GetMapping("/explanation/wrong-answer")
+    private ExplanationWrongAnswerResponseDto getWrongExplanation(
+        @RequestHeader("accessToken") String accessToken,
+        @RequestBody ExplanationWrongAnswerRequestDto request) {
+        String userUUID = jwtService.getInfo("account", accessToken);
+        return explanationService.getWrongExplanation(userUUID, request);
     }
 }
 

@@ -24,6 +24,29 @@ public class QuizServiceImpl implements QuizService {
     @Autowired
     private QuizManagementRepository quizManagementRepository;
 
+    public List<?> getQuizByKind(String userUUID, int kind) {
+        List<?> quizzes = switch (kind) {
+            case 1 -> getRandomObjectiveQuizzes();
+            case 2 -> getRandomSubjectiveQuizzes();
+            case 3 -> getRandomCaseObjectiveQuizzes();
+            default -> throw new IllegalArgumentException("Invalid kind value");
+        };
+        for (Object quizObj : quizzes) {
+            if (quizObj instanceof Map) {
+                Map<String, Object> quizMap = (Map<String, Object>) quizObj;
+                int quizId = (int) quizMap.get("quizId");
+                boolean isBookmarked = checkBookmarkStatus(userUUID, quizId);
+                quizMap.put("isBookmark", isBookmarked);
+            } else if (quizObj instanceof SubjectiveQuizResponseDto) {
+                SubjectiveQuizResponseDto dto = (SubjectiveQuizResponseDto) quizObj;
+                boolean isBookmarked = checkBookmarkStatus(userUUID, dto.getQuizId());
+                dto.setIsBookmark(isBookmarked);
+            }
+        }
+
+        return quizzes;
+    }
+
     private Map<String, Object> generateQuizMap(Quiz quiz) {
         Map<String, Object> quizMap = new HashMap<>();
 
@@ -88,7 +111,8 @@ public class QuizServiceImpl implements QuizService {
             SubjectiveQuizResponseDto dto = new SubjectiveQuizResponseDto();
             dto.setQuizId(quiz.getId());
             dto.setQuestion(quiz.getQuestion());
-            dto.setContent(content);
+            dto.setContent(Collections.singletonList(content));
+            dto.setCaseNum(1);
             dto.setIsMulti(false);  // 항상 false로 설정
             dto.setKind(quiz.getKind());
             dto.setFinancialType((quiz.getFinancialType()));
@@ -117,27 +141,5 @@ public class QuizServiceImpl implements QuizService {
         return quizManagement != null && quizManagement.getIsBookmark();
     }
 
-    public List<?> getQuizByKind(String userUUID, int kind) {
-        List<?> quizzes = switch (kind) {
-            case 1 -> getRandomObjectiveQuizzes();
-            case 2 -> getRandomSubjectiveQuizzes();
-            case 3 -> getRandomCaseObjectiveQuizzes();
-            default -> throw new IllegalArgumentException("Invalid kind value");
-        };
-        for (Object quizObj : quizzes) {
-            if (quizObj instanceof Map) {
-                Map<String, Object> quizMap = (Map<String, Object>) quizObj;
-                int quizId = (int) quizMap.get("quizId");
-                boolean isBookmarked = checkBookmarkStatus(userUUID, quizId);
-                quizMap.put("isBookmark", isBookmarked);
-            } else if (quizObj instanceof SubjectiveQuizResponseDto) {
-                SubjectiveQuizResponseDto dto = (SubjectiveQuizResponseDto) quizObj;
-                boolean isBookmarked = checkBookmarkStatus(userUUID, dto.getQuizId());
-                dto.setIsBookmark(isBookmarked);
-            }
-        }
-
-        return quizzes;
-    }
 
 }

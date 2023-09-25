@@ -8,10 +8,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class GameInitResponse {
-    private MyInfo myInfo;
-    private UserInfo userInfo;
-    private GameMessage initGameMessage;
+@NoArgsConstructor
+public class QuizMessage {
+    private int quizId;
+    private String question;
+    private List<String> content;
+    private int caseNum;
+    private boolean isMulti;
+    private int kind;
 }

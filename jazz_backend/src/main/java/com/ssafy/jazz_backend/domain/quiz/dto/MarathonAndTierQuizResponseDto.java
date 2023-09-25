@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class MarathonQuizResponseDto {
+public class MarathonAndTierQuizResponseDto {
 
 
     private Integer quizId;
@@ -18,7 +18,7 @@ public class MarathonQuizResponseDto {
     private Integer kind;
 
     //팩토리 패턴
-    public static MarathonQuizResponseDto create(Integer quizId, String question, List<String> content, Integer caseNum, Boolean isMulti, Integer kind){
-        return new MarathonQuizResponseDto(quizId, question, content, caseNum, isMulti, kind);
+    public static MarathonAndTierQuizResponseDto create(Integer quizId, String question, List<String> content, Integer caseNum, Boolean isMulti, Integer kind){
+        return new MarathonAndTierQuizResponseDto(quizId, question, content, caseNum, isMulti, kind);
     }
 }

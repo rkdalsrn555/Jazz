@@ -1,10 +1,23 @@
 package com.ssafy.jazz_backend.domain.websocket.service;
 
+import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
+import com.ssafy.jazz_backend.domain.member.entity.Member;
+import com.ssafy.jazz_backend.domain.member.repository.MemberRepository;
+import com.ssafy.jazz_backend.domain.quiz.repository.QuizRepository;
+import com.ssafy.jazz_backend.domain.websocket.dto.GameInitResponse;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameMessage;
+import com.ssafy.jazz_backend.domain.websocket.dto.GameMyInfo;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameRequest;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameResponse;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameResponse.ResponseResult;
+import com.ssafy.jazz_backend.domain.websocket.dto.GameResultResponse;
+import com.ssafy.jazz_backend.domain.websocket.dto.GameUserInfo;
 import com.ssafy.jazz_backend.domain.websocket.dto.MessageType;
+import com.ssafy.jazz_backend.domain.websocket.dto.MyInfo;
+import com.ssafy.jazz_backend.domain.websocket.dto.QuizMessage;
+import com.ssafy.jazz_backend.domain.websocket.dto.UserInfo;
+import com.ssafy.jazz_backend.global.Util;
+import jakarta.servlet.http.HttpSession;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,6 +33,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.context.request.async.DeferredResult;
 
 @Service
@@ -33,6 +47,18 @@ public class GameService {
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private QuizRepository quizRepository;
+
+    @Autowired
+    private JwtService jwtService;
+
+    @Autowired
+    private Util util;
 
     /*
     필드 초기화 메서드
@@ -130,6 +156,11 @@ public class GameService {
         messagingTemplate.convertAndSend(destination, gameMessage);
     }
 
+    public void sendQuizMessage(String gameRoomId, QuizMessage quizMessage) {
+        String destination = getDestination(gameRoomId);
+        messagingTemplate.convertAndSend(destination, quizMessage);
+    }
+
     public void connectUser(String gameRoomId, String webSocketSessionId) {
         connectedUsers.put(webSocketSessionId, gameRoomId);
     }
@@ -153,4 +184,27 @@ public class GameService {
             result.setResult(response);
         }
     }
+
+    public GameInitResponse gameInit(String accessToken, HttpSession session, String enemyId) {
+        Member member = memberRepository.findById(jwtService.getInfo("account", accessToken)).orElseThrow(() -> new NullPointerException());
+        Member enemy = memberRepository.findById(enemyId).orElseThrow(() -> new NullPointerException());
+
+        MyInfo myInfo = new MyInfo(member.getUserId(), member.getProfile().getExpPoint(), 100);
+        UserInfo userInfo = new UserInfo(enemy.getUserId(), enemy.getProfile().getExpPoint(), 100);
+        GameMyInfo gameMyInfo = new GameMyInfo(member.getId(), session.getId(), 5);
+        GameUserInfo gameUserInfo = new GameUserInfo(5);
+        GameMessage initGameMessage = new GameMessage(session.getId(), "Game init Message", MessageType.GAME, 1, gameMyInfo, gameUserInfo);
+
+        GameInitResponse gameInitResponse = new GameInitResponse(myInfo, userInfo, initGameMessage);
+        return gameInitResponse;
+    }
+
+    public GameResultResponse gameResult(String accessToken) {
+        /*
+        프론트와 협의 후 작성
+         */
+        GameResultResponse gameResultResponse = new GameResultResponse();
+        return gameResultResponse;
+    }
+
 }

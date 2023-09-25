@@ -4,6 +4,7 @@ import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -23,11 +24,13 @@ public class JwtInterceptor implements HandlerInterceptor {
         String accessToken = request.getHeader("accessToken");
 
         // accessToken이 있고, 정상적이면 return true
-        if (accessToken != null && jwtService.checkToken(accessToken)) {
-            return true;
-        } else {
-            // accessToken이 문제가 있으면 예외 발생
+        if (accessToken == null) {
             throw new NullPointerException();
+        } else {
+            if (jwtService.checkToken(accessToken)) {
+                return true;
+            }
+            throw new NoSuchElementException("토큰 검사 실패");
         }
     }
 }

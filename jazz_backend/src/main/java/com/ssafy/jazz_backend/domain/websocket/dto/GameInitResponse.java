@@ -1,5 +1,6 @@
 package com.ssafy.jazz_backend.domain.websocket.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

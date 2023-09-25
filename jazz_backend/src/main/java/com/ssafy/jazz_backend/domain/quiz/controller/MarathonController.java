@@ -1,6 +1,6 @@
 package com.ssafy.jazz_backend.domain.quiz.controller;
 
-import com.ssafy.jazz_backend.domain.quiz.dto.MarathonQuizResponseDto;
+import com.ssafy.jazz_backend.domain.quiz.dto.MarathonAndTierQuizResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.MarathonResultRequestDto;
 import com.ssafy.jazz_backend.domain.quiz.service.MarathonService;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +25,8 @@ public class MarathonController {
     private ResponseEntity<?> getMarathonQuiz(@RequestHeader("accessToken") String accessToken) {
 
         try {
-            MarathonQuizResponseDto responseDto = marathonService.getMarathonQuiz(accessToken);
-            return new ResponseEntity<MarathonQuizResponseDto>(responseDto, HttpStatus.OK);
+            MarathonAndTierQuizResponseDto responseDto = marathonService.getMarathonQuiz(accessToken);
+            return new ResponseEntity<MarathonAndTierQuizResponseDto>(responseDto, HttpStatus.OK);
         } catch (Exception e) {
             log.info("에러 발생 : " + e.getMessage());
             return new ResponseEntity<>(Collections.singletonList(e.getMessage()),

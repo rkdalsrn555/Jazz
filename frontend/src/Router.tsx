@@ -11,6 +11,7 @@ import Dictionary from 'pages/Dictionary/Dictionary';
 import DictionaryResult from 'pages/DictionaryResult/DictionaryResult';
 import Result from 'pages/Quiz/Result';
 import ShortAnswerMultipleQuestionPage from 'pages/Quiz/ShortAnswerMultipleQuestionPage';
+import DescriptiveMultipleQuestionPage from 'pages/Quiz/DescriptiveMultipleQuestionPage';
 
 const route = [
   { path: '/', component: <Home /> },
@@ -24,6 +25,10 @@ const route = [
   {
     path: '/short-answer-multiple-question',
     component: <ShortAnswerMultipleQuestionPage />,
+  },
+  {
+    path: '/description-mutiple-question',
+    component: <DescriptiveMultipleQuestionPage />,
   },
   { path: '/result', component: <Result /> },
 ];

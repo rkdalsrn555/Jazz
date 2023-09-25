@@ -84,7 +84,7 @@ const Home = () => {
     color: '#FFF7CB',
     img: <S.ButtonImg src={Envelop} />,
     width: '31.6%',
-    destination: '',
+    destination: '/description-mutiple-question',
   };
   const financialDictFeature: btnProps = {
     title: '금융 사전',

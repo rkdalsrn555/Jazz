@@ -36,21 +36,18 @@ public class AddToQuizManagementServiceImpl implements AddToQuizManagementServic
 
         Optional<QuizManagement> existingQuizManagement = quizManagementRepository.findByIdMemberAndIdQuiz(
             member, quiz);
-        if (existingQuizManagement.isPresent()) {
-            // 예외처리
-            throw new RuntimeException(
-                "이미 등록된 퀴즈입니다");
+
+        if (!existingQuizManagement.isPresent()) {
+            QuizManagementId quizManagementId = new QuizManagementId();
+            quizManagementId.setMember(member);
+            quizManagementId.setQuiz(quiz);
+
+            QuizManagement quizManagement = QuizManagement.builder()
+                .id(quizManagementId)
+                .build();
+
+            quizManagementRepository.save(quizManagement);
         }
-
-        QuizManagementId quizManagementId = new QuizManagementId();
-        quizManagementId.setMember(member);
-        quizManagementId.setQuiz(quiz);
-
-        QuizManagement quizManagement = QuizManagement.builder()
-            .id(quizManagementId)
-            .build();
-
-        quizManagementRepository.save(quizManagement);
 
         return AddToQuizManagementResponseDto.builder()
             .quizID(quizId)

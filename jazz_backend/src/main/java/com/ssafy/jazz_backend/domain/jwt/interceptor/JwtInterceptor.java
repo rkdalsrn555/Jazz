@@ -30,7 +30,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             if (jwtService.checkToken(accessToken)) {
                 return true;
             }
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("토큰 검사 실패");
         }
     }
 }

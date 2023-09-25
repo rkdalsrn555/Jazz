@@ -65,10 +65,18 @@ export const QuestionBox = (props: QuestionBoxProps) => {
                   : ''}
               </S.MultipleQuestionUl>
             ) : (
-              <S.SubjectiveInput
-                value={answer}
-                onChange={handleChangeSubjectQuestion}
-              />
+              <>
+                {isJudge ? (
+                  <S.AnswerContaier>{answer}</S.AnswerContaier>
+                ) : (
+                  <S.SubjectiveInput
+                    value={answer}
+                    onChange={(e) => {
+                      handleChangeSubjectQuestion(e);
+                    }}
+                  />
+                )}
+              </>
             )}
           </S.QuestionContent>
           {isJudge ? (

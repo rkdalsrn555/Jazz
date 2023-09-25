@@ -45,7 +45,7 @@ export const ExplanationTitle = styled.div<{ result: boolean }>`
     color: #fff;
     font-size: 20px;
     font-weight: 700;
-    background: ${(props) => (props.result ? '#54B03C' : '#D93D3D')};
+    $background: ${(props) => (props.result ? '#54B03C' : '#D93D3D')};
     border-radius: 20px;
   }
 `;

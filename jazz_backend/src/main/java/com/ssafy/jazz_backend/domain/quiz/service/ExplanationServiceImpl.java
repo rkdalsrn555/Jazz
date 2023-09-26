@@ -62,8 +62,11 @@ public class ExplanationServiceImpl implements ExplanationService {
         // 사용자가 선택한 오답의 Explanation 찾기
         Explanation wrongExplanation = explanationRepository.findByWord(request.getWrongContent());
 
-        if (correctExplanation == null || wrongExplanation == null) {
-            throw new IllegalArgumentException("Explanation not found for the provided word.");
+        String wrongExplanationDescription;
+        if (wrongExplanation == null) {
+            wrongExplanationDescription = "이 단어의 뜻은 잘 모르겠어요";
+        } else {
+            wrongExplanationDescription = wrongExplanation.getDescription();
         }
 
         // 응답 구성
@@ -72,7 +75,7 @@ public class ExplanationServiceImpl implements ExplanationService {
             .correctContent(correctChoice.getContent())
             .correctExplanation(correctExplanation.getDescription())
             .wrongContent(request.getWrongContent())
-            .wrongExplanation(wrongExplanation.getDescription())
+            .wrongExplanation(wrongExplanationDescription)
             .build();
     }
 }

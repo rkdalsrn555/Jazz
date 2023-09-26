@@ -19,9 +19,11 @@ export const Input = styled.input<{ theme: themeProps }>`
   height: 3rem;
   border: none;
   border-radius: 0.4rem;
-  transition: box-shadow 0.2s;
+  transition-property: box-shadow, background-color;
+  transition-duration: 0.2s;
   font-size: 1.3rem;
   padding: 1rem;
+  background-color: ${(props) => props.theme.bg.light};
 
   &:focus {
     border-radius: 0.4rem;

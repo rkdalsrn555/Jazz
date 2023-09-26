@@ -2,8 +2,9 @@ import * as S from './DictionarySearchInput.styled';
 import { themeProps } from '@emotion/react';
 import { useTheme } from '@mui/material';
 import Magnifier from 'assets/img/magnifier.png';
-import { ChangeEvent, useState, KeyboardEvent } from 'react';
+import { ChangeEvent, useState, KeyboardEvent, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { userApis } from 'hooks/api/userApis';
 
 type ChildProps = {
   onChangeText: (e: ChangeEvent<HTMLInputElement>) => void;

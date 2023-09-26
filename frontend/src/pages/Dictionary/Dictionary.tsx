@@ -3,8 +3,11 @@ import { themeProps } from '@emotion/react';
 import { useTheme } from '@mui/material';
 import React, { useRef, useState, ChangeEvent, KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Logo from 'assets/JazzLogo.png';
 
 import DictionarySearchInput from 'components/features/DictionarySearchInput/DictionarySearchInput';
+import { Link } from 'react-router-dom';
+import Enlarge from 'components/Effect/Enlarge/Enlarge';
 
 const Dictionary = () => {
   const theme: themeProps = useTheme();
@@ -30,9 +33,15 @@ const Dictionary = () => {
     }
   };
 
+  const toHome = () => {
+    navigate('/');
+  };
+
   return (
     <S.Container>
-      <S.Title>금융 단어 검색</S.Title>
+      <Enlarge>
+        <S.Img src={Logo} onClick={toHome} />
+      </Enlarge>
       <DictionarySearchInput
         props={{ onChangeText, handleEnter, handleSearch, setText }}
       />

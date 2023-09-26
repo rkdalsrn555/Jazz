@@ -14,7 +14,8 @@ type QuizButtonProps = {
     | '그만풀기'
     | '즐겨찾기'
     | '다음문제'
-    | '결과보기';
+    | '결과보기'
+    | '채점하기';
   handleClick?: () => void;
   isBookmark?: boolean | null;
   disabled: boolean;

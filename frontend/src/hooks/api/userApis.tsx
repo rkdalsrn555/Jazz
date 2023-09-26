@@ -3,7 +3,7 @@ import axios from 'axios';
 // axios 인스턴스 생성
 export const userApis = axios.create({
   baseURL: `${process.env.REACT_APP_BASE_URL}`,
-  timeout: 1000,
+  timeout: 2000,
 });
 
 // request를 보내기 전에 가로채서 헤더에 토큰을 넣어준다.

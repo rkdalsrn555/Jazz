@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class MarathonResultRequestDto {
-    private Integer quizId;
-    private Boolean isCorrect;
+
+    private Integer solveCount;
 }

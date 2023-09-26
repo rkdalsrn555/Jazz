@@ -4,7 +4,7 @@ import com.ssafy.jazz_backend.domain.member.entity.Member;
 import com.ssafy.jazz_backend.domain.member.profile.entity.Profile;
 import com.ssafy.jazz_backend.domain.member.profile.repository.ProfileRepository;
 import com.ssafy.jazz_backend.domain.member.record.dto.redisDto.LevelRankRedisDto;
-import com.ssafy.jazz_backend.domain.member.record.dto.redisDto.MarathonRankRedisDto;
+import com.ssafy.jazz_backend.domain.member.record.dto.redisDto.MarathonRankDailyRedisDto;
 import com.ssafy.jazz_backend.domain.member.record.dto.redisDto.TierRankRedisDto;
 import com.ssafy.jazz_backend.domain.member.record.dto.responseDto.RankingTopTenResponseDto;
 import com.ssafy.jazz_backend.domain.member.record.entity.Marathon;
@@ -63,6 +63,7 @@ public class RankingServiceImpl implements RankingService {
 
         return responseDtoList;
     }
+
     //티어 랭크 top 10 조회
     @Override
     public List<RankingTopTenResponseDto> getTierRankingTopTen(String accessTocken) {
@@ -83,14 +84,15 @@ public class RankingServiceImpl implements RankingService {
 
         return responseDtoList;
     }
+
     //마라톤 랭크 top 10 조회
     @Override
     public List<RankingTopTenResponseDto> getMarathonRankingTopTen(String accessTocken) {
         //redis에서 top 10 가져옴
-        List<MarathonRankRedisDto> marathonRankRedisDtoList = getTopTenMarathonRanks();
+        List<MarathonRankDailyRedisDto> marathonRankRedisDtoList = getTopTenMarathonDailyRanks();
         Season nowSeason = getCurrentSeason();
         List<RankingTopTenResponseDto> responseDtoList = new ArrayList<>();
-        for (MarathonRankRedisDto marathonRankRedisDto : marathonRankRedisDtoList) {
+        for (MarathonRankDailyRedisDto marathonRankRedisDto : marathonRankRedisDtoList) {
             String memberId = marathonRankRedisDto.getMemberId();
             Member member = findMemberById(memberId);
             Profile profile = findProfileById(memberId);
@@ -104,13 +106,15 @@ public class RankingServiceImpl implements RankingService {
         return responseDtoList;
     }
 
-    private List<MarathonRankRedisDto> getTopTenMarathonRanks() {
+
+    private List<MarathonRankDailyRedisDto> getTopTenMarathonDailyRanks() {
         Set<ZSetOperations.TypedTuple<String>> topTenMemberIds = zSetOperations.reverseRangeWithScores(
-            util.getMarathonRankKeyName(), 0, 9);
+            util.getMarathonDailyRankKeyName(), 0, 9);
         //<ZSetOperations.TypedTuple<String>> 는 Set에 저장되는 타입
         //  ZSetOperations.TypedTuple 는 redis zset의 멤버(value)와 score 를 포함하는 튜플 인터페이스
         //      String은 zset에 저장되는 value가 String 타입이다 를 의미
-        return topTenMemberIds.stream().map(MarathonRankRedisDto::convertToMarathonRankRedisDto)
+        return topTenMemberIds.stream()
+            .map(MarathonRankDailyRedisDto::convertToMarathonRankRedisDto)
             .collect(Collectors.toList());
     }
 
@@ -155,7 +159,9 @@ public class RankingServiceImpl implements RankingService {
     }
 
     private Marathon findMarathonByMemberAndSeason(Member member, Season season) {
-        return marathonJpaRepository.findById(new MarathonId(member, season.getMarathonSeason()))
+        return marathonJpaRepository.findById(
+                new MarathonId(member, season.getMarathonDailySeason(),
+                    season.getMarathonMonthlySeason()))
             .orElseThrow(() -> new IllegalArgumentException("uuid와 season에 해당하는 마라톤 기록이 없습니다."));
     }
 

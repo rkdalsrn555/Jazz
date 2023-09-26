@@ -115,13 +115,15 @@ public class MarathonServiceImpl implements MarathonService {
 
         // 다이아 증정 - 한 문제당 10개
         Profile profile = findProfileById(userUUID);
+        System.out.println("Profile profile = findProfileById(userUUID); 까지 완려");
         updateDiamond(profile, solveCount * 10);
-
+        System.out.println("Profile profile = findProfileById(userUUID); 까지 완려2");
         return MarathonResultResponseDto.create(solveCount, solveCount * 10);
     }
 
 
     private void updateDiamond(Profile profile, int diamondCount) {
+        System.out.println(diamondCount);
         profile.setDiamond(diamondCount);
         profileRepository.save(profile);
 
@@ -140,6 +142,7 @@ public class MarathonServiceImpl implements MarathonService {
     }
 
     private Marathon findMarathonByMemberAndNowSeason(Member member, Season nowSeason) {
+
         MarathonId marathonId = MarathonId.create(member, nowSeason.getMarathonDailySeason(),
             nowSeason.getMarathonMonthlySeason());
         Marathon marathon = marathonJpaRepository.findById(marathonId).orElse(null);

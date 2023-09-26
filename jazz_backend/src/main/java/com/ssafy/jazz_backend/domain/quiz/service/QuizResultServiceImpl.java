@@ -39,7 +39,7 @@ public class QuizResultServiceImpl implements QuizResultService {
         zSetOperations.add(util.getLevelRankKeyName(), memberId, updatedProfile.getExpPoint());
 
         QuizResultResponseDto responseDto = QuizResultResponseDto.create(
-            rewardExpPoint, rewardDiamond);
+            rewardDiamond, rewardExpPoint);
 
         return responseDto;
     }
@@ -50,9 +50,10 @@ public class QuizResultServiceImpl implements QuizResultService {
         int preDiamond = profile.getDiamond();
 
         profile.setExpPoint(rewardExpPoint + preExpPoint);
-        profile.setExpPoint(rewardDiamond + preDiamond);
+        profile.setDiamond(rewardDiamond + preDiamond);
         profileRepository.save(profile);
         return profile;
+
 
     }
 

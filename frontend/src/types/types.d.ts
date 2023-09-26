@@ -82,7 +82,7 @@ type QuestionBoxProps = {
   isMulti: boolean;
   isBookmark?: boolean | null;
   finiancialType: number;
-  caseNum?: number | null;
+  caseNum?: number;
   kind: number;
   questionNumber?: number;
   isJudge?: boolean;

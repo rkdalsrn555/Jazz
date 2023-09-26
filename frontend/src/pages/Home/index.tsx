@@ -56,7 +56,7 @@ const Home = () => {
     color: '#D9FFCB',
     img: <S.ButtonImg src={Heart} />,
     width: '48%',
-    destination: '',
+    destination: '/marathon',
   };
   const basicFeature: btnProps = {
     title: '경제 기초 개념',
@@ -80,7 +80,7 @@ const Home = () => {
     color: '#FFDECB',
     img: <S.ButtonImg src={Message} />,
     width: '31.6%',
-    destination: '',
+    destination: '/short-answer-multiple-question',
   };
   const essayChoiceFeature: btnProps = {
     title: '서술형 객관식',
@@ -88,7 +88,7 @@ const Home = () => {
     color: '#FFF7CB',
     img: <S.ButtonImg src={Envelop} />,
     width: '31.6%',
-    destination: '',
+    destination: '/description-mutiple-question',
   };
   const financialDictFeature: btnProps = {
     title: '금융 사전',

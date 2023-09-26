@@ -11,7 +11,7 @@ import Enlarge from 'components/Effect/Enlarge/Enlarge';
 import FadeInOut from 'components/Effect/FadeInOut/FadeInOut';
 import { userApis } from 'hooks/api/userApis';
 
-const ShortAnswerQuestionPage = () => {
+const ShortAnswerMultipleQuestionPage = () => {
   // 새로고침 막기
   useBeforeunload((event: any) => event.preventDefault());
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const ShortAnswerQuestionPage = () => {
   // 정답 개수 세기
   const [answerCnt, setAnswerCnt] = useState<number>(0);
   // 정답을 담는 상태
-  const [answer, setAnswer] = useState<string | number>('');
+  const [answer, setAnswer] = useState<string | number>(0);
   // 정답인지 아닌지 확인
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   // 즐겨찾기 시 버튼 비활성화
@@ -80,15 +80,8 @@ const ShortAnswerQuestionPage = () => {
   const checkAnswer = async () => {
     if (quizList) {
       // 적은 답과 content의 내용이 일치하면 정답!
-      let ans = null;
-      let correctAns = null;
-      if (typeof answer === 'string') {
-        ans = answer.replace(/\s+/g, '');
-        correctAns = quizList[nowQuizNumber].content[0].replace(/\s+/g, '');
-      } else {
-        ans = answer;
-        correctAns = quizList[nowQuizNumber].caseNum;
-      }
+      let ans = answer;
+      let correctAns = quizList[nowQuizNumber].caseNum;
       if (ans === correctAns) {
         setIsCorrect(true);
         // 정답 갯수 하나 세기
@@ -102,15 +95,13 @@ const ShortAnswerQuestionPage = () => {
         await patchTryQuiz(false);
       }
       setIsJudge(true);
-      if (quizList[nowQuizNumber].content.length === 1) {
-        setAnswer(quizList[nowQuizNumber].content[0]);
-      }
+      setAnswer(Number(correctAns));
     }
   };
 
   const getQuiz = async () => {
     await userApis
-      .get('/quiz/2')
+      .get('/quiz/1')
       .then((res) => {
         setQuizList(res.data);
         console.log(res.data);
@@ -280,4 +271,4 @@ const ShortAnswerQuestionPage = () => {
   );
 };
 
-export default ShortAnswerQuestionPage;
+export default ShortAnswerMultipleQuestionPage;

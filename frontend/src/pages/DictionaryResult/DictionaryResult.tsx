@@ -8,6 +8,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import iconv from 'iconv-lite';
 import { Buffer } from 'buffer';
 import axios from 'axios';
+// import useJsonP from 'use-jsonp';
+import jsonp from 'jsonp';
+import useJsonP from 'use-jsonp';
 
 const DictionaryResult = () => {
   const theme: themeProps = useTheme();
@@ -37,33 +40,50 @@ const DictionaryResult = () => {
 
   const [data, setData] = useState('');
 
-  useEffect(() => {
+  const getDefinition = async () => {
+    await jsonp(
+      `openapi/service/FnTermSvc/getFinancialTermMeaning?serviceKey=r4nr%2BOHhRKhV2p9x4wWuxWYt01cfJaDJwuuTY36rRa%2FFDbQ3i%2BljBAUvLlX0Th0BFs97KYUWD1J4Jgdq%2B3UkKw%3D%3D&term=기`,
+      (err, data) => {
+        console.log(data);
+      }
+    );
+  };
+
+  const jsonNow = useJsonP({
+    url: 'openapi/service/FnTermSvc/getFinancialTermMeaning?serviceKey=r4nr%2BOHhRKhV2p9x4wWuxWYt01cfJaDJwuuTY36rRa%2FFDbQ3i%2BljBAUvLlX0Th0BFs97KYUWD1J4Jgdq%2B3UkKw%3D%3D&term=기',
+    id: '',
+    callback: (res) => {
+      console.log(res);
+      console.log('왜 안되지');
+    },
+  });
+
+  const getTest = () => {
     axios
       .get(
-        `http://api.seibro.or.kr/openapi/service/FnTermSvc/getFinancialTermMeaning?serviceKey=r4nr%2BOHhRKhV2p9x4wWuxWYt01cfJaDJwuuTY36rRa%2FFDbQ3i%2BljBAUvLlX0Th0BFs97KYUWD1J4Jgdq%2B3UkKw%3D%3D&term=기`
+        // `/openapi/service/FnTermSvc/getFinancialTermMeaning?serviceKey=m5tfM2QGQ8fT91yb%2FXr%2FyglS96RS0BD4QCAL9oSMM10f4MNciyLdiHv5R8MgVDZrP08a8lJUn1htOZTEMZiGQg%3D%3D&term=기`
+        `/openapi/service/FnTermSvc/getFinancialTermMeaning?serviceKey=m5tfM2QGQ8fT91yb/Xr/yglS96RS0BD4QCAL9oSMM10f4MNciyLdiHv5R8MgVDZrP08a8lJUn1htOZTEMZiGQg==&term=기`
       )
       .then((res) => {
-        console.log(res);
-        // console.log(
-        //   res.data.response.body.items.item[0].ksdFnceDictDescContent
-        // );
-        // const rawContent = Buffer.from(
-        //   res.data.response.body.items.item[0].ksdFnceDictDescContent,
-        //   'binary'
-        // );
-        // const rawContent =
-        //   res.data.response.body.items.item[0].ksdFnceDictDescContent;
-        const rawContent = res.data.response.body.items.item[0];
-        console.log(rawContent);
-        const decodedContent = iconv.decode(rawContent, 'euc-kr');
-        console.log(decodedContent);
-
-        // 데이터 상태 변수에 디코딩한 내용 설정
-        setData(decodedContent);
+        console.log('나는 리스펀스 데이터다!!', res.data.response);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  useEffect(() => {
+    // jsonNow();
+    // getDefinition();
+    getTest();
+    console.log(searchWord);
+    //   const rawContent = data.data.response.body.items.item[0];
+    //   console.log(rawContent);
+    //   const decodedContent = iconv.decode(rawContent, 'euc-kr');
+    //   console.log(decodedContent);
+    //   // 데이터 상태 변수에 디코딩한 내용 설정
+    //   setData(decodedContent);
+    // };
   }, [searchWord]);
 
   return (

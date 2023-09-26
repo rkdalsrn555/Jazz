@@ -7,9 +7,13 @@ import Modify from 'assets/img/writing.png';
 import Bell from 'assets/img/bell.png';
 import Diamond from 'assets/img/diamond.png';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { UserInfo } from 'atoms/atoms';
+import { VictoryPie } from 'victory';
 
 const Inner = (feature: innerContainerProps) => {
   const theme: themeProps = useTheme();
+  const userInfo = useRecoilValue(UserInfo);
 
   const users = [
     {
@@ -417,7 +421,7 @@ const Inner = (feature: innerContainerProps) => {
               <S.Img src={Bell} />
               <S.DiamondContainer>
                 {/* 다이아개수 받아와서 넣어야 될 자리 */}
-                150
+                {userInfo.diamond}
                 <S.Img
                   src={Diamond}
                   style={{ width: '1.4rem', height: '1.4rem' }}

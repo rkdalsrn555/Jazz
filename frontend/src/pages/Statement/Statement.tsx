@@ -12,13 +12,13 @@ const Statement = () => {
   const { companyId } = useParams<{ companyId: string }>();
   // 위에 companyId 이용해서 특정 회사의 재무제표를 받아와야 함
   // 아래는 임시 회사 임시 정보
-  const company: companyProps = {
-    id: 1,
-    name: '삼성전자',
-    totalValue: 65465465,
-    totalSale: 654654654,
-    starred: true,
-  };
+  // const company: companyProps = {
+  //   id: 1,
+  //   name: '삼성전자',
+  //   totalValue: 65465465,
+  //   totalSale: 654654654,
+  //   starred: true,
+  // };
   const fpRef = useRef<HTMLDivElement>(null);
   const ciRef = useRef<HTMLDivElement>(null);
   const cfRef = useRef<HTMLDivElement>(null);
@@ -134,7 +134,7 @@ const Statement = () => {
   return (
     <S.Container>
       <S.PageName>기업정보</S.PageName>
-      <S.CompanyName>{company.name}</S.CompanyName>
+      {/* <S.CompanyName>{company.name}</S.CompanyName> */}
       <S.LeftContainer>
         <S.StatementTypeContainer>
           {StatementTypes.map((type, i) => {

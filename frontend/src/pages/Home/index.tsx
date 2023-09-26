@@ -1,7 +1,7 @@
 import * as S from './Home.styled';
 import { themeProps } from '@emotion/react';
 import { useTheme } from '@mui/material';
-import { IsDark } from 'atoms/atoms';
+import { IsDark, UserInfo } from 'atoms/atoms';
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Inner from 'components/features/Main/InnerContainer';
@@ -9,6 +9,7 @@ import {
   btnProps,
   innerContainerProps,
   profileBlockInfoProps,
+  userType,
 } from 'types/types';
 import Button from 'components/features/Main/Button';
 import Heart from 'assets/img/icons8-heart-100.png';
@@ -23,6 +24,7 @@ import Shop from 'assets/img/icons8-shop-64.png';
 import ProfileInfo from 'components/features/Main/ProfileInfo/ProfileInfo';
 import GameMatchingModal from 'components/features/Game/GameMatchingModal/GameMatchingModal';
 import { userApis } from 'hooks/api/userApis';
+import { Border, VictoryPie } from 'victory';
 
 const Home = () => {
   const theme: themeProps = useTheme();
@@ -157,19 +159,20 @@ const Home = () => {
   };
 
   // 사용자 정보 api로 받아와야 함
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useRecoilState(UserInfo);
   useEffect(() => {
     userApis
       .get('/user/profile')
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res.data);
+        setUserInfo(res.data);
+      })
       .catch((err) => console.log(err));
   }, [userToken]);
 
-  const tempInfo: profileBlockInfoProps = {
-    marathon: 16,
-    correctRate: 72,
-    solved: 173,
-    favorite: 21,
+  const calcPercent = () => {
+    const result = (360 * userInfo.winningPercentage) / 100;
+    return result;
   };
 
   const profileContainerFeature: innerContainerProps = {
@@ -184,13 +187,33 @@ const Home = () => {
         <S.ProfileContent>
           <S.ProfileLeft>
             <S.ProfileLeftPrefix>금융 초보자</S.ProfileLeftPrefix>
-            <S.ProfileLeftTitle>새싹이 나버린 감자</S.ProfileLeftTitle>
+            <S.ProfileLeftTitle>{userInfo?.nickname}</S.ProfileLeftTitle>
             <S.Box>
               <S.ProfileLeftImg />
             </S.Box>
           </S.ProfileLeft>
+          <S.PieConatiner>
+            <S.PieTitle>
+              정답률
+              <S.PieNumber>{userInfo.winningPercentage} %</S.PieNumber>
+            </S.PieTitle>
+            <S.Pie>
+              <VictoryPie
+                standalone={false}
+                colorScale={['tomato', 'orange', 'gold', 'cyan', 'navy']}
+                origin={{ x: 150, y: 90 }}
+                width={180}
+                innerRadius={60}
+                data={[
+                  { x: ' ', y: calcPercent() },
+                  { x: ' ', y: 360 - calcPercent() },
+                ]}
+                animate={{ duration: 2000 }}
+              />
+            </S.Pie>
+          </S.PieConatiner>
           <S.ProfileRight>
-            <ProfileInfo {...tempInfo} />
+            {userInfo ? <ProfileInfo user={userInfo} /> : null}
           </S.ProfileRight>
         </S.ProfileContent>
       </S.ProfileContainer>
@@ -208,7 +231,10 @@ const Home = () => {
   };
 
   return (
-    <S.Container>
+    <S.Container
+      initial={{ scale: 0.9 }}
+      animate={{ scale: 1 }}
+    >
       <GameMatchingModal {...gameMatchingModalFeature} />
       <S.LeftContainer>
         <Inner {...quizContainerFeature} />

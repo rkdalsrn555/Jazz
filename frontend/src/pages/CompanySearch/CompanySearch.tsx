@@ -9,100 +9,42 @@ import { companyProps } from 'types/types';
 import Star from 'assets/img/star.png';
 import Starred from 'assets/img/starred.png';
 import { click } from '@testing-library/user-event/dist/click';
+import useDebounce from 'hooks/useDebounce';
+import axios from 'axios';
 
 const CompanySearch = () => {
   const theme: themeProps = useTheme();
-  // 추후 company 타입도 갱신해야함(types.d.ts)
-  const sampleCompanies: companyProps[] = [
-    {
-      id: 1,
-      name: '삼성전자',
-      totalValue: 65465465,
-      totalSale: 654654654,
-      starred: true,
-    },
-    {
-      id: 2,
-      name: 'LG',
-      totalValue: 465465,
-      totalSale: 4654654,
-      starred: false,
-    },
-    {
-      id: 1,
-      name: '삼성전자',
-      totalValue: 65465465,
-      totalSale: 654654654,
-      starred: true,
-    },
-    {
-      id: 2,
-      name: 'LG',
-      totalValue: 465465,
-      totalSale: 4654654,
-      starred: false,
-    },
-    {
-      id: 1,
-      name: '삼성전자',
-      totalValue: 65465465,
-      totalSale: 654654654,
-      starred: true,
-    },
-    {
-      id: 2,
-      name: 'LG',
-      totalValue: 465465,
-      totalSale: 4654654,
-      starred: false,
-    },
-    {
-      id: 1,
-      name: '삼성전자',
-      totalValue: 65465465,
-      totalSale: 654654654,
-      starred: true,
-    },
-    {
-      id: 2,
-      name: 'LG',
-      totalValue: 465465,
-      totalSale: 4654654,
-      starred: false,
-    },
-    {
-      id: 1,
-      name: '삼성전자',
-      totalValue: 65465465,
-      totalSale: 654654654,
-      starred: true,
-    },
-    {
-      id: 2,
-      name: 'LG',
-      totalValue: 465465,
-      totalSale: 4654654,
-      starred: false,
-    },
-  ];
+  const [searchingCompany, setSearchingCompany] = useState('');
+  const debounceSearchCompany = useDebounce<string>(searchingCompany, 500);
 
-  const [companies, setCompanies] = useState(sampleCompanies);
+  const [companies, setCompanies] = useState<companyProps[]>();
 
   const handleInput = (e: any) => {
     // console.log(e.target.value);
     const searchWord = e.target.value;
-    let newCompanies: companyProps[] = [];
-    sampleCompanies.forEach((element) => {
-      const lowerCaseName = element.name.toLowerCase();
-      if (
-        element.name.includes(searchWord) ||
-        lowerCaseName.includes(searchWord)
-      ) {
-        newCompanies.push(element);
-      }
-    });
-    setCompanies(newCompanies);
+    setSearchingCompany(searchWord);
+    // let newCompanies: companyProps[] = [];
+    // sampleCompanies.forEach((element) => {
+    //   const lowerCaseName = element.name.toLowerCase();
+    //   if (
+    //     element.name.includes(searchWord) ||
+    //     lowerCaseName.includes(searchWord)
+    //   ) {
+    //     newCompanies.push(element);
+    //   }
+    // });
+    // setCompanies(newCompanies);
   };
+
+  useEffect(() => {
+    console.log(debounceSearchCompany);
+    axios
+      .get(`/enterprise/${debounceSearchCompany}`)
+      .then((res) => console.log(res))
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [debounceSearchCompany]);
 
   const [clickedCompany, setClickedCompany] = useState<companyProps>();
 
@@ -122,9 +64,9 @@ const CompanySearch = () => {
           </S.SearchDiv>
         </S.SearchContainer>
         <S.ListContainer theme={theme}>
-          {companies.map((company, i) => {
+          {/* {companies.map((company, i) => {
             return <CompanyListBlock props={{ company, setClickedCompany }} />;
-          })}
+          })} */}
         </S.ListContainer>
       </S.LeftContainer>
       <S.RightContainer theme={theme}>
@@ -162,23 +104,23 @@ const CompanySearch = () => {
                   <S.BannerContentInner>
                     <S.BannerContentTitle>시가 총액</S.BannerContentTitle>
                     <S.BannerContentContent>
-                      {clickedCompany.totalValue}
+                      {/* {clickedCompany.totalValue} */}
                     </S.BannerContentContent>
                   </S.BannerContentInner>
                   <S.BannerContentInner>
                     <S.BannerContentTitle>매출액</S.BannerContentTitle>
                     <S.BannerContentContent>
-                      {clickedCompany.totalSale}
+                      {/* {clickedCompany.totalSale} */}
                     </S.BannerContentContent>
                   </S.BannerContentInner>
                 </S.BannerContent>
               </S.BannerRight>
 
-              {clickedCompany.starred ? (
+              {/* {clickedCompany.starred ? (
                 <S.StarredContainer src={Starred} />
               ) : (
                 <S.StarredContainer src={Star} />
-              )}
+              )} */}
             </S.InnerBannerContainer>
           ) : (
             <S.BlankBanner>

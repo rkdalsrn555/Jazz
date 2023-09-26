@@ -20,17 +20,17 @@ const CompanyListBlock = ({ props }: { props: ChildProps }) => {
       <S.NameContainer>{props.company.name}</S.NameContainer>
       <S.ValueSaleContainer>
         <S.ValueSaleTitle>시가총액</S.ValueSaleTitle>
-        <S.ValueSaleContent>{props.company.totalValue}</S.ValueSaleContent>
+        {/* <S.ValueSaleContent>{props.company.totalValue}</S.ValueSaleContent> */}
       </S.ValueSaleContainer>
       <S.ValueSaleContainer>
         <S.ValueSaleTitle>매출액</S.ValueSaleTitle>
-        <S.ValueSaleContent>{props.company.totalSale}</S.ValueSaleContent>
+        {/* <S.ValueSaleContent>{props.company.totalSale}</S.ValueSaleContent> */}
       </S.ValueSaleContainer>
-      {props.company.starred ? (
+      {/* {props.company.starred ? (
         <S.StarredContainer src={Starred} />
       ) : (
         <S.StarredContainer src={Star} />
-      )}
+      )} */}
     </S.Container>
   );
 };

@@ -9,11 +9,7 @@ import java.util.List;
 public interface MarathonService {
 
     MarathonAndTierQuizResponseDto getMarathonQuiz(String accessToken);
-<<<<<<< HEAD
 
     MarathonResultResponseDto applyMarathonQuizResult(String accessToken,
         MarathonResultRequestDto requestDto);
-=======
-    MarathonResultResponseDto applyMarathonQuizResult(String accessToken, List<MarathonResultRequestDto> requestDtoList);
->>>>>>> 4b68e214ffcaa74a88d99dde5f12cef635327f48
 }

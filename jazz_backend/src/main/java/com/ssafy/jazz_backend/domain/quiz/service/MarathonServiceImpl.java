@@ -68,13 +68,10 @@ public class MarathonServiceImpl implements MarathonService {
             List<Choice> choiceList = quiz.getCases();
             //주관식이니까 1개 짜리 리스트임
             List<String> contentList = getContentList(choiceList);
-<<<<<<< HEAD
+
             return MarathonAndTierQuizResponseDto.create(quiz.getId(), quiz.getQuestion(),
                 contentList, 1,
                 false, quiz.getKind());
-=======
-            return MarathonAndTierQuizResponseDto.create(quiz.getId(),quiz.getQuestion(),contentList,1,false,quiz.getKind());
->>>>>>> 4b68e214ffcaa74a88d99dde5f12cef635327f48
 
         } else {
             //퀴즈에 대한 보기들 리스트에 담음
@@ -88,13 +85,9 @@ public class MarathonServiceImpl implements MarathonService {
             //정답 번호 저장
             int correctAnswerIndex = contentList.indexOf(correctAnswer) + 1;
 
-<<<<<<< HEAD
             return MarathonAndTierQuizResponseDto.create(quiz.getId(), quiz.getQuestion(),
                 contentList,
                 correctAnswerIndex, true, quiz.getKind());
-=======
-            return MarathonAndTierQuizResponseDto.create(quiz.getId(),quiz.getQuestion(),contentList,correctAnswerIndex,true,quiz.getKind());
->>>>>>> 4b68e214ffcaa74a88d99dde5f12cef635327f48
         }
     }
 

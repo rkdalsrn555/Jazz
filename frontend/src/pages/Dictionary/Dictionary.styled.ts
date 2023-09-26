@@ -19,3 +19,8 @@ export const Title = styled.div`
   font-weight: 900;
   font-size: 1.5rem;
 `;
+
+export const Img = styled.img`
+  /* border: solid red; */
+  width: 80%;
+`;

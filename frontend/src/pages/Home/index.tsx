@@ -22,11 +22,13 @@ import Battle from 'assets/img/icons8-battle-96.png';
 import Shop from 'assets/img/icons8-shop-64.png';
 import ProfileInfo from 'components/features/Main/ProfileInfo/ProfileInfo';
 import GameMatchingModal from 'components/features/Game/GameMatchingModal/GameMatchingModal';
+import { userApis } from 'hooks/api/userApis';
 
 const Home = () => {
   const theme: themeProps = useTheme();
   const isDark = useRecoilValue(IsDark);
   const [isToggled, setIsToggled] = useState<boolean>(false);
+  const userToken = localStorage.getItem('userAccessToken');
 
   useEffect(() => {
     // console.log('isDark', isDark);
@@ -154,12 +156,22 @@ const Home = () => {
     ),
   };
 
+  // 사용자 정보 api로 받아와야 함
+  const [userInfo, setUserInfo] = useState();
+  useEffect(() => {
+    userApis
+      .get('/user/profile')
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }, [userToken]);
+
   const tempInfo: profileBlockInfoProps = {
     marathon: 16,
     correctRate: 72,
     solved: 173,
     favorite: 21,
   };
+
   const profileContainerFeature: innerContainerProps = {
     title: '프로필',
     width: '95%',

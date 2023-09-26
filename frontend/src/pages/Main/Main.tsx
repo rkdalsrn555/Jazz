@@ -21,7 +21,9 @@ function Main() {
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <Global styles={GlobalStyle} />
       <Container theme={isDark}>
-        {location.pathname === '/login' || location.pathname === '/sign-up' ? (
+        {location.pathname === '/login' ||
+        location.pathname === '/sign-up' ||
+        location.pathname === '/dictionary' ? (
           ''
         ) : (
           <Header />

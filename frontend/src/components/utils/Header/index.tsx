@@ -20,6 +20,7 @@ const Header = () => {
     '/short-answer-question',
     '/description-mutiple-question',
     '/short-answer-multiple-question',
+    '/marathon',
   ];
 
   return (

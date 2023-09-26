@@ -11,25 +11,22 @@ import Enlarge from 'components/Effect/Enlarge/Enlarge';
 import FadeInOut from 'components/Effect/FadeInOut/FadeInOut';
 import { userApis } from 'hooks/api/userApis';
 
-const ShortAnswerQuestionPage = () => {
-  // 새로고침 막기
-  useBeforeunload((event: any) => event.preventDefault());
+type MarathonResult = {
+  quizId: number;
+  isCorrect: boolean;
+};
+
+const MarathonPage = () => {
+  useBeforeunload((event: any) => event.preventDefault()); // 새로고침 막기
   const navigate = useNavigate();
+  const [quizList, setQuizList] = useState<QuestionBoxProps[] | null>(null); // 퀴즈 리스트 (1개)
+  const [nowQuizNumber, setNowQuizNumber] = useState<number>(0); // 지금 문제 번호
+  const [isJudge, setIsJudge] = useState<boolean>(false); // 정답 체크 중일때의 상태
+  const [answerCnt, setAnswerCnt] = useState<number>(0); // 정답 개수 세기
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null); // 정답인지 아닌지 확인
+  const [answer, setAnswer] = useState<string | number>(''); // 정답을 담는 상태
+  const [isDisabled, setIsDisabled] = useState<boolean>(false); // 즐겨찾기 버튼 비활성화
   const [isToggled, setIsToggled] = useState<boolean>(false); // 모달 창 toggle
-  // 지금 문제 번호
-  const [nowQuizNumber, setNowQuizNumber] = useState<number>(0);
-  // 퀴즈 리스트 (10개)
-  const [quizList, setQuizList] = useState<QuestionBoxProps[] | null>(null);
-  // 정답 체크중일때의 상태
-  const [isJudge, setIsJudge] = useState<boolean>(false);
-  // 정답 개수 세기
-  const [answerCnt, setAnswerCnt] = useState<number>(0);
-  // 정답을 담는 상태
-  const [answer, setAnswer] = useState<string | number>('');
-  // 정답인지 아닌지 확인
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-  // 즐겨찾기 시 버튼 비활성화
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
   // 모달에 띄울 내용
   const [modalData, setModalData] = useState<{
     data: {
@@ -42,96 +39,36 @@ const ShortAnswerQuestionPage = () => {
 
   // 다음 문제로 가는 함수
   const nextQuestion = () => {
+    getQuiz();
     setIsJudge(false);
     setNowQuizNumber((prev) => prev + 1);
     setIsCorrect(null);
     setAnswer('');
   };
 
-  const putTryQuiz = async () => {
-    if (quizList) {
-      await userApis
-        .put(`/quiz/management/${quizList[nowQuizNumber].quizId}`)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
-
-  const patchTryQuiz = async (isCorrect: boolean) => {
-    if (quizList) {
-      await userApis
-        .patch(`/quiz/correction`, {
-          quizId: quizList[nowQuizNumber].quizId,
-          isCorrect: isCorrect,
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
-
-  const checkAnswer = async () => {
-    if (quizList) {
-      // 적은 답과 content의 내용이 일치하면 정답!
-      let ans = null;
-      let correctAns = null;
-      if (typeof answer === 'string') {
-        ans = answer.replace(/\s+/g, '');
-        correctAns = quizList[nowQuizNumber].content[0].replace(/\s+/g, '');
-      } else {
-        ans = answer;
-        correctAns = quizList[nowQuizNumber].caseNum;
-      }
-      if (ans === correctAns) {
-        setIsCorrect(true);
-        // 정답 갯수 하나 세기
-        setAnswerCnt((prev) => prev + 1);
-        // 문제 답 적은거 axios 요청 보내기
-        await putTryQuiz();
-        await patchTryQuiz(true);
-      } else {
-        setIsCorrect(false);
-        await putTryQuiz();
-        await patchTryQuiz(false);
-      }
-      setIsJudge(true);
-      if (quizList[nowQuizNumber].content.length === 1) {
-        setAnswer(quizList[nowQuizNumber].content[0]);
-      }
-    }
-  };
-
   const getQuiz = async () => {
     await userApis
-      .get('/quiz/2')
+      .get('/quiz/marathon')
       .then((res) => {
-        setQuizList(res.data);
-        console.log(res.data);
+        setQuizList([res.data]);
+        console.log([res.data]);
       })
       .catch((err) => {
         console.log('문제를 불러오지 못했어요');
       });
-    // setQuizList(mockData);
   };
 
   const patchFavoriteQuiz = async () => {
     setIsDisabled(true);
     if (quizList) {
-      if (!quizList[nowQuizNumber].isBookmark) {
+      if (!quizList[0].isBookmark) {
         await userApis
           .patch(`/quiz/bookmark/registration`, {
-            quizId: quizList[nowQuizNumber].quizId,
+            quizId: quizList[0].quizId,
             isBookmark: true,
           })
           .then((res) => {
-            quizList[nowQuizNumber].isBookmark = res.data.isBookmark;
+            quizList[0].isBookmark = res.data.isBookmark;
             setIsDisabled(false);
           })
           .catch((err) => {
@@ -140,11 +77,11 @@ const ShortAnswerQuestionPage = () => {
       } else {
         await userApis
           .patch(`/quiz/bookmark/release`, {
-            quizId: quizList[nowQuizNumber].quizId,
+            quizId: quizList[0].quizId,
             isBookmark: false,
           })
           .then((res) => {
-            quizList[nowQuizNumber].isBookmark = res.data.isBookmark;
+            quizList[0].isBookmark = res.data.isBookmark;
             setIsDisabled(false);
           })
           .catch((err) => {
@@ -156,17 +93,41 @@ const ShortAnswerQuestionPage = () => {
 
   const patchQuizResult = async () => {
     await userApis
-      .patch(`/quiz/result`, {
-        correctCount: answerCnt,
+      .patch(`/quiz/marathon/result`, {
+        solveCount: answerCnt,
       })
       .then((res) => {
         const responseData = {
-          answerCnt: answerCnt,
-          diamond: res.data.diamond,
-          expPoint: res.data.expPoint,
+          correctNum: res.data.solveCount,
+          diamond: res.data.diamondCount,
         };
-        navigate('/result', { state: responseData });
+        navigate('/marathon/result', { state: responseData });
       });
+  };
+
+  const checkAnswer = async () => {
+    if (quizList) {
+      // 적은 답과 content의 내용이 일치하면 정답!
+      let ans = null;
+      let correctAns = null;
+      if (typeof answer === 'string') {
+        ans = answer.replace(/\s+/g, '');
+        correctAns = quizList[0].content[0].replace(/\s+/g, '');
+      } else {
+        ans = answer;
+        correctAns = quizList[0].caseNum;
+      }
+      if (ans === correctAns) {
+        setIsCorrect(true);
+        setAnswerCnt((prev) => prev + 1);
+      } else {
+        setIsCorrect(false);
+      }
+      setIsJudge(true);
+      if (quizList[0].content.length === 1) {
+        setAnswer(quizList[0].content[0]);
+      }
+    }
   };
 
   useEffect(() => {
@@ -183,17 +144,16 @@ const ShortAnswerQuestionPage = () => {
           isToggled={isToggled}
           setIsToggled={setIsToggled}
         />
-        <QuizProgressBar questionCnt={10} gauge={(nowQuizNumber + 1) * 10} />
         {quizList ? (
           <QuestionBox
-            quizId={quizList[nowQuizNumber].quizId}
-            question={quizList[nowQuizNumber].question}
-            content={quizList[nowQuizNumber].content}
-            isMulti={quizList[nowQuizNumber].isMulti}
-            isBookmark={quizList[nowQuizNumber].isBookmark}
-            finiancialType={quizList[nowQuizNumber].finiancialType}
-            caseNum={quizList[nowQuizNumber].caseNum}
-            kind={quizList[nowQuizNumber].kind}
+            quizId={quizList[0].quizId}
+            question={quizList[0].question}
+            content={quizList[0].content}
+            isMulti={quizList[0].isMulti}
+            isBookmark={quizList[0].isBookmark}
+            finiancialType={quizList[0].finiancialType}
+            caseNum={quizList[0].caseNum}
+            kind={quizList[0].kind}
             questionNumber={nowQuizNumber + 1}
             answer={answer}
             setAnswer={setAnswer}
@@ -234,13 +194,11 @@ const ShortAnswerQuestionPage = () => {
                 title="즐겨찾기"
                 kind="favorite"
                 handleClick={patchFavoriteQuiz}
-                isBookmark={
-                  quizList ? quizList[nowQuizNumber].isBookmark : false
-                }
+                isBookmark={quizList ? quizList[0].isBookmark : false}
                 disabled={isDisabled}
               />
             </Enlarge>
-            {nowQuizNumber === 9 ? (
+            {!isCorrect ? (
               <Enlarge>
                 <QuizButton
                   title="결과보기"
@@ -263,11 +221,8 @@ const ShortAnswerQuestionPage = () => {
         ) : (
           <S.ButtonContainer isJudge={false}>
             <Enlarge>
-              <QuizButton title="힌트보기" kind="hint" disabled={isDisabled} />
-            </Enlarge>
-            <Enlarge>
               <QuizButton
-                title="정답보기"
+                title="채점하기"
                 kind="answerCheck"
                 handleClick={checkAnswer}
                 disabled={isDisabled}
@@ -280,4 +235,4 @@ const ShortAnswerQuestionPage = () => {
   );
 };
 
-export default ShortAnswerQuestionPage;
+export default MarathonPage;

@@ -52,7 +52,7 @@ const Home = () => {
     color: '#D9FFCB',
     img: <S.ButtonImg src={Heart} />,
     width: '48%',
-    destination: '',
+    destination: '/marathon',
   };
   const basicFeature: btnProps = {
     title: '경제 기초 개념',

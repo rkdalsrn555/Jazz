@@ -6,6 +6,7 @@ import com.ssafy.jazz_backend.domain.quiz.entity.QuizManagement;
 import com.ssafy.jazz_backend.domain.quiz.repository.QuizManagementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BookmarkServiceImpl implements BookmarkService {
@@ -14,6 +15,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     private QuizManagementRepository quizManagementRepository;
 
     @Override
+    @Transactional
     public BookmarkResponseDto registerBookmark(String userUUID, BookmarkRequestDto request) {
         QuizManagement quizManagement = quizManagementRepository.findByMemberIdAndQuizId(
             userUUID,
@@ -28,6 +30,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
+    @Transactional
     public BookmarkResponseDto releaseBookmark(String userUUID, BookmarkRequestDto request) {
         QuizManagement quizManagement = quizManagementRepository.findByMemberIdAndQuizId(
             userUUID,

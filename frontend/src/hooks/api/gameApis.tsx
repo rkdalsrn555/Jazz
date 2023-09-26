@@ -1,15 +1,15 @@
 import axios from 'axios';
 
 // axios 인스턴스 생성
-export const userApis = axios.create({
-  baseURL: `${process.env.REACT_APP_BASE_URL}`,
+export const gameApis = axios.create({
+  baseURL: `http://j9a708.p.ssafy.io/api`,
 });
 
 // request를 보내기 전에 가로채서 헤더에 토큰을 넣어준다.
 // 기본 형태 axios.interceptor.request.use(onFulfilled, onRejected)
 // onFullfilled에서 에러가 발생하면 onRejected가 실행되고
 // onRejected가 실행되면 request가 이루어지지않고 즉시 종료된다.
-userApis.interceptors.request.use(
+gameApis.interceptors.request.use(
   (config: any) => {
     // 요청을 보내기 전에 수행할 일
     // localstorage에 저장한 액세스토큰 가져오기
@@ -33,7 +33,7 @@ userApis.interceptors.request.use(
 );
 
 // response interceptor를 사용한 토큰 갱신 로직
-userApis.interceptors.response.use(
+gameApis.interceptors.response.use(
   (res) => res, // 응답이 성공적인 경우 아무것도 하지 않음
   // 에러 응답이 돌아왔을 때, err.response.message에 담긴 메세지가 토큰 관련 메세지였을때 처리해줄 로직
   async (err) => {

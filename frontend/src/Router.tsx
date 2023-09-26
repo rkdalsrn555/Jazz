@@ -15,6 +15,7 @@ import ShortAnswerMultipleQuestionPage from 'pages/Quiz/ShortAnswerMultipleQuest
 import DescriptiveMultipleQuestionPage from 'pages/Quiz/DescriptiveMultipleQuestionPage';
 import MarathonPage from 'pages/Quiz/MarathonPage';
 import MarathonResultPage from 'pages/Quiz/MarathonResultPage';
+import FavoritePage from 'pages/Favorite/FavoritePage';
 import Error404 from 'components/utils/Error/Error404';
 
 const PrivatePath = [
@@ -37,6 +38,7 @@ const PrivatePath = [
   { path: '/marathon', component: <MarathonPage /> },
   { path: '/marathon/result', component: <MarathonResultPage /> },
   { path: '/quiz/result', component: <QuizResultPage /> },
+  { path: '/favorite', component: <FavoritePage /> },
 ];
 
 const Router = () => {

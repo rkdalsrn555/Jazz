@@ -18,8 +18,8 @@ public class BookmarkRandomQuizResponseDto {
     String question;
     List<String> content;
     int caseNum;
-    boolean isMulti;
-    boolean isBookmark;
+    Boolean isMulti;
+    Boolean isBookmark;
     int financialType;
     int kind;
 }

@@ -11,6 +11,7 @@ import com.ssafy.jazz_backend.domain.quiz.repository.QuizRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AddToQuizManagementServiceImpl implements AddToQuizManagementService {
@@ -25,6 +26,7 @@ public class AddToQuizManagementServiceImpl implements AddToQuizManagementServic
     private QuizRepository quizRepository;
 
     @Override
+    @Transactional
     public AddToQuizManagementResponseDto addToQuizManagement(String userUUID, int quizId) {
         Member member = memberRepository.findById(userUUID).orElse(null);
         Quiz quiz = quizRepository.findById(quizId).orElse(null);

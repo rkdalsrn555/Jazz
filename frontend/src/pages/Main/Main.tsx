@@ -9,6 +9,7 @@ import Router from 'Router';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Header from 'components/utils/Header/index';
+import { motion } from 'framer-motion';
 
 function Main() {
   const isDark = useRecoilValue(IsDark);
@@ -34,7 +35,7 @@ function Main() {
   );
 }
 
-const Container = styled.div<{ theme: boolean }>`
+const Container = styled(motion.div)<{ theme: boolean }>`
   /* border: solid black; */
   display: flex;
   flex-direction: column;

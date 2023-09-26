@@ -10,6 +10,7 @@ import Dictionary from 'pages/Dictionary/Dictionary';
 import DictionaryResult from 'pages/DictionaryResult/DictionaryResult';
 import Result from 'pages/Quiz/Result';
 import PrivateRoute from 'hooks/PrivateRoute';
+import { AnimatePresence } from 'framer-motion';
 
 const route = [
   { path: '/', component: <Home /> },
@@ -27,22 +28,24 @@ const Router = () => {
   const userAccessToken = window.localStorage.getItem('userAccessToken');
 
   return (
-    <Routes>
-      {route.map((item) => (
-        <Route
-          path={item.path}
-          element={
-            <PrivateRoute
-              component={item.component}
-              authenticated={userAccessToken}
-            />
-          }
-        />
-      ))}
-      {/* 로그인, 회원가입 */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/sign-up" element={<Signup />} />
-    </Routes>
+    <AnimatePresence>
+      <Routes>
+        {route.map((item) => (
+          <Route
+            path={item.path}
+            element={
+              <PrivateRoute
+                component={item.component}
+                authenticated={userAccessToken}
+              />
+            }
+          />
+        ))}
+        {/* 로그인, 회원가입 */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/sign-up" element={<Signup />} />
+      </Routes>
+    </AnimatePresence>
   );
 };
 export default Router;

@@ -28,8 +28,12 @@ public class MarathonController {
     private ResponseEntity<?> getMarathonQuiz(@RequestHeader("accessToken") String accessToken) {
 
         try {
+<<<<<<< HEAD
             MarathonAndTierQuizResponseDto responseDto = marathonService.getMarathonQuiz(
                 accessToken);
+=======
+            MarathonAndTierQuizResponseDto responseDto = marathonService.getMarathonQuiz(accessToken);
+>>>>>>> 4b68e214ffcaa74a88d99dde5f12cef635327f48
             return new ResponseEntity<MarathonAndTierQuizResponseDto>(responseDto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(

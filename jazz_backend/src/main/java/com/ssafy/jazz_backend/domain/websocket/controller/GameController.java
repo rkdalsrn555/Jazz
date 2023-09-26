@@ -1,16 +1,22 @@
 package com.ssafy.jazz_backend.domain.websocket.controller;
 
+import com.ssafy.jazz_backend.domain.quiz.dto.MarathonAndTierQuizResponseDto;
+import com.ssafy.jazz_backend.domain.quiz.service.MarathonServiceImpl;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameInitResponse;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameMessage;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameMyInfo;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameRequest;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameResponse;
+import com.ssafy.jazz_backend.domain.websocket.dto.GameResultResponse;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameUserInfo;
 import com.ssafy.jazz_backend.domain.websocket.dto.MessageType;
 import com.ssafy.jazz_backend.domain.websocket.dto.MyInfo;
+import com.ssafy.jazz_backend.domain.websocket.dto.QuizMessage;
 import com.ssafy.jazz_backend.domain.websocket.dto.UserInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +31,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.ssafy.jazz_backend.domain.websocket.service.GameService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,6 +47,8 @@ public class GameController {
 
 //    private final JwtService jwtService;
     private final GameService gameService;
+
+    private final MarathonServiceImpl marathonService;
 
     @GetMapping("/join")
     @ResponseBody
@@ -73,33 +82,25 @@ public class GameController {
         return ResponseEntity.ok().build();
     }
 
-    /*
-    initGameMessage와 랜덤 퀴즈 9문제를 같이 줄것인가 ? (고민)
-     */
     @GetMapping("/play")
     @ResponseBody
-    public GameInitResponse startGame(@RequestHeader("accessToken") String accessToken, HttpServletRequest request) {
-        String session = request.getSession().getId();
+    public GameInitResponse startGame(@RequestHeader("accessToken") String accessToken, HttpSession session, String enemyId) {
+//        String session = request.getSession().getId();
 //        SimpMessageHeaderAccessor accessor = SimpMessageHeaderAccessor.create();
 //        String session = accessor.getSessionId();
 //        String userUUID = jwtService.getInfo("account", accessToken);
-        /*
-        JpaRepository로 user 정보 갖고오기
-        #
-        #
-        #
-        #
-         */
 
-        MyInfo myInfo = new MyInfo("유저1", 300, 400);
-        UserInfo userInfo = new UserInfo("유저2", 400, 600);
-        GameMyInfo gameMyInfo = new GameMyInfo("userUUID", session, 5);
-        GameUserInfo gameUserInfo = new GameUserInfo(5);
-        GameMessage initGameMessage = new GameMessage(session, "init Message", MessageType.GAME, 1, gameMyInfo, gameUserInfo);
-
-        GameInitResponse gameInitResponse = new GameInitResponse(myInfo, userInfo, initGameMessage);
+        GameInitResponse gameInitResponse = gameService.gameInit(accessToken, session, enemyId);
 
         return gameInitResponse;
+    }
+
+    @PatchMapping("/result")
+    @ResponseBody
+    public GameResultResponse endGame(@RequestHeader("accessToken") String accessToken) {
+        GameResultResponse gameResultResponse = gameService.gameResult(accessToken);
+
+        return gameResultResponse;
     }
 
     @MessageMapping("/status-message/{gameRoomId}")
@@ -116,8 +117,19 @@ public class GameController {
         }
     }
 
-    /*
-    게임 로직 구현 부분
-     */
+    @MessageMapping("/quiz-message/{gameRoomId}")
+    public void sendQuizMessage(@DestinationVariable("gameRoomId") String gameRoomId) {
+       MarathonAndTierQuizResponseDto marathonAndTierQuizResponseDto = marathonService.getMarathonQuiz("NoAccessToken");
+       logger.info("Random Quiz : {}", marathonAndTierQuizResponseDto.getQuestion());
+       if(marathonAndTierQuizResponseDto == null) {
+           return;
+       }
+
+       QuizMessage quizMessage = new QuizMessage(marathonAndTierQuizResponseDto.getQuizId(), marathonAndTierQuizResponseDto.getQuestion(),
+           marathonAndTierQuizResponseDto.getContent(), marathonAndTierQuizResponseDto.getCaseNum(),
+           marathonAndTierQuizResponseDto.getIsMulti(), marathonAndTierQuizResponseDto.getKind());
+
+       gameService.sendQuizMessage(gameRoomId, quizMessage);
+    }
 
 }

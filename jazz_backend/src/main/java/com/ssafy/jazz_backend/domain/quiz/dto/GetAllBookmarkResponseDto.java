@@ -13,8 +13,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class GetAllBookmarkResponseDto {
 
-    private int quizId;
-    private String question;
-    private String content;
-    private int kind;
+    int quizId;
+    String question;
+    String content;
+    int kind;
+    Boolean isBookmark;
 }

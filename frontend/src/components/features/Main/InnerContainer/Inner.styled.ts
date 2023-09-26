@@ -53,22 +53,27 @@ export const ProfileHeaderRight = styled.div`
   width: fit-content;
 `;
 
-export const DiamondContainer = styled.div`
+export const DiamondContainer = styled.div<{ theme: themeProps }>`
   /* border: solid green; */
   border-radius: 100rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #dbe5ff;
+  color: ${(props) => props.theme.font.deep};
+  background-color: ${(props) => props.theme.bg.mid};
   padding: 0.3rem 1rem 0.3rem 1rem;
   font-weight: bold;
   font-size: 1.2rem;
-  gap: 2rem;
+  gap: 1rem;
   width: fit-content;
+  transition: all 0.2s;
+  /* box-shadow: inset 0.5px 1px 5px 0px ${(props) =>
+    props.theme.bg.shadow} !important; */
+  box-shadow: inset 0.5px 1px 5px 0px ${(props) => props.theme.bg.shadow};
 `;
 
-export const Title = styled.div`
+export const Title = styled.div<{ theme: themeProps }>`
   /* border: solid black; */
   display: flex;
   flex-direction: row;
@@ -77,6 +82,7 @@ export const Title = styled.div`
   font-weight: 600;
   padding-left: 0.8rem;
   height: 3rem;
+  color: ${(props) => props.theme.font.deep};
 `;
 
 export const ContentContainer = styled.div`
@@ -185,23 +191,25 @@ export const RankContainerHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-bottom: 0.5rem;
 `;
 
-export const RankTitle = styled.div`
+export const RankTitle = styled.div<{ theme: themeProps }>`
   /* border: solid green; */
   display: flex;
   flex-direction: row;
   justify-content: center;
   font-weight: 600;
+  color: ${(props) => props.theme.font.deep};
 `;
 
-export const RankContent = styled.div`
+export const RankContent = styled.div<{ theme: themeProps }>`
   /* border: solid blue; */
   display: flex;
   flex-direction: column;
   height: calc(100% - 2rem);
   overflow-y: scroll;
-  box-shadow: inset 0.5px 1px 5px 0px grey;
+  box-shadow: inset 0.5px 1px 5px 0px ${(props) => props.theme.bg.shadow};
   border-radius: 0.5rem;
   padding-top: 0.5rem;
 `;
@@ -212,8 +220,9 @@ export const RankEach = styled.div`
   margin-bottom: 0.5rem;
 `;
 
-export const RankEachContent = styled.div`
+export const RankEachContent = styled.div<{ theme: themeProps }>`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: ${(props) => props.theme.font.deep};
 `;

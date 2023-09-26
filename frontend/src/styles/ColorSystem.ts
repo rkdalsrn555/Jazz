@@ -39,16 +39,18 @@ export const palette = {
 export const darkTheme: themeProps = {
   bg: {
     deep: palette.neutral_800,
-    mid: '#636A7A',
-    light: '#B7B7B7',
-    shadow: '#292C32',
-    selected: 'rgb(255, 253, 213)',
+    // mid: '#636A7A',
+    // light: '#B7B7B7',
+    mid: '#212224',
+    light: '#3d4147',
+    shadow: 'black',
+    selected: '#DBE5FF',
   },
   font: {
-    deep: palette.neutral_800,
+    deep: 'white',
     mid: palette.neutral_400,
     light: palette.neutral_50,
-    text: '#000000',
+    text: 'gold',
   },
   point: {
     deep: palette.pink_500,

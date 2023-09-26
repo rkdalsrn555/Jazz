@@ -28,7 +28,10 @@ const GlobalStyle = css`
       url('/fonts/woff/Pretendard-Bold.woff') format('woff');
   }
 
-  * ::-webkit-scrollbar {
+  * {
+    -webkit-user-select: none;
+  }
+  ::-webkit-scrollbar {
     width: 0.4rem;
     height: 0.4rem;
     background-color: transparent;

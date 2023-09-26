@@ -15,10 +15,18 @@ const Header = () => {
       <S.Logo src={BrandLogo} />
     </Link>
   );
+
+  const blockLogoClickList = [
+    '/short-answer-question',
+    '/description-mutiple-question',
+    '/short-answer-multiple-question',
+    '/marathon',
+  ];
+
   return (
     <S.Container theme={theme}>
       <S.Blank />
-      {location.pathname === '/short-answer-question' ? (
+      {blockLogoClickList.includes(location.pathname) ? (
         <S.Logo src={BrandLogo} />
       ) : (
         <Enlarge>

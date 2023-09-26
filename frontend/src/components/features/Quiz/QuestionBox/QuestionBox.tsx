@@ -51,17 +51,26 @@ export const QuestionBox = (props: QuestionBoxProps) => {
             {kind === 1 || kind === 3 ? (
               <S.MultipleQuestionUl>
                 {Array.isArray(content)
-                  ? content.map((item, index) => (
-                      <S.MultipleQuestionLi
-                        key={index}
-                        kind={kind}
-                        active={index + 1}
-                        answer={Number(answer)}
-                        onClick={() => {
-                          handleChangeMultipleQuestion(index);
-                        }}
-                      >{`${index + 1}. ${item}`}</S.MultipleQuestionLi>
-                    ))
+                  ? content.map((item, index) =>
+                      isJudge ? (
+                        <S.MultipleQuestionLi
+                          key={index}
+                          kind={kind}
+                          active={index + 1}
+                          answer={Number(answer)}
+                        >{`${index + 1}. ${item}`}</S.MultipleQuestionLi>
+                      ) : (
+                        <S.MultipleQuestionLi
+                          key={index}
+                          kind={kind}
+                          active={index + 1}
+                          answer={Number(answer)}
+                          onClick={() => {
+                            handleChangeMultipleQuestion(index);
+                          }}
+                        >{`${index + 1}. ${item}`}</S.MultipleQuestionLi>
+                      )
+                    )
                   : ''}
               </S.MultipleQuestionUl>
             ) : (

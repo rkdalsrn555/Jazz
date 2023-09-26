@@ -11,6 +11,7 @@ type Menu = {
     question: string;
     content: string;
     kind: number;
+    isBookmark: boolean;
   }[];
 };
 
@@ -43,7 +44,7 @@ const FavoritePage = () => {
 
   useEffect(() => {
     getFavoriteList();
-  }, [menuArr]);
+  }, []);
 
   return (
     <div>

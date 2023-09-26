@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as S from './FavoriteTabMenu.styled';
 import { userApis } from 'hooks/api/userApis';
 import { ReactComponent as FavoriteIcon } from '../../../../assets/svgs/Quiz/star.svg';
+import AccordionLi from '../AccordionLi/AccordionLi';
 
 type Menu = {
   name: string;
@@ -10,6 +11,7 @@ type Menu = {
     question: string;
     content: string;
     kind: number;
+    isBookmark: boolean;
   }[];
 };
 
@@ -39,12 +41,19 @@ const FavoriteTabMenu = (props: OwnProps) => {
       </S.TabMenu>
       <S.Desc>
         {menuArr[currentTab].content.map((item) => (
-          <div>
-            <FavoriteIcon
-              //   fill={item.isBookmark ? '#FFE812' : '#fff'}
-              fill={true ? '#FFE812' : '#fff'}
-            ></FavoriteIcon>
-          </div>
+          // <div>
+          //   <FavoriteIcon
+          //     //   fill={item.isBookmark ? '#FFE812' : '#fff'}
+          //     fill={true ? '#FFE812' : '#fff'}
+          //   ></FavoriteIcon>
+          // </div>
+          <AccordionLi
+            quizId={item.quizId}
+            question={item.question}
+            content={item.content}
+            kind={item.kind}
+            isBookmark={item.isBookmark}
+          />
         ))}
       </S.Desc>
     </S.Container>

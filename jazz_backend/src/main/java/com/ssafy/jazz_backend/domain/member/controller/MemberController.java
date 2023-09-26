@@ -5,6 +5,7 @@ import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.DuplicatedNicknameRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.ModifyNicknameRequestDto;
+import com.ssafy.jazz_backend.domain.member.dto.MyProfileInfoResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.UserLoginRequestDto;
@@ -12,6 +13,8 @@ import com.ssafy.jazz_backend.domain.member.dto.UserLoginResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.UserLogoutRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.UserLogoutResponseDto;
 import com.ssafy.jazz_backend.domain.member.service.MemberService;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -112,6 +115,45 @@ public class MemberController {
                 .nickname(nickname)
                 .build()
             ), HttpStatus.OK);
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<?> viewMyProfile(@RequestHeader("accessToken") String accessToken) {
+        List<String> prefix = new ArrayList<>();
+        prefix.add("멋있는");
+        prefix.add("환상적인");
+
+        List<String> suffix = new ArrayList<>();
+        suffix.add("막국수");
+        suffix.add("춘천 닭갈비");
+
+        List<Integer> character = new ArrayList<>();
+        character.add(1);
+        character.add(4);
+
+        MyProfileInfoResponseDto myProfileInfoResponseDto = MyProfileInfoResponseDto.builder()
+            .userUUID("UUID")
+            .nickname("으넌넌")
+            .diamond(100000)
+            .expPoint(30)
+            .level(99)
+            .rankPoint(3500)
+            .rank("Platinum")
+            .collectQuizRecord(200)
+            .winningPercentage(89)
+            .marathonOneDay(70)
+            .bookmarkCnt(172)
+            .takePrefixTitleId(3)
+            .takePrefixContent("배고픈")
+            .takeSuffixTitleId(3)
+            .takeSuffixContent("아메리카노")
+            .ablePrefixTitleList(prefix)
+            .ableSuffixTitleList(suffix)
+            .takeCharacterId(5)
+            .ableCharacterList(character)
+            .mailCnt(50)
+            .build();
+        return new ResponseEntity<>(myProfileInfoResponseDto, HttpStatus.OK);
     }
 
 }

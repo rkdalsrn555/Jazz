@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 
-@RedisHash(timeToLive = 31536000) //TTL 1년으로 설정
+@RedisHash(timeToLive = 604800) //TTL 1년으로 설정
 @AllArgsConstructor
 @Getter
 @Setter

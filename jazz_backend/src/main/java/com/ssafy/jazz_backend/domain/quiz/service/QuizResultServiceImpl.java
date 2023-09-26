@@ -9,6 +9,7 @@ import com.ssafy.jazz_backend.global.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,29 +21,36 @@ public class QuizResultServiceImpl implements QuizResultService {
     //키 : String , Value : String, 스코어는 Double로 고정임
     private final ZSetOperations<String, String> zSetOperations;
 
+    @Transactional
     @Override
     public QuizResultResponseDto getQuizResult(String accessToken, QuizResultRequestDto request) {
 
         String memberId = jwtService.getInfo("account", accessToken);
         Profile profile = findByMemberId(memberId);
+        //맞은 문제 수
+        int correctCount = getCorrectCount(request);
+        //rewardExp = 맞은 수 * 10
+        int rewardExpPoint = getRewardExpPoint(correctCount);
+        //rewardDiamond = 맞은 수 * 2
+        int rewardDiamond = getRewardDiamond(correctCount);
         //DB에 값 업데이트
-        Profile updatedProfile = updateExpPointAndDiamond(profile, request);
+        Profile updatedProfile = updateExpPointAndDiamond(profile, rewardExpPoint, rewardDiamond);
         //Redis 값 넣기
         zSetOperations.add(util.getLevelRankKeyName(), memberId, updatedProfile.getExpPoint());
 
         QuizResultResponseDto responseDto = QuizResultResponseDto.create(
-            updatedProfile.getDiamond(), updatedProfile.getExpPoint());
+            rewardExpPoint, rewardDiamond);
 
         return responseDto;
     }
 
-    private Profile updateExpPointAndDiamond(Profile profile, QuizResultRequestDto request) {
-        int correctCount = getCorrectCount(request);
-        int rewardExpPoint = getRewardExpPoint(correctCount);
-        int rewardDiamond = getRewardDiamond(correctCount);
+    private Profile updateExpPointAndDiamond(Profile profile, int rewardExpPoint,
+        int rewardDiamond) {
+        int preExpPoint = profile.getExpPoint();
+        int preDiamond = profile.getDiamond();
 
-        profile.setExpPoint(rewardExpPoint + profile.getExpPoint());
-        profile.setExpPoint(rewardDiamond + profile.getDiamond());
+        profile.setExpPoint(rewardExpPoint + preExpPoint);
+        profile.setExpPoint(rewardDiamond + preDiamond);
         profileRepository.save(profile);
         return profile;
 
@@ -51,7 +59,6 @@ public class QuizResultServiceImpl implements QuizResultService {
     private Profile findByMemberId(String memberId) {
         return profileRepository.findById(memberId)
             .orElseThrow(() -> new IllegalArgumentException("해당 uuid에 맞는 프로필이 없습니다."));
-
 
     }
 

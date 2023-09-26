@@ -16,7 +16,10 @@ public class Season {
     private Integer id = 1;
 
     @Builder.Default
-    private Integer marathonSeason = 0;
+    private Integer marathonDailySeason = 0;
+    @Builder.Default
+    private Integer marathonMonthlySeason = 0;
+
     @Builder.Default
     private Integer tierSeason = 0;
 

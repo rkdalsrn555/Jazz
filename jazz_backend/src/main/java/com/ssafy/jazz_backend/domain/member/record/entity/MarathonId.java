@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 @Embeddable
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 public class MarathonId {
 
@@ -19,7 +18,12 @@ public class MarathonId {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private Integer season;
+    private Integer daily_season;
+    private Integer monthly_season;
+
+    public static MarathonId create(Member member, Integer daily_season, Integer monthly_season) {
+        return new MarathonId(member, daily_season, monthly_season);
+    }
 
 
 }

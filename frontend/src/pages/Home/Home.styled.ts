@@ -117,19 +117,22 @@ export const ProfileLeft = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 90%;
   width: 45%;
   min-width: fit-content;
 `;
 
-export const ProfileLeftPrefix = styled.div`
+export const ProfileLeftPrefix = styled.div<{ theme: themeProps }>`
   font-weight: 600;
+  margin-top: 0.5rem;
+  color: ${(props) => props.theme.font.deep};
 `;
 
-export const ProfileLeftTitle = styled.div`
+export const ProfileLeftTitle = styled.div<{ theme: themeProps }>`
   font-size: 1.3rem;
   font-weight: 900;
   margin-bottom: 0.5rem;
+  color: ${(props) => props.theme.font.deep};
 `;
 
 export const Box = styled.div`
@@ -183,13 +186,13 @@ export const Pie = styled.svg`
   /* padding: 1rem; */
 `;
 
-export const PieTitle = styled.text`
+export const PieTitle = styled.text<{ theme: themeProps }>`
   /* border: solid green; */
   display: flex;
   flex-direction: column;
   align-items: center;
   position: absolute;
-  color: black;
+  color: ${(props) => props.theme.font.deep};
   font-size: 1rem;
   font-weight: bold;
   top: 46%;

@@ -47,6 +47,7 @@ public class GetAllBookmarkServiceImpl implements GetAllBookmarkService {
                 .question(quiz.getQuestion())
                 .content(choice.getContent())
                 .kind(quiz.getKind())
+                .isBookmark(quizManagement.getIsBookmark())
                 .build();
             responseList.add(responseDto);
         }

@@ -99,7 +99,6 @@ const MarathonPage = () => {
       .then((res) => {
         const responseData = {
           correctNum: res.data.solveCount,
-          diamond: res.data.diamondCount,
         };
         navigate('/marathon/result', { state: responseData });
       });

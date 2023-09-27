@@ -52,12 +52,8 @@ const DescriptiveMultipleQuestionPage = () => {
     if (quizList) {
       await userApis
         .put(`/quiz/management/${quizList[nowQuizNumber].quizId}`)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((res) => {})
+        .catch((err) => {});
     }
   };
 
@@ -68,12 +64,8 @@ const DescriptiveMultipleQuestionPage = () => {
           quizId: quizList[nowQuizNumber].quizId,
           isCorrect: isCorrect,
         })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((res) => {})
+        .catch((err) => {});
     }
   };
 
@@ -156,7 +148,7 @@ const DescriptiveMultipleQuestionPage = () => {
           diamond: res.data.diamond,
           expPoint: res.data.expPoint,
         };
-        navigate('/result', { state: responseData });
+        navigate('/quiz/result', { state: responseData });
       });
   };
 

@@ -9,7 +9,6 @@ const MarathonResultPage = () => {
   useEffect(() => {
     if (!location.state) {
       navigate('/home');
-      // window.location.reload();
     }
   });
 

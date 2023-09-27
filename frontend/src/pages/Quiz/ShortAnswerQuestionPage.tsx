@@ -52,12 +52,8 @@ const ShortAnswerQuestionPage = () => {
     if (quizList) {
       await userApis
         .put(`/quiz/management/${quizList[nowQuizNumber].quizId}`)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((res) => {})
+        .catch((err) => {});
     }
   };
 
@@ -68,12 +64,8 @@ const ShortAnswerQuestionPage = () => {
           quizId: quizList[nowQuizNumber].quizId,
           isCorrect: isCorrect,
         })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((res) => {})
+        .catch((err) => {});
     }
   };
 
@@ -84,10 +76,7 @@ const ShortAnswerQuestionPage = () => {
       let correctAns = null;
       if (typeof answer === 'string') {
         ans = answer.replace(/\s+/g, '');
-        correctAns = quizList[nowQuizNumber].content[0].replace(/\s+/g, '');
-      } else {
-        ans = answer;
-        correctAns = quizList[nowQuizNumber].caseNum;
+        correctAns = quizList[nowQuizNumber].content[0]?.replace(/\s+/g, '');
       }
       if (ans === correctAns) {
         setIsCorrect(true);
@@ -165,7 +154,7 @@ const ShortAnswerQuestionPage = () => {
           diamond: res.data.diamond,
           expPoint: res.data.expPoint,
         };
-        navigate('/result', { state: responseData });
+        navigate('/quiz/result', { state: responseData });
       });
   };
 

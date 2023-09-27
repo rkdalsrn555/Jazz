@@ -3,6 +3,12 @@ package com.ssafy.jazz_backend.domain.member.service.serviceImpl;
 import com.ssafy.jazz_backend.domain.item.entity.ItemManagement;
 import com.ssafy.jazz_backend.domain.item.repository.ItemJpaRepository;
 import com.ssafy.jazz_backend.domain.item.repository.ItemManagementJpaRepository;
+import com.ssafy.jazz_backend.domain.item.title.entity.PreTitleManagement;
+import com.ssafy.jazz_backend.domain.item.title.entity.SuffixTitleManagement;
+import com.ssafy.jazz_backend.domain.item.title.repository.PreTitleJpaRepository;
+import com.ssafy.jazz_backend.domain.item.title.repository.PreTitleManagementJpaRepostiory;
+import com.ssafy.jazz_backend.domain.item.title.repository.SuffixTitleJpaRepository;
+import com.ssafy.jazz_backend.domain.item.title.repository.SuffixTitleManagementJpaRepostiory;
 import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
 import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdResponseDto;
@@ -49,6 +55,14 @@ public class MemberServiceImpl implements MemberService {
     ItemJpaRepository itemJpaRepository;
     @Autowired
     ItemManagementJpaRepository itemManagementJpaRepository;
+    @Autowired
+    PreTitleJpaRepository preTitleJpaRepository;
+    @Autowired
+    PreTitleManagementJpaRepostiory preTitleManagementJpaRepostiory;
+    @Autowired
+    SuffixTitleJpaRepository suffixTitleJpaRepository;
+    @Autowired
+    SuffixTitleManagementJpaRepostiory suffixTitleManagementJpaRepostiory;
 
     @Override
     public JoinMemberResponseDto joinMember(JoinMemberRequestDto joinMemberRequestDto) {
@@ -69,6 +83,8 @@ public class MemberServiceImpl implements MemberService {
             .pw(pwSalt[0])
             .id(id)
             .itemManagements(new ArrayList<>())
+            .preTitleManagements(new ArrayList<>())
+            .suffixTitleManagements(new ArrayList<>())
             .build();
 
 
@@ -95,6 +111,28 @@ public class MemberServiceImpl implements MemberService {
             itemManagement.setMember(member);
             member.getItemManagements().add(itemManagement);
         }
+
+        PreTitleManagement preTitleManagementDefault = new PreTitleManagement(member, preTitleJpaRepository.findById(1).orElseThrow(() -> new NullPointerException()), true, true);
+        preTitleManagementDefault.setMember(member);
+        member.getPreTitleManagements().add(preTitleManagementDefault);
+        long preSize = preTitleJpaRepository.count();
+        for(int i = 2; i <= preSize; i++){
+            PreTitleManagement preTitleManagement = new PreTitleManagement(member, preTitleJpaRepository.findById(i).orElseThrow(() -> new NullPointerException()), false, false);
+            preTitleManagement.setMember(member);
+            member.getPreTitleManagements().add(preTitleManagement);
+        }
+
+        SuffixTitleManagement suffixTitleManagementDefault = new SuffixTitleManagement(member, suffixTitleJpaRepository.findById(1).orElseThrow(()-> new NullPointerException()), true, true);
+        suffixTitleManagementDefault.setMember(member);
+        member.getSuffixTitleManagements().add(suffixTitleManagementDefault);
+        long suffixSize = suffixTitleJpaRepository.count();
+        for(int i = 2; i <= suffixSize; i++){
+            SuffixTitleManagement suffixTitleManagement = new SuffixTitleManagement(member, suffixTitleJpaRepository.findById(i).orElseThrow(() -> new NullPointerException()), false, false);
+            suffixTitleManagement.setMember(member);
+            member.getSuffixTitleManagements().add(suffixTitleManagement);
+        }
+
+
         System.out.println("ItemManagement 생성 완료");
 
         // profile table에 저장

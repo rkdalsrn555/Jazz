@@ -6,6 +6,8 @@ import QuestionImg from '../../../../assets/img/Game/question.png';
 import MatchingProfile from '../MatchingProfile/MatchingProfile';
 import { ReactComponent as CloseIcon } from '../../../../assets/svgs/Game/close.svg';
 import LoadingBar from '../LoadingBar/LoadingBar';
+import { userApis } from 'hooks/api/userApis';
+import { gameApis } from 'hooks/api/gameApis';
 
 import StompJs from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
@@ -29,25 +31,13 @@ type OwnProps = {
 const GameMatchingModal = (props: OwnProps) => {
   const { me, other, isMatching, isToggled, closeModal } = props;
 
-  const getGameInfo = async () => {
-    await axios.get(`${process.env.REACT_APP_BASE_URL}/game/play`, {
-      headers: {
-        // accessToken: process.env.REACT_APP_ACCESS_TOKEN,
-      },
-    });
-  };
-
-  const getMatching = async () => {
-    await axios.get(`${process.env.REACT_APP_BASE_URL}/game/join`, {
-      headers: {
-        // accessToken: process.env.REACT_APP_ACCESS_TOKEN,
-      },
-    });
-  };
+  //////////////////////게임 로직/////////////////////////////////////
+  const tryMatch = async () => await gameApis.get(`/game/join`);
+  const getGameInfo = async () => await gameApis.get(`/game/play`);
 
   useEffect(() => {
     if (isToggled) {
-      getMatching()
+      tryMatch()
         .then((res) => {
           console.log('매칭성공!');
           getGameInfo()

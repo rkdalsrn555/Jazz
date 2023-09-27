@@ -24,15 +24,20 @@ export const Input = styled.input<{ theme: themeProps }>`
   font-size: 1.3rem;
   padding: 1rem;
   background-color: ${(props) => props.theme.bg.light};
+  color: ${(props) => props.theme.font.deep};
 
   &:focus {
     border-radius: 0.4rem;
     outline: none;
-    box-shadow: 0.5px 1px 10px 2px ${(props) => props.theme.bg.selected};
+    box-shadow: 0px 0px 5px 0.1px ${(props) => props.theme.bg.selected};
   }
 
   &:hover {
-    outline: solid 1px yellow;
+    outline: solid 1px ${(props) => props.theme.bg.selected};
+  }
+
+  &::placeholder {
+    color: ${(props) => props.theme.font.deep};
   }
 `;
 

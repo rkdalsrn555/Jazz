@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import { themeProps } from '@emotion/react';
+import { motion } from 'framer-motion';
 
-export const Container = styled.div`
+export const Container = styled(motion.div)`
   /* border: solid green; */
   width: 100%;
   height: 100%;
@@ -104,7 +105,7 @@ export const ProfileContent = styled.div`
   /* border: solid white; */
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -116,19 +117,22 @@ export const ProfileLeft = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 90%;
   width: 45%;
   min-width: fit-content;
 `;
 
-export const ProfileLeftPrefix = styled.div`
+export const ProfileLeftPrefix = styled.div<{ theme: themeProps }>`
   font-weight: 600;
+  margin-top: 0.5rem;
+  color: ${(props) => props.theme.font.deep};
 `;
 
-export const ProfileLeftTitle = styled.div`
+export const ProfileLeftTitle = styled.div<{ theme: themeProps }>`
   font-size: 1.3rem;
   font-weight: 900;
   margin-bottom: 0.5rem;
+  color: ${(props) => props.theme.font.deep};
 `;
 
 export const Box = styled.div`
@@ -160,5 +164,38 @@ export const ProfileRight = styled.div`
   flex-direction: row;
   justify-content: center;
   height: 100%;
-  width: 65%;
+  width: 30%;
 `;
+
+export const PieConatiner = styled.div`
+  /* border: solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 100%;
+  position: relative;
+`;
+
+export const Pie = styled.svg`
+  /* border: solid black; */
+  display: flex;
+  width: fit-content;
+  height: 10rem;
+  /* padding: 1rem; */
+`;
+
+export const PieTitle = styled.text<{ theme: themeProps }>`
+  /* border: solid green; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  color: ${(props) => props.theme.font.deep};
+  font-size: 1rem;
+  font-weight: bold;
+  top: 46%;
+`;
+
+export const PieNumber = styled.text``;

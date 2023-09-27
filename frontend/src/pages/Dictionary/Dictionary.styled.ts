@@ -22,5 +22,6 @@ export const Title = styled.div`
 
 export const Img = styled.img`
   /* border: solid red; */
-  width: 80%;
+  width: 70%;
+  margin-bottom: 2rem;
 `;

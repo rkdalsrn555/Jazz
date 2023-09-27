@@ -1,15 +1,11 @@
 import * as S from './Home.styled';
 import { themeProps } from '@emotion/react';
 import { useTheme } from '@mui/material';
-import { IsDark } from 'atoms/atoms';
+import { IsDark, UserInfo } from 'atoms/atoms';
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Inner from 'components/features/Main/InnerContainer';
-import {
-  btnProps,
-  innerContainerProps,
-  profileBlockInfoProps,
-} from 'types/types';
+import { btnProps, innerContainerProps } from 'types/types';
 import Button from 'components/features/Main/Button';
 import Heart from 'assets/img/icons8-heart-100.png';
 import Eye from 'assets/img/icons8-eye-100.png';
@@ -23,16 +19,14 @@ import Shop from 'assets/img/icons8-shop-64.png';
 import ProfileInfo from 'components/features/Main/ProfileInfo/ProfileInfo';
 import GameMatchingModal from 'components/features/Game/GameMatchingModal/GameMatchingModal';
 import { userApis } from 'hooks/api/userApis';
+import { Border, VictoryPie } from 'victory';
+import { forceReRender } from '@storybook/react';
 
 const Home = () => {
   const theme: themeProps = useTheme();
   const isDark = useRecoilValue(IsDark);
   const [isToggled, setIsToggled] = useState<boolean>(false);
   const userToken = localStorage.getItem('userAccessToken');
-
-  useEffect(() => {
-    // console.log('isDark', isDark);
-  }, []);
 
   ///////////////////////게임 매칭시 나타나는 모달//////////////////////////
   const gameMatchingModalFeature = {
@@ -157,20 +151,33 @@ const Home = () => {
   };
 
   // 사용자 정보 api로 받아와야 함
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useRecoilState(UserInfo);
   useEffect(() => {
+    setGraphicData(wantedGraphicData);
     userApis
       .get('/user/profile')
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res.data);
+        setUserInfo(res.data);
+      })
       .catch((err) => console.log(err));
   }, [userToken]);
 
-  const tempInfo: profileBlockInfoProps = {
-    marathon: 16,
-    correctRate: 72,
-    solved: 173,
-    favorite: 21,
+  const calcPercent = () => {
+    const result = (360 * userInfo.winningPercentage) / 100;
+    return result;
   };
+
+  const wantedGraphicData = [
+    { x: ' ', y: calcPercent() },
+    { x: ' ', y: 360 - calcPercent() },
+  ];
+  const defaultGraphicData = [
+    { x: ' ', y: 0 },
+    { x: ' ', y: 100 },
+  ];
+  // const defaultGraphicData = [{ x: ' ', y: 0 }, { x: ' ',  y: 0 }, { y: 100 }];
+  const [graphicData, setGraphicData] = useState(defaultGraphicData);
 
   const profileContainerFeature: innerContainerProps = {
     title: '프로필',
@@ -183,20 +190,48 @@ const Home = () => {
       <S.ProfileContainer>
         <S.ProfileContent>
           <S.ProfileLeft>
-            <S.ProfileLeftPrefix>금융 초보자</S.ProfileLeftPrefix>
-            <S.ProfileLeftTitle>새싹이 나버린 감자</S.ProfileLeftTitle>
+            <S.ProfileLeftPrefix theme={theme}>금융 초보자</S.ProfileLeftPrefix>
+            <S.ProfileLeftTitle theme={theme}>
+              {userInfo?.nickname}
+            </S.ProfileLeftTitle>
             <S.Box>
               <S.ProfileLeftImg />
             </S.Box>
           </S.ProfileLeft>
+          <S.PieConatiner>
+            <S.PieTitle theme={theme}>
+              정답률
+              <S.PieNumber>{userInfo.winningPercentage} %</S.PieNumber>
+            </S.PieTitle>
+            <S.Pie>
+              <VictoryPie
+                standalone={false}
+                animate={{ easing: 'bounce' }}
+                // colorScale={['orange', 'gold', 'cyan', 'navy']}
+                // colorScale={['purple', 'lightpurple']}
+                colorScale={['tomato', 'orange']}
+                // colorScale={['orange', 'gold']}
+                origin={{ x: 150, y: 90 }}
+                width={180}
+                innerRadius={60}
+                data={graphicData}
+              />
+            </S.Pie>
+          </S.PieConatiner>
           <S.ProfileRight>
-            <ProfileInfo {...tempInfo} />
+            {userInfo ? <ProfileInfo user={userInfo} /> : null}
           </S.ProfileRight>
         </S.ProfileContent>
       </S.ProfileContainer>
     ),
   };
 
+  const [rankRender, setRankRender] = useState(true);
+  useEffect(() => {
+    console.log('isDark', isDark);
+    setRankRender(!rankRender);
+  }, [isDark]);
+  
   const rankContainerFeature: innerContainerProps = {
     title: '랭크',
     width: '95%',
@@ -204,11 +239,11 @@ const Home = () => {
     minHeight: '15rem',
     minWidth: '',
     backgroundColor: theme.bg.light,
-    content: '',
+    content: { rankRender },
   };
 
   return (
-    <S.Container>
+    <S.Container initial={{ scale: 0.9 }} animate={{ scale: 1 }}>
       <GameMatchingModal {...gameMatchingModalFeature} />
       <S.LeftContainer>
         <Inner {...quizContainerFeature} />

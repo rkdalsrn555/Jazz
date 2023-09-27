@@ -7,10 +7,14 @@ import Modify from 'assets/img/writing.png';
 import Bell from 'assets/img/bell.png';
 import Diamond from 'assets/img/diamond.png';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { IsDark, UserInfo } from 'atoms/atoms';
+import { VictoryPie } from 'victory';
+import { forceReRender } from '@storybook/react';
 
 const Inner = (feature: innerContainerProps) => {
   const theme: themeProps = useTheme();
-
+  const userInfo = useRecoilValue(UserInfo);
   const users = [
     {
       nickname: 'A',
@@ -85,26 +89,27 @@ const Inner = (feature: innerContainerProps) => {
       rate: 82,
     },
   ];
+  const [state, updateState] = useState(true);
 
   const tierRank = () => {
     return (
-      <S.RankContent>
+      <S.RankContent theme={theme}>
         {users.map((e, i) => {
           return (
             <S.RankEach>
-              <S.RankEachContent style={{ flex: 0.5 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 0.5 }}>
                 {i + 1}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 1.4 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 1.4 }}>
                 {e.nickname}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 0.8 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
                 {e.tier}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 1 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 1 }}>
                 {e.solved}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 0.8 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
                 {e.rate}%
               </S.RankEachContent>
             </S.RankEach>
@@ -116,23 +121,23 @@ const Inner = (feature: innerContainerProps) => {
 
   const dailyMarathon = () => {
     return (
-      <S.RankContent>
+      <S.RankContent theme={theme}>
         {users.map((e, i) => {
           return (
             <S.RankEach>
-              <S.RankEachContent style={{ flex: 0.5 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 0.5 }}>
                 {i + 5}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 1.4 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 1.4 }}>
                 {e.nickname}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 0.8 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
                 {e.tier}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 1 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 1 }}>
                 {e.solved}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 0.8 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
                 {e.rate}%
               </S.RankEachContent>
             </S.RankEach>
@@ -142,27 +147,31 @@ const Inner = (feature: innerContainerProps) => {
     );
   };
 
+  const blankFunction = () => {
+    return <S.RankContent theme={theme}></S.RankContent>;
+  };
   const [rankType, setRankType] = useState(tierRank);
+  const [previousType, setPreviousType] = useState('tier');
 
   const monthlyMarathon = () => {
     return (
-      <S.RankContent>
+      <S.RankContent theme={theme}>
         {users.map((e, i) => {
           return (
             <S.RankEach>
-              <S.RankEachContent style={{ flex: 0.5 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 0.5 }}>
                 {i + 10}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 1.4 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 1.4 }}>
                 {e.nickname}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 0.8 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
                 {e.tier}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 1 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 1 }}>
                 {e.solved}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 0.8 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
                 {e.rate}%
               </S.RankEachContent>
             </S.RankEach>
@@ -174,23 +183,23 @@ const Inner = (feature: innerContainerProps) => {
 
   const levelRank = () => {
     return (
-      <S.RankContent>
+      <S.RankContent theme={theme}>
         {users.map((e, i) => {
           return (
             <S.RankEach>
-              <S.RankEachContent style={{ flex: 0.5 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 0.5 }}>
                 {i + 15}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 1.4 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 1.4 }}>
                 {e.nickname}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 0.8 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
                 {e.tier}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 1 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 1 }}>
                 {e.solved}
               </S.RankEachContent>
-              <S.RankEachContent style={{ flex: 0.8 }}>
+              <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
                 {e.rate}%
               </S.RankEachContent>
             </S.RankEach>
@@ -402,12 +411,47 @@ const Inner = (feature: innerContainerProps) => {
     if (tierRef.current) tierRef.current.style.color = 'red';
   }, [tierRef]);
 
+  useEffect(() => {
+    console.log('리렌더링 시켜주삼');
+    if (tierRef.current && dmRef.current && mmRef.current && levelRef.current) {
+      if (tierRef.current.style.color === 'red') {
+        setPreviousType('tier');
+      } else if (dmRef.current.style.color === 'red') {
+        setPreviousType('dailyMarathon');
+      } else if (mmRef.current.style.color === 'red') {
+        setPreviousType('monthlyMarathon');
+      } else if (levelRef.current.style.color === 'red') {
+        setPreviousType('level');
+      }
+    }
+  }, [feature.content]);
+  useEffect(() => {
+    updateState(!state);
+    setRankType(blankFunction());
+  }, [previousType]);
+  // useEffect(() => {
+  //   switch (previousType) {
+  //     case 'tier':
+  //       setRankType(tierRank);
+  //       break;
+  //     case 'dailyMarathon':
+  //       setRankType(dailyMarathon);
+  //       break;
+  //     case 'monthlyMarathon':
+  //       setRankType(monthlyMarathon);
+  //       break;
+  //     case 'level':
+  //       setRankType(levelRank);
+  //       break;
+  //   }
+  // }, [state]);
+
   return (
     <S.Container feature={feature} theme={theme}>
       {feature.title === '프로필' ? (
         <S.ProfileHeaderContainer>
           <S.ProfileHeader>
-            <S.Title>
+            <S.Title theme={theme}>
               {feature.title}
               <Link to={'/home'}>
                 <S.Img src={Modify} />
@@ -415,9 +459,9 @@ const Inner = (feature: innerContainerProps) => {
             </S.Title>
             <S.ProfileHeaderRight>
               <S.Img src={Bell} />
-              <S.DiamondContainer>
+              <S.DiamondContainer theme={theme}>
                 {/* 다이아개수 받아와서 넣어야 될 자리 */}
-                150
+                {userInfo.diamond}
                 <S.Img
                   src={Diamond}
                   style={{ width: '1.4rem', height: '1.4rem' }}
@@ -431,7 +475,7 @@ const Inner = (feature: innerContainerProps) => {
         <S.RankHeaderContainer>
           <S.RankHeader>
             <S.RankHeaderUpper>
-              <S.Title>{feature.title}</S.Title>
+              <S.Title theme={theme}>{feature.title}</S.Title>
               <S.RankTimerContainer theme={theme} ref={timerRef}>
                 {timeLeft}
               </S.RankTimerContainer>
@@ -478,16 +522,26 @@ const Inner = (feature: innerContainerProps) => {
           <S.Line />
         </S.RankHeaderContainer>
       ) : (
-        <S.Title>{feature.title}</S.Title>
+        <S.Title theme={theme}>{feature.title}</S.Title>
       )}
       {feature.title === '랭크' ? (
         <S.RankOuterContainer theme={theme}>
           <S.RankContainerHeader>
-            <S.RankTitle style={{ flex: 0.5 }}>순위</S.RankTitle>
-            <S.RankTitle style={{ flex: 1.4 }}>닉네임</S.RankTitle>
-            <S.RankTitle style={{ flex: 0.8 }}>티어</S.RankTitle>
-            <S.RankTitle style={{ flex: 1 }}>푼 문제 수</S.RankTitle>
-            <S.RankTitle style={{ flex: 0.8 }}>정답률</S.RankTitle>
+            <S.RankTitle theme={theme} style={{ flex: 0.5 }}>
+              순위
+            </S.RankTitle>
+            <S.RankTitle theme={theme} style={{ flex: 1.4 }}>
+              닉네임
+            </S.RankTitle>
+            <S.RankTitle theme={theme} style={{ flex: 0.8 }}>
+              티어
+            </S.RankTitle>
+            <S.RankTitle theme={theme} style={{ flex: 1 }}>
+              푼 문제 수
+            </S.RankTitle>
+            <S.RankTitle theme={theme} style={{ flex: 0.8 }}>
+              정답률
+            </S.RankTitle>
           </S.RankContainerHeader>
           {rankType}
         </S.RankOuterContainer>

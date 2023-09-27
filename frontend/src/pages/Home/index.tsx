@@ -2,7 +2,7 @@ import * as S from './Home.styled';
 import { themeProps } from '@emotion/react';
 import { useTheme } from '@mui/material';
 import { IsDark, UserInfo } from 'atoms/atoms';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Inner from 'components/features/Main/InnerContainer';
 import { btnProps, innerContainerProps } from 'types/types';
@@ -21,6 +21,8 @@ import GameMatchingModal from 'components/features/Game/GameMatchingModal/GameMa
 import { userApis } from 'hooks/api/userApis';
 import { Border, VictoryPie } from 'victory';
 import { forceReRender } from '@storybook/react';
+import RankTimer from 'components/features/Main/RankTimer/RankTimer';
+import RankChart from 'components/features/Main/RankChart/RankChart';
 
 const Home = () => {
   const theme: themeProps = useTheme();
@@ -226,12 +228,114 @@ const Home = () => {
     ),
   };
 
-  const [rankRender, setRankRender] = useState(true);
+  const timerRef = useRef<HTMLDivElement>(null);
+  const tierRef = useRef<HTMLButtonElement>(null);
+  const dmRef = useRef<HTMLButtonElement>(null);
+  const mmRef = useRef<HTMLButtonElement>(null);
+  const levelRef = useRef<HTMLButtonElement>(null);
+
+  const handleRankClick = (e: any) => {
+    if (
+      tierRef.current &&
+      dmRef.current &&
+      mmRef.current &&
+      levelRef.current &&
+      timerRef.current
+    ) {
+      tierRef.current.style.color = 'grey';
+      dmRef.current.style.color = 'grey';
+      mmRef.current.style.color = 'grey';
+      levelRef.current.style.color = 'grey';
+      setTimerType(e.target.id);
+      setRankType(e.target.id);
+      switch (e.target.id) {
+        case 'tier':
+          tierRef.current.style.color = 'red';
+          timerRef.current.style.display = 'flex';
+          break;
+        case 'dailyMarathon':
+          dmRef.current.style.color = 'red';
+          timerRef.current.style.display = 'flex';
+          break;
+        case 'monthlyMarathon':
+          mmRef.current.style.color = 'red';
+          timerRef.current.style.display = 'flex';
+          break;
+        case 'level':
+          levelRef.current.style.color = 'red';
+          timerRef.current.style.display = 'none';
+          break;
+      }
+    }
+  };
+
+  const handleRankOver = (e: any) => {
+    if (tierRef.current && dmRef.current && mmRef.current && levelRef.current) {
+      switch (e.target.id) {
+        case 'tier':
+          if (tierRef.current.style.color != 'red') {
+            tierRef.current.style.color = 'darkgrey';
+          }
+          break;
+        case 'dailyMarathon':
+          if (dmRef.current.style.color != 'red') {
+            dmRef.current.style.color = 'darkgrey';
+          }
+          break;
+        case 'monthlyMarathon':
+          if (mmRef.current.style.color != 'red') {
+            mmRef.current.style.color = 'darkgrey';
+          }
+          break;
+        case 'level':
+          if (levelRef.current.style.color != 'red') {
+            levelRef.current.style.color = 'darkgrey';
+          }
+          break;
+      }
+    }
+  };
+
+  const handleRankOut = (e: any) => {
+    if (tierRef.current && dmRef.current && mmRef.current && levelRef.current) {
+      switch (e.target.id) {
+        case 'tier':
+          if (tierRef.current.style.color != 'red') {
+            tierRef.current.style.color = 'grey';
+          }
+          break;
+        case 'dailyMarathon':
+          if (dmRef.current.style.color != 'red') {
+            dmRef.current.style.color = 'grey';
+          }
+          break;
+        case 'monthlyMarathon':
+          if (mmRef.current.style.color != 'red') {
+            mmRef.current.style.color = 'grey';
+          }
+          break;
+        case 'level':
+          if (levelRef.current.style.color != 'red') {
+            levelRef.current.style.color = 'grey';
+          }
+          break;
+      }
+    }
+  };
+
   useEffect(() => {
-    console.log('isDark', isDark);
-    setRankRender(!rankRender);
+    if (tierRef.current) tierRef.current.style.color = 'red';
+  }, [tierRef]);
+
+  const [timerType, setTimerType] = useState('tier');
+  const [rankType, setRankType] = useState('tier');
+  const [rankTrigger, setRankTrigger] = useState(true);
+
+  useEffect(() => {
+    console.log('모드 바뀜');
+    setRankTrigger(!rankTrigger);
   }, [isDark]);
-  
+
   const rankContainerFeature: innerContainerProps = {
     title: '랭크',
     width: '95%',
@@ -239,23 +343,74 @@ const Home = () => {
     minHeight: '15rem',
     minWidth: '',
     backgroundColor: theme.bg.light,
-    content: { rankRender },
+    content: rankType,
   };
 
   return (
     <S.Container initial={{ scale: 0.9 }} animate={{ scale: 1 }}>
       <GameMatchingModal {...gameMatchingModalFeature} />
       <S.LeftContainer>
-        <Inner {...quizContainerFeature} />
-        <Inner {...studyContainerFeature} />
+        <Inner feature={quizContainerFeature} children={null} />
+        <Inner feature={studyContainerFeature} children={null} />
         <S.EtcContainer>
           <Button {...battleFeature} />
           <Button {...shopFeature} />
         </S.EtcContainer>
       </S.LeftContainer>
       <S.RightContainer>
-        <Inner {...profileContainerFeature} />
-        <Inner {...rankContainerFeature} />
+        <Inner feature={profileContainerFeature} children={null} />
+        <Inner feature={rankContainerFeature}>
+          <S.RankHeaderContainer>
+            <S.RankHeader>
+              <S.RankHeaderUpper>
+                <S.Title theme={theme}>랭크</S.Title>
+                <S.RankTimerContainer theme={theme} ref={timerRef}>
+                  <RankTimer timerType={timerType} />
+                </S.RankTimerContainer>
+              </S.RankHeaderUpper>
+              <S.RankHeaderBottom>
+                <S.RankSort
+                  onClick={(e) => handleRankClick(e)}
+                  onMouseOver={(e) => handleRankOver(e)}
+                  onMouseOut={(e) => handleRankOut(e)}
+                  id="tier"
+                  ref={tierRef}
+                >
+                  티어
+                </S.RankSort>
+                <S.RankSort
+                  onClick={(e) => handleRankClick(e)}
+                  onMouseOver={(e) => handleRankOver(e)}
+                  onMouseOut={(e) => handleRankOut(e)}
+                  id="dailyMarathon"
+                  ref={dmRef}
+                >
+                  마라톤(일간)
+                </S.RankSort>
+                <S.RankSort
+                  onClick={(e) => handleRankClick(e)}
+                  onMouseOver={(e) => handleRankOver(e)}
+                  onMouseOut={(e) => handleRankOut(e)}
+                  id="monthlyMarathon"
+                  ref={mmRef}
+                >
+                  마라톤(월간)
+                </S.RankSort>
+                <S.RankSort
+                  onClick={(e) => handleRankClick(e)}
+                  onMouseOver={(e) => handleRankOver(e)}
+                  onMouseOut={(e) => handleRankOut(e)}
+                  id="level"
+                  ref={levelRef}
+                >
+                  레벨
+                </S.RankSort>
+              </S.RankHeaderBottom>
+            </S.RankHeader>
+            <S.Line />
+          </S.RankHeaderContainer>
+          <RankChart selectedRank={rankType} trigger={rankTrigger} />
+        </Inner>
       </S.RightContainer>
     </S.Container>
   );

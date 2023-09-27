@@ -1,12 +1,17 @@
 package com.ssafy.jazz_backend.domain.member.entity;
 
+import com.ssafy.jazz_backend.domain.item.entity.ItemManagement;
 import com.ssafy.jazz_backend.domain.member.profile.entity.Profile;
 import com.ssafy.jazz_backend.global.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.*;
 
 @Entity
@@ -15,6 +20,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Member extends BaseEntity {
 
     @Id
@@ -35,4 +41,8 @@ public class Member extends BaseEntity {
 
     @OneToOne(mappedBy = "member")
     private Profile profile;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<ItemManagement> itemManagements;
+
 }

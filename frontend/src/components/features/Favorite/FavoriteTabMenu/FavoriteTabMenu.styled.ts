@@ -41,7 +41,6 @@ export const Desc = styled.div`
   text-align: center;
   background-color: #fff;
   overflow: scroll;
-  padding: 20px 30px;
 
   & div {
     width: 100%;

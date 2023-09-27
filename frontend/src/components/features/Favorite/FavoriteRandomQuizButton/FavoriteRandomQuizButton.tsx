@@ -4,10 +4,10 @@ import Enlarge from 'components/Effect/Enlarge/Enlarge';
 
 const ButtonStyle = styled.button`
   width: 150px;
-  height: 5rem;
+  height: 3rem;
   background-color: #a3a3e1;
   border-radius: 100px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 800;
   color: #fff;
 `;

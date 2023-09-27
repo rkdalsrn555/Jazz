@@ -1,58 +1,29 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from '@emotion/styled';
 
-export const ItemWrap = styled(motion.li)`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  margin-top: -1px;
-  background: white;
-  overflow: hidden;
-
-  h1 {
-    padding: 22px 30px 21px 30px;
-    font-size: 15px;
-    z-index: 1;
-    opacity: 0.9;
-  }
-`;
-
-export const Img = styled(motion.div)`
-  width: 40px;
-  height: 40px;
-  overflow: hidden;
-  border-radius: 50%;
-  margin: 0 30px 0 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    vertical-align: bottom;
-  }
-`;
-
-export const SubWrap = styled(motion.div)`
-  font-size: 15px;
-  height: auto;
+export const AccordionButtonContainer = styled.button`
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #a3a3e1;
+  justify-content: space-between;
+  padding: 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  background: white;
+  text-align: left;
+`;
+
+export const SubWrap = styled.div`
+  position: relative;
+  font-size: 15px;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f2ff;
 
   div {
-    padding: 10px 20px;
     text-align: left;
-  }
-
-  :last-child {
-    border-radius: 0 0 20px 20px;
   }
 `;
 
@@ -62,7 +33,30 @@ export const ContentContainer = styled.div`
 `;
 
 export const QuestionStyle = styled.div`
+  padding-left: 5%;
+  position: absolute;
+  top: 15%;
   display: flex;
+  align-items: center;
+  gap: 10%;
+
+  & h1 {
+    font-weight: 800;
+  }
+
+  & p {
+    width: 80%;
+    line-height: 20px;
+    color: #212121;
+  }
+`;
+
+export const ContentStyle = styled.div`
+  padding-left: 5%;
+  position: absolute;
+  top: 60%;
+  display: flex;
+  align-items: center;
   gap: 10%;
 
   & h1 {
@@ -70,11 +64,26 @@ export const QuestionStyle = styled.div`
   }
 `;
 
-export const ContentStyle = styled.div`
+export const FavoriteLiContainer = styled.div`
   display: flex;
-  gap: 10%;
+  align-items: center;
+  padding-left: 5%;
+
+  & .liContent {
+    display: flex;
+    align-items: center;
+    gap: 5%;
+  }
+
+  & .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 5%;
+  }
 
   & h1 {
-    font-weight: 800;
+    font-size: 16px;
+    padding: 28px 10px;
   }
 `;

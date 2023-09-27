@@ -17,14 +17,24 @@ type Menu = {
 
 type OwnProps = {
   menuArr: Menu[];
+  getFavoriteList: () => void;
 };
 
 const FavoriteTabMenu = (props: OwnProps) => {
-  const { menuArr } = props;
+  const [currentOpen, setCurrentOpen] = useState<number | null>(null);
+  const toggleOpen = (quizId: number) => {
+    if (currentOpen === quizId) {
+      setCurrentOpen(null);
+    } else {
+      setCurrentOpen(quizId);
+    }
+  };
+  const { menuArr, getFavoriteList } = props;
   const [currentTab, clickTab] = useState<number>(0);
 
   const selectMenuHandler = (index: number) => {
     clickTab(index);
+    setCurrentOpen(null);
   };
 
   return (
@@ -41,18 +51,15 @@ const FavoriteTabMenu = (props: OwnProps) => {
       </S.TabMenu>
       <S.Desc>
         {menuArr[currentTab].content.map((item) => (
-          // <div>
-          //   <FavoriteIcon
-          //     //   fill={item.isBookmark ? '#FFE812' : '#fff'}
-          //     fill={true ? '#FFE812' : '#fff'}
-          //   ></FavoriteIcon>
-          // </div>
           <AccordionLi
             quizId={item.quizId}
             question={item.question}
             content={item.content}
             kind={item.kind}
             isBookmark={item.isBookmark}
+            currentOpen={currentOpen}
+            toggleOpen={toggleOpen}
+            getFavoriteList={getFavoriteList}
           />
         ))}
       </S.Desc>

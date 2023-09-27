@@ -11,11 +11,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetAllBookmarkResponseDto {
+public class InsertExplanationRequestDto {
 
-    int quizId;
-    String question;
-    String content;
-    int kind;
-    Boolean isBookmark;
+    String word;
+    String description;
 }

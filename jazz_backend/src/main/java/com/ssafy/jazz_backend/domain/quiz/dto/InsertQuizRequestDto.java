@@ -11,11 +11,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetAllBookmarkResponseDto {
+public class InsertQuizRequestDto {
 
     int quizId;
-    String question;
-    String content;
     int kind;
-    Boolean isBookmark;
+    int financialType;
+    String question;
 }

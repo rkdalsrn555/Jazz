@@ -199,3 +199,75 @@ export const PieTitle = styled.text<{ theme: themeProps }>`
 `;
 
 export const PieNumber = styled.text``;
+
+//////////////////////////// 아래는 랭크 관련
+export const Title = styled.div<{ theme: themeProps }>`
+  /* border: solid black; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: large;
+  font-weight: 600;
+  padding-left: 0.8rem;
+  height: 3rem;
+  color: ${(props) => props.theme.font.deep};
+`;
+
+export const RankHeaderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 1rem;
+`;
+
+export const RankHeader = styled.div`
+  /* border: solid black; */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: fit-content;
+`;
+
+export const RankHeaderUpper = styled.div`
+  display: flex;
+  flex-direction: row;
+  position: relative;
+`;
+
+export const RankHeaderBottom = styled.div`
+  /* border: solid green; */
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
+  align-items: center;
+  min-width: 20rem;
+  gap: 0.5rem;
+  padding-left: 0.5rem;
+`;
+
+export const RankSort = styled(motion.button)`
+  /* border: solid blue; */
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0 0.3rem 0 0.3rem;
+  color: grey;
+  &:hover {
+    cursor: pointer;
+    color: darkgrey;
+  }
+`;
+
+export const RankTimerContainer = styled.div<{ theme: themeProps }>`
+  /* border: solid red; */
+  display: flex;
+  flex-direction: row;
+  width: 40%;
+  height: 125%;
+  border-radius: 0.4rem;
+  position: absolute;
+  /* top: 0.5rem; */
+  right: 1rem;
+  box-shadow: inset 0.5px 1px 5px 0px ${(props) => props.theme.bg.shadow};
+  background-color: ${(props) => props.theme.bg.mid};
+  transition: all 0.2s;
+`;

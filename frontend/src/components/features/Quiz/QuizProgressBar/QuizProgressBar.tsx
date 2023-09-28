@@ -6,10 +6,11 @@ import { motion } from 'framer-motion';
 type OwnProps = {
   questionCnt: number;
   gauge: number;
+  nowQuestionNumber: number;
 };
 
 const QuizProgressBar = (props: OwnProps) => {
-  const { questionCnt, gauge } = props;
+  const { questionCnt, gauge, nowQuestionNumber } = props;
 
   useEffect(() => {});
 
@@ -21,7 +22,7 @@ const QuizProgressBar = (props: OwnProps) => {
           width: `${gauge}%`,
         }}
       ></motion.div>
-      <S.ProgressBarText>{`${gauge / 10}/${questionCnt}`}</S.ProgressBarText>
+      <S.ProgressBarText>{`${nowQuestionNumber}/${questionCnt}`}</S.ProgressBarText>
     </S.ProgressBarContainer>
   );
 };

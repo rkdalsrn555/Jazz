@@ -9,12 +9,13 @@ import { useNavigate } from 'react-router-dom';
 
 type OwnProps = {
   correctNum: number;
-  diamondCnt: number;
-  exp: number;
+  diamondCnt?: number;
+  exp?: number;
+  quizCnt?: number;
 };
 
 const QuizResult = (props: OwnProps) => {
-  const { correctNum, diamondCnt, exp } = props;
+  const { correctNum, diamondCnt, exp, quizCnt } = props;
   const navigate = useNavigate();
 
   return (
@@ -22,24 +23,37 @@ const QuizResult = (props: OwnProps) => {
       <S.QuizContainer>
         <S.QuizResultIcon src={QuizResultIcon} />
         <S.ResultBox>
-          <S.AwardTitle style={{ marginTop: '40px' }}>결과</S.AwardTitle>
-          <S.AwardBox>
-            <S.AwardBoxLi>{correctNum}/10</S.AwardBoxLi>
-          </S.AwardBox>
-          <S.AwardTitle>보상</S.AwardTitle>
+          <S.AwardTitle
+            style={diamondCnt ? { marginTop: '40px' } : { marginTop: '20%' }}
+          >
+            결과
+          </S.AwardTitle>
           <S.AwardBox>
             <S.AwardBoxLi>
-              <DiamondIcon />
-              {`+${diamondCnt}`}
-            </S.AwardBoxLi>
-            <S.AwardBoxLi>
-              <span style={{ color: 'black' }}>EXP</span> +{exp}
+              {diamondCnt ? `${correctNum}/10` : `${correctNum}/${quizCnt}`}
             </S.AwardBoxLi>
           </S.AwardBox>
+
+          {diamondCnt ? (
+            <>
+              <S.AwardTitle>보상</S.AwardTitle>
+              <S.AwardBox>
+                <S.AwardBoxLi>
+                  <DiamondIcon />
+                  {`+${diamondCnt}`}
+                </S.AwardBoxLi>
+                <S.AwardBoxLi>
+                  <span style={{ color: 'black' }}>EXP</span> +{exp}
+                </S.AwardBoxLi>
+              </S.AwardBox>
+            </>
+          ) : (
+            ''
+          )}
           <Enlarge>
             <S.OkBtn
               onClick={() => {
-                navigate('/home');
+                diamondCnt ? navigate('/home') : navigate('/favorite');
               }}
             >
               <S.OkBtnTitle>끝내기</S.OkBtnTitle>

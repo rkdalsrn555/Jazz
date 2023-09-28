@@ -166,7 +166,11 @@ const ShortAnswerMultipleQuestionPage = () => {
           isToggled={isToggled}
           setIsToggled={setIsToggled}
         />
-        <QuizProgressBar questionCnt={10} gauge={(nowQuizNumber + 1) * 10} />
+        <QuizProgressBar
+          questionCnt={10}
+          gauge={(nowQuizNumber + 1) * 10}
+          nowQuestionNumber={nowQuizNumber + 1}
+        />
         {quizList ? (
           <QuestionBox
             quizId={quizList[nowQuizNumber].quizId}

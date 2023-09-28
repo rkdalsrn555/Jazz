@@ -16,8 +16,7 @@ import axios from 'axios';
 type Client = {
   level: number;
   nickname: string;
-  charactor: string;
-  bgColor: string;
+  charactorNumber: 1 | 2 | 3 | 4 | 5;
 };
 
 type OwnProps = {
@@ -32,8 +31,8 @@ const GameMatchingModal = (props: OwnProps) => {
   const { me, other, isMatching, isToggled, closeModal } = props;
 
   //////////////////////게임 로직/////////////////////////////////////
-  const tryMatch = async () => await gameApis.get(`/game/join`);
-  const getGameInfo = async () => await gameApis.get(`/game/play`);
+  const tryMatch = async () => await userApis.get(`/game/join`);
+  const getGameInfo = async () => await userApis.get(`/game/play`);
 
   useEffect(() => {
     if (isToggled) {
@@ -55,6 +54,8 @@ const GameMatchingModal = (props: OwnProps) => {
     }
   }, [isToggled]);
 
+  useEffect(() => {}, [other]);
+
   return (
     <AnimatePresence>
       {isToggled && (
@@ -74,8 +75,7 @@ const GameMatchingModal = (props: OwnProps) => {
               <MatchingProfile
                 level={me.level}
                 nickname={me.nickname}
-                charactor={me.charactor}
-                bgColor={me.bgColor}
+                charactorNumber={me.charactorNumber}
               ></MatchingProfile>
               <div className="battleIcon">
                 <img src={VsImg} alt="대결" width={100} />
@@ -84,8 +84,7 @@ const GameMatchingModal = (props: OwnProps) => {
                 <MatchingProfile
                   level={other ? other.level : 0}
                   nickname={other ? other.nickname : ''}
-                  charactor={other ? other.charactor : ''}
-                  bgColor={other ? other.bgColor : ''}
+                  charactorNumber={other ? other.charactorNumber : 1}
                 ></MatchingProfile>
               ) : (
                 <div className="questionMark">
@@ -94,9 +93,13 @@ const GameMatchingModal = (props: OwnProps) => {
               )}
             </S.ModalContent>
             {isMatching ? (
-              <S.AcceptButton>대결 수락</S.AcceptButton>
+              <S.loadingAndButtonContainer>
+                <S.AcceptButton>대결 수락</S.AcceptButton>
+              </S.loadingAndButtonContainer>
             ) : (
-              <LoadingBar />
+              <S.loadingAndButtonContainer>
+                <LoadingBar />
+              </S.loadingAndButtonContainer>
             )}
           </S.ModalContainer>
         </>

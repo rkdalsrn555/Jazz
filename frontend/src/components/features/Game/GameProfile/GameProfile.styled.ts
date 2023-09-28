@@ -6,8 +6,7 @@ export const GameProfileContainerOut = styled.div`
   flex-direction: column;
   justify-content: center;
   position: relative;
-  width: 431px;
-  height: 741px;
+  height: 400px;
   border-radius: 16px;
   background: rgba(0, 0, 0);
   color: #fff;
@@ -15,6 +14,7 @@ export const GameProfileContainerOut = styled.div`
   font-weight: bold;
   line-height: 230px;
   text-align: center;
+  padding: 10px;
 
   &::before,
   &::after {
@@ -46,15 +46,15 @@ export const GameProfileContainerOut = styled.div`
   }
 
   & h2 {
-    line-height: 40px;
+    line-height: 35px;
     margin: 0;
-    font-size: 32px;
+    font-size: 24px;
   }
 
   & h3 {
-    line-height: 40px;
+    line-height: 35px;
     margin: 0;
-    font-size: 32px;
+    font-size: 24px;
   }
 `;
 
@@ -84,5 +84,6 @@ export const UserContentContainer = styled.div`
 `;
 
 export const HeartGuageContainer = styled.div`
-  height: 150px;
+  height: 40%;
+  margin-top: -15%;
 `;

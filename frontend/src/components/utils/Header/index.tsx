@@ -22,6 +22,7 @@ const Header = () => {
     '/short-answer-multiple-question',
     '/marathon',
     '/favorite/random-quiz',
+    '/battle-game',
   ];
 
   return (

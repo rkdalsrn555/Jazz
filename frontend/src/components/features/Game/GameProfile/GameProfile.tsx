@@ -7,17 +7,43 @@ type OwnProps = {
   heartCntProps: number;
   level: number;
   nickname: string;
-  charactor: string;
+  charactorNumber: 1 | 2 | 3 | 4 | 5;
 };
 
 const GameProfile = (props: OwnProps) => {
-  const { heartCntProps, level, nickname, charactor } = props;
+  const { heartCntProps, level, nickname, charactorNumber } = props;
   const [heartCnt, setHeartCnt] = useState<number>(heartCntProps);
+
+  const DrawCharactor = (charactorNumber: number) => {
+    let charactor = '';
+    switch (charactorNumber) {
+      case 1:
+        charactor = 'circle.png';
+        break;
+      case 2:
+        charactor = 'rectangle.png';
+        break;
+      case 3:
+        charactor = 'triangle.png';
+        break;
+      case 4:
+        charactor = 'rock.png';
+        break;
+      case 5:
+        charactor = 'warrier.png';
+        break;
+    }
+    return charactor;
+  };
 
   return (
     <S.GameProfileContainerOut>
       <S.UserCharactorContainer>
-        <img src={`/assets/img/modelAsset/${charactor}`} alt="유저캐릭터" />
+        <img
+          src={`/assets/img/modelAsset/${DrawCharactor(charactorNumber)}`}
+          alt="유저캐릭터"
+          width={200}
+        />
       </S.UserCharactorContainer>
       <S.UserContentContainer>
         <h2>Lv. {level}</h2>
@@ -28,9 +54,9 @@ const GameProfile = (props: OwnProps) => {
           .fill(0)
           .map((_, i) =>
             i < heartCnt ? (
-              <FullHeartIcon key={i} />
+              <FullHeartIcon key={i} width={35} />
             ) : (
-              <BrokeHeartIcon key={i} />
+              <BrokeHeartIcon key={i} width={35} />
             )
           )}
       </S.HeartGuageContainer>

@@ -23,6 +23,7 @@ export const ModalContainer = styled(motion.div)`
   align-items: center;
   justify-content: center;
   width: 70%;
+  min-width: 800px;
   max-width: 800px;
   height: 55%;
   max-height: 600px;
@@ -68,4 +69,12 @@ export const AcceptButton = styled.button`
   font-size: 24px;
   font-weight: 700;
   background: linear-gradient(90deg, #ffe259 15%, #ffa751 85%);
+`;
+
+export const loadingAndButtonContainer = styled.div`
+  height: 70px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

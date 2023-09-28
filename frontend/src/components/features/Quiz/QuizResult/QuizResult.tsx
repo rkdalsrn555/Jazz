@@ -21,20 +21,26 @@ const QuizResult = (props: OwnProps) => {
   return (
     <FadeInOut>
       <S.QuizContainer>
-        <S.QuizResultIcon src={QuizResultIcon} />
+        <S.QuizResultIcon src={QuizResultIcon} width={530} />
         <S.ResultBox>
           <S.AwardTitle
-            style={diamondCnt ? { marginTop: '40px' } : { marginTop: '20%' }}
+            style={
+              diamondCnt || diamondCnt === 0
+                ? { marginTop: '40px' }
+                : { marginTop: '20%' }
+            }
           >
             결과
           </S.AwardTitle>
           <S.AwardBox>
             <S.AwardBoxLi>
-              {diamondCnt ? `${correctNum}/10` : `${correctNum}/${quizCnt}`}
+              {diamondCnt || diamondCnt === 0
+                ? `${correctNum}/10`
+                : `${correctNum}/${quizCnt}`}
             </S.AwardBoxLi>
           </S.AwardBox>
 
-          {diamondCnt ? (
+          {diamondCnt || diamondCnt === 0 ? (
             <>
               <S.AwardTitle>보상</S.AwardTitle>
               <S.AwardBox>
@@ -53,11 +59,13 @@ const QuizResult = (props: OwnProps) => {
           <Enlarge>
             <S.OkBtn
               onClick={() => {
-                diamondCnt ? navigate('/home') : navigate('/favorite');
+                diamondCnt || diamondCnt === 0
+                  ? navigate('/home')
+                  : navigate('/favorite');
               }}
             >
               <S.OkBtnTitle>끝내기</S.OkBtnTitle>
-              <S.OkBtnBgImg src={ButtonBg} alt="버튼" />
+              <S.OkBtnBgImg src={ButtonBg} alt="버튼" width={200} />
             </S.OkBtn>
           </Enlarge>
         </S.ResultBox>

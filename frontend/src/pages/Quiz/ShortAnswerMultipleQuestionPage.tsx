@@ -160,16 +160,16 @@ const ShortAnswerMultipleQuestionPage = () => {
 
   return (
     <FadeInOut>
+      <QuizProgressBar
+        questionCnt={10}
+        gauge={(nowQuizNumber + 1) * 10}
+        nowQuestionNumber={nowQuizNumber + 1}
+      />
       <S.Container>
         <Modal
           {...modalData}
           isToggled={isToggled}
           setIsToggled={setIsToggled}
-        />
-        <QuizProgressBar
-          questionCnt={10}
-          gauge={(nowQuizNumber + 1) * 10}
-          nowQuestionNumber={nowQuizNumber + 1}
         />
         {quizList ? (
           <QuestionBox

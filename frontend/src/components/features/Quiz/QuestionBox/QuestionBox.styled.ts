@@ -9,9 +9,10 @@ export const QuestionContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 860px;
-  height: 655px;
+  width: 600px;
+  min-height: 50%;
   box-sizing: border-box;
+  margin: 0 auto;
 `;
 
 export const QuestionTitle = styled.div<{
@@ -22,7 +23,7 @@ export const QuestionTitle = styled.div<{
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 860px;
+  width: 100%;
   height: fit-content;
   background-color: ${(props) => {
     if (props.isCorrect !== null) {
@@ -32,9 +33,9 @@ export const QuestionTitle = styled.div<{
     }
   }};
   border-radius: 24px 24px 0 0;
-  font-size: 30px;
+  font-size: 20px;
   box-sizing: border-box;
-  padding: ${(props) => (props.kind === 3 ? '22px 46px 22px 46px' : '46px')};
+  padding: ${(props) => (props.kind === 3 ? '46px' : '46px')};
 `;
 
 export const QuestionContent = styled.div<{
@@ -45,8 +46,8 @@ export const QuestionContent = styled.div<{
   align-items: center;
   justify-content: center;
   border-radius: 0 0 24px 24px;
-  width: 860px;
-  min-height: 396px;
+  width: 100%;
+  min-height: 20rem;
   background-color: ${(props) => {
     if (props.isCorrect !== null) {
       return props.isCorrect ? '#F4FEDA ' : '#E9CEC9';
@@ -58,34 +59,32 @@ export const QuestionContent = styled.div<{
 
 export const AnswerIconContainer = styled.div`
   position: absolute;
-  top: 30%;
+  top: 20%;
   left: 0;
   right: 0;
   text-align: center;
 `;
 
 export const AnswerContaier = styled.div`
-  height: 84px;
   background-color: #dbe8f9;
   border: none;
   border-radius: 8px;
   text-align: center;
-  line-height: 50px;
-  font-size: 50px;
+  line-height: 30px;
+  font-size: 30px;
   font-weight: 800;
-  padding: 14px;
+  padding: 15px 20px;
   box-sizing: border-box;
   caret-color: #638ef3;
 `;
 
 export const SubjectiveInput = styled.input`
-  height: 84px;
   background-color: #dbe8f9;
   border: none;
   border-radius: 8px;
   text-align: center;
-  font-size: 50px;
-  padding: 14px;
+  font-size: 30px;
+  padding: 15px 20px;
   box-sizing: border-box;
   caret-color: #638ef3;
   &:focus {
@@ -96,6 +95,7 @@ export const SubjectiveInput = styled.input`
 export const MultipleQuestionUl = styled.ul`
   display: flex;
   flex-direction: column;
+  width: 90%;
   gap: 18px;
   padding: 0;
 `;
@@ -104,16 +104,15 @@ export const MultipleQuestionLi = styled.li<{
   active: number;
   answer: number;
 }>`
-  max-width: 750px;
-  min-width: 750px;
-  height: fit-content;
+  min-width: 100%;
+  height: 100%;
   text-align: left;
   background-color: #dbe8f9;
   border-radius: 8px;
   box-sizing: border-box;
-  font-size: ${(props) => (props.kind === 3 ? '24px' : '30px')};
+  font-size: ${(props) => (props.kind === 3 ? '16px' : '16px')};
   list-style: none;
-  padding: 22px 40px;
+  padding: 15px 20px;
   box-shadow: ${(props) =>
     props.active === props.answer ? '0 0 0 5px #638EF3 inset' : ''};
 `;

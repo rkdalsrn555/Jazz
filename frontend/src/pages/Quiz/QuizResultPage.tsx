@@ -7,6 +7,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 90vh;
 `;
 
 const QuizResultPage = () => {
@@ -16,6 +17,8 @@ const QuizResultPage = () => {
   useEffect(() => {
     if (!location.state) {
       navigate('/home');
+    } else {
+      console.log(location.state.diamond);
     }
   }, []);
 

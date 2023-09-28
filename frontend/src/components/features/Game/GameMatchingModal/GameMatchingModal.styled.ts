@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
 export const GreyBackground = styled.div`
-  background: #aaaaaa2e;
+  background: rgba(0, 0, 0, 0.7);
   width: 100vw;
   height: 100vh;
   display: block;
@@ -14,7 +14,7 @@ export const GreyBackground = styled.div`
 
 export const ModalContainer = styled(motion.div)`
   position: absolute;
-  top: 12%;
+  top: 15%;
   left: 50%;
   transform: translate3d(-50%, 0, 0);
   z-index: 9999;
@@ -22,19 +22,19 @@ export const ModalContainer = styled(motion.div)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 32px;
-  width: 1156px;
-  height: 731px;
+  width: 70%;
+  max-width: 800px;
+  height: 55%;
+  max-height: 600px;
   box-shadow: 0px 0px 30px 7px #fff;
   border-radius: 12px;
   text-align: center;
-  padding: 24px 32px;
   background-color: rgba(0, 0, 0, 0.8);
 
   & .closeIcon {
     position: absolute;
-    top: 38px;
-    right: 38px;
+    top: 2%;
+    right: 3%;
     fill-opacity: 0.5;
   }
 
@@ -46,8 +46,16 @@ export const ModalContainer = styled(motion.div)`
 export const ModalContent = styled.div`
   display: flex;
   align-items: center;
-  gap: 100px;
-  margin-bottom: 30px;
+  justify-content: space-between;
+
+  & .questionMark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+  }
 `;
 
 export const AcceptButton = styled.button`

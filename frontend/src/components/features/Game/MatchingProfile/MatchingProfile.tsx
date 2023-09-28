@@ -15,7 +15,11 @@ const MatchingProfile = (props: OwnProps) => {
     <S.ProfileContainer>
       <S.UserCharactorContainer bgColor={bgColor}>
         <div className="linearGradient">
-          <img src={`/assets/img/modelAsset/${charactor}`} alt="유저캐릭터" />
+          <img
+            src={`/assets/img/modelAsset/${charactor}`}
+            alt="유저캐릭터"
+            width={250}
+          />
         </div>
       </S.UserCharactorContainer>
       <S.UserContentContainer>

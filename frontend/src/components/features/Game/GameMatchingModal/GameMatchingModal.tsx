@@ -65,7 +65,11 @@ const GameMatchingModal = (props: OwnProps) => {
             animate={{ y: 50, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
           >
-            <CloseIcon onClick={closeModal} className="closeIcon"></CloseIcon>
+            <CloseIcon
+              onClick={closeModal}
+              className="closeIcon"
+              width={50}
+            ></CloseIcon>
             <S.ModalContent>
               <MatchingProfile
                 level={me.level}
@@ -73,8 +77,8 @@ const GameMatchingModal = (props: OwnProps) => {
                 charactor={me.charactor}
                 bgColor={me.bgColor}
               ></MatchingProfile>
-              <div>
-                <img src={VsImg} alt="대결" />
+              <div className="battleIcon">
+                <img src={VsImg} alt="대결" width={100} />
               </div>
               {isMatching ? (
                 <MatchingProfile
@@ -84,8 +88,8 @@ const GameMatchingModal = (props: OwnProps) => {
                   bgColor={other ? other.bgColor : ''}
                 ></MatchingProfile>
               ) : (
-                <div style={{ width: '300px' }}>
-                  <img src={QuestionImg} alt="물음표" />
+                <div className="questionMark">
+                  <img src={QuestionImg} alt="물음표" width={100} />
                 </div>
               )}
             </S.ModalContent>

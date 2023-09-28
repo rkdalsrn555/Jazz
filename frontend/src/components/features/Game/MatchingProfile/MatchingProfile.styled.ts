@@ -6,8 +6,7 @@ export const ProfileContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 300px;
-  height: 450px;
+  height: 400px;
   background: transparent;
   z-index: 99;
 `;
@@ -27,8 +26,8 @@ export const UserCharactorContainer = styled.div<{ bgColor: string }>`
   & .linearGradient {
     position: absolute;
     top: 0;
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
     background: ${(props) => `radial-gradient(
       90.44% 90.27% at 49.89% 50.86%,
       ${props.bgColor} 0%,
@@ -45,8 +44,8 @@ export const UserContentContainer = styled.div`
   align-items: center;
   justify-content: center;
   color: #fff;
-  padding-top: 20px;
-  font-size: 24px;
+  font-size: 20px;
+  margin-top: -15%;
 
   & h2,
   h3 {

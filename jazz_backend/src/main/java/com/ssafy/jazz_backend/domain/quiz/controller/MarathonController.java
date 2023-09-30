@@ -52,7 +52,6 @@ public class MarathonController {
         try {
             MarathonResultResponseDto responseDto = marathonService.applyMarathonQuizResult(
                 accessToken, requestDto);
-            System.out.println("컨트롤러 까지 왔음");
             return new ResponseEntity<MarathonResultResponseDto>(responseDto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(

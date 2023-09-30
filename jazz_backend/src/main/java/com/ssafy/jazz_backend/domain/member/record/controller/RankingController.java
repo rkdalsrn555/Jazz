@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
@@ -29,10 +28,10 @@ public class RankingController {
     //update가 일어나면 바로 redis에 값 넣고 db에도 바꿔줌
     @GetMapping("/level")
     private ResponseEntity<?> getLevelRankingTopTen(
-        @RequestHeader String accessTocken) {
+        @RequestHeader String accessToken) {
         try {
             List<RankingTopTenResponseDto> levelRankingTopTen = rankingService.getLevelRankingTopTen(
-                accessTocken);
+                accessToken);
             return new ResponseEntity<>(levelRankingTopTen,
                 HttpStatus.OK);
         } catch (Exception e) {
@@ -46,10 +45,10 @@ public class RankingController {
 
     @GetMapping("/tier")
     private ResponseEntity<?> getTierRankingTopTen(
-        @RequestHeader String accessTocken) {
+        @RequestHeader String accessToken) {
         try {
             List<RankingTopTenResponseDto> tierRankingTopTen = rankingService.getTierRankingTopTen(
-                accessTocken);
+                accessToken);
             return new ResponseEntity<>(tierRankingTopTen,
                 HttpStatus.OK);
         } catch (Exception e) {
@@ -61,13 +60,13 @@ public class RankingController {
 
     }
 
-    @GetMapping("/marathon")
-    private ResponseEntity<?> getMarathonRankingTopTen(
-        @RequestHeader String accessTocken) {
+    @GetMapping("/daily/marathon")
+    private ResponseEntity<?> getDailyMarathonRankingTopTen(
+        @RequestHeader String accessToken) {
         try {
-            List<RankingTopTenResponseDto> marathonRankingTopTen = rankingService.getMarathonRankingTopTen(
-                accessTocken);
-            return new ResponseEntity<>(marathonRankingTopTen,
+            List<RankingTopTenResponseDto> dailyMarathonRankingTopTen = rankingService.getDailyMarathonRankingTopTen(
+                accessToken);
+            return new ResponseEntity<>(dailyMarathonRankingTopTen,
                 HttpStatus.OK);
         } catch (Exception e) {
             log.info("에러 발생 : " + e.getMessage());
@@ -75,6 +74,22 @@ public class RankingController {
                 HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+
+    }
+
+    @GetMapping("/monthly/marathon")
+    private ResponseEntity<?> getMonthlyMarathonRankingTopTen(
+        @RequestHeader String accessToken) {
+        try {
+            List<RankingTopTenResponseDto> monthlyMarathonRankingTopTen = rankingService.getMonthlyMarathonRankingTopTen(
+                accessToken);
+            return new ResponseEntity<>(monthlyMarathonRankingTopTen,
+                HttpStatus.OK);
+        } catch (Exception e) {
+            log.info("에러 발생 : " + e.getMessage());
+            return new ResponseEntity<>(Collections.singletonList(e.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 

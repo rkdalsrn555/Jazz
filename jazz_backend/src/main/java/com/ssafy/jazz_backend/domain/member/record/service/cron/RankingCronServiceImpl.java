@@ -1,7 +1,7 @@
 package com.ssafy.jazz_backend.domain.member.record.service.cron;
 
 import com.ssafy.jazz_backend.domain.member.record.dto.redisDto.LevelRankRedisDto;
-import com.ssafy.jazz_backend.domain.member.record.dto.redisDto.MarathonRankDailyRedisDto;
+import com.ssafy.jazz_backend.domain.member.record.dto.redisDto.DailyMarathonRankRedisDto;
 import com.ssafy.jazz_backend.domain.member.record.dto.redisDto.TierRankRedisDto;
 import com.ssafy.jazz_backend.global.Util;
 import java.util.List;
@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.ZSetOperations;
-import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -46,25 +45,25 @@ public class RankingCronServiceImpl {
             .collect(Collectors.toList());
     }
 
-    private List<MarathonRankDailyRedisDto> getTopTenMarathonDailyRanks() {
+    private List<DailyMarathonRankRedisDto> getTopTenMarathonDailyRanks() {
         Set<ZSetOperations.TypedTuple<String>> topTenMemberIds = zSetOperations.reverseRangeWithScores(
-            util.getMarathonDailyRankKeyName(), 0, 9);
+            util.getDailyMarathonRankKeyName(), 0, 9);
         //<ZSetOperations.TypedTuple<String>> 는 Set에 저장되는 타입
         //  ZSetOperations.TypedTuple 는 redis zset의 멤버(value)와 score 를 포함하는 튜플 인터페이스
         //      String은 zset에 저장되는 value가 String 타입이다 를 의미
         return topTenMemberIds.stream()
-            .map(MarathonRankDailyRedisDto::convertToMarathonRankRedisDto)
+            .map(DailyMarathonRankRedisDto::convertToDailyMarathonRankRedisDto)
             .collect(Collectors.toList());
     }
 
     //#############    Delete    ################
 
     public void DeleteDailyMarathonRankInRedis() {
-        zSetOperations.remove(util.getMarathonDailyRankKeyName());
+        zSetOperations.remove(util.getDailyMarathonRankKeyName());
     }
 
     public void DeleteMonthlyMarathonRankInRedis() {
-        zSetOperations.remove(util.getMarathonMonthlyRankKeyName());
+        zSetOperations.remove(util.getMonthlyMarathonRankKeyName());
     }
 
     public void DeleteTierRankInRedis() {
@@ -77,16 +76,16 @@ public class RankingCronServiceImpl {
 
     //##############    캐싱 Warming   #################
 
-    public void cacheWarmingDailyMarathonRankInRedis(List<MarathonRankDailyRedisDto> toptenList) {
+    public void cacheWarmingDailyMarathonRankInRedis(List<DailyMarathonRankRedisDto> toptenList) {
 
-        for (MarathonRankDailyRedisDto topten : toptenList) {
-            zSetOperations.add(util.getMarathonDailyRankKeyName(), topten.getMemberId(),
+        for (DailyMarathonRankRedisDto topten : toptenList) {
+            zSetOperations.add(util.getDailyMarathonRankKeyName(), topten.getMemberId(),
                 topten.getQuizRecord());
         }
     }
 
     public void cacheWarmingMonthlyMarathonRankInRedis() {
-        
+
     }
 
     public void cacheWarmingLevelRankInRedis(List<LevelRankRedisDto> toptenList) {

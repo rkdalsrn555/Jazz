@@ -59,12 +59,12 @@ public class Util {
         return "tier-ranking";
     }
 
-    public String getMarathonDailyRankKeyName() {
-        return "marathon-daily-ranking";
+    public String getDailyMarathonRankKeyName() {
+        return "daily-marathon-ranking";
     }
 
-    public String getMarathonMonthlyRankKeyName() {
-        return "marathon-monthly-ranking";
+    public String getMonthlyMarathonRankKeyName() {
+        return "monthly-marathon-ranking";
     }
 
     //chiceList를 통해 contentList(보기내용)을 랜덤 처리해서 retrun

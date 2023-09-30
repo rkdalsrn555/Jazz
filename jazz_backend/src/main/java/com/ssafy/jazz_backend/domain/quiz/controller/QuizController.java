@@ -130,20 +130,27 @@ public class QuizController {
 
     }
 
-    @GetMapping("/explanation/correct-answer")
+    @GetMapping("/explanation/correct-answer/{quizId}")
     private ExplanationCorrectAnswerResponseDto getCorrectExplanation(
         @RequestHeader("accessToken") String accessToken,
-        @RequestBody ExplanationCorrectAnswerRequestDto request) {
+        @PathVariable int quizId) {
         String userUUID = jwtService.getInfo("account", accessToken);
+        ExplanationCorrectAnswerRequestDto request = new ExplanationCorrectAnswerRequestDto(quizId);
         return explanationService.getCorrectExplanation(userUUID, request);
     }
 
-    @GetMapping("/explanation/wrong-answer")
+    @GetMapping("/explanation/wrong-answer/{quizId}")
     private ExplanationWrongAnswerResponseDto getWrongExplanation(
         @RequestHeader("accessToken") String accessToken,
-        @RequestBody ExplanationWrongAnswerRequestDto request) {
+        @PathVariable int quizId,
+        @RequestParam("wrongContent") String wrongContent) {
+
         String userUUID = jwtService.getInfo("account", accessToken);
+
+        ExplanationWrongAnswerRequestDto request = new ExplanationWrongAnswerRequestDto(quizId,
+            wrongContent);
         return explanationService.getWrongExplanation(userUUID, request);
     }
+
 }
 

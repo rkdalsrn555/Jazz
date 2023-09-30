@@ -66,7 +66,7 @@ const RankTimer = ({ timerType }: { timerType: String }) => {
   const mmTimer = () => {
     const dDay = new Date(today);
     dDay.setMonth(today.getMonth() + 1);
-    dDay.setDate(0);
+    dDay.setDate(1);
     dDay.setHours(0);
     dDay.setMinutes(0);
     dDay.setSeconds(0);

@@ -4,12 +4,12 @@ import { motion } from 'framer-motion';
 
 export const InputContainer = styled.div`
   /* border: solid black; */
-  flex: 0.1;
+  /* flex: 0.1; */
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 100%;
   position: relative;
 `;
 

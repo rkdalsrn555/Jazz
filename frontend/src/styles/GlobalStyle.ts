@@ -32,7 +32,7 @@ const GlobalStyle = css`
     -webkit-user-select: none;
   }
   ::-webkit-scrollbar {
-    width: 0.4rem;
+    width: 0.5rem;
     height: 0.4rem;
     background-color: transparent;
   }

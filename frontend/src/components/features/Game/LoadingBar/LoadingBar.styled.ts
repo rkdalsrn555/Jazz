@@ -6,7 +6,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 640px;
+  width: 80%;
 
   & p {
     color: #fff;
@@ -20,7 +20,7 @@ export const Container = styled.div`
 export const barContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 640px;
+  width: 100%;
   height: 8px;
   border-radius: 4px;
   background: linear-gradient(45deg, #d668cd, #cd4048);

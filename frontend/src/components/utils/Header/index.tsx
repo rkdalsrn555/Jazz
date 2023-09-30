@@ -10,11 +10,6 @@ import Enlarge from 'components/Effect/Enlarge/Enlarge';
 const Header = () => {
   const location = useLocation();
   const theme: themeProps = useTheme();
-  const logoContent = (
-    <Link to={'home'}>
-      <S.Logo src={BrandLogo} />
-    </Link>
-  );
 
   const blockLogoClickList = [
     '/short-answer-question',

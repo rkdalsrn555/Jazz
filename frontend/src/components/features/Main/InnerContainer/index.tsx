@@ -31,11 +31,11 @@ const Inner = ({
             <S.Title theme={theme}>
               {feature.title}
               <Link to={'/home'}>
-                <S.Img src={Modify} />
+                <S.EditBtn theme={theme} />
               </Link>
             </S.Title>
             <S.ProfileHeaderRight>
-              <S.Img src={Bell} />
+              <S.Bell theme={theme} />
               <S.DiamondContainer theme={theme}>
                 {/* 다이아개수 받아와서 넣어야 될 자리 */}
                 {userInfo.diamond}

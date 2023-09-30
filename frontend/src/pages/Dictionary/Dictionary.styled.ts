@@ -25,3 +25,10 @@ export const Img = styled.img`
   width: 70%;
   margin-bottom: 2rem;
 `;
+
+export const SearchInput = styled.div<{ theme: themeProps }>`
+  /* border: solid green; */
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+`;

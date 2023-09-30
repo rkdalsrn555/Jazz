@@ -72,7 +72,6 @@ public class QuizController {
         @PathVariable int quizId) {
         String userUUID = jwtService.getInfo("account", accessToken);
 
-        // 여기에서 'result' 변수를 선언하고 초기화합니다.
         AddToQuizManagementResponseDto result = addToQuizManagementService.addToQuizManagement(
             userUUID, quizId);
 

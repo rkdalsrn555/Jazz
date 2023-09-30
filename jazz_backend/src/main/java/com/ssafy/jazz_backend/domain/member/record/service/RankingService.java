@@ -10,5 +10,7 @@ public interface RankingService {
 
     List<RankingTopTenResponseDto> getTierRankingTopTen(String accessTocken);
 
-    List<RankingTopTenResponseDto> getMarathonRankingTopTen(String accessTocken);
+    List<RankingTopTenResponseDto> getDailyMarathonRankingTopTen(String accessTocken);
+
+    List<RankingTopTenResponseDto> getMonthlyMarathonRankingTopTen(String accessTocken);
 }

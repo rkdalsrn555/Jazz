@@ -17,8 +17,8 @@ import com.ssafy.jazz_backend.domain.quiz.entity.Choice;
 import com.ssafy.jazz_backend.domain.quiz.entity.Quiz;
 import com.ssafy.jazz_backend.domain.quiz.repository.QuizRepository;
 import com.ssafy.jazz_backend.global.Util;
-import com.ssafy.jazz_backend.global.error.exception.MemberException;
-import com.ssafy.jazz_backend.global.error.info.MemberErrorInfo;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
@@ -37,6 +37,9 @@ public class MarathonServiceImpl implements MarathonService {
     private final SeasonJpaRepository seasonJpaRepository;
     private final MemberRepository memberRepository;
     private final ProfileRepository profileRepository;
+
+    @PersistenceContext
+    private final EntityManager entityManager;
 
 
     //Sorted Set 을 위한 DI
@@ -98,27 +101,43 @@ public class MarathonServiceImpl implements MarathonService {
     public MarathonResultResponseDto applyMarathonQuizResult(String accessToken,
         MarathonResultRequestDto marathonResultRequestDto) {
         String userUUID = jwtService.getInfo("account", accessToken);
+        //uuid를 통해 member 찾음
         Member member = findMemberById(userUUID);
+        //현재 시즌 찾음
         Season nowSeason = getNowSeason();
 
-        //findMarathonByMemberAndNowSeason 해서 Marathon 없으면 새로 만들어서 return 해줌
-        Marathon marathon = findMarathonByMemberAndNowSeason(member, nowSeason);
+        //findMarathonByMemberAndNowSeason 해서 dailyMarathon 없으면 새로 만들어서 return 해줌
+        Marathon dailyMarathon = findMarathonByMemberAndNowSeason(member, nowSeason);
+
+        //DB에서 지금 monthly 시즌 중에서 가장 높은 record를 가지고 있는 marathon을 받아옴
+        Marathon monthlyMarathon = marathonJpaRepository.findMarathonWithMaxQuizRecordByMonthlySeason(
+            nowSeason.getMonthlySeason()).orElse(null);
+
+        //monthlyMarathon이 null 인 경우 새로 만들어줌 -> 이미 dailyMarathon 을 먼저 생성했기 때문에 무조건 있을 듯
+        if (monthlyMarathon == null) {
+            System.out.println("monthlyMarathon 이 null 인 경우");
+            MarathonId marathonId = MarathonId.create(member, nowSeason.getDailySeason(),
+                nowSeason.getMonthlySeason());
+            monthlyMarathon = generateMarathon(marathonId);
+        }
 
         int solveCount = marathonResultRequestDto.getSolveCount();
 
-        if (solveCount > marathon.getQuizRecord()) {
+        //일간 랭킹보다 solveCount 큰 경우 db에 저장 + redis에 저장
+        if (solveCount > dailyMarathon.getQuizRecord()) {
             //marathon 정보 DB에 저장
-            updateQuizRecord(marathon, solveCount);
+            updateQuizRecord(dailyMarathon, solveCount);
             //redis에도 등록
-            zSetOperations.add(util.getMarathonDailyRankKeyName(), userUUID, solveCount);
+            zSetOperations.add(util.getDailyMarathonRankKeyName(), userUUID, solveCount);
         }
 
+        //월간 랭킹보다 solveCount 큰 경우 redis에만 저장
+        if (solveCount > monthlyMarathon.getQuizRecord()) {
+            zSetOperations.add(util.getMonthlyMarathonRankKeyName(), userUUID, solveCount);
+        }
         // 다이아 증정 - 한 문제당 10개
-        Profile profile = findProfileById(userUUID);
-        System.out.println("Profile profile = findProfileById(userUUID); 까지 완려");
-        updateDiamond(profile, solveCount * 10);
-        System.out.println("Profile profile = findProfileById(userUUID); 까지 완려2");
-        return MarathonResultResponseDto.create(solveCount, solveCount * 10);
+
+        return MarathonResultResponseDto.create(solveCount);
     }
 
 
@@ -143,11 +162,12 @@ public class MarathonServiceImpl implements MarathonService {
 
     private Marathon findMarathonByMemberAndNowSeason(Member member, Season nowSeason) {
 
-        MarathonId marathonId = MarathonId.create(member, nowSeason.getMarathonDailySeason(),
-            nowSeason.getMarathonMonthlySeason());
+        MarathonId marathonId = MarathonId.create(member, nowSeason.getDailySeason(),
+            nowSeason.getMonthlySeason());
         Marathon marathon = marathonJpaRepository.findById(marathonId).orElse(null);
         //empty인 경우 새로 만들어서 저장
         if (marathon == null) {
+            System.out.println("마라톤이 null ");
             marathon = generateMarathon(marathonId);
         }
         return marathon;
@@ -155,7 +175,9 @@ public class MarathonServiceImpl implements MarathonService {
 
     private Marathon generateMarathon(MarathonId marathonId) {
         Marathon marathon = Marathon.create(marathonId, 0);
+
         marathonJpaRepository.save(marathon);
+        entityManager.flush();
         return marathon;
     }
 

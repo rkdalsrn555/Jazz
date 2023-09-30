@@ -6,11 +6,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class MarathonResultResponseDto {
+
     private Integer solveCount;
-    private Integer diamondCount;
 
-    public static MarathonResultResponseDto create(Integer solveCount, Integer diamondCount){
+    public static MarathonResultResponseDto create(Integer solveCount) {
 
-        return new MarathonResultResponseDto(solveCount, diamondCount);
+        return new MarathonResultResponseDto(solveCount);
     }
 }

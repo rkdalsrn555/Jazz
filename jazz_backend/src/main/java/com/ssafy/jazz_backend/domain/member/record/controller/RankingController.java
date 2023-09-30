@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
@@ -61,13 +60,13 @@ public class RankingController {
 
     }
 
-    @GetMapping("/marathon")
-    private ResponseEntity<?> getMarathonRankingTopTen(
+    @GetMapping("/daily/marathon")
+    private ResponseEntity<?> getDailyMarathonRankingTopTen(
         @RequestHeader String accessTocken) {
         try {
-            List<RankingTopTenResponseDto> marathonRankingTopTen = rankingService.getMarathonRankingTopTen(
+            List<RankingTopTenResponseDto> dailyMarathonRankingTopTen = rankingService.getDailyMarathonRankingTopTen(
                 accessTocken);
-            return new ResponseEntity<>(marathonRankingTopTen,
+            return new ResponseEntity<>(dailyMarathonRankingTopTen,
                 HttpStatus.OK);
         } catch (Exception e) {
             log.info("에러 발생 : " + e.getMessage());
@@ -75,6 +74,22 @@ public class RankingController {
                 HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+
+    }
+
+    @GetMapping("/monthly/marathon")
+    private ResponseEntity<?> getMonthlyMarathonRankingTopTen(
+        @RequestHeader String accessTocken) {
+        try {
+            List<RankingTopTenResponseDto> monthlyMarathonRankingTopTen = rankingService.getMonthlyMarathonRankingTopTen(
+                accessTocken);
+            return new ResponseEntity<>(monthlyMarathonRankingTopTen,
+                HttpStatus.OK);
+        } catch (Exception e) {
+            log.info("에러 발생 : " + e.getMessage());
+            return new ResponseEntity<>(Collections.singletonList(e.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 

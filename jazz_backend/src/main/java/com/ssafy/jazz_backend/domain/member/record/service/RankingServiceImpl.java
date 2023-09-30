@@ -97,8 +97,11 @@ public class RankingServiceImpl implements RankingService {
         System.out.println("3");
         List<RankingTopTenResponseDto> responseDtoList = new ArrayList<>();
         System.out.println("4");
+        System.out.println(dailyMarathonRankRedisDtoList.size()
+            + " redis에서 가져온 dailyMarathonRankRedisDtoList size");
         for (DailyMarathonRankRedisDto dailyMarathonRankRedisDto : dailyMarathonRankRedisDtoList) {
             String memberId = dailyMarathonRankRedisDto.getMemberId();
+            System.out.println(memberId);
             Member member = findMemberById(memberId);
             Profile profile = findProfileById(memberId);
             //일간 랭킹에서 nowSeason은 MarathonDailySeason도 맞고 MarathonMonthlySeason 도 같은 시즌을 의미함.
@@ -203,23 +206,47 @@ public class RankingServiceImpl implements RankingService {
     }
 
     private Marathon findMarathonByMemberAndSeason(Member member, Season season) {
-        return marathonJpaRepository.findById(
-                new MarathonId(member, season.getDailySeason(),
-                    season.getMonthlySeason()))
-            .orElseThrow(() -> new IllegalArgumentException("uuid와 season에 해당하는 마라톤 기록이 없습니다."));
+        Marathon marathon = marathonJpaRepository.findById(
+            new MarathonId(member, season.getDailySeason(),
+                season.getMonthlySeason())).orElse(null);
+        if (marathon == null) {
+            return null;
+        }
+        return marathon;
     }
 
     private Tier findTierByMemberAndSeason(Member member, Season season) {
-        return tierJpaRepository.findById(new TierId(member, season.getTierSeason()))
-            .orElseThrow(() -> new IllegalArgumentException("uuid와 season에 해당하는 티어 기록이 없습니다."));
+        Tier tier = tierJpaRepository.findById(new TierId(member, season.getTierSeason()))
+            .orElse(null);
+        if (tier == null) {
+            System.out.println("tier 가 null 입니다.");
+            return null;
+        }
+        return tier;
+//            .orElseThrow(() -> new IllegalArgumentException("uuid와 season에 해당하는 티어 기록이 없습니다."));
+
     }
 
     private RankingTopTenResponseDto buildResponseDto(Profile profile, Tier tier,
         Marathon marathon) {
-        int level = util.makeLevel(profile.getExpPoint());
-        String rank = util.makeRank(tier.getRankPoint());
-        int winRate = util.makeWinRate(tier.getWin(), tier.getDraw(), tier.getLose());
-        int quizRecord = marathon.getQuizRecord();
+        int winRate = 0;
+        String rank = "Bronze";
+        int level = 1;
+        int quizRecord = 0;
+        //profile이 null인 경우
+        if (profile != null) {
+            level = util.makeLevel(profile.getExpPoint());
+        }
+
+        //tier가 null 인 경우
+        if (tier != null) {
+            rank = util.makeRank(tier.getRankPoint());
+            winRate = util.makeWinRate(tier.getWin(), tier.getDraw(), tier.getLose());
+        }
+        // marathon이 null 인 경우
+        if (marathon != null) {
+            quizRecord = marathon.getQuizRecord();
+        }
         return new RankingTopTenResponseDto(profile.getNickname(), rank, level, winRate,
             quizRecord);
     }

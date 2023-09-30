@@ -1,4 +1,4 @@
-package com.ssafy.jazz_backend.domain.item.entity;
+package com.ssafy.jazz_backend.domain.item.title.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,21 +10,24 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Table(name = "item")
+@Table(name = "pretitle")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Item {
+@ToString
+public class PreTitle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int price;
+    private int degree;
 
-    private Kind kind;
+    private String content;
+
 }

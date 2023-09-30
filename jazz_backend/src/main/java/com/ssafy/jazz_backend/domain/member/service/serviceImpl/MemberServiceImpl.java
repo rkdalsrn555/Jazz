@@ -1,5 +1,14 @@
 package com.ssafy.jazz_backend.domain.member.service.serviceImpl;
 
+import com.ssafy.jazz_backend.domain.item.entity.ItemManagement;
+import com.ssafy.jazz_backend.domain.item.repository.ItemJpaRepository;
+import com.ssafy.jazz_backend.domain.item.repository.ItemManagementJpaRepository;
+import com.ssafy.jazz_backend.domain.item.title.entity.PreTitleManagement;
+import com.ssafy.jazz_backend.domain.item.title.entity.SuffixTitleManagement;
+import com.ssafy.jazz_backend.domain.item.title.repository.PreTitleJpaRepository;
+import com.ssafy.jazz_backend.domain.item.title.repository.PreTitleManagementJpaRepostiory;
+import com.ssafy.jazz_backend.domain.item.title.repository.SuffixTitleJpaRepository;
+import com.ssafy.jazz_backend.domain.item.title.repository.SuffixTitleManagementJpaRepostiory;
 import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
 import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdResponseDto;
@@ -25,6 +34,7 @@ import com.ssafy.jazz_backend.domain.member.service.MemberService;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +51,18 @@ public class MemberServiceImpl implements MemberService {
     JwtService jwtService;
     @Autowired
     TokenRepository tokenRepository;
+    @Autowired
+    ItemJpaRepository itemJpaRepository;
+    @Autowired
+    ItemManagementJpaRepository itemManagementJpaRepository;
+    @Autowired
+    PreTitleJpaRepository preTitleJpaRepository;
+    @Autowired
+    PreTitleManagementJpaRepostiory preTitleManagementJpaRepostiory;
+    @Autowired
+    SuffixTitleJpaRepository suffixTitleJpaRepository;
+    @Autowired
+    SuffixTitleManagementJpaRepostiory suffixTitleManagementJpaRepostiory;
 
     @Override
     public JoinMemberResponseDto joinMember(JoinMemberRequestDto joinMemberRequestDto) {
@@ -60,7 +82,11 @@ public class MemberServiceImpl implements MemberService {
             .salt(pwSalt[1])
             .pw(pwSalt[0])
             .id(id)
+            .itemManagements(new ArrayList<>())
+            .preTitleManagements(new ArrayList<>())
+            .suffixTitleManagements(new ArrayList<>())
             .build();
+
 
         // profile 객체 생성
         Profile profile = Profile.builder()
@@ -76,6 +102,38 @@ public class MemberServiceImpl implements MemberService {
 
         // member table에 저장해줌
         memberRepository.save(member);
+
+        ItemManagement itemManagementDefault = new ItemManagement(member, itemJpaRepository.findById(1).orElseThrow(() -> new NullPointerException()),true, true);
+        itemManagementDefault.setMember(member);
+        member.getItemManagements().add(itemManagementDefault);
+        for (int i = 2; i <= 6; i++) {
+            ItemManagement itemManagement = new ItemManagement(member, itemJpaRepository.findById(i).orElseThrow(() -> new NullPointerException()),false, false);
+            itemManagement.setMember(member);
+            member.getItemManagements().add(itemManagement);
+        }
+
+        PreTitleManagement preTitleManagementDefault = new PreTitleManagement(member, preTitleJpaRepository.findById(1).orElseThrow(() -> new NullPointerException()), true, true);
+        preTitleManagementDefault.setMember(member);
+        member.getPreTitleManagements().add(preTitleManagementDefault);
+        long preSize = preTitleJpaRepository.count();
+        for(int i = 2; i <= preSize; i++){
+            PreTitleManagement preTitleManagement = new PreTitleManagement(member, preTitleJpaRepository.findById(i).orElseThrow(() -> new NullPointerException()), false, false);
+            preTitleManagement.setMember(member);
+            member.getPreTitleManagements().add(preTitleManagement);
+        }
+
+        SuffixTitleManagement suffixTitleManagementDefault = new SuffixTitleManagement(member, suffixTitleJpaRepository.findById(1).orElseThrow(()-> new NullPointerException()), true, true);
+        suffixTitleManagementDefault.setMember(member);
+        member.getSuffixTitleManagements().add(suffixTitleManagementDefault);
+        long suffixSize = suffixTitleJpaRepository.count();
+        for(int i = 2; i <= suffixSize; i++){
+            SuffixTitleManagement suffixTitleManagement = new SuffixTitleManagement(member, suffixTitleJpaRepository.findById(i).orElseThrow(() -> new NullPointerException()), false, false);
+            suffixTitleManagement.setMember(member);
+            member.getSuffixTitleManagements().add(suffixTitleManagement);
+        }
+
+
+        System.out.println("ItemManagement 생성 완료");
 
         // profile table에 저장
         profileRepository.save(profile);

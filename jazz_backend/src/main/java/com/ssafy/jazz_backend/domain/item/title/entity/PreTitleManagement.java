@@ -1,33 +1,31 @@
-package com.ssafy.jazz_backend.domain.item.entity;
+package com.ssafy.jazz_backend.domain.item.title.entity;
 
+import com.ssafy.jazz_backend.domain.item.entity.Item;
+import com.ssafy.jazz_backend.domain.item.entity.ItemManagementId;
 import com.ssafy.jazz_backend.domain.member.entity.Member;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
-@Table(name = "itemmanagement")
+@Table(name = "pretitlemanagement")
 @Getter
 @Setter
 @Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemManagement {
+public class PreTitleManagement {
 
     @EmbeddedId
-    private ItemManagementId id;
+    private PreTitleManagementId id;
 
     @Builder.Default
     private boolean isOwn = false;
@@ -40,8 +38,8 @@ public class ItemManagement {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public ItemManagement(Member member, Item item, boolean isOwn, boolean isUsed) {
-        this.id = new ItemManagementId(member, item);
+    public PreTitleManagement(Member member, PreTitle preTitle, boolean isOwn, boolean isUsed) {
+        this.id = new PreTitleManagementId(member, preTitle);
         this.isOwn = isOwn;
         this.isUsed = isUsed;
     }

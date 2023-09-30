@@ -42,9 +42,11 @@ const Dictionary = () => {
       <Enlarge>
         <S.Img src={Logo} onClick={toHome} />
       </Enlarge>
-      <DictionarySearchInput
-        props={{ onChangeText, handleEnter, handleSearch, setText }}
-      />
+      <S.SearchInput theme={theme}>
+        <DictionarySearchInput
+          props={{ onChangeText, handleEnter, handleSearch, setText }}
+        />
+      </S.SearchInput>
     </S.Container>
   );
 };

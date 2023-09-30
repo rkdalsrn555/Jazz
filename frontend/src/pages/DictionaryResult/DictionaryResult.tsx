@@ -11,9 +11,13 @@ import axios from 'axios';
 // import useJsonP from 'use-jsonp';
 import jsonp from 'jsonp';
 import useJsonP from 'use-jsonp';
+import { useRecoilValue } from 'recoil';
+import { IsDark } from 'atoms/atoms';
+import { object } from 'prop-types';
 
 const DictionaryResult = () => {
   const theme: themeProps = useTheme();
+  const isDark = useRecoilValue(IsDark);
   // 검색어임 이거 이용해서 api로 검색어 결과 가져와야 함
   const { searchWord } = useParams<{ searchWord: string }>();
   const navigate = useNavigate();
@@ -38,7 +42,11 @@ const DictionaryResult = () => {
     }
   };
 
-  const [data, setData] = useState('');
+  const blankData = () => {
+    return <S.ReturnContainer></S.ReturnContainer>;
+  };
+
+  const [data, setData] = useState(blankData());
 
   const getDefinition = async () => {
     await jsonp(
@@ -61,11 +69,43 @@ const DictionaryResult = () => {
   const getTest = () => {
     axios
       .get(
-        // `/openapi/service/FnTermSvc/getFinancialTermMeaning?serviceKey=m5tfM2QGQ8fT91yb%2FXr%2FyglS96RS0BD4QCAL9oSMM10f4MNciyLdiHv5R8MgVDZrP08a8lJUn1htOZTEMZiGQg%3D%3D&term=기`
-        `/openapi/service/FnTermSvc/getFinancialTermMeaning?serviceKey=m5tfM2QGQ8fT91yb/Xr/yglS96RS0BD4QCAL9oSMM10f4MNciyLdiHv5R8MgVDZrP08a8lJUn1htOZTEMZiGQg==&term=기`
+        // `/openapi/service/FnTermSvc/getFinancialTermMeaning?serviceKey=m5tfM2QGQ8fT91yb%2FXr%2FyglS96RS0BD4QCAL9oSMM10f4MNciyLdiHv5R8MgVDZrP08a8lJUn1htOZTEMZiGQg%3D%3D&term=${searchWord}`
+        `/openapi/service/FnTermSvc/getFinancialTermMeaning?serviceKey=m5tfM2QGQ8fT91yb/Xr/yglS96RS0BD4QCAL9oSMM10f4MNciyLdiHv5R8MgVDZrP08a8lJUn1htOZTEMZiGQg==&term=${searchWord}`
       )
       .then((res) => {
-        console.log('나는 리스펀스 데이터다!!', res.data.response);
+        const response: any[] = res.data.response.body.items.item;
+        const result = () => {
+          if (response.length) {
+            return response.map((e, i) => (
+              <S.InnerReturnContainer theme={theme}>
+                <S.Word>{e.fnceDictNm}</S.Word>
+                <S.Definition>{e.ksdFnceDictDescContent}</S.Definition>
+              </S.InnerReturnContainer>
+            ));
+          } else {
+            return (
+              <S.InnerReturnContainer theme={theme}>
+                <S.Word>{res.data.response.body.items.item.fnceDictNm}</S.Word>
+                <S.Definition>
+                  {res.data.response.body.items.item.ksdFnceDictDescContent}
+                </S.Definition>
+              </S.InnerReturnContainer>
+            );
+          }
+        };
+        if (typeof response === 'object') {
+          const returnData = () => {
+            return <S.ReturnContainer>{result()}</S.ReturnContainer>;
+          };
+          setData(returnData());
+        } else {
+          const returnData = () => {
+            return (
+              <S.ResultContainer>검색 결과가 없습니다😱😱</S.ResultContainer>
+            );
+          };
+          setData(returnData());
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -88,10 +128,12 @@ const DictionaryResult = () => {
 
   return (
     <S.Container>
-      <S.Title>'{searchWord}'로 검색한 결과</S.Title>
-      <DictionarySearchInput
-        props={{ onChangeText, handleEnter, handleSearch, setText }}
-      />
+      <S.Title theme={theme}>'{searchWord}'로 검색한 결과</S.Title>
+      <S.SearchInput theme={theme}>
+        <DictionarySearchInput
+          props={{ onChangeText, handleEnter, handleSearch, setText }}
+        />
+      </S.SearchInput>
       <S.ResultContainer>
         <S.ResultInnerContainer theme={theme}>{data}</S.ResultInnerContainer>
       </S.ResultContainer>

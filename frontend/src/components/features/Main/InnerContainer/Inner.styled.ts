@@ -2,6 +2,9 @@ import { themeProps } from '@emotion/react';
 import styled from '@emotion/styled';
 import { innerContainerProps } from 'types/types';
 import { motion } from 'framer-motion';
+import Notification from '@mui/icons-material/Notifications';
+import Edit from '@mui/icons-material/Edit';
+
 
 export const Container = styled.div<{
   feature: innerContainerProps;
@@ -101,4 +104,14 @@ export const Img = styled.img`
 export const Blank = styled.div`
   /* border: solid green; */
   width: 20%;
+`;
+
+export const Bell = styled(Notification)<{ theme: themeProps }>`
+  color: ${(props) => props.theme.font.deep};
+  transition: color 0.2s;
+`;
+
+export const EditBtn = styled(Edit)<{ theme: themeProps }>`
+  color: ${(props) => props.theme.font.deep};
+  transition: color 0.2s;
 `;

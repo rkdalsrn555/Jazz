@@ -1,7 +1,7 @@
-import styled from "@emotion/styled";
-import { themeProps } from "@emotion/react";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
+import styled from '@emotion/styled';
+import { themeProps } from '@emotion/react';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 export const BtnBox = styled.div`
   /* border: solid green; */
@@ -16,6 +16,12 @@ export const BtnBox = styled.div`
   padding-right: 3rem;
 `;
 
-export const LightModeIconStyled = styled(LightModeIcon)``;
+export const LightModeIconStyled = styled(LightModeIcon)<{ theme: themeProps }>`
+  color: ${(props) => props.theme.font.deep};
+  transition: color 0.2s;
+`;
 
-export const DarkModeIconStyled = styled(DarkModeIcon)``;
+export const DarkModeIconStyled = styled(DarkModeIcon)<{ theme: themeProps }>`
+  color: ${(props) => props.theme.font.deep};
+  transition: color 0.2s;
+`;

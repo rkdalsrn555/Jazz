@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
 export const GreyBackground = styled.div`
-  background: #aaaaaa2e;
+  background: rgba(0, 0, 0, 0.7);
   width: 100%;
   height: 100%;
   display: block;

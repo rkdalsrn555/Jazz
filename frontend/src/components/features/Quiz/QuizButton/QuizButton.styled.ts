@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 
 export const ButtonContainer = styled.button<{ kind: string }>`
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   border-radius: 24px;
   border: none;
-  font-size: 30px;
+  font-size: 16px;
   color: #fff;
   font-weight: 600;
   background-color: ${(props) => (props.kind === 'hint' ? '#FFAEAE' : '')};

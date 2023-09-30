@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import FavoriteRandomQuizButton from 'components/features/Favorite/FavoriteRandomQuizButton/FavoriteRandomQuizButton';
 import FavoriteTabMenu from 'components/features/Favorite/FavoriteTabMenu/FavoriteTabMenu';
 import { userApis } from 'hooks/api/userApis';
-import styled from '@emotion/styled';
+import * as S from './FavoritePage.styled';
 
 type Content = {
   quizId: number;
@@ -49,29 +49,13 @@ const FavoritePage = () => {
 
   return (
     <div>
-      <TitleContainer>
-        <FavoriteTitle>즐겨찾기</FavoriteTitle>
+      <S.TitleContainer>
+        <S.FavoriteTitle>즐겨찾기</S.FavoriteTitle>
         <FavoriteRandomQuizButton />
-      </TitleContainer>
+      </S.TitleContainer>
       <FavoriteTabMenu menuArr={menuArr} getFavoriteList={getFavoriteList} />
     </div>
   );
 };
 
 export default FavoritePage;
-
-const TitleContainer = styled.div`
-  width: 90%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 auto;
-  padding: 1% 0;
-`;
-
-const FavoriteTitle = styled.h1`
-  color: #6e6893;
-  font-size: 24px;
-  font-weight: 900;
-  text-align: center;
-`;

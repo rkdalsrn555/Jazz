@@ -8,8 +8,7 @@ export const meta: Meta<typeof MatchingProfile> = {
   args: {
     level: 15,
     nickname: '재린이',
-    charactor: 'circle.png',
-    bgColor: '#8CC8DC',
+    charactorNumber: 1,
   },
 };
 
@@ -20,8 +19,7 @@ const Template: Story = {
   args: {
     level: 15,
     nickname: '재린이',
-    charactor: 'circle.png',
-    bgColor: '#8CC8DC',
+    charactorNumber: 1,
   },
 };
 
@@ -30,8 +28,7 @@ export const CircleCharactor: Story = {
   args: {
     level: 15,
     nickname: '재린이',
-    charactor: 'circle.png',
-    bgColor: '#BD6598',
+    charactorNumber: 1,
   },
 };
 
@@ -40,8 +37,7 @@ export const RectangleCharactor: Story = {
   args: {
     level: 15,
     nickname: '재린이',
-    charactor: 'rectangle.png',
-    bgColor: '#F66639',
+    charactorNumber: 2,
   },
 };
 
@@ -50,8 +46,7 @@ export const TriangleCharactor: Story = {
   args: {
     level: 15,
     nickname: '재린이',
-    charactor: 'triangle.png',
-    bgColor: '#FFC702',
+    charactorNumber: 3,
   },
 };
 
@@ -60,8 +55,7 @@ export const WarrierCharactor: Story = {
   args: {
     level: 15,
     nickname: '재린이',
-    charactor: 'warrier.png',
-    bgColor: '#EA7C71',
+    charactorNumber: 5,
   },
 };
 
@@ -70,7 +64,6 @@ export const RockCharactor: Story = {
   args: {
     level: 15,
     nickname: '재린이',
-    charactor: 'rock.png',
-    bgColor: '#1FC9F1',
+    charactorNumber: 4,
   },
 };

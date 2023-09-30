@@ -15,14 +15,12 @@ const Template: Story = {
     me: {
       level: 15,
       nickname: '재린이',
-      charactor: 'triangle.png',
-      bgColor: '#FFC702',
+      charactorNumber: 2,
     },
     other: {
       level: 15,
       nickname: '바위맨',
-      charactor: 'rock.png',
-      bgColor: '#1FC9F1',
+      charactorNumber: 4,
     },
     isMatching: false,
   },
@@ -35,8 +33,7 @@ export const BeforeMatching: Story = {
     me: {
       level: 15,
       nickname: '재린이',
-      charactor: 'triangle.png',
-      bgColor: '#FFC702',
+      charactorNumber: 2,
     },
     isMatching: false,
   },
@@ -49,14 +46,12 @@ export const Matching: Story = {
     me: {
       level: 15,
       nickname: '재린이',
-      charactor: 'triangle.png',
-      bgColor: '#FFC702',
+      charactorNumber: 2,
     },
     other: {
       level: 15,
       nickname: '바위맨',
-      charactor: 'rock.png',
-      bgColor: '#1FC9F1',
+      charactorNumber: 4,
     },
     isMatching: true,
   },

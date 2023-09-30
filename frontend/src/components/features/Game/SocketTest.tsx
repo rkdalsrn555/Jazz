@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import TalkBlock from './TalkBlock';
 import * as StompJs from '@stomp/stompjs';
 
 const TextBox = styled.div`
@@ -93,9 +92,6 @@ const SocketTest = () => {
 
   return (
     <TextBox>
-      {talkList.map((item) => (
-        <TalkBlock text={item} />
-      ))}
       <InputContainer>
         <TextInput type="text" value={text} onChange={handleChange} />
         <button

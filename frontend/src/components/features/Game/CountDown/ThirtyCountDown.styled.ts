@@ -9,24 +9,23 @@ export const Container = styled.div`
 
 export const ThirtyCountDownContainer = styled.div`
   position: absolute;
-  top: 20px;
+  top: 30px;
   left: 0;
   right: 0;
   margin: 0 auto;
-  width: 229px;
-  height: 107px;
+  width: 150px;
+  height: 90px;
   background: linear-gradient(144deg, #28272f 0%, #040404 100%);
-  border-radius: 40px;
+  border-radius: 32px;
   text-align: center;
 
   & p {
     position: absolute;
     left: 0;
     right: 0;
-    margin: 0;
-    width: 229px;
-    height: 107px;
-    font-size: 70px;
+    height: 90px;
+    line-height: 90px;
+    font-size: 50px;
     font-weight: 700;
     background: linear-gradient(
       245deg,

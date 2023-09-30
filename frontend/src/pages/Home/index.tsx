@@ -35,8 +35,7 @@ const Home = () => {
     me: {
       level: 15,
       nickname: '재린이',
-      charactor: 'triangle.png',
-      bgColor: '#FFC702',
+      charactorNumber: 1,
     },
     other: null,
     isMatching: false,
@@ -348,6 +347,7 @@ const Home = () => {
 
   return (
     <S.Container initial={{ scale: 0.9 }} animate={{ scale: 1 }}>
+      {/* @ts-ignore */}
       <GameMatchingModal {...gameMatchingModalFeature} />
       <S.LeftContainer>
         <Inner feature={quizContainerFeature} children={null} />

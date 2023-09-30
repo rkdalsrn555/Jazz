@@ -15,7 +15,7 @@ const Template: Story = {
     heartCntProps: 5,
     level: 15,
     nickname: '재린이',
-    charactor: 'circle.png',
+    charactorNumber: 1,
   },
 };
 
@@ -26,7 +26,7 @@ export const FullHeartProfile: Story = {
     heartCntProps: 5,
     level: 15,
     nickname: '재린이',
-    charactor: 'circle.png',
+    charactorNumber: 1,
   },
 };
 
@@ -37,7 +37,7 @@ export const LooseHeartProfile: Story = {
     heartCntProps: 3,
     level: 15,
     nickname: '재린이',
-    charactor: 'circle.png',
+    charactorNumber: 1,
   },
 };
 
@@ -48,7 +48,7 @@ export const CircleCharactor: Story = {
     heartCntProps: 3,
     level: 15,
     nickname: '재린이',
-    charactor: 'circle.png',
+    charactorNumber: 1,
   },
 };
 
@@ -59,7 +59,7 @@ export const RectangleCharactor: Story = {
     heartCntProps: 3,
     level: 15,
     nickname: '재린이',
-    charactor: 'rectangle.png',
+    charactorNumber: 2,
   },
 };
 
@@ -70,7 +70,7 @@ export const TriangleCharactor: Story = {
     heartCntProps: 3,
     level: 15,
     nickname: '재린이',
-    charactor: 'triangle.png',
+    charactorNumber: 3,
   },
 };
 
@@ -81,7 +81,7 @@ export const WarrierCharactor: Story = {
     heartCntProps: 3,
     level: 15,
     nickname: '재린이',
-    charactor: 'warrier.png',
+    charactorNumber: 4,
   },
 };
 
@@ -92,6 +92,6 @@ export const RockCharactor: Story = {
     heartCntProps: 3,
     level: 15,
     nickname: '재린이',
-    charactor: 'rock.png',
+    charactorNumber: 5,
   },
 };

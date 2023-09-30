@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './ThreeCountDown.styled';
 
-const ThreeCountDown = () => {
+type OwnProps = {
+  trigger: () => void;
+  currentRound: number;
+};
+
+const ThreeCountDown = (props: OwnProps) => {
+  const { trigger, currentRound } = props;
   const [num, setNum] = useState<number>(3);
 
   useEffect(() => {
-    if (num <= 0) {
+    if (num < 0) {
+      trigger();
       return;
     } else {
       const timer = setInterval(() => {
@@ -18,7 +25,11 @@ const ThreeCountDown = () => {
     }
   }, [num]);
 
-  return <S.CountDownText>{num === 0 ? 'round start!' : num}</S.CountDownText>;
+  return (
+    <S.CountDownText>
+      {num === 0 ? `round${currentRound} start!` : num}
+    </S.CountDownText>
+  );
 };
 
 export default ThreeCountDown;

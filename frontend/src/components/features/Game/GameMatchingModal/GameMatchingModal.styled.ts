@@ -60,6 +60,7 @@ export const ModalContent = styled.div`
 `;
 
 export const AcceptButton = styled.button`
+  cursor: pointer;
   width: 370px;
   height: 70px;
   padding: 18px 32px;

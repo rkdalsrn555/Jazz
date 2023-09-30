@@ -22,7 +22,11 @@ export const BattleContainer = styled.div`
 `;
 
 export const BattleBoard = styled.div`
-  min-width: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 800px;
+  width: 100%;
   height: 645px;
   border-radius: 24px;
   background-color: rgba(255, 255, 255, 0.6);

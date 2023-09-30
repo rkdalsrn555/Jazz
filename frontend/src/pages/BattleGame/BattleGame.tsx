@@ -5,34 +5,25 @@ import GameProfile from 'components/features/Game/GameProfile/GameProfile';
 import ThreeCountDown from 'components/features/Game/CountDown/ThreeCountDown';
 import ThirtyCountDown from 'components/features/Game/CountDown/ThirtyCountDown';
 
-type Me = {
-  nickname: string;
-  level: number;
-  heartCnt: number;
-  charactor: number;
-};
-
-type UserGameInfo = {
-  gameRound: number;
-  me: {};
-  other: {};
-};
-
 const BattleGame = () => {
   useBeforeunload((event: any) => event.preventDefault()); // 새로고침 막기
 
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   const startRound = () => setIsPlaying(true);
   const endRound = () => setIsPlaying(false);
 
   return (
     <S.Container>
-      <ThirtyCountDown
-        isPlaying={isPlaying}
-        startRound={startRound}
-        endRound={endRound}
-      />
+      {isPlaying ? (
+        <ThirtyCountDown
+          isPlaying={isPlaying}
+          startRound={startRound}
+          endRound={endRound}
+        />
+      ) : (
+        <div style={{ height: '150px' }}></div>
+      )}
       <S.BattleContainer>
         <GameProfile
           heartCntProps={5}
@@ -40,7 +31,18 @@ const BattleGame = () => {
           nickname="재린이"
           charactorNumber={1}
         />
-        <S.BattleBoard>전투</S.BattleBoard>
+        <S.BattleBoard>
+          {isPlaying ? (
+            ''
+          ) : (
+            <ThreeCountDown
+              currentRound={1}
+              trigger={() => {
+                setIsPlaying(true);
+              }}
+            />
+          )}
+        </S.BattleBoard>
         <GameProfile
           heartCntProps={5}
           level={15}

@@ -90,3 +90,33 @@ type QuestionBoxProps = {
   setAnswer?: (arg: string | number) => void;
   isCorrect?: boolean | null;
 };
+
+type gameClientProfile = {
+  level: number;
+  nickname: string;
+  currentCharactor: number;
+};
+
+type initGameMessage = {
+  session: string;
+  message: string;
+  messageType: string;
+  round: number;
+  myInfo: {
+    userUUID: string;
+    session: string;
+    lives: number;
+  };
+  userInfo: {
+    lives: number;
+  };
+};
+
+type gameMatchingModal = {
+  me: gameClientProfile;
+  other: gameClientProfile;
+  initGameMessage: initGameMessage;
+  isMatching: boolean;
+  isToggled: boolean;
+  closeModal: () => void;
+};

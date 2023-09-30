@@ -1,17 +1,18 @@
-import React, { useState, useRef, useEffect, ReactNode } from 'react';
+import React, { useEffect } from 'react';
 import * as S from './GameMatchingModal.styled';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import VsImg from '../../../../assets/img/Game/vs.png';
 import QuestionImg from '../../../../assets/img/Game/question.png';
 import MatchingProfile from '../MatchingProfile/MatchingProfile';
 import { ReactComponent as CloseIcon } from '../../../../assets/svgs/Game/close.svg';
 import LoadingBar from '../LoadingBar/LoadingBar';
 import { userApis } from 'hooks/api/userApis';
-import { gameApis } from 'hooks/api/gameApis';
+import { useNavigate } from 'react-router-dom';
 
 import StompJs from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import axios from 'axios';
+import Enlarge from 'components/Effect/Enlarge/Enlarge';
 
 type Client = {
   level: number;
@@ -29,28 +30,32 @@ type OwnProps = {
 
 const GameMatchingModal = (props: OwnProps) => {
   const { me, other, isMatching, isToggled, closeModal } = props;
+  const navigate = useNavigate();
 
   //////////////////////게임 로직/////////////////////////////////////
-  const tryMatch = async () => await userApis.get(`/game/join`);
-  const getGameInfo = async () => await userApis.get(`/game/play`);
+  // const tryMatch = async () => await userApis.get(`/game/join`);
+  // const getGameInfo = async () => await userApis.get(`/game/play`);
+  const cancleMatching = async () => await userApis.get(`/game/cancel`);
 
   useEffect(() => {
+    // if (isToggled) {
+    //   tryMatch()
+    //     .then((res) => {
+    //       console.log('매칭성공!');
+    //       getGameInfo()
+    //         .then((res) => {
+    //           console.log(res);
+    //         })
+    //         .catch((err) => {
+    //           console.log(err);
+    //         });
+    //     })
+    //     .catch((err) => {
+    //       console.log('매칭실패!');
+    //     });
+    //   console.log('요청보냈다!');
+    // }
     if (isToggled) {
-      tryMatch()
-        .then((res) => {
-          console.log('매칭성공!');
-          getGameInfo()
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        })
-        .catch((err) => {
-          console.log('매칭실패!');
-        });
-      console.log('요청보냈다!');
     }
   }, [isToggled]);
 
@@ -67,7 +72,15 @@ const GameMatchingModal = (props: OwnProps) => {
             exit={{ y: 100, opacity: 0 }}
           >
             <CloseIcon
-              onClick={closeModal}
+              onClick={() => {
+                cancleMatching()
+                  .then((res) => {
+                    closeModal();
+                  })
+                  .catch((err) => {
+                    alert('매칭 취소에 실패하였습니다, 다시 취소해주세요');
+                  });
+              }}
               className="closeIcon"
               width={50}
             ></CloseIcon>
@@ -94,7 +107,15 @@ const GameMatchingModal = (props: OwnProps) => {
             </S.ModalContent>
             {isMatching ? (
               <S.loadingAndButtonContainer>
-                <S.AcceptButton>대결 수락</S.AcceptButton>
+                <Enlarge>
+                  <S.AcceptButton
+                    onClick={() => {
+                      navigate('/battle-game');
+                    }}
+                  >
+                    대결 수락
+                  </S.AcceptButton>
+                </Enlarge>
               </S.loadingAndButtonContainer>
             ) : (
               <S.loadingAndButtonContainer>

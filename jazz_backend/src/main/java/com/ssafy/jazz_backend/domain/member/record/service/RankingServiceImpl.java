@@ -67,7 +67,7 @@ public class RankingServiceImpl implements RankingService {
 
     //티어 랭크 top 10 조회
     @Override
-    public List<RankingTopTenResponseDto> getTierRankingTopTen(String accessTocken) {
+    public List<RankingTopTenResponseDto> getTierRankingTopTen(String accessToken) {
         //redis에서 top 10 가져옴
         List<TierRankRedisDto> tierRankRedisDtoList = getTopTenTierRanks();
         Season nowSeason = getCurrentSeason();
@@ -88,11 +88,15 @@ public class RankingServiceImpl implements RankingService {
 
     //마라톤 일간 랭크 top 10 조회
     @Override
-    public List<RankingTopTenResponseDto> getDailyMarathonRankingTopTen(String accessTocken) {
+    public List<RankingTopTenResponseDto> getDailyMarathonRankingTopTen(String accessToken) {
         //redis에서 top 10 가져옴
+        System.out.println("1");
         List<DailyMarathonRankRedisDto> dailyMarathonRankRedisDtoList = getTopTenDailyMarathonRanks();
+        System.out.println("2");
         Season nowSeason = getCurrentSeason();
+        System.out.println("3");
         List<RankingTopTenResponseDto> responseDtoList = new ArrayList<>();
+        System.out.println("4");
         for (DailyMarathonRankRedisDto dailyMarathonRankRedisDto : dailyMarathonRankRedisDtoList) {
             String memberId = dailyMarathonRankRedisDto.getMemberId();
             Member member = findMemberById(memberId);
@@ -105,12 +109,13 @@ public class RankingServiceImpl implements RankingService {
             responseDtoList.add(responseDto);
 
         }
+        System.out.println("5");
         return responseDtoList;
     }
 
     //마라톤 월간 랭크 top 10 조회
     @Override
-    public List<RankingTopTenResponseDto> getMonthlyMarathonRankingTopTen(String accessTocken) {
+    public List<RankingTopTenResponseDto> getMonthlyMarathonRankingTopTen(String accessToken) {
         //redis에서 top 10 가져옴
         List<MonthlyMarathonRankRedisDto> monthlyMarathonRankRedisDtoList = getTopTenMonthlyMarathonRanks();
         Season nowSeason = getCurrentSeason();

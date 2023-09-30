@@ -28,10 +28,10 @@ public class RankingController {
     //update가 일어나면 바로 redis에 값 넣고 db에도 바꿔줌
     @GetMapping("/level")
     private ResponseEntity<?> getLevelRankingTopTen(
-        @RequestHeader String accessTocken) {
+        @RequestHeader String accessToken) {
         try {
             List<RankingTopTenResponseDto> levelRankingTopTen = rankingService.getLevelRankingTopTen(
-                accessTocken);
+                accessToken);
             return new ResponseEntity<>(levelRankingTopTen,
                 HttpStatus.OK);
         } catch (Exception e) {
@@ -45,10 +45,10 @@ public class RankingController {
 
     @GetMapping("/tier")
     private ResponseEntity<?> getTierRankingTopTen(
-        @RequestHeader String accessTocken) {
+        @RequestHeader String accessToken) {
         try {
             List<RankingTopTenResponseDto> tierRankingTopTen = rankingService.getTierRankingTopTen(
-                accessTocken);
+                accessToken);
             return new ResponseEntity<>(tierRankingTopTen,
                 HttpStatus.OK);
         } catch (Exception e) {
@@ -62,10 +62,10 @@ public class RankingController {
 
     @GetMapping("/daily/marathon")
     private ResponseEntity<?> getDailyMarathonRankingTopTen(
-        @RequestHeader String accessTocken) {
+        @RequestHeader String accessToken) {
         try {
             List<RankingTopTenResponseDto> dailyMarathonRankingTopTen = rankingService.getDailyMarathonRankingTopTen(
-                accessTocken);
+                accessToken);
             return new ResponseEntity<>(dailyMarathonRankingTopTen,
                 HttpStatus.OK);
         } catch (Exception e) {
@@ -79,10 +79,10 @@ public class RankingController {
 
     @GetMapping("/monthly/marathon")
     private ResponseEntity<?> getMonthlyMarathonRankingTopTen(
-        @RequestHeader String accessTocken) {
+        @RequestHeader String accessToken) {
         try {
             List<RankingTopTenResponseDto> monthlyMarathonRankingTopTen = rankingService.getMonthlyMarathonRankingTopTen(
-                accessTocken);
+                accessToken);
             return new ResponseEntity<>(monthlyMarathonRankingTopTen,
                 HttpStatus.OK);
         } catch (Exception e) {

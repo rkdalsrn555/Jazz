@@ -132,10 +132,9 @@ public class MarathonServiceImpl implements MarathonService {
         }
 
         //월간 랭킹보다 solveCount 큰 경우 redis에만 저장
-        if (solveCount > monthlyMarathon.getQuizRecord()) {
+        if (solveCount >= monthlyMarathon.getQuizRecord()) {
             zSetOperations.add(util.getMonthlyMarathonRankKeyName(), userUUID, solveCount);
         }
-        // 다이아 증정 - 한 문제당 10개
 
         return MarathonResultResponseDto.create(solveCount);
     }

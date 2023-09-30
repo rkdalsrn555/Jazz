@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface RankingService {
 
-    List<RankingTopTenResponseDto> getLevelRankingTopTen(String accessTocken);
+    List<RankingTopTenResponseDto> getLevelRankingTopTen(String accessToken);
 
-    List<RankingTopTenResponseDto> getTierRankingTopTen(String accessTocken);
+    List<RankingTopTenResponseDto> getTierRankingTopTen(String accessToken);
 
-    List<RankingTopTenResponseDto> getDailyMarathonRankingTopTen(String accessTocken);
+    List<RankingTopTenResponseDto> getDailyMarathonRankingTopTen(String accessToken);
 
-    List<RankingTopTenResponseDto> getMonthlyMarathonRankingTopTen(String accessTocken);
+    List<RankingTopTenResponseDto> getMonthlyMarathonRankingTopTen(String accessToken);
 }

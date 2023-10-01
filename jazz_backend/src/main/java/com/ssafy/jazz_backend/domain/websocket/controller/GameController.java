@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -71,7 +72,7 @@ public class GameController {
 
     @GetMapping("/cancel")
     @ResponseBody
-    public ResponseEntity<Void> cancelRequest(@RequestHeader("accessToken") String accessToken) {
+    public ResponseEntity<String> cancelRequest(@RequestHeader("accessToken") String accessToken) {
         SimpMessageHeaderAccessor accessor = SimpMessageHeaderAccessor.create();
         String session = accessor.getSessionId();
         logger.info(">> Cancel request. session : {}", session);
@@ -79,7 +80,7 @@ public class GameController {
         final GameRequest user = new GameRequest(session);
         gameService.cancelGameRoom(user);
 
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>("매칭 취소 성공", HttpStatus.OK);
     }
 
     @GetMapping("/play")

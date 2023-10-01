@@ -3,11 +3,19 @@ package com.ssafy.jazz_backend.domain.enterprise.service;
 import com.ssafy.jazz_backend.domain.enterprise.dto.enterpriseReponseDto.EnterpriseInfoResponseDto;
 import com.ssafy.jazz_backend.domain.enterprise.dto.enterpriseReponseDto.EnterpriseGraphResponseDto;
 import com.ssafy.jazz_backend.domain.enterprise.dto.enterpriseReponseDto.EnterpriseNameResponseDto;
+import com.ssafy.jazz_backend.domain.enterprise.dto.enterpriseReponseDto.FinancialTableResponseDto;
+import com.ssafy.jazz_backend.domain.enterprise.entity.CashFlow;
+import com.ssafy.jazz_backend.domain.enterprise.entity.ComprehensiveIncome;
 import com.ssafy.jazz_backend.domain.enterprise.entity.Enterprise;
 import com.ssafy.jazz_backend.domain.enterprise.entity.FinancialGraph;
+import com.ssafy.jazz_backend.domain.enterprise.entity.FinancialPosition;
+import com.ssafy.jazz_backend.domain.enterprise.entity.IncomeStatement;
+import com.ssafy.jazz_backend.domain.enterprise.repository.CashFlowJpaRepository;
+import com.ssafy.jazz_backend.domain.enterprise.repository.ComprehensiveIncomeJpaRepository;
 import com.ssafy.jazz_backend.domain.enterprise.repository.EnterpriseJpaRepository;
 import com.ssafy.jazz_backend.domain.enterprise.repository.FinancialGraphJpaRepository;
-import jakarta.persistence.criteria.CriteriaBuilder.In;
+import com.ssafy.jazz_backend.domain.enterprise.repository.FinancialPositionJpaRepository;
+import com.ssafy.jazz_backend.domain.enterprise.repository.IncomeStatementJpaRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +28,17 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
     private final EnterpriseJpaRepository enterpriseJpaRepository;
     private final FinancialGraphJpaRepository financialGraphJpaRepository;
+    private final FinancialPositionJpaRepository financialPositionJpaRepository;
+    private final IncomeStatementJpaRepository incomeStatementJpaRepository;
+    private final ComprehensiveIncomeJpaRepository comprehensiveIncomeJpaRepository;
+    private final CashFlowJpaRepository cashFlowJpaRepository;
+
+    //표 명 상수 등록
+    private static final String FP = "재무상태표";
+    private static final String CI = "포괄손익계산서";
+    private static final String CF = "현금흐름표";
+    private static final String CE = "자본변동표";
+    private static final String IS = "손익계산서";
 
     //기업명 검색 (유사한 사명 찾기)
     @Override
@@ -84,6 +103,102 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         return responseDtoList;
     }
 
+    //손익계산서
+    @Override
+    public List<FinancialTableResponseDto> getIncomeStatement(String accessToken,
+        Integer enterpriseId) {
+
+        //enterpriseId에 맞는 enterprise 가져오기 없으면 에러
+        Enterprise enterprise = enterpriseJpaRepository.findById(enterpriseId)
+            .orElseThrow(() -> new NullPointerException(
+                enterpriseId + " 해당 enterpriseId에 맞는 기업이 없습니다."));
+
+        //enterpriseId에 맞는 손익계산서 가져오기
+        List<IncomeStatement> incomeStatementList = incomeStatementJpaRepository.findByEnterpriseId(
+            enterprise.getId());
+
+        //responseDtoList 만들기
+        List<FinancialTableResponseDto> responseDtoList = createFinancialTableResponseDtoListForIS(
+            incomeStatementList, IS);
+
+        //responseDtoList ord 기준으로 오름차순 정렬
+        Collections.sort(responseDtoList);
+        return responseDtoList;
+    }
+    
+    //자본변동표 -> 일단 보류
+
+
+    //재무상태표
+    @Override
+    public List<FinancialTableResponseDto> getFinancialPosition(String accessToken,
+        Integer enterpriseId) {
+
+        //enterpriseId에 맞는 enterprise 가져오기 없으면 에러
+        Enterprise enterprise = enterpriseJpaRepository.findById(enterpriseId)
+            .orElseThrow(() -> new NullPointerException(
+                enterpriseId + " 해당 enterpriseId에 맞는 기업이 없습니다."));
+
+        //enterpriseId에 맞는 재무상태표 가져오기
+        List<FinancialPosition> financialPositionList =
+            financialPositionJpaRepository.findByEnterpriseId(enterprise.getId());
+
+        //responseDtoList 만들기
+        List<FinancialTableResponseDto> responseDtoList = createFinancialTableResponseDtoListForFP(
+            financialPositionList, FP);
+
+        //responseDtoList ord 기준으로 오름차순 정렬
+        Collections.sort(responseDtoList);
+        return responseDtoList;
+    }
+
+    //포괄손익계산서
+    @Override
+    public List<FinancialTableResponseDto> getComprehensiveIncome(String accessToken,
+        Integer enterpriseId) {
+
+        //enterpriseId에 맞는 enterprise 가져오기 없으면 에러
+        Enterprise enterprise = enterpriseJpaRepository.findById(enterpriseId)
+            .orElseThrow(() -> new NullPointerException(
+                enterpriseId + " 해당 enterpriseId에 맞는 기업이 없습니다."));
+
+        //enterpriseId에 맞는 포괄손익계산서 가져오기
+        List<ComprehensiveIncome> comprehensiveIncomeList =
+            comprehensiveIncomeJpaRepository.findByEnterpriseId(enterprise.getId());
+
+        //responseDtoList 만들기
+        List<FinancialTableResponseDto> responseDtoList = createFinancialTableResponseDtoListForCI(
+            comprehensiveIncomeList, CI);
+
+        //responseDtoList ord 기준으로 오름차순 정렬
+        Collections.sort(responseDtoList);
+        return responseDtoList;
+    }
+
+    //현금흐름표
+    @Override
+    public List<FinancialTableResponseDto> getCashFlow(String accessToken, Integer enterpriseId) {
+
+        //enterpriseId에 맞는 enterprise 가져오기 없으면 에러
+        Enterprise enterprise = enterpriseJpaRepository.findById(enterpriseId)
+            .orElseThrow(() -> new NullPointerException(
+                enterpriseId + " 해당 enterpriseId에 맞는 기업이 없습니다."));
+
+        //enterpriseId에 맞는 현금흐름표 가져오기
+        List<CashFlow> cashFlowList = cashFlowJpaRepository.findByEnterpriseId(enterprise.getId());
+
+        //responseDtoList 만들기
+        List<FinancialTableResponseDto> responseDtoList = createFinancialTableResponseDtoListForCF(
+            cashFlowList, CF);
+
+        //responseDtoList ord 기준으로 오름차순 정렬
+        Collections.sort(responseDtoList);
+        return responseDtoList;
+    }
+
+    // =====================================================================================================
+    // =====================================================================================================
+
     // 재무제표 그래프 검색(기업명 클릭) List<EnterpriseGraphResponseDto> responseDtoList 를 구성하는 메서드
     private List<EnterpriseGraphResponseDto> createEnterpriseGraphResponseDtoList(
         List<FinancialGraph> financialGraphList, Enterprise enterprise) {
@@ -128,6 +243,69 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         return enterpriseJpaRepository.findById(enterpriseId)
             .orElseThrow(() -> new IllegalArgumentException(
                 enterpriseId + " 해당 enterpriseId에 맞는 기업이 없습니다."));
+    }
+
+    //재무제표 responseDtoList 만들기
+    private List<FinancialTableResponseDto> createFinancialTableResponseDtoListForFP(
+        List<FinancialPosition> financialPositionList, String tableName) {
+
+        List<FinancialTableResponseDto> responseDtoList = new ArrayList<>();
+        for (FinancialPosition financialPosition : financialPositionList) {
+            FinancialTableResponseDto responseDto = FinancialTableResponseDto.create(
+                financialPosition.getId().getOrd(), tableName, financialPosition.getAccountName(),
+                financialPosition.getThstrmName(), financialPosition.getThAmount(),
+                financialPosition.getFrmtrmName(), financialPosition.getFrmAmount());
+            responseDtoList.add(responseDto);
+        }
+        return responseDtoList;
+    }
+
+    //손익계산서 responseDtoList 만들기
+    private List<FinancialTableResponseDto> createFinancialTableResponseDtoListForIS(
+        List<IncomeStatement> incomeStatementList, String tableName) {
+
+        List<FinancialTableResponseDto> responseDtoList = new ArrayList<>();
+        for (IncomeStatement incomeStatement : incomeStatementList) {
+            FinancialTableResponseDto responseDto = FinancialTableResponseDto.create(
+                incomeStatement.getId().getOrd(), tableName, incomeStatement.getAccountName(),
+                incomeStatement.getThstrmName(), incomeStatement.getThAmount(),
+                incomeStatement.getFrmtrmName(), incomeStatement.getFrmAmount());
+            responseDtoList.add(responseDto);
+        }
+        return responseDtoList;
+    }
+
+
+    //포괄손익계산서 responseDtoList 만들기
+    private List<FinancialTableResponseDto> createFinancialTableResponseDtoListForCI(
+        List<ComprehensiveIncome> comprehensiveIncomeList, String tableName) {
+
+        List<FinancialTableResponseDto> responseDtoList = new ArrayList<>();
+        for (ComprehensiveIncome comprehensiveIncome : comprehensiveIncomeList) {
+            FinancialTableResponseDto responseDto = FinancialTableResponseDto.create(
+                comprehensiveIncome.getId().getOrd(), tableName,
+                comprehensiveIncome.getAccountName(),
+                comprehensiveIncome.getThstrmName(), comprehensiveIncome.getThAmount(),
+                comprehensiveIncome.getFrmtrmName(), comprehensiveIncome.getFrmAmount());
+            responseDtoList.add(responseDto);
+        }
+        return responseDtoList;
+    }
+
+    //현금흐름표 responseDtoList 만들기
+    private List<FinancialTableResponseDto> createFinancialTableResponseDtoListForCF(
+        List<CashFlow> cashFlowList, String tableName) {
+
+        List<FinancialTableResponseDto> responseDtoList = new ArrayList<>();
+        for (CashFlow cashFlow : cashFlowList) {
+            FinancialTableResponseDto responseDto = FinancialTableResponseDto.create(
+                cashFlow.getId().getOrd(), tableName,
+                cashFlow.getAccountName(),
+                cashFlow.getThstrmName(), cashFlow.getThAmount(),
+                cashFlow.getFrmtrmName(), cashFlow.getFrmAmount());
+            responseDtoList.add(responseDto);
+        }
+        return responseDtoList;
     }
 
 }

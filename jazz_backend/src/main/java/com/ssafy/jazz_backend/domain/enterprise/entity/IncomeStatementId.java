@@ -14,14 +14,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class IncomeStatementId implements Serializable {
-    @Column(name = "point_time_name", length = 100, nullable = false)
-    private String pointTimeName;
+
+    private int ord;
 
     @Column(name = "enterprise_id", nullable = false)
     private int enterpriseId;
 
-    public IncomeStatementId(String pointTimeName, int enterpriseId) {
-        this.pointTimeName = pointTimeName;
+    public IncomeStatementId(int ord, int enterpriseId) {
+        this.ord = ord;
         this.enterpriseId = enterpriseId;
     }
 }

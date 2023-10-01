@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuizMessage {
+    private MessageType messageType;
     private int quizId;
     private String question;
     private List<String> content;

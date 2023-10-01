@@ -129,7 +129,7 @@ public class GameController {
            return;
        }
 
-       QuizMessage quizMessage = new QuizMessage(marathonAndTierQuizResponseDto.getQuizId(), marathonAndTierQuizResponseDto.getQuestion(),
+       QuizMessage quizMessage = new QuizMessage(MessageType.QUIZ, marathonAndTierQuizResponseDto.getQuizId(), marathonAndTierQuizResponseDto.getQuestion(),
            marathonAndTierQuizResponseDto.getContent(), marathonAndTierQuizResponseDto.getCaseNum(),
            marathonAndTierQuizResponseDto.getIsMulti(), marathonAndTierQuizResponseDto.getKind());
 

@@ -24,15 +24,19 @@ public class WebSocketEventListener {
     @Autowired
     private GameService gameService;
 
-    @EventListener
+//    @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
         logger.info("connecting..");
         MessageHeaderAccessor accessor = NativeMessageHeaderAccessor.getAccessor(event.getMessage(),
             SimpMessageHeaderAccessor.class);
         GenericMessage<?> generic = (GenericMessage<?>) accessor.getHeader("simpConnectMessage");
+        logger.info("generic = {}", generic);
         Map<String, Object> nativeHeaders = (Map<String, Object>) generic.getHeaders().get("nativeHeaders");
+        logger.info("nativeHeader = {}", nativeHeaders);
         String gameRoomId = ((List<String>) nativeHeaders.get("gameRoomId")).get(0);
+        logger.info("gameRoomId = {}", gameRoomId);
         String sessionId = (String) generic.getHeaders().get("simpSessionId");
+        logger.info("sessionId = {}", sessionId);
 
         logger.info("[Connected] room id : {} | websocket session id : {}", gameRoomId, sessionId);
 

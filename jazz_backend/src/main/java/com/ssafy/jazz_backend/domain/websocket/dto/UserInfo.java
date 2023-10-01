@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserInfo {
-    private String userId;
-    private int expPoint;
-    private int rankPoint;
+    private String nickname;
+    private int level;
+    private int currentCharacter;
 }

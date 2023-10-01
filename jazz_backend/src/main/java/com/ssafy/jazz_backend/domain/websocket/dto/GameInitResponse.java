@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GameInitResponse {
-    private MyInfo myInfo;
-    private UserInfo userInfo;
+    private MyInfo me;
+    private UserInfo other;
     private GameMessage initGameMessage;
 }

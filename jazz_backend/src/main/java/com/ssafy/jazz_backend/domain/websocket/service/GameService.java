@@ -190,8 +190,8 @@ public class GameService {
         Member member = memberRepository.findById(jwtService.getInfo("account", accessToken)).orElseThrow(() -> new NullPointerException());
         Member enemy = memberRepository.findById(enemyId).orElseThrow(() -> new NullPointerException());
 
-        MyInfo myInfo = new MyInfo(member.getUserId(), member.getProfile().getExpPoint()/10, itemManagementJpaRepository.findItemIdByMemberIdAndIsUsed(member.getId()).orElseThrow(() -> new NullPointerException()));
-        UserInfo userInfo = new UserInfo(enemy.getUserId(), enemy.getProfile().getExpPoint()/10, itemManagementJpaRepository.findItemIdByMemberIdAndIsUsed(enemy.getId()).orElseThrow(() -> new NullPointerException()));
+        MyInfo myInfo = new MyInfo(member.getProfile().getNickname(), member.getProfile().getExpPoint() / 10 + 1, itemManagementJpaRepository.findItemIdByMemberIdAndIsUsed(member.getId()).orElseThrow(() -> new NullPointerException()));
+        UserInfo userInfo = new UserInfo(enemy.getProfile().getNickname(), enemy.getProfile().getExpPoint() / 10 + 1, itemManagementJpaRepository.findItemIdByMemberIdAndIsUsed(enemy.getId()).orElseThrow(() -> new NullPointerException()));
         GameMyInfo gameMyInfo = new GameMyInfo(member.getId(), session.getId(), 5);
         GameUserInfo gameUserInfo = new GameUserInfo(5);
         GameMessage initGameMessage = new GameMessage(session.getId(), "Game init Message", MessageType.GAME, 1, gameMyInfo, gameUserInfo);

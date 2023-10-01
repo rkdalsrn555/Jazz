@@ -18,6 +18,6 @@ public class GameMessage {
     private MessageType messageType;
     // 진행 중인 라운드
     private int round;
-    private GameMyInfo myInfo;
-    private GameUserInfo userInfo;
+    private GameMyInfo me;
+    private GameUserInfo other;
 }

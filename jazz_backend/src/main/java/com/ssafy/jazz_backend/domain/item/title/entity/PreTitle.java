@@ -13,7 +13,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "pretitle")
 @Getter
 @Setter
 @Builder

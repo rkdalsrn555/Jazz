@@ -17,7 +17,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "itemmanagement")
 @Getter
 @Setter
 @Builder

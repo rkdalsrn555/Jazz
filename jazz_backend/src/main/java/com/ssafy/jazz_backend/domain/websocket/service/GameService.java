@@ -139,9 +139,6 @@ public class GameService {
             DeferredResult<GameResponse> user1Result = waitingUsers.remove(user1);
             DeferredResult<GameResponse> user2Result = waitingUsers.remove(user2);
 
-            logger.info("user1 : " + user1Result.getResult());
-            logger.info("user2 : " + user2Result.getResult());
-
             user1Result.setResult(
                 new GameResponse(ResponseResult.SUCCESS, uuid, user1.getSession(), user2.getMemberUUID()));
             user2Result.setResult(

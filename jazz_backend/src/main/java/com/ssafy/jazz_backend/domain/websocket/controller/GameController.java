@@ -1,5 +1,6 @@
 package com.ssafy.jazz_backend.domain.websocket.controller;
 
+import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
 import com.ssafy.jazz_backend.domain.quiz.dto.MarathonAndTierQuizResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.service.MarathonServiceImpl;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameInitResponse;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -32,6 +34,7 @@ import com.ssafy.jazz_backend.domain.websocket.service.GameService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,7 +48,7 @@ public class GameController {
 
     private static final Logger logger = LoggerFactory.getLogger(GameController.class);
 
-//    private final JwtService jwtService;
+    private final JwtService jwtService;
     private final GameService gameService;
 
     private final MarathonServiceImpl marathonService;
@@ -57,8 +60,9 @@ public class GameController {
 //        SimpMessageHeaderAccessor accessor = SimpMessageHeaderAccessor.create();
 //        String session = accessor.getSessionId();
         logger.info(">> Join request. session : {}", session);
+        String memberUUID = jwtService.getInfo("account", accessToken);
 
-        final GameRequest user = new GameRequest(session);
+        final GameRequest user = new GameRequest(session, memberUUID);
         final DeferredResult<GameResponse> deferredResult = new DeferredResult<>(null);
         gameService.joinGameRoom(user, deferredResult);
 
@@ -71,20 +75,20 @@ public class GameController {
 
     @GetMapping("/cancel")
     @ResponseBody
-    public ResponseEntity<Void> cancelRequest(@RequestHeader("accessToken") String accessToken) {
+    public ResponseEntity<String> cancelRequest(@RequestHeader("accessToken") String accessToken) {
         SimpMessageHeaderAccessor accessor = SimpMessageHeaderAccessor.create();
         String session = accessor.getSessionId();
         logger.info(">> Cancel request. session : {}", session);
 
-        final GameRequest user = new GameRequest(session);
+        final GameRequest user = new GameRequest(session, null);
         gameService.cancelGameRoom(user);
 
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>("매칭 취소 성공", HttpStatus.OK);
     }
 
-    @GetMapping("/play")
+    @GetMapping("/play/{enemyId}")
     @ResponseBody
-    public GameInitResponse startGame(@RequestHeader("accessToken") String accessToken, HttpSession session, String enemyId) {
+    public GameInitResponse startGame(@RequestHeader("accessToken") String accessToken, HttpSession session, @PathVariable String enemyId) {
 //        String session = request.getSession().getId();
 //        SimpMessageHeaderAccessor accessor = SimpMessageHeaderAccessor.create();
 //        String session = accessor.getSessionId();

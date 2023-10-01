@@ -16,6 +16,7 @@ public class GameResponse {
     private ResponseResult responseResult;
     private String gameRoomId;
     private String session;
+    private String enemyId;
 
     public enum ResponseResult {
         SUCCESS, CANCEL, TIMEOUT;

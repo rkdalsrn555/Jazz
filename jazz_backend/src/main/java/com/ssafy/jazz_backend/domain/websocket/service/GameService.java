@@ -1,5 +1,6 @@
 package com.ssafy.jazz_backend.domain.websocket.service;
 
+import com.ssafy.jazz_backend.domain.item.repository.ItemManagementJpaRepository;
 import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
 import com.ssafy.jazz_backend.domain.member.entity.Member;
 import com.ssafy.jazz_backend.domain.member.repository.MemberRepository;
@@ -52,6 +53,9 @@ public class GameService {
     private MemberRepository memberRepository;
 
     @Autowired
+    private ItemManagementJpaRepository itemManagementJpaRepository;
+
+    @Autowired
     private QuizRepository quizRepository;
 
     @Autowired
@@ -97,7 +101,7 @@ public class GameService {
         try {
             lock.writeLock().lock();
             setJoinResult(waitingUsers.remove(gameRequest),
-                new GameResponse(ResponseResult.CANCEL, null, gameRequest.getSession()));
+                new GameResponse(ResponseResult.CANCEL, null, gameRequest.getSession(), null));
         } finally {
             lock.writeLock().unlock();
         }
@@ -107,7 +111,7 @@ public class GameService {
         try {
             lock.writeLock().lock();
             setJoinResult(waitingUsers.remove(gameRequest),
-                new GameResponse(ResponseResult.TIMEOUT, null, gameRequest.getSession()));
+                new GameResponse(ResponseResult.TIMEOUT, null, gameRequest.getSession(), null));
         } finally {
             lock.writeLock().unlock();
         }
@@ -135,13 +139,10 @@ public class GameService {
             DeferredResult<GameResponse> user1Result = waitingUsers.remove(user1);
             DeferredResult<GameResponse> user2Result = waitingUsers.remove(user2);
 
-            logger.info("user1 : " + user1Result.getResult());
-            logger.info("user2 : " + user2Result.getResult());
-
             user1Result.setResult(
-                new GameResponse(ResponseResult.SUCCESS, uuid, user1.getSession()));
+                new GameResponse(ResponseResult.SUCCESS, uuid, user1.getSession(), user2.getMemberUUID()));
             user2Result.setResult(
-                new GameResponse(ResponseResult.SUCCESS, uuid, user2.getSession()));
+                new GameResponse(ResponseResult.SUCCESS, uuid, user2.getSession(), user1.getMemberUUID()));
         } catch (Exception e) {
             logger.warn("Exception occur while checking waiting users", e);
         } finally {
@@ -189,8 +190,8 @@ public class GameService {
         Member member = memberRepository.findById(jwtService.getInfo("account", accessToken)).orElseThrow(() -> new NullPointerException());
         Member enemy = memberRepository.findById(enemyId).orElseThrow(() -> new NullPointerException());
 
-        MyInfo myInfo = new MyInfo(member.getUserId(), member.getProfile().getExpPoint(), 100);
-        UserInfo userInfo = new UserInfo(enemy.getUserId(), enemy.getProfile().getExpPoint(), 100);
+        MyInfo myInfo = new MyInfo(member.getUserId(), member.getProfile().getExpPoint()/10, itemManagementJpaRepository.findItemIdByMemberIdAndIsUsed(member.getId()).orElseThrow(() -> new NullPointerException()));
+        UserInfo userInfo = new UserInfo(enemy.getUserId(), enemy.getProfile().getExpPoint()/10, itemManagementJpaRepository.findItemIdByMemberIdAndIsUsed(enemy.getId()).orElseThrow(() -> new NullPointerException()));
         GameMyInfo gameMyInfo = new GameMyInfo(member.getId(), session.getId(), 5);
         GameUserInfo gameUserInfo = new GameUserInfo(5);
         GameMessage initGameMessage = new GameMessage(session.getId(), "Game init Message", MessageType.GAME, 1, gameMyInfo, gameUserInfo);

@@ -34,6 +34,7 @@ import com.ssafy.jazz_backend.domain.websocket.service.GameService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -85,9 +86,9 @@ public class GameController {
         return new ResponseEntity<>("매칭 취소 성공", HttpStatus.OK);
     }
 
-    @GetMapping("/play")
+    @GetMapping("/play/{enemyId}")
     @ResponseBody
-    public GameInitResponse startGame(@RequestHeader("accessToken") String accessToken, HttpSession session, String enemyId) {
+    public GameInitResponse startGame(@RequestHeader("accessToken") String accessToken, HttpSession session, @PathVariable String enemyId) {
 //        String session = request.getSession().getId();
 //        SimpMessageHeaderAccessor accessor = SimpMessageHeaderAccessor.create();
 //        String session = accessor.getSessionId();

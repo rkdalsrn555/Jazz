@@ -7,7 +7,6 @@ import com.ssafy.jazz_backend.domain.member.repository.MemberRepository;
 import com.ssafy.jazz_backend.domain.quiz.repository.QuizRepository;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameInitResponse;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameMessage;
-import com.ssafy.jazz_backend.domain.websocket.dto.GameMyInfo;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameRequest;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameResponse;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameResponse.ResponseResult;
@@ -101,7 +100,7 @@ public class GameService {
         try {
             lock.writeLock().lock();
             setJoinResult(waitingUsers.remove(gameRequest),
-                new GameResponse(ResponseResult.CANCEL, null, gameRequest.getSession(), null));
+                new GameResponse(ResponseResult.CANCEL, null, gameRequest.getSession(), null, null, null, null));
         } finally {
             lock.writeLock().unlock();
         }
@@ -111,7 +110,7 @@ public class GameService {
         try {
             lock.writeLock().lock();
             setJoinResult(waitingUsers.remove(gameRequest),
-                new GameResponse(ResponseResult.TIMEOUT, null, gameRequest.getSession(), null));
+                new GameResponse(ResponseResult.TIMEOUT, null, gameRequest.getSession(), null, null, null, null));
         } finally {
             lock.writeLock().unlock();
         }
@@ -139,10 +138,20 @@ public class GameService {
             DeferredResult<GameResponse> user1Result = waitingUsers.remove(user1);
             DeferredResult<GameResponse> user2Result = waitingUsers.remove(user2);
 
+            // MyInfo, UserInfo, GameMessage 생성
+            Member member1 = memberRepository.findById(user1.getMemberUUID()).orElseThrow(() -> new NullPointerException());
+            Member member2 = memberRepository.findById(user2.getMemberUUID()).orElseThrow(() -> new NullPointerException());
+            UserInfo user1Info = new UserInfo(member1.getProfile().getNickname(), member1.getProfile().getExpPoint() / 10 + 1, itemManagementJpaRepository.findItemIdByMemberIdAndIsUsed(member1.getId()).orElseThrow(() -> new NullPointerException()));
+            UserInfo user2Info = new UserInfo(member2.getProfile().getNickname(), member2.getProfile().getExpPoint() / 10 + 1, itemManagementJpaRepository.findItemIdByMemberIdAndIsUsed(member2.getId()).orElseThrow(() -> new NullPointerException()));
+            GameUserInfo gameUser1Info = new GameUserInfo(user1.getSession(), 5, false);
+            GameUserInfo gameUser2Info = new GameUserInfo(user2.getSession(), 5, false);
+            GameMessage gameMessage = new GameMessage(user1.getSession(), "Game Init Message", MessageType.GAME, 1, gameUser1Info, gameUser2Info);
+
             user1Result.setResult(
-                new GameResponse(ResponseResult.SUCCESS, uuid, user1.getSession(), user2.getMemberUUID()));
+                new GameResponse(ResponseResult.SUCCESS, uuid, user1.getSession(), user2.getMemberUUID(), user1Info, user2Info, gameMessage));
+            gameMessage.setSession(user2.getSession());
             user2Result.setResult(
-                new GameResponse(ResponseResult.SUCCESS, uuid, user2.getSession(), user1.getMemberUUID()));
+                new GameResponse(ResponseResult.SUCCESS, uuid, user2.getSession(), user1.getMemberUUID(), user2Info, user1Info, gameMessage));
         } catch (Exception e) {
             logger.warn("Exception occur while checking waiting users", e);
         } finally {
@@ -187,17 +196,18 @@ public class GameService {
     }
 
     public GameInitResponse gameInit(String accessToken, HttpSession session, String enemyId) {
-        Member member = memberRepository.findById(jwtService.getInfo("account", accessToken)).orElseThrow(() -> new NullPointerException());
-        Member enemy = memberRepository.findById(enemyId).orElseThrow(() -> new NullPointerException());
-
-        MyInfo myInfo = new MyInfo(member.getProfile().getNickname(), member.getProfile().getExpPoint() / 10 + 1, itemManagementJpaRepository.findItemIdByMemberIdAndIsUsed(member.getId()).orElseThrow(() -> new NullPointerException()));
-        UserInfo userInfo = new UserInfo(enemy.getProfile().getNickname(), enemy.getProfile().getExpPoint() / 10 + 1, itemManagementJpaRepository.findItemIdByMemberIdAndIsUsed(enemy.getId()).orElseThrow(() -> new NullPointerException()));
-        GameMyInfo gameMyInfo = new GameMyInfo(member.getId(), session.getId(), 5);
-        GameUserInfo gameUserInfo = new GameUserInfo(5);
-        GameMessage initGameMessage = new GameMessage(session.getId(), "Game init Message", MessageType.GAME, 1, gameMyInfo, gameUserInfo);
-
-        GameInitResponse gameInitResponse = new GameInitResponse(myInfo, userInfo, initGameMessage);
-        return gameInitResponse;
+//        Member member = memberRepository.findById(jwtService.getInfo("account", accessToken)).orElseThrow(() -> new NullPointerException());
+//        Member enemy = memberRepository.findById(enemyId).orElseThrow(() -> new NullPointerException());
+//
+//        MyInfo myInfo = new MyInfo(member.getProfile().getNickname(), member.getProfile().getExpPoint() / 10 + 1, itemManagementJpaRepository.findItemIdByMemberIdAndIsUsed(member.getId()).orElseThrow(() -> new NullPointerException()));
+//        UserInfo userInfo = new UserInfo(enemy.getProfile().getNickname(), enemy.getProfile().getExpPoint() / 10 + 1, itemManagementJpaRepository.findItemIdByMemberIdAndIsUsed(enemy.getId()).orElseThrow(() -> new NullPointerException()));
+//        GameUserInfo gameUser1Info = new GameMyInfo(member.getId(), session.getId(), 5, false);
+//        GameUserInfo gameUser2Info = new GameUserInfo(5, false);
+//        GameMessage initGameMessage = new GameMessage(session.getId(), "Game init Message", MessageType.GAME, 1, gameMyInfo, gameUserInfo);
+//
+//        GameInitResponse gameInitResponse = new GameInitResponse(myInfo, userInfo, initGameMessage);
+//        return gameInitResponse;
+        return null;
     }
 
     public GameResultResponse gameResult(String accessToken) {

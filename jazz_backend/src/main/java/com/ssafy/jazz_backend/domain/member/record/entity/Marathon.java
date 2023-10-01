@@ -8,13 +8,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.checkerframework.checker.units.qual.A;
 
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Marathon {
 
     @Id
@@ -22,6 +23,11 @@ public class Marathon {
 
     @Builder.Default
     private Integer quizRecord = 0;
+
+    public Integer getQuizRecord() {
+        return this.quizRecord;
+    }
+
 
     public static Marathon create(MarathonId marathonId, Integer quizRecord) {
         return new Marathon(marathonId, quizRecord);

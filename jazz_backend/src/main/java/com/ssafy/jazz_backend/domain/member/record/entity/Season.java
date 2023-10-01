@@ -18,9 +18,9 @@ public class Season {
     private Integer id = 1;
 
     @Builder.Default
-    private Integer marathonDailySeason = 0;
+    private Integer dailySeason = 0; // 마라톤 일간 시즌
     @Builder.Default
-    private Integer marathonMonthlySeason = 0;
+    private Integer monthlySeason = 0; // 마라톤 월간 시즌
 
     @Builder.Default
     private Integer tierSeason = 0;

@@ -17,13 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 @AllArgsConstructor
 public class MarathonId {
 
-    
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private Integer daily_season;
-    private Integer monthly_season;
+    private Integer dailySeason;
+    private Integer monthlySeason;
 
     public static MarathonId create(Member member, Integer daily_season, Integer monthly_season) {
 

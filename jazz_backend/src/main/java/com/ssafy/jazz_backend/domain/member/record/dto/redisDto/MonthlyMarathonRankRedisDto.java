@@ -11,18 +11,18 @@ import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 @AllArgsConstructor
 @Getter
 @Setter
-public class MarathonRankDailyRedisDto {
+public class MonthlyMarathonRankRedisDto {
 
     @Id
     private String memberId;
 
     private Integer quizRecord;
 
-    public static MarathonRankDailyRedisDto convertToMarathonRankRedisDto(
+    public static MonthlyMarathonRankRedisDto convertToMonthlyMarathonRankRedisDto(
         TypedTuple<String> tuple) {
         String memberId = tuple.getValue();
         Integer score = tuple.getScore().intValue();
-        return new MarathonRankDailyRedisDto(memberId, score);
+        return new MonthlyMarathonRankRedisDto(memberId, score);
 
     }
 }

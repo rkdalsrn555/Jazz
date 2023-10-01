@@ -3,11 +3,18 @@ package com.ssafy.jazz_backend.domain.quiz.service;
 import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
 import com.ssafy.jazz_backend.domain.member.profile.entity.Profile;
 import com.ssafy.jazz_backend.domain.member.profile.repository.ProfileRepository;
+import com.ssafy.jazz_backend.domain.member.record.dto.redisDto.DailyMarathonRankRedisDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.QuizResultRequestDto;
 import com.ssafy.jazz_backend.domain.quiz.dto.QuizResultResponseDto;
 import com.ssafy.jazz_backend.global.Util;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +49,27 @@ public class QuizResultServiceImpl implements QuizResultService {
             rewardDiamond, rewardExpPoint);
 
         return responseDto;
+    }
+
+    @RedisHash(timeToLive = 31536000) //TTL 1년으로 설정
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public class DailyMarathonRankRedisDto {
+
+        @Id
+        private String memberId;
+
+        private Integer quizRecord;
+
+        public static com.ssafy.jazz_backend.domain.member.record.dto.redisDto.DailyMarathonRankRedisDto convertToDailyMarathonRankRedisDto(
+            TypedTuple<String> tuple) {
+            String memberId = tuple.getValue();
+            Integer score = tuple.getScore().intValue();
+            return new com.ssafy.jazz_backend.domain.member.record.dto.redisDto.DailyMarathonRankRedisDto(
+                memberId, score);
+
+        }
     }
 
     private Profile updateExpPointAndDiamond(Profile profile, int rewardExpPoint,

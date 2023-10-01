@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "pretitlemanagement")
 @Getter
 @Setter
 @Builder

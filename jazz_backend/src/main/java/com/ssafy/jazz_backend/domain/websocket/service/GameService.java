@@ -101,7 +101,7 @@ public class GameService {
         try {
             lock.writeLock().lock();
             setJoinResult(waitingUsers.remove(gameRequest),
-                new GameResponse(ResponseResult.CANCEL, null, gameRequest.getSession()));
+                new GameResponse(ResponseResult.CANCEL, null, gameRequest.getSession(), null));
         } finally {
             lock.writeLock().unlock();
         }
@@ -111,7 +111,7 @@ public class GameService {
         try {
             lock.writeLock().lock();
             setJoinResult(waitingUsers.remove(gameRequest),
-                new GameResponse(ResponseResult.TIMEOUT, null, gameRequest.getSession()));
+                new GameResponse(ResponseResult.TIMEOUT, null, gameRequest.getSession(), null));
         } finally {
             lock.writeLock().unlock();
         }
@@ -143,9 +143,9 @@ public class GameService {
             logger.info("user2 : " + user2Result.getResult());
 
             user1Result.setResult(
-                new GameResponse(ResponseResult.SUCCESS, uuid, user1.getSession()));
+                new GameResponse(ResponseResult.SUCCESS, uuid, user1.getSession(), user2.getMemberUUID()));
             user2Result.setResult(
-                new GameResponse(ResponseResult.SUCCESS, uuid, user2.getSession()));
+                new GameResponse(ResponseResult.SUCCESS, uuid, user2.getSession(), user1.getMemberUUID()));
         } catch (Exception e) {
             logger.warn("Exception occur while checking waiting users", e);
         } finally {

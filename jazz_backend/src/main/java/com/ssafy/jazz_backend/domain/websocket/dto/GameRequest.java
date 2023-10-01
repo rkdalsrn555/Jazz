@@ -15,6 +15,7 @@ import lombok.ToString;
 public class GameRequest {
 
     private String session;
+    private String memberUUID;
 
     @Override
     public boolean equals(Object o) {

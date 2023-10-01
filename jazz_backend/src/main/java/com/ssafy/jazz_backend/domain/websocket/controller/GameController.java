@@ -5,7 +5,6 @@ import com.ssafy.jazz_backend.domain.quiz.dto.MarathonAndTierQuizResponseDto;
 import com.ssafy.jazz_backend.domain.quiz.service.MarathonServiceImpl;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameInitResponse;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameMessage;
-import com.ssafy.jazz_backend.domain.websocket.dto.GameMyInfo;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameRequest;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameResponse;
 import com.ssafy.jazz_backend.domain.websocket.dto.GameResultResponse;
@@ -86,6 +85,7 @@ public class GameController {
         return new ResponseEntity<>("매칭 취소 성공", HttpStatus.OK);
     }
 
+    // 사용 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     @GetMapping("/play/{enemyId}")
     @ResponseBody
     public GameInitResponse startGame(@RequestHeader("accessToken") String accessToken, HttpSession session, @PathVariable String enemyId) {

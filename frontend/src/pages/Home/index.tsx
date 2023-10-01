@@ -114,7 +114,7 @@ const Home = () => {
     color: 'pink',
     img: <S.ShopImg src={Shop} />,
     width: '30%',
-    destination: '',
+    destination: '/store',
   };
 
   ///////////////////////////////////////////////////////////////

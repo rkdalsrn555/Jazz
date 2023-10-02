@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Enlarge from 'components/Effect/Enlarge/Enlarge';
-import { useNavigate } from 'react-router-dom';
 
 const ButtonStyle = styled.button`
   width: 150px;
@@ -13,18 +12,14 @@ const ButtonStyle = styled.button`
   color: #fff;
 `;
 
-const FavoriteRandomQuizButton = () => {
-  const navigate = useNavigate();
+type OwnProps = {
+  handleClick: () => void;
+};
 
+const FavoriteRandomQuizButton = (props: OwnProps) => {
   return (
     <Enlarge>
-      <ButtonStyle
-        onClick={() => {
-          navigate('/favorite/random-quiz');
-        }}
-      >
-        랜덤 문제풀기
-      </ButtonStyle>
+      <ButtonStyle onClick={props.handleClick}>랜덤 문제풀기</ButtonStyle>
     </Enlarge>
   );
 };

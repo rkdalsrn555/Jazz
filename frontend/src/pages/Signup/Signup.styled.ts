@@ -31,7 +31,7 @@ export const LogoContainer = styled.div`
 `;
 
 export const signupText = styled.p`
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
   color: #444b59;
 

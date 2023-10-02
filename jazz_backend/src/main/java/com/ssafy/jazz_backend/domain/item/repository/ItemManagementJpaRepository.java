@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ItemManagementJpaRepository extends JpaRepository<ItemManagement, ItemManagementId> {
-    @Query(value = "SELECT item_id FROM ItemManagement WHERE member_id = :memberId AND is_used = true", nativeQuery = true)
+    @Query(value = "SELECT item_id FROM item_management WHERE member_id = :memberId AND is_used = true", nativeQuery = true)
     Optional<Integer> findItemIdByMemberIdAndIsUsed(@Param("memberId") String memberId);
 }

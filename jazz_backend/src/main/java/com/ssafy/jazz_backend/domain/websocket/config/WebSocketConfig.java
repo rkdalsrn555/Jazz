@@ -23,8 +23,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // '/game-websocket' 경로를 STOMP 엔드포인트로 등록
         registry.addEndpoint("/game-websocket")
-            .setAllowedOrigins("*")
-            .withSockJS();
+            .setAllowedOriginPatterns("*");
     }
 
 }

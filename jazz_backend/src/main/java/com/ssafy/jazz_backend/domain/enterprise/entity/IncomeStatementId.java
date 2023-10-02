@@ -2,6 +2,8 @@ package com.ssafy.jazz_backend.domain.enterprise.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import java.io.Serializable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,14 +16,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class IncomeStatementId implements Serializable {
-    @Column(name = "point_time_name", length = 100, nullable = false)
-    private String pointTimeName;
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column(name = "enterprise_id", nullable = false)
     private int enterpriseId;
 
-    public IncomeStatementId(String pointTimeName, int enterpriseId) {
-        this.pointTimeName = pointTimeName;
+    public IncomeStatementId(int id, int enterpriseId) {
+        this.id = id;
         this.enterpriseId = enterpriseId;
     }
 }

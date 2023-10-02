@@ -1,6 +1,7 @@
 package com.ssafy.jazz_backend.domain.enterprise.controller;
 // 고유번호, 연도를 params로 받아 해당 재무제표를 각 db에 넣는 controller 입니다.
 
+import com.ssafy.jazz_backend.domain.enterprise.service.FinancialStatementsService;
 import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,12 +17,16 @@ public class FinancialStatementsController {
     @Autowired
     private JwtService jwtService;
 
-    @GetMapping("/fs/{corp_code}/{bsns_year}/{name}")
+    @Autowired
+    private FinancialStatementsService financialStatementsService;
+
+    @GetMapping("/fs/{corpCode}/{bsnsYear}/{enterpriseName}")
     ResponseEntity<?> insertFinancialStatement(@RequestHeader("accessToken") String accessToken,
-        @PathVariable String name,
-        @PathVariable String corp_code,
-        @PathVariable String bsns_year) {
+        @PathVariable String enterpriseName,
+        @PathVariable String corpCode,
+        @PathVariable String bsnsYear) {
         String userUUID = jwtService.getInfo("account", accessToken);
+        financialStatementsService.fetchFinancialData(corpCode, bsnsYear, enterpriseName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

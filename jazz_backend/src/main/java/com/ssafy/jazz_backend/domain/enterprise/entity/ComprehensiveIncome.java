@@ -47,4 +47,7 @@ public class ComprehensiveIncome {
     @Column(name = "frm_amount")
     private Long frmAmount;
 
+    @Column(name = "ord")
+    private int ord;
+
 }

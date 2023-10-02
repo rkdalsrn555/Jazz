@@ -23,6 +23,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "CashFlow")
 public class CashFlow {
+
     @EmbeddedId
     private CashFlowId id;
 
@@ -45,4 +46,7 @@ public class CashFlow {
 
     @Column(name = "frm_amount")
     private Long frmAmount;
+
+    @Column(name = "ord")
+    private int ord;
 }

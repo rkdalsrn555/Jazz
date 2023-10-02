@@ -252,7 +252,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         List<FinancialTableResponseDto> responseDtoList = new ArrayList<>();
         for (FinancialPosition financialPosition : financialPositionList) {
             FinancialTableResponseDto responseDto = FinancialTableResponseDto.create(
-                financialPosition.getId().getOrd(), tableName, financialPosition.getAccountName(),
+                financialPosition.getOrd(), tableName, financialPosition.getAccountName(),
                 financialPosition.getThstrmName(), financialPosition.getThAmount(),
                 financialPosition.getFrmtrmName(), financialPosition.getFrmAmount());
             responseDtoList.add(responseDto);
@@ -267,7 +267,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         List<FinancialTableResponseDto> responseDtoList = new ArrayList<>();
         for (IncomeStatement incomeStatement : incomeStatementList) {
             FinancialTableResponseDto responseDto = FinancialTableResponseDto.create(
-                incomeStatement.getId().getOrd(), tableName, incomeStatement.getAccountName(),
+                incomeStatement.getOrd(), tableName, incomeStatement.getAccountName(),
                 incomeStatement.getThstrmName(), incomeStatement.getThAmount(),
                 incomeStatement.getFrmtrmName(), incomeStatement.getFrmAmount());
             responseDtoList.add(responseDto);
@@ -283,7 +283,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         List<FinancialTableResponseDto> responseDtoList = new ArrayList<>();
         for (ComprehensiveIncome comprehensiveIncome : comprehensiveIncomeList) {
             FinancialTableResponseDto responseDto = FinancialTableResponseDto.create(
-                comprehensiveIncome.getId().getOrd(), tableName,
+                comprehensiveIncome.getOrd(), tableName,
                 comprehensiveIncome.getAccountName(),
                 comprehensiveIncome.getThstrmName(), comprehensiveIncome.getThAmount(),
                 comprehensiveIncome.getFrmtrmName(), comprehensiveIncome.getFrmAmount());
@@ -299,7 +299,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         List<FinancialTableResponseDto> responseDtoList = new ArrayList<>();
         for (CashFlow cashFlow : cashFlowList) {
             FinancialTableResponseDto responseDto = FinancialTableResponseDto.create(
-                cashFlow.getId().getOrd(), tableName,
+                cashFlow.getOrd(), tableName,
                 cashFlow.getAccountName(),
                 cashFlow.getThstrmName(), cashFlow.getThAmount(),
                 cashFlow.getFrmtrmName(), cashFlow.getFrmAmount());

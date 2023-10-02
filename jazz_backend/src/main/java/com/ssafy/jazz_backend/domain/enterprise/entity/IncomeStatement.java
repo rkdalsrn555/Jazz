@@ -21,6 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "IncomeStatement")
 public class IncomeStatement {
+
     @EmbeddedId
     private IncomeStatementId id;
 
@@ -43,4 +44,7 @@ public class IncomeStatement {
 
     @Column(name = "frm_amount")
     private Long frmAmount;
+
+    @Column(name = "ord")
+    private int ord;
 }

@@ -1,11 +1,11 @@
 package com.ssafy.jazz_backend.domain.enterprise.service;
 
 import com.ssafy.jazz_backend.domain.enterprise.dto.DartApiResponseDto;
-import com.ssafy.jazz_backend.domain.enterprise.entity.ChangeInEquity;
+import com.ssafy.jazz_backend.domain.enterprise.dto.FinancialStatementsResponseDto;
 import com.ssafy.jazz_backend.domain.enterprise.entity.ComprehensiveIncome;
+import com.ssafy.jazz_backend.domain.enterprise.entity.ComprehensiveIncomeId;
 import com.ssafy.jazz_backend.domain.enterprise.entity.Enterprise;
 import com.ssafy.jazz_backend.domain.enterprise.repository.CashFlowRepository;
-import com.ssafy.jazz_backend.domain.enterprise.repository.ChangeInEquityRepository;
 import com.ssafy.jazz_backend.domain.enterprise.repository.ComprehensiveIncomeRepository;
 import com.ssafy.jazz_backend.domain.enterprise.repository.EnterpriseRepository;
 import com.ssafy.jazz_backend.domain.enterprise.repository.FinancialPositionRepository;
@@ -29,9 +29,6 @@ public class FinancialStatementsServiceImpl implements FinancialStatementsServic
 
     @Autowired
     private CashFlowRepository cashFlowRepository;
-
-    @Autowired
-    private ChangeInEquityRepository changeInEquityRepository;
 
     @Autowired
     private ComprehensiveIncomeRepository comprehensiveIncomeRepository;
@@ -61,7 +58,23 @@ public class FinancialStatementsServiceImpl implements FinancialStatementsServic
         enterpriseRepository.save(enterprise);
 
         // ComprhensiveIncome 엔터티에 저장하는코드 작성해야함. 그 외 엔터티에 저장하는 것도 아래에 쭉 작성함
-//        ComprehensiveIncome comprehensiveIncome = new ComprehensiveIncome();
+        for (FinancialStatementsResponseDto dto : response.getList()) {
+            ComprehensiveIncome comprehensiveIncome = ComprehensiveIncome.builder()
+                .id(new ComprehensiveIncomeId(0,
+                    enterprise.getId())) //
+                .enterprise(enterprise)
+                .accountName(dto.getAccount_nm())
+                .thstrmName(dto.getThstrm_nm())
+                .thAmount(
+                    dto.getThstrm_amount() != null ? Long.parseLong(dto.getThstrm_amount()) : null)
+                .frmtrmName(dto.getFrmtrm_nm())
+                .frmAmount(
+                    dto.getFrmtrm_amount() != null ? Long.parseLong(dto.getFrmtrm_amount()) : null)
+                .ord(Integer.parseInt(dto.getOrd())) // Manually setting ord value here
+                .build();
+
+            comprehensiveIncome = comprehensiveIncomeRepository.save(comprehensiveIncome);
+        }
 
         return response;
     }

@@ -24,6 +24,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "FinancialPosition")
 public class FinancialPosition {
+
     @EmbeddedId
     private FinancialPositionId id;
 
@@ -46,4 +47,7 @@ public class FinancialPosition {
 
     @Column(name = "frm_amount")
     private Long frmAmount;
+
+    @Column(name = "ord")
+    private int ord;
 }

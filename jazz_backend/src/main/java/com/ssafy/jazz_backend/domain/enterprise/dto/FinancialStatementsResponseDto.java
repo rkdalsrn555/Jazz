@@ -12,7 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FinancialStatementsResponseDto {
-
     private String rcept_no;
     private String reprt_code;
     private String bsns_year;
@@ -30,4 +29,5 @@ public class FinancialStatementsResponseDto {
     private String bfefrmtrm_amount;
     private String ord;
     private String currency;
+
 }

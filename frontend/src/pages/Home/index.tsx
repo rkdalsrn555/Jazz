@@ -27,18 +27,11 @@ import RankChart from 'components/features/Main/RankChart/RankChart';
 const Home = () => {
   const theme: themeProps = useTheme();
   const isDark = useRecoilValue(IsDark);
-  const [isToggled, setIsToggled] = useState<boolean>(false);
   const userToken = localStorage.getItem('userAccessToken');
 
   ///////////////////////게임 매칭시 나타나는 모달//////////////////////////
+  const [isToggled, setIsToggled] = useState<boolean>(false);
   const gameMatchingModalFeature = {
-    me: {
-      level: 15,
-      nickname: '재린이',
-      charactorNumber: 1,
-    },
-    other: null,
-    isMatching: false,
     isToggled: isToggled,
     closeModal: () => setIsToggled(false),
   };
@@ -114,7 +107,7 @@ const Home = () => {
     color: 'pink',
     img: <S.ShopImg src={Shop} />,
     width: '30%',
-    destination: '',
+    destination: '/store',
   };
 
   ///////////////////////////////////////////////////////////////

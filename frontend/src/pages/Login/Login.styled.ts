@@ -19,7 +19,7 @@ export const LoginContainer = styled.div`
 `;
 
 export const signupText = styled.p`
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
   color: #444b59;
 
@@ -32,10 +32,10 @@ export const signupText = styled.p`
 `;
 
 export const LogoContainer = styled.div`
-  width: 424px;
+  width: 300px;
   overflow: hidden;
   margin: 0 auto;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 
   & img {
     width: 100%;

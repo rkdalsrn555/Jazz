@@ -48,6 +48,13 @@ const ShortAnswerQuestionPage = () => {
     setAnswer('');
   };
 
+  const getExplanation = async () => {
+    if (isCorrect) {
+      await userApis.get(`/quiz/explanation/wrong-answer`);
+    } else {
+    }
+  };
+
   const putTryQuiz = async () => {
     if (quizList) {
       await userApis

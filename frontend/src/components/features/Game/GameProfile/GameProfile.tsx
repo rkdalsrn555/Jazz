@@ -7,16 +7,16 @@ type OwnProps = {
   heartCntProps: number;
   level: number;
   nickname: string;
-  charactorNumber: 1 | 2 | 3 | 4 | 5;
+  currentCharactor: 1 | 2 | 3 | 4 | 5;
 };
 
 const GameProfile = (props: OwnProps) => {
-  const { heartCntProps, level, nickname, charactorNumber } = props;
+  const { heartCntProps, level, nickname, currentCharactor } = props;
   const [heartCnt, setHeartCnt] = useState<number>(heartCntProps);
 
-  const DrawCharactor = (charactorNumber: number) => {
+  const DrawCharactor = (currentCharactor: number) => {
     let charactor = '';
-    switch (charactorNumber) {
+    switch (currentCharactor) {
       case 1:
         charactor = 'circle.png';
         break;
@@ -40,7 +40,7 @@ const GameProfile = (props: OwnProps) => {
     <S.GameProfileContainerOut>
       <S.UserCharactorContainer>
         <img
-          src={`/assets/img/modelAsset/${DrawCharactor(charactorNumber)}`}
+          src={`/assets/img/modelAsset/${DrawCharactor(currentCharactor)}`}
           alt="유저캐릭터"
           width={200}
         />

@@ -59,19 +59,6 @@ export const ModalContent = styled.div`
   }
 `;
 
-export const AcceptButton = styled.button`
-  cursor: pointer;
-  width: 370px;
-  height: 70px;
-  padding: 18px 32px;
-  border: none;
-  border-radius: 30px;
-  color: #fff;
-  font-size: 24px;
-  font-weight: 700;
-  background: linear-gradient(90deg, #ffe259 15%, #ffa751 85%);
-`;
-
 export const loadingAndButtonContainer = styled.div`
   height: 70px;
   width: 100%;

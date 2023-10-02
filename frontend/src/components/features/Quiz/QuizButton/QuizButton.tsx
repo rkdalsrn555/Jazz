@@ -36,13 +36,13 @@ const QuizButton = (props: QuizButtonProps) => {
       }}
       disabled={disabled}
     >
-      {kind === 'hint' ? <HintIcon></HintIcon> : ''}
-      {kind === 'answerCheck' ? <NextIcon></NextIcon> : ''}
-      {kind === 'stop' ? <StopIcon></StopIcon> : ''}
-      {kind === 'next' ? <NextIcon></NextIcon> : ''}
-      {kind === 'result' ? <TrophyIcon></TrophyIcon> : ''}
+      {kind === 'hint' ? <HintIcon width={70} /> : ''}
+      {kind === 'answerCheck' ? <NextIcon width={70} /> : ''}
+      {kind === 'stop' ? <StopIcon width={80} /> : ''}
+      {kind === 'next' ? <NextIcon width={70} /> : ''}
+      {kind === 'result' ? <TrophyIcon width={70} /> : ''}
       {kind === 'favorite' ? (
-        <FavoriteIcon fill={isBookmark ? '#FFE812' : '#fff'}></FavoriteIcon>
+        <FavoriteIcon fill={isBookmark ? '#FFE812' : '#fff'} width={70} />
       ) : (
         ''
       )}

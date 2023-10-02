@@ -4,15 +4,15 @@ import * as S from './MatchingProfile.styled';
 type OwnProps = {
   level: number;
   nickname: string;
-  charactorNumber: 1 | 2 | 3 | 4 | 5;
+  currentCharactor: 1 | 2 | 3 | 4 | 5;
 };
 
 const MatchingProfile = (props: OwnProps) => {
-  const { level, nickname, charactorNumber } = props;
+  const { level, nickname, currentCharactor } = props;
 
-  const DrawCharactorBg = (charactorNumber: number) => {
+  const DrawCharactorBg = (currentCharactor: number) => {
     let charactorBg = '';
-    switch (charactorNumber) {
+    switch (currentCharactor) {
       case 1:
         charactorBg = '#BD6598';
         break;
@@ -32,9 +32,9 @@ const MatchingProfile = (props: OwnProps) => {
     return charactorBg;
   };
 
-  const DrawCharactor = (charactorNumber: number) => {
+  const DrawCharactor = (currentCharactor: number) => {
     let charactor = '';
-    switch (charactorNumber) {
+    switch (currentCharactor) {
       case 1:
         charactor = 'circle.png';
         break;
@@ -56,10 +56,10 @@ const MatchingProfile = (props: OwnProps) => {
 
   return (
     <S.ProfileContainer>
-      <S.UserCharactorContainer bgColor={DrawCharactorBg(charactorNumber)}>
+      <S.UserCharactorContainer bgColor={DrawCharactorBg(currentCharactor)}>
         <div className="linearGradient">
           <img
-            src={`/assets/img/modelAsset/${DrawCharactor(charactorNumber)}`}
+            src={`/assets/img/modelAsset/${DrawCharactor(currentCharactor)}`}
             alt="유저캐릭터"
             width={250}
           />

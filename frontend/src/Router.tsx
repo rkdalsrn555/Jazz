@@ -24,7 +24,7 @@ import Error404 from 'components/utils/Error/Error404';
 const PrivatePath = [
   { path: '/', component: <Home /> },
   { path: '/home', component: <Home /> },
-  { path: '/battle-game', component: <BattleGame /> },
+  { path: '/battle-game/:gameRoomId', component: <BattleGame /> },
   { path: '/companySearch', component: <CompanySearch /> },
   { path: '/statement/:companyId', component: <Statement /> },
   { path: '/dictionary', component: <Dictionary /> },
@@ -60,6 +60,7 @@ const Router = () => {
     <Routes>
       {PrivatePath.map((item) => (
         <Route
+          key={item.path}
           path={item.path}
           element={
             <PrivateRoute

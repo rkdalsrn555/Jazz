@@ -1,5 +1,6 @@
 import { QuestionBoxProps } from 'types/types';
 import { themeProps } from '@emotion/react';
+import { TempUserGameInfo } from '../atoms/atoms';
 
 type userType = {
   ableCharacterList: number[] | number;
@@ -97,26 +98,47 @@ type gameClientProfile = {
   currentCharactor: number;
 };
 
-type initGameMessage = {
+type gameMatchingModal = {
+  isToggled: boolean;
+  closeModal: () => void;
+};
+
+type TempInitGameMessage = {
   session: string;
   message: string;
   messageType: string;
   round: number;
-  myInfo: {
-    userUUID: string;
+  user1: {
     session: string;
     lives: number;
+    isChecked: false;
   };
-  userInfo: {
+  user2: {
+    session: string;
     lives: number;
+    isChecked: false;
   };
 };
 
-type gameMatchingModal = {
+type TempUserGameInfoType = {
+  gameRoomId: string;
   me: gameClientProfile;
   other: gameClientProfile;
-  initGameMessage: initGameMessage;
-  isMatching: boolean;
-  isToggled: boolean;
-  closeModal: () => void;
+};
+
+type TempGameSessionType = {
+  mySession: string;
+};
+
+type BattleResultType = {
+  user1Cnt: {
+    win: number;
+    lose: number;
+    draw: number;
+  };
+  user2Cnt: {
+    win: number;
+    lose: number;
+    draw: number;
+  };
 };

@@ -72,6 +72,9 @@ export const InnerReturnContainer = styled.div<{ theme: themeProps }>`
   padding: 1rem;
 `;
 
-export const Word = styled.div``;
+export const Word = styled.div`
+  font-weight: 900;
+  font-size: 1.1rem;
+`;
 
 export const Definition = styled.div``;

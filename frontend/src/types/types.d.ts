@@ -77,6 +77,7 @@ type QuestionListProps = {
 };
 
 type QuestionBoxProps = {
+  messageType?: string;
   quizId: number;
   question: string;
   content: string[] | string;
@@ -111,16 +112,17 @@ type TempInitGameMessage = {
   session: string;
   message: string;
   messageType: string;
+  winner: string;
   round: number;
   user1: {
     session: string;
     lives: number;
-    isChecked: false;
+    checked: false;
   };
   user2: {
     session: string;
     lives: number;
-    isChecked: false;
+    checked: false;
   };
 };
 

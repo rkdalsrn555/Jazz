@@ -71,7 +71,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         //오름차순으로 sorting
         Collections.sort(graphDtoList);
         //가장 마지막 값 가져옴(이게 가장 최근임)
-        EnterpriseGraphResponseDto graph = graphDtoList.get(graphDtoList.size());
+        EnterpriseGraphResponseDto graph = graphDtoList.get(graphDtoList.size()-1);
 
         //EnterpriseInfoResponseDto responseDto 구성
         EnterpriseInfoResponseDto responseDto = EnterpriseInfoResponseDto.create(

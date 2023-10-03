@@ -18,7 +18,7 @@ export const Container = styled.div`
 
 export const LeftContainer = styled.div<{ theme: themeProps }>`
   /* border: solid red; */
-  flex: 1.2;
+  flex: 1;
   display: flex;
   flex-direction: column;
   min-width: 40rem;
@@ -33,7 +33,7 @@ export const LeftContainer = styled.div<{ theme: themeProps }>`
 
 export const RightContainer = styled.div<{ theme: themeProps }>`
   /* border: solid blue; */
-  flex: 1;
+  flex: 1.6;
   display: flex;
   flex-direction: column;
   height: calc(100vh - 10rem);
@@ -47,12 +47,13 @@ export const RightContainer = styled.div<{ theme: themeProps }>`
   position: relative;
 `;
 
-export const Title = styled.div`
+export const Title = styled.div<{ theme: themeProps }>`
   /* border: solid green; */
   width: 100%;
   height: fit-content;
   font-size: 1.3rem;
   font-weight: 900;
+  color: ${(props) => props.theme.font.deep};
 `;
 
 export const SearchContainer = styled.div<{ theme: themeProps }>`
@@ -73,6 +74,7 @@ export const SearchInput = styled.input<{ theme: themeProps }>`
   width: 93%;
   padding: 0.3rem;
   background-color: ${(props) => props.theme.bg.light};
+  color: ${(props) => props.theme.font.deep};
   transition-property: background-color;
   transition-duration: 0.2s;
 
@@ -112,7 +114,9 @@ export const ListContainer = styled.div<{ theme: themeProps }>`
   transition: all 0.2s;
 `;
 
-export const ListInnerContainer = styled.div<{ theme: themeProps }>``;
+export const BlankList = styled.div<{ theme: themeProps }>`
+  color: ${(props) => props.theme.font.deep};
+`;
 
 export const CompanyBanner = styled.div<{ theme: themeProps }>`
   /* border: solid black; */
@@ -240,12 +244,13 @@ export const CompanyOutlineContainer = styled.div`
   gap: 0.8rem;
 `;
 
-export const CompanyOutlineTitle = styled.div`
+export const CompanyOutlineTitle = styled.div<{ theme: themeProps }>`
   /* border: solid green; */
   width: 100%;
   height: fit-content;
   font-size: 1.1rem;
   font-weight: 900;
+  color: ${(props) => props.theme.font.deep};
 `;
 
 export const CompanyOutline = styled.div<{ theme: themeProps }>`

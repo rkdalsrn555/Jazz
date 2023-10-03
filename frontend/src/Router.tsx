@@ -24,6 +24,7 @@ import { themeProps } from '@emotion/react';
 import { useTheme } from '@mui/material';
 
 const PrivatePath = [
+  { path: '/', component: <Home /> },
   { path: '/home', component: <Home /> },
   { path: '/battle-game/:gameRoomId', component: <BattleGame /> },
   { path: '/companySearch', component: <CompanySearch /> },

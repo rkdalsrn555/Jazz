@@ -19,7 +19,7 @@ export const Container = styled.div<{ theme: themeProps }>`
   }
 `;
 
-export const NameContainer = styled.div`
+export const NameContainer = styled.div<{ theme: themeProps }>`
   /* border: solid green; */
   flex: 1;
   display: flex;
@@ -27,6 +27,8 @@ export const NameContainer = styled.div`
   align-items: center;
   font-size: 1.5rem;
   font-weight: 900;
+  color: ${(props) => props.theme.font.deep};
+  transition: color 0.2s;
 `;
 
 export const ValueSaleContainer = styled.div`

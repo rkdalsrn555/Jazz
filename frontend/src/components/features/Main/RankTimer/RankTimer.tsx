@@ -4,8 +4,13 @@ import { useTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-const RankTimer = ({ timerType }: { timerType: String }) => {
-  const theme: themeProps = useTheme();
+const RankTimer = ({
+  timerType,
+  theme,
+}: {
+  timerType: String;
+  theme: themeProps;
+}) => {
   const today = new Date();
   const day = today.getDay();
 

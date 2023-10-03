@@ -8,7 +8,7 @@ import Bell from 'assets/img/bell.png';
 import Diamond from 'assets/img/diamond.png';
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { IsDark, UserInfo } from 'atoms/atoms';
+import { IsDark } from 'atoms/atoms';
 import { VictoryPie } from 'victory';
 import { forceReRender } from '@storybook/react';
 import RankChart from '../RankChart/RankChart';
@@ -16,17 +16,19 @@ import RankChart from '../RankChart/RankChart';
 const Inner = ({
   feature,
   children,
+  theme,
 }: {
   feature: innerContainerProps;
   children: JSX.Element | ReactNode | null;
+  theme: themeProps;
 }) => {
-  const theme: themeProps = useTheme();
-  const userInfo = useRecoilValue(UserInfo);
+  
+  // const userInfo = useRecoilValue(UserInfo);
 
   return (
     <S.Container feature={feature} theme={theme}>
       {feature.title === '프로필' ? (
-        <S.ProfileHeaderContainer>
+         <S.ProfileHeaderContainer>
           <S.ProfileHeader>
             <S.Title theme={theme}>
               {feature.title}
@@ -38,7 +40,7 @@ const Inner = ({
               <S.Bell theme={theme} />
               <S.DiamondContainer theme={theme}>
                 {/* 다이아개수 받아와서 넣어야 될 자리 */}
-                {userInfo.diamond}
+                {/* {userInfo.diamond} */}
                 <S.Img
                   src={Diamond}
                   style={{ width: '1.4rem', height: '1.4rem' }}

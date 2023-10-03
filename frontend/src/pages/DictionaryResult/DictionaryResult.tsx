@@ -17,7 +17,6 @@ import { object } from 'prop-types';
 
 const DictionaryResult = () => {
   const theme: themeProps = useTheme();
-  const isDark = useRecoilValue(IsDark);
   // 검색어임 이거 이용해서 api로 검색어 결과 가져와야 함
   const { searchWord } = useParams<{ searchWord: string }>();
   const navigate = useNavigate();

@@ -52,9 +52,14 @@ type profileBlockInfoProps = {
   favorite: number;
 };
 
-type companyProps = {
+type companyBriefInfo = {
   id: number;
   name: string;
+};
+
+type companyProps = {
+  id: int;
+  name: String;
   totalAssets: number;
   totalDebt: number;
   totalCapital: number;

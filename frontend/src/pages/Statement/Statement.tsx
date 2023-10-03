@@ -2,7 +2,7 @@ import * as S from './Statement.styled';
 import { themeProps } from '@emotion/react';
 import { useTheme } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { StatementType, companyProps } from 'types/types';
+import { StatementType } from 'types/types';
 import StatementTypeBtn from 'components/features/Statement/StatementType/StatementTypeBtn';
 import { useEffect, useRef, useState } from 'react';
 

@@ -5,6 +5,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,5 +27,6 @@ public class ComprehensiveIncomeId implements Serializable {
         this.id = id;
         this.enterpriseId = enterpriseId;
     }
+
 
 }

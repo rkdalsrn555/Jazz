@@ -78,6 +78,7 @@ public class EnterpriseController {
     @GetMapping("/income-statement/{enterpriseId}")
     private ResponseEntity<?> getIncomeStatement(@RequestHeader("accessToken") String accessToken,
         @PathVariable Integer enterpriseId) {
+        System.out.println(enterpriseId);
         try {
             List<FinancialTableResponseDto> responseDtoList = enterpriseService.getIncomeStatement(
                 accessToken, enterpriseId);

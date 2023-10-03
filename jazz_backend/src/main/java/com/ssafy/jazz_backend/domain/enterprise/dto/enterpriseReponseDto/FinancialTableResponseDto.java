@@ -1,8 +1,12 @@
 package com.ssafy.jazz_backend.domain.enterprise.dto.enterpriseReponseDto;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class FinancialTableResponseDto implements Comparable<FinancialTableResponseDto> {
 
     private Integer ord;
@@ -23,6 +27,14 @@ public class FinancialTableResponseDto implements Comparable<FinancialTableRespo
     //오름차순
     @Override
     public int compareTo(FinancialTableResponseDto o) {
-        return this.ord - o.ord;
+        if (this.ord == null && o.ord == null) {
+            return 0;
+        } else if (this.ord == null) {
+            return -1;
+        } else if (o.ord == null) {
+            return 1;
+        } else {
+            return this.ord - o.ord;
+        }
     }
 }

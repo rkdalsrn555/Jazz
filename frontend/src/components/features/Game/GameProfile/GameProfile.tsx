@@ -12,7 +12,6 @@ type OwnProps = {
 
 const GameProfile = (props: OwnProps) => {
   const { heartCntProps, level, nickname, currentCharactor } = props;
-  const [heartCnt, setHeartCnt] = useState<number>(heartCntProps);
 
   const DrawCharactor = (currentCharactor: number) => {
     let charactor = '';
@@ -53,7 +52,7 @@ const GameProfile = (props: OwnProps) => {
         {Array(5)
           .fill(0)
           .map((_, i) =>
-            i < heartCnt ? (
+            i < heartCntProps ? (
               <FullHeartIcon key={i} width={35} />
             ) : (
               <BrokeHeartIcon key={i} width={35} />

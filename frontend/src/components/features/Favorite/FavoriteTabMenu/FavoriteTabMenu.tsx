@@ -44,6 +44,7 @@ const FavoriteTabMenu = (props: OwnProps) => {
           <li
             className={index === currentTab ? 'submenu focused' : 'submenu'}
             onClick={() => selectMenuHandler(index)}
+            key={el.name}
           >
             <p>{el.name}</p>
           </li>
@@ -52,6 +53,7 @@ const FavoriteTabMenu = (props: OwnProps) => {
       <S.Desc>
         {menuArr[currentTab].content.map((item) => (
           <AccordionLi
+            key={item.quizId}
             quizId={item.quizId}
             question={item.question}
             content={item.content}

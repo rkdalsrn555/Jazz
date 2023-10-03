@@ -164,7 +164,7 @@ const Home = () => {
     userUUID: '',
     winningPercentage: 0,
   });
-  
+
   useEffect(() => {
     setGraphicData(wantedGraphicData);
     userApis

@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import * as S from './QuestionBox.styled';
+import * as S from './GameQuestionBox.styled';
 import { QuestionBoxProps } from 'types/types';
 import { ReactComponent as CorrectIcon } from '../../../../assets/svgs/Quiz/correct.svg';
 import { ReactComponent as WrongIcon } from '../../../../assets/svgs/Quiz/wrong.svg';
-import ExplanationBox from '../ExplanationBox/ExplanationBox';
 import FadeInOut from 'components/Effect/FadeInOut/FadeInOut';
 
-export const QuestionBox = (props: QuestionBoxProps) => {
+export const GameQuestionBox = (props: QuestionBoxProps) => {
   const {
     quizId,
     question,
@@ -100,17 +99,6 @@ export const QuestionBox = (props: QuestionBoxProps) => {
             ''
           )}
         </S.QuestionContainer>
-        {isJudge && kind !== 3 ? (
-          <ExplanationBox
-            correctContent={answer}
-            correctExplanation={correctExplanation}
-            wrongContent={!isCorrect ? wrongContent : ''}
-            wrongExplanation={!isCorrect ? wrongExplanation : ''}
-            result={isCorrect ?? true}
-          />
-        ) : (
-          ''
-        )}
       </S.Container>
     </FadeInOut>
   );

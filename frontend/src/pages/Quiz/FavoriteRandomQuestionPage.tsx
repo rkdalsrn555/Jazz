@@ -22,6 +22,16 @@ const FavoriteRandomQuestionPage = () => {
   const [answer, setAnswer] = useState<string | number>(''); // 정답을 담는 상태
   const [isDisabled, setIsDisabled] = useState<boolean>(false); // 즐겨찾기 버튼 비활성화
   const [isToggled, setIsToggled] = useState<boolean>(false); // 모달 창 toggle
+  // 정답일때의 설명
+  const [correctAnswer, setCorrectAnswer] = useState<{
+    correctContent: string;
+    correctExplanation: string;
+  } | null>(null);
+  // 오답일때의 설명
+  const [wrongAnswer, setWrongAnswer] = useState<{
+    wrongContent: string;
+    wrongExplanation: string;
+  } | null>(null);
   // 모달에 띄울 내용
   const [modalData, setModalData] = useState<{
     data: {
@@ -38,6 +48,39 @@ const FavoriteRandomQuestionPage = () => {
     setNowQuizNumber((prev) => prev + 1);
     setIsCorrect(null);
     setAnswer('');
+    setCorrectAnswer(null);
+    setWrongAnswer(null);
+  };
+
+  const getExplanation = async (isCorrect: boolean, wrongAnswer?: string) => {
+    if (isCorrect && quizList) {
+      await userApis
+        .get(`/quiz/explanation/correct-answer/${quizList[0].quizId}`)
+        .then((res) => {
+          setCorrectAnswer({
+            correctContent: res.data.correctContent,
+            correctExplanation: res.data.correctExplanation,
+          });
+        })
+        .catch((err) => {});
+    } else if (!isCorrect && quizList) {
+      await userApis
+        .get(
+          `/quiz/explanation/wrong-answer/${quizList[0].quizId}?wrongContent=${wrongAnswer}`
+        )
+        .then((res) => {
+          console.log(res.data);
+          setCorrectAnswer({
+            correctContent: res.data.correctContent,
+            correctExplanation: res.data.correctExplanation,
+          });
+          setWrongAnswer({
+            wrongContent: res.data.wrongContent,
+            wrongExplanation: res.data.wrongExplanation,
+          });
+        })
+        .catch((err) => {});
+    }
   };
 
   const getQuiz = async () => {
@@ -161,6 +204,10 @@ const FavoriteRandomQuestionPage = () => {
             setAnswer={setAnswer}
             isCorrect={isCorrect}
             isJudge={isJudge}
+            correctContent={correctAnswer?.correctContent}
+            correctExplanation={correctAnswer?.correctExplanation}
+            wrongContent={wrongAnswer?.wrongContent}
+            wrongExplanation={wrongAnswer?.wrongExplanation}
           />
         ) : (
           '퀴즈를 불러오는 중이에요'

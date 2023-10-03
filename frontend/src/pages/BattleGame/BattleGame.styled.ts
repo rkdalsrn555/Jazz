@@ -31,3 +31,20 @@ export const BattleBoard = styled.div`
   border-radius: 24px;
   background-color: rgba(255, 255, 255, 0.6);
 `;
+
+export const AnswerBtn = styled.button`
+  width: 300px;
+  height: 80px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(90deg, #ffe259 15.1%, #ffa751 85.42%);
+  border-radius: 24px;
+`;
+
+export const ResultContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3%;
+`;

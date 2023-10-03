@@ -62,16 +62,17 @@ export const TempGameMessage = atom<TempInitGameMessage>({
     session: '',
     message: '',
     messageType: '',
+    winner: '',
     round: 0,
     user1: {
       session: '',
       lives: 0,
-      isChecked: false,
+      checked: false,
     },
     user2: {
       session: '',
       lives: 0,
-      isChecked: false,
+      checked: false,
     },
   },
 });

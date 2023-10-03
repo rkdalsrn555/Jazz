@@ -17,8 +17,6 @@ const QuizResultPage = () => {
   useEffect(() => {
     if (!location.state) {
       navigate('/home');
-    } else {
-      console.log(location.state.diamond);
     }
   }, []);
 

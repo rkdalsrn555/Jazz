@@ -1,6 +1,20 @@
 import React, { useLayoutEffect, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MarathonResult from 'components/features/Quiz/MarathonResult/MarathonResult';
+import MarathonResultBtn from 'components/features/Quiz/MarathonResult/MarathonResultBtn';
+import styled from '@emotion/styled';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2%;
+  width: 100vw;
+  height: 90vh;
+  margin: 0 auto;
+  padding-top: 3%;
+`;
 
 const MarathonResultPage = () => {
   const location = useLocation();
@@ -15,7 +29,10 @@ const MarathonResultPage = () => {
   return !location?.state ? (
     <div></div>
   ) : (
-    <MarathonResult correctNum={location?.state?.correctNum ?? 0} />
+    <Container>
+      <MarathonResult correctNum={location?.state?.correctNum ?? 0} />
+      <MarathonResultBtn />
+    </Container>
   );
 };
 

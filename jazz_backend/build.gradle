@@ -48,6 +48,13 @@ dependencies {
 
     // XML TO JSON Parser
     implementation group: 'org.json', name: 'json', version: '20230227'
+
+    // Kafka
+    implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '3.4.0'
+    implementation group: 'org.springframework.kafka', name: 'spring-kafka', version: '3.0.10'
+    
+    // Json bind
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
 }
 
 tasks.named('test') {

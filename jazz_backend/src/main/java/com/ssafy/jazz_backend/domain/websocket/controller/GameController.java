@@ -15,6 +15,7 @@ import com.ssafy.jazz_backend.domain.websocket.dto.QuizMessage;
 import com.ssafy.jazz_backend.domain.websocket.dto.UserInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -121,6 +122,7 @@ public class GameController {
         }
     }
 
+    @Transactional
     @MessageMapping("/quiz-message/{gameRoomId}")
     public void sendQuizMessage(@DestinationVariable("gameRoomId") String gameRoomId) {
        MarathonAndTierQuizResponseDto marathonAndTierQuizResponseDto = marathonService.getMarathonQuiz("NoAccessToken");

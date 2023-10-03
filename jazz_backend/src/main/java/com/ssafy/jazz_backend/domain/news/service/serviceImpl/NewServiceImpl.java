@@ -47,14 +47,13 @@ public class NewServiceImpl implements NewsService {
 
         // 0. 구독하기
         SseEmitter emitter = new SseEmitter();
-//        emitterMap.put(UUID, emitter);
-        emitterMap.put("1", emitter);
+        emitterMap.put(UUID, emitter);
 
         // sse는 일단은 무조건 값을 넘겨줘야 하기 때문에 초기에 아무 값이나 넣어줘야함
-        emitter.send(SseEmitter.event().name("1").data(enterpriseName));
+        emitter.send(SseEmitter.event().name(UUID).data(enterpriseName));
 
         // 1. 레디스에 해당 기업의 뉴스 크롤링 정보가 있는지 확인하기
-        if (UUID.equals("김의년")) {
+        if (enterpriseName.equals("김의년")) {
             // 2-1. 있다면 해당 기업의 뉴스 크롤링 정보를 리턴
             // 있다고 가정하는 입력
             // 레디스에 있는 값 sse에 담아서 보내주기
@@ -64,7 +63,7 @@ public class NewServiceImpl implements NewsService {
             // 없는 경우
             postTopic(UUID, enterpriseName);
         }
-        SseEmitter sseEmitter1 = emitterMap.get("1");
+        SseEmitter sseEmitter1 = emitterMap.get(UUID);
         return sseEmitter1;
     }
 
@@ -88,7 +87,10 @@ public class NewServiceImpl implements NewsService {
 
     @KafkaListener(topics = "test_topic2", groupId = "test_kafka1")
     void getTopic(@Payload String message) {
+        // 6. 자바에서 크롤링 토픽에 올라온 데이터를 받기
         ObjectMapper objectMapper = new ObjectMapper();
+        SseEmitter emitter = null;
+        String UUID = "";
 
         try {
             // JSON 문자열을 JsonNode로 파싱
@@ -100,12 +102,12 @@ public class NewServiceImpl implements NewsService {
                 String key = node.get("key").asText();
                 String value = node.get("value").asText();
 
-                // 처리할 로직 추가
-                System.out.printf("Key: %s, Value: %s%n", key, value);
+                if (key.equals("사용자")) {
+                    UUID = value;
+                    emitter = emitterMap.get(UUID);
+                }
             }
-
-            SseEmitter emitter = emitterMap.get("1");
-            emitter.send(SseEmitter.event().name("1").data("확인용 데이터"));
+            emitter.send(SseEmitter.event().name(UUID).data(jsonNode));
         } catch (Exception e) {
             e.printStackTrace();
         }

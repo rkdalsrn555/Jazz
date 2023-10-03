@@ -17,7 +17,6 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class ComprehensiveIncomeId implements Serializable {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "enterprise_id", nullable = false)

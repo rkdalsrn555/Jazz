@@ -10,6 +10,7 @@ import com.ssafy.jazz_backend.domain.enterprise.repository.ComprehensiveIncomeRe
 import com.ssafy.jazz_backend.domain.enterprise.repository.EnterpriseRepository;
 import com.ssafy.jazz_backend.domain.enterprise.repository.FinancialPositionRepository;
 import com.ssafy.jazz_backend.domain.enterprise.repository.IncomeStatementRepository;
+import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -46,7 +47,6 @@ public class FinancialStatementsServiceImpl implements FinancialStatementsServic
 
         // Validation of the response
         if (response == null || !"000".equals(response.getStatus())) {
-            // Handle the error appropriately
             return null;
         }
 
@@ -57,11 +57,11 @@ public class FinancialStatementsServiceImpl implements FinancialStatementsServic
         enterprise.setRceptNo(response.getList().get(0).getRcept_no());
         enterpriseRepository.save(enterprise);
 
-        // ComprhensiveIncome 엔터티에 저장하는코드 작성해야함. 그 외 엔터티에 저장하는 것도 아래에 쭉 작성함
+        // ComprehensiveIncome 엔터티에 저장
         for (FinancialStatementsResponseDto dto : response.getList()) {
             ComprehensiveIncome comprehensiveIncome = ComprehensiveIncome.builder()
-                .id(new ComprehensiveIncomeId(0,
-                    enterprise.getId())) //
+                .id(new ComprehensiveIncomeId())
+                .ord(Integer.parseInt(dto.getOrd()))
                 .enterprise(enterprise)
                 .accountName(dto.getAccount_nm())
                 .thstrmName(dto.getThstrm_nm())
@@ -70,10 +70,9 @@ public class FinancialStatementsServiceImpl implements FinancialStatementsServic
                 .frmtrmName(dto.getFrmtrm_nm())
                 .frmAmount(
                     dto.getFrmtrm_amount() != null ? Long.parseLong(dto.getFrmtrm_amount()) : null)
-                .ord(Integer.parseInt(dto.getOrd())) // Manually setting ord value here
                 .build();
 
-            comprehensiveIncome = comprehensiveIncomeRepository.save(comprehensiveIncome);
+            comprehensiveIncomeRepository.save(comprehensiveIncome);
         }
 
         return response;

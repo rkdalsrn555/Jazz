@@ -3,6 +3,8 @@ package com.ssafy.jazz_backend.domain.enterprise.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
@@ -25,7 +27,9 @@ import lombok.Setter;
 public class ComprehensiveIncome {
 
     @EmbeddedId
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ComprehensiveIncomeId id;
+
 
     @MapsId("enterpriseId") // ComprehensiveIncomeId의 enterpriseId와 매핑
     @ManyToOne

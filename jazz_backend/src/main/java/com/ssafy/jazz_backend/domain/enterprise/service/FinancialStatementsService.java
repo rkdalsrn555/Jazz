@@ -4,5 +4,5 @@ import com.ssafy.jazz_backend.domain.enterprise.dto.DartApiResponseDto;
 
 public interface FinancialStatementsService {
 
-    DartApiResponseDto fetchFinancialData(String corpCode, String bsnsYear, String enterpriseName);
+    void fetchFinancialData(String bsnsYear);
 }

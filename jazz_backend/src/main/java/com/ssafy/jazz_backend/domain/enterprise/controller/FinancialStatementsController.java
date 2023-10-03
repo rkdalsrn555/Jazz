@@ -20,13 +20,11 @@ public class FinancialStatementsController {
     @Autowired
     private FinancialStatementsService financialStatementsService;
 
-    @GetMapping("/fs/{corpCode}/{bsnsYear}/{enterpriseName}")
+    @GetMapping("/fs/{bsnsYear}")
     ResponseEntity<?> insertFinancialStatement(@RequestHeader("accessToken") String accessToken,
-        @PathVariable String enterpriseName,
-        @PathVariable String corpCode,
         @PathVariable String bsnsYear) {
         String userUUID = jwtService.getInfo("account", accessToken);
-        financialStatementsService.fetchFinancialData(corpCode, bsnsYear, enterpriseName);
+        financialStatementsService.fetchFinancialData(bsnsYear);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

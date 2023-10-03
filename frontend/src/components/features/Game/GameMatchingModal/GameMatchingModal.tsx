@@ -57,7 +57,7 @@ const GameMatchingModal = (props: OwnProps) => {
         .then((res) => {
           setGameRoomId(res.data.gameRoomId);
           setIsMatching(true);
-          setTempMySession({ mySession: res.data.initGameMessage.session });
+          setTempMySession({ mySession: res.data.session });
           setTempGameInfo({
             gameRoomId: res.data.gameRoomId,
             me: {
@@ -76,20 +76,21 @@ const GameMatchingModal = (props: OwnProps) => {
             message: res.data.initGameMessage.message,
             messageType: res.data.initGameMessage.messageType,
             round: res.data.initGameMessage.round,
+            winner: res.data.initGameMessage.winner,
             user1: {
               session: res.data.initGameMessage.user1.session,
               lives: res.data.initGameMessage.user1.lives,
-              isChecked: res.data.initGameMessage.user1.isChecked,
+              checked: res.data.initGameMessage.user1.checked,
             },
             user2: {
               session: res.data.initGameMessage.user2.session,
               lives: res.data.initGameMessage.user2.lives,
-              isChecked: res.data.initGameMessage.user2.isChecked,
+              checked: res.data.initGameMessage.user2.checked,
             },
           });
           setTimeout(() => {
             navigate(`/battle-game/${res.data.gameRoomId}`);
-          }, 3000);
+          }, 2000);
         })
         .catch((err) => {
           alert('매칭에 실패하였습니다. 다시 게임 대전을 신청해주세요');

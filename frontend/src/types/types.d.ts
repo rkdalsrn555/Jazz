@@ -82,6 +82,7 @@ type QuestionListProps = {
 };
 
 type QuestionBoxProps = {
+  messageType?: string;
   quizId: number;
   question: string;
   content: string[] | string;
@@ -95,6 +96,10 @@ type QuestionBoxProps = {
   answer?: string | number;
   setAnswer?: (arg: string | number) => void;
   isCorrect?: boolean | null;
+  correctContent?: string;
+  correctExplanation?: string;
+  wrongContent?: string;
+  wrongExplanation?: string;
 };
 
 type gameClientProfile = {
@@ -112,16 +117,17 @@ type TempInitGameMessage = {
   session: string;
   message: string;
   messageType: string;
+  winner: string;
   round: number;
   user1: {
     session: string;
     lives: number;
-    isChecked: false;
+    checked: false;
   };
   user2: {
     session: string;
     lives: number;
-    isChecked: false;
+    checked: false;
   };
 };
 

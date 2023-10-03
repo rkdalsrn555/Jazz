@@ -16,6 +16,7 @@ const MarathonResult = (props: OwnProps) => {
         src={conguratulationIcon}
         alt="축하합니다!"
         style={{ paddingBottom: '60px' }}
+        width={500}
       />
       <S.MarathonResultContainer>
         <S.MarathonResultContent>연속으로</S.MarathonResultContent>

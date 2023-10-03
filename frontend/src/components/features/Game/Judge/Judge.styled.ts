@@ -12,7 +12,7 @@ export const JudgeContainer = styled.div`
   box-shadow: 0px 0px 30px 7px #fff;
 
   & p {
-    font-size: 200px;
+    font-size: 50px;
     font-weight: 900;
     color: #fff;
   }
@@ -33,7 +33,7 @@ export const AwardContainer = styled.div`
     gap: 20px;
 
     & p {
-      font-size: 100px;
+      font-size: 50px;
     }
   }
 

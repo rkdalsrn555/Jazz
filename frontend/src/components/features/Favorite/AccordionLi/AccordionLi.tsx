@@ -52,9 +52,9 @@ const AccordionLi = (props: OwnProps) => {
     >
       <S.FavoriteLiContainer>
         <div className="liContent">
-          <button onClick={patchReleaseBookmark}>
+          <div onClick={patchReleaseBookmark}>
             <StarIcon color={'#FFCF53'} />
-          </button>
+          </div>
           <h1>{content}</h1>
         </div>
         <AnimatePresence initial={false} mode="wait">

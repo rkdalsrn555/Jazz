@@ -28,6 +28,16 @@ const ShortAnswerQuestionPage = () => {
   const [answer, setAnswer] = useState<string | number>('');
   // 정답인지 아닌지 확인
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  // 정답일때의 설명
+  const [correctAnswer, setCorrectAnswer] = useState<{
+    correctContent: string;
+    correctExplanation: string;
+  } | null>(null);
+  // 오답일때의 설명
+  const [wrongAnswer, setWrongAnswer] = useState<{
+    wrongContent: string;
+    wrongExplanation: string;
+  } | null>(null);
   // 즐겨찾기 시 버튼 비활성화
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   // 모달에 띄울 내용
@@ -46,12 +56,40 @@ const ShortAnswerQuestionPage = () => {
     setNowQuizNumber((prev) => prev + 1);
     setIsCorrect(null);
     setAnswer('');
+    setCorrectAnswer(null);
+    setWrongAnswer(null);
   };
 
-  const getExplanation = async () => {
-    if (isCorrect) {
-      await userApis.get(`/quiz/explanation/wrong-answer`);
-    } else {
+  const getExplanation = async (isCorrect: boolean, wrongAnswer?: string) => {
+    if (isCorrect && quizList) {
+      await userApis
+        .get(
+          `/quiz/explanation/correct-answer/${quizList[nowQuizNumber].quizId}`
+        )
+        .then((res) => {
+          setCorrectAnswer({
+            correctContent: res.data.correctContent,
+            correctExplanation: res.data.correctExplanation,
+          });
+        })
+        .catch((err) => {});
+    } else if (!isCorrect && quizList) {
+      await userApis
+        .get(
+          `/quiz/explanation/wrong-answer/${quizList[nowQuizNumber].quizId}?wrongContent=${wrongAnswer}`
+        )
+        .then((res) => {
+          console.log(res.data);
+          setCorrectAnswer({
+            correctContent: res.data.correctContent,
+            correctExplanation: res.data.correctExplanation,
+          });
+          setWrongAnswer({
+            wrongContent: res.data.wrongContent,
+            wrongExplanation: res.data.wrongExplanation,
+          });
+        })
+        .catch((err) => {});
     }
   };
 
@@ -92,10 +130,12 @@ const ShortAnswerQuestionPage = () => {
         // 문제 답 적은거 axios 요청 보내기
         await putTryQuiz();
         await patchTryQuiz(true);
+        await getExplanation(true);
       } else {
         setIsCorrect(false);
         await putTryQuiz();
         await patchTryQuiz(false);
+        await getExplanation(false, String(ans));
       }
       setIsJudge(true);
       if (quizList[nowQuizNumber].content.length === 1) {
@@ -199,6 +239,10 @@ const ShortAnswerQuestionPage = () => {
             setAnswer={setAnswer}
             isCorrect={isCorrect}
             isJudge={isJudge}
+            correctContent={correctAnswer?.correctContent}
+            correctExplanation={correctAnswer?.correctExplanation}
+            wrongContent={wrongAnswer?.wrongContent}
+            wrongExplanation={wrongAnswer?.wrongExplanation}
           />
         ) : (
           '퀴즈를 불러오는 중이에요'

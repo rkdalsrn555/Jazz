@@ -13,6 +13,9 @@ const ThirtyCountDown = (props: OwnProps) => {
 
   useEffect(() => {
     if (num <= 0) {
+      setTimeout(() => {
+        endRound();
+      }, 3000);
       return;
     } else {
       const timer = setInterval(() => {

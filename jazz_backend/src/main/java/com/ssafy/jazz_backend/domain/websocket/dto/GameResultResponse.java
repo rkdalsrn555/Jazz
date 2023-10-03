@@ -10,6 +10,5 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GameResultResponse {
-    private int gainRankPoint;
     private int result; // 1 : 승, 2 : 무, 3 : 패
 }

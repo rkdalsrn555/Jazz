@@ -5,6 +5,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,6 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class ComprehensiveIncomeId implements Serializable {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "enterprise_id", nullable = false)
@@ -27,5 +27,6 @@ public class ComprehensiveIncomeId implements Serializable {
         this.id = id;
         this.enterpriseId = enterpriseId;
     }
+
 
 }

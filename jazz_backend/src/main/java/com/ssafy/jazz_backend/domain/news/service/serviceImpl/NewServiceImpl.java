@@ -49,6 +49,10 @@ public class NewServiceImpl implements NewsService {
         SseEmitter emitter = new SseEmitter();
         emitterMap.put(UUID, emitter);
 
+        // 동작이 완료하거나, 시간이 초과하면 맵에서 해당 emitter 제거
+        emitter.onCompletion(() -> emitterMap.remove(UUID));
+        emitter.onTimeout(() -> emitterMap.remove(UUID));
+
         // sse는 일단은 무조건 값을 넘겨줘야 하기 때문에 초기에 아무 값이나 넣어줘야함
         emitter.send(SseEmitter.event().name(UUID).data(enterpriseName));
 

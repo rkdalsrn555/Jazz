@@ -5,11 +5,12 @@ import com.ssafy.jazz_backend.domain.enterprise.entity.FinancialPositionId;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface FinancialPositionJpaRepository extends
     JpaRepository<FinancialPosition, FinancialPositionId> {
 
     @Query("Select f from FinancialPosition f where f.id.enterpriseId = :enterpriseId")
-    List<FinancialPosition> findByEnterpriseId(Integer enterpriseId);
+    List<FinancialPosition> findByEnterpriseId(@Param("enterpriseId") Integer enterpriseId);
 
 }

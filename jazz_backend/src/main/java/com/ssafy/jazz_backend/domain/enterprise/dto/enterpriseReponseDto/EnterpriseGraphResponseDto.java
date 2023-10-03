@@ -2,9 +2,11 @@ package com.ssafy.jazz_backend.domain.enterprise.dto.enterpriseReponseDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class EnterpriseGraphResponseDto implements Comparable<EnterpriseGraphResponseDto> {
 
     private Integer id;

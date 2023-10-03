@@ -29,7 +29,7 @@ public class EnterpriseController {
     @GetMapping
     private ResponseEntity<?> searchEnterpriseName(
         @RequestHeader("accessToken") String accessToken,
-        @RequestParam("enterpiseName") String enterpiseName) {
+        @RequestParam("enterpriseName") String enterpiseName) {
 
         List<EnterpriseNameResponseDto> responseDtoList = enterpriseService.searchEnterpriseName(
             accessToken,

@@ -20,9 +20,10 @@ import FavoriteRandomQuestionPage from 'pages/Quiz/FavoriteRandomQuestionPage';
 import FavoriteRandomQuizResult from 'pages/Quiz/FavoriteRandomQuizResult';
 import StorePage from 'pages/Store/StorePage';
 import Error404 from 'components/utils/Error/Error404';
+import { themeProps } from '@emotion/react';
+import { useTheme } from '@mui/material';
 
 const PrivatePath = [
-  { path: '/', component: <Home /> },
   { path: '/home', component: <Home /> },
   { path: '/battle-game/:gameRoomId', component: <BattleGame /> },
   { path: '/companySearch', component: <CompanySearch /> },
@@ -94,7 +95,6 @@ const Router = () => {
           />
         }
       />
-
       <Route path="*" element={<Error404 />} />
     </Routes>
   );

@@ -8,14 +8,11 @@ import { IsDark } from 'atoms/atoms';
 
 const RankChart = ({
   selectedRank,
-  trigger,
+  theme,
 }: {
   selectedRank: String;
-  trigger: boolean;
+  theme: themeProps;
 }) => {
-  const theme: themeProps = useTheme();
-  const isDark = useRecoilValue(IsDark);
-
   const users = [
     {
       nickname: 'A',

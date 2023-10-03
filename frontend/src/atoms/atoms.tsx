@@ -27,10 +27,10 @@ export const userRefreshAtom = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const UserInfo = atom<userType>({
-  key: 'UserInfo',
-  effects_UNSTABLE: [persistAtom],
-});
+// export const UserInfo = atom<userType>({
+//   key: 'UserInfo',
+//   effects_UNSTABLE: [persistAtom],
+// });
 
 export const TempUserGameInfo = atom<TempUserGameInfoType>({
   key: 'TempUserGameInfo',

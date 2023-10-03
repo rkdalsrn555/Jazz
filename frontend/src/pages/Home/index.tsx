@@ -1,11 +1,9 @@
 import * as S from './Home.styled';
 import { themeProps } from '@emotion/react';
 import { useTheme } from '@mui/material';
-import { IsDark, UserInfo } from 'atoms/atoms';
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import Inner from 'components/features/Main/InnerContainer';
-import { btnProps, innerContainerProps } from 'types/types';
+import { btnProps, innerContainerProps, userType } from 'types/types';
 import Button from 'components/features/Main/Button';
 import Heart from 'assets/img/icons8-heart-100.png';
 import Eye from 'assets/img/icons8-eye-100.png';
@@ -26,7 +24,6 @@ import RankChart from 'components/features/Main/RankChart/RankChart';
 
 const Home = () => {
   const theme: themeProps = useTheme();
-  const isDark = useRecoilValue(IsDark);
   const userToken = localStorage.getItem('userAccessToken');
 
   ///////////////////////게임 매칭시 나타나는 모달//////////////////////////
@@ -110,7 +107,7 @@ const Home = () => {
     destination: '/store',
   };
 
-  ///////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////////
   const quizContainerFeature: innerContainerProps = {
     title: '퀴즈를 풀어봐요!',
     width: '95%',
@@ -145,7 +142,29 @@ const Home = () => {
   };
 
   // 사용자 정보 api로 받아와야 함
-  const [userInfo, setUserInfo] = useRecoilState(UserInfo);
+  const [userInfo, setUserInfo] = useState<userType>({
+    ableCharacterList: 0,
+    ablePrefixTitleList: '',
+    ableSuffixTitleList: '',
+    bookmarkCnt: 0,
+    collectQuizRecord: 0,
+    diamond: 0,
+    expPoint: 0,
+    level: 0,
+    mailCnt: 0,
+    marathonOneDay: 0,
+    nickname: '',
+    rank: '',
+    rankPoint: 0,
+    takeCharacterId: 0,
+    takePrefixContent: '',
+    takePrefixTitleId: 0,
+    takeSuffixContent: '',
+    takeSuffixTitleId: 0,
+    userUUID: '',
+    winningPercentage: 0,
+  });
+  
   useEffect(() => {
     setGraphicData(wantedGraphicData);
     userApis
@@ -321,12 +340,6 @@ const Home = () => {
 
   const [timerType, setTimerType] = useState('tier');
   const [rankType, setRankType] = useState('tier');
-  const [rankTrigger, setRankTrigger] = useState(true);
-
-  useEffect(() => {
-    console.log('모드 바뀜');
-    setRankTrigger(!rankTrigger);
-  }, [isDark]);
 
   const rankContainerFeature: innerContainerProps = {
     title: '랭크',
@@ -343,22 +356,26 @@ const Home = () => {
       {/* @ts-ignore */}
       <GameMatchingModal {...gameMatchingModalFeature} />
       <S.LeftContainer>
-        <Inner feature={quizContainerFeature} children={null} />
-        <Inner feature={studyContainerFeature} children={null} />
+        <Inner feature={quizContainerFeature} children={null} theme={theme} />
+        <Inner feature={studyContainerFeature} children={null} theme={theme} />
         <S.EtcContainer>
           <Button {...battleFeature} />
           <Button {...shopFeature} />
         </S.EtcContainer>
       </S.LeftContainer>
       <S.RightContainer>
-        <Inner feature={profileContainerFeature} children={null} />
-        <Inner feature={rankContainerFeature}>
+        <Inner
+          feature={profileContainerFeature}
+          children={null}
+          theme={theme}
+        />
+        <Inner feature={rankContainerFeature} theme={theme}>
           <S.RankHeaderContainer>
             <S.RankHeader>
               <S.RankHeaderUpper>
                 <S.Title theme={theme}>랭크</S.Title>
                 <S.RankTimerContainer theme={theme} ref={timerRef}>
-                  <RankTimer timerType={timerType} />
+                  <RankTimer timerType={timerType} theme={theme} />
                 </S.RankTimerContainer>
               </S.RankHeaderUpper>
               <S.RankHeaderBottom>
@@ -402,7 +419,7 @@ const Home = () => {
             </S.RankHeader>
             <S.Line />
           </S.RankHeaderContainer>
-          <RankChart selectedRank={rankType} trigger={rankTrigger} />
+          <RankChart selectedRank={rankType} theme={theme} />
         </Inner>
       </S.RightContainer>
     </S.Container>

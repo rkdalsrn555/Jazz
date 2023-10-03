@@ -5,53 +5,56 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Search from 'assets/img/magnifier.png';
 import CompanyListBlock from 'components/features/CompanySearch/CompanyListBlock/CompanyListBlock';
-import { companyProps } from 'types/types';
+import { companyBriefInfo, companyProps } from 'types/types';
 import Star from 'assets/img/star.png';
 import Starred from 'assets/img/starred.png';
 import { click } from '@testing-library/user-event/dist/click';
 import useDebounce from 'hooks/useDebounce';
 import axios from 'axios';
+import { userApis } from 'hooks/api/userApis';
 
 const CompanySearch = () => {
   const theme: themeProps = useTheme();
   const [searchingCompany, setSearchingCompany] = useState('');
   const debounceSearchCompany = useDebounce<string>(searchingCompany, 500);
 
-  const [companies, setCompanies] = useState<companyProps[]>();
+  const [companies, setCompanies] = useState<companyBriefInfo[]>();
 
   const handleInput = (e: any) => {
-    // console.log(e.target.value);
     const searchWord = e.target.value;
     setSearchingCompany(searchWord);
-    // let newCompanies: companyProps[] = [];
-    // sampleCompanies.forEach((element) => {
-    //   const lowerCaseName = element.name.toLowerCase();
-    //   if (
-    //     element.name.includes(searchWord) ||
-    //     lowerCaseName.includes(searchWord)
-    //   ) {
-    //     newCompanies.push(element);
-    //   }
-    // });
-    // setCompanies(newCompanies);
   };
 
   useEffect(() => {
     console.log(debounceSearchCompany);
-    axios
-      .get(`/enterprise/${debounceSearchCompany}`)
-      .then((res) => console.log(res))
+    userApis
+      .get(`/enterprise?enterpriseName=${debounceSearchCompany}`)
+      .then((res) => {
+        // console.log(res);
+        setCompanies(res.data);
+        console.log(companies);
+      })
       .catch((err) => {
         console.log(err);
       });
   }, [debounceSearchCompany]);
 
-  const [clickedCompany, setClickedCompany] = useState<companyProps>();
+  const [clickedCompany, setClickedCompany] = useState<companyProps>({
+    id: 0,
+    name: '',
+    totalAssets: 0,
+    totalDebt: 0,
+    totalCapital: 0,
+  });
+
+  useEffect(() => {
+    console.log(clickedCompany);
+  }, [clickedCompany]);
 
   return (
     <S.Container>
       <S.LeftContainer theme={theme}>
-        <S.Title>기업 검색</S.Title>
+        <S.Title theme={theme}>기업 검색</S.Title>
         <S.SearchContainer theme={theme}>
           <S.SearchInput
             type="text"
@@ -64,13 +67,19 @@ const CompanySearch = () => {
           </S.SearchDiv>
         </S.SearchContainer>
         <S.ListContainer theme={theme}>
-          {/* {companies.map((company, i) => {
-            return <CompanyListBlock props={{ company, setClickedCompany }} />;
-          })} */}
+          {companies ? (
+            companies.map((company, i) => {
+              return (
+                <CompanyListBlock props={{ company, setClickedCompany }} />
+              );
+            })
+          ) : (
+            <S.BlankList theme={theme}>검색 결과가 없습니다.</S.BlankList>
+          )}
         </S.ListContainer>
       </S.LeftContainer>
       <S.RightContainer theme={theme}>
-        <S.Title>기업 정보</S.Title>
+        <S.Title theme={theme}>기업 정보</S.Title>
         {/* 클릭시 보여지는 transition 속도와 
         dark/light mode 전환시 보여지는 transition 속도를 다르게 설정하기 위함 */}
         <S.StatementBtnContainer
@@ -79,14 +88,14 @@ const CompanySearch = () => {
           whileTap={{ scale: 1 }}
           transition={{ duration: 0.05 }}
         >
-          {clickedCompany ? (
+          {clickedCompany.id != 0 ? (
             <Link to={`/statement/${clickedCompany.id}`}>
               <S.StatementBtn theme={theme}>재무제표 확인하기</S.StatementBtn>
             </Link>
           ) : null}
         </S.StatementBtnContainer>
         <S.CompanyBanner theme={theme}>
-          {clickedCompany ? (
+          {clickedCompany.id != 0 ? (
             <S.InnerBannerContainer>
               <S.BannerLeft>
                 <S.Box>
@@ -96,21 +105,22 @@ const CompanySearch = () => {
               <S.BannerRight>
                 <S.BannerTitle>{clickedCompany.name}</S.BannerTitle>
                 <S.BannerContent>
-                  {/* 아래 항목들은 추후 가용한 정보로 바꿔야 함 */}
                   <S.BannerContentInner>
-                    <S.BannerContentTitle>시총 순위</S.BannerContentTitle>
-                    <S.BannerContentContent>X위</S.BannerContentContent>
-                  </S.BannerContentInner>
-                  <S.BannerContentInner>
-                    <S.BannerContentTitle>시가 총액</S.BannerContentTitle>
+                    <S.BannerContentTitle>총 자본</S.BannerContentTitle>
                     <S.BannerContentContent>
-                      {/* {clickedCompany.totalValue} */}
+                      {clickedCompany.totalAssets}
                     </S.BannerContentContent>
                   </S.BannerContentInner>
                   <S.BannerContentInner>
-                    <S.BannerContentTitle>매출액</S.BannerContentTitle>
+                    <S.BannerContentTitle>총 부채</S.BannerContentTitle>
                     <S.BannerContentContent>
-                      {/* {clickedCompany.totalSale} */}
+                      {clickedCompany.totalDebt}
+                    </S.BannerContentContent>
+                  </S.BannerContentInner>
+                  <S.BannerContentInner>
+                    <S.BannerContentTitle>총 차산</S.BannerContentTitle>
+                    <S.BannerContentContent>
+                      {clickedCompany.totalCapital}
                     </S.BannerContentContent>
                   </S.BannerContentInner>
                 </S.BannerContent>
@@ -129,9 +139,9 @@ const CompanySearch = () => {
           )}
         </S.CompanyBanner>
         <S.CompanyOutlineContainer>
-          <S.CompanyOutlineTitle>기업 개요</S.CompanyOutlineTitle>
+          <S.CompanyOutlineTitle theme={theme}>기업 개요</S.CompanyOutlineTitle>
           <S.CompanyOutline theme={theme}>
-            {clickedCompany ? (
+            {clickedCompany.id != 0 ? (
               `${clickedCompany.name} 여기에 기업 개요 들어가야 함`
             ) : (
               <S.BlankBanner>

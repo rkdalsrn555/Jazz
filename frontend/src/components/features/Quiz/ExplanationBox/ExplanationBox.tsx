@@ -2,22 +2,51 @@ import React from 'react';
 import * as S from './ExplanationBox.styled';
 
 type OwnProps = {
-  title: string;
-  content: string;
   result: boolean;
+  correctContent?: string | number;
+  correctExplanation?: string;
+  wrongContent?: string | number;
+  wrongExplanation?: string;
 };
 
 const ExplanationBox = (props: OwnProps) => {
-  const { title, content, result } = props;
+  const {
+    correctContent,
+    correctExplanation,
+    wrongContent,
+    wrongExplanation,
+    result,
+  } = props;
 
   return (
-    <S.ExplanationContainer>
-      <S.ExplanationTitle result={result}>
-        <h1>{title}</h1>
-        <div className="label">{result ? '정답' : '오답'}</div>
-      </S.ExplanationTitle>
-      <p>{content}</p>
-    </S.ExplanationContainer>
+    <>
+      {result ? (
+        <S.ExplanationContainer>
+          <S.ExplanationTitle result={true}>
+            <h1>{correctContent}</h1>
+            <div className="label">정답</div>
+          </S.ExplanationTitle>
+          <p>{correctExplanation ?? '해당 문제는 해설이 없습니다'}</p>
+        </S.ExplanationContainer>
+      ) : (
+        <div>
+          <S.ExplanationContainer>
+            <S.ExplanationTitle result={true}>
+              <h1>{correctContent}</h1>
+              <div className="label">정답</div>
+            </S.ExplanationTitle>
+            <p>{correctExplanation ?? '해당 문제는 해설이 없습니다'}</p>
+          </S.ExplanationContainer>
+          <S.ExplanationContainer>
+            <S.ExplanationTitle result={false}>
+              <h1>{wrongContent ?? '입력한 답안이 없어요'}</h1>
+              <div className="label">오답</div>
+            </S.ExplanationTitle>
+            <p>{wrongExplanation ?? '해당 답안은 해설이 없습니다'}</p>
+          </S.ExplanationContainer>
+        </div>
+      )}
+    </>
   );
 };
 

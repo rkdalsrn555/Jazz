@@ -21,6 +21,10 @@ export const QuestionBox = (props: QuestionBoxProps) => {
     answer,
     setAnswer,
     isCorrect,
+    correctContent,
+    correctExplanation,
+    wrongContent,
+    wrongExplanation,
   } = props;
 
   const handleChangeSubjectQuestion = (
@@ -96,8 +100,14 @@ export const QuestionBox = (props: QuestionBoxProps) => {
             ''
           )}
         </S.QuestionContainer>
-        {isJudge ? (
-          <ExplanationBox title={String(answer)} content="" result={true} />
+        {isJudge && kind !== 3 ? (
+          <ExplanationBox
+            correctContent={answer}
+            correctExplanation={correctExplanation}
+            wrongContent={!isCorrect ? wrongContent : ''}
+            wrongExplanation={!isCorrect ? wrongExplanation : ''}
+            result={isCorrect ?? true}
+          />
         ) : (
           ''
         )}

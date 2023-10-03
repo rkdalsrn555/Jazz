@@ -59,7 +59,7 @@ export const QuestionContent = styled.div<{
 
 export const AnswerIconContainer = styled.div`
   position: absolute;
-  top: 20%;
+  top: 25%;
   left: 0;
   right: 0;
   text-align: center;

@@ -90,6 +90,10 @@ type QuestionBoxProps = {
   answer?: string | number;
   setAnswer?: (arg: string | number) => void;
   isCorrect?: boolean | null;
+  correctContent?: string;
+  correctExplanation?: string;
+  wrongContent?: string;
+  wrongExplanation?: string;
 };
 
 type gameClientProfile = {

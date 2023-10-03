@@ -68,11 +68,24 @@ export const FavoriteLiContainer = styled.div`
   display: flex;
   align-items: center;
   padding-left: 5%;
+  width: 500px;
 
   & .liContent {
     display: flex;
     align-items: center;
+    width: 50%;
     gap: 5%;
+
+    & div {
+      width: 20%;
+    }
+
+    & h1 {
+      text-align: left;
+      font-size: 16px;
+      padding: 28px 10px;
+      width: 100%;
+    }
   }
 
   & .arrow {
@@ -80,10 +93,5 @@ export const FavoriteLiContainer = styled.div`
     align-items: center;
     justify-content: flex-end;
     padding-right: 5%;
-  }
-
-  & h1 {
-    font-size: 16px;
-    padding: 28px 10px;
   }
 `;

@@ -1,6 +1,8 @@
 package com.ssafy.jazz_backend.domain.jwt.interceptor;
 
 import com.ssafy.jazz_backend.domain.jwt.service.JwtService;
+import com.ssafy.jazz_backend.domain.member.entity.Member;
+import com.ssafy.jazz_backend.domain.member.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -16,6 +18,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Autowired
     private JwtService jwtService;
+    @Autowired MemberRepository memberRepository;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
@@ -24,6 +27,13 @@ public class JwtInterceptor implements HandlerInterceptor {
             return true;
         }
         String accessToken = request.getHeader("accessToken");
+
+        String uuid = jwtService.getInfo("account", accessToken);
+        Member member = memberRepository.findById(uuid).orElse(null);
+        if(member == null ){
+            response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
+            return false;
+        }
 
         // accessToken이 있고, 정상적이면 return true
         if (accessToken == null) {
@@ -37,6 +47,8 @@ public class JwtInterceptor implements HandlerInterceptor {
             // 401
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
+
+
         }
     }
 }

@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.IOException;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import java.util.Date;
@@ -92,6 +93,10 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String getInfo(String key, String token) {
+        String uuid = (String)this.getUserInfoFromToken(token).get(key);
+        if(uuid == null) {
+            return "";
+        }
         return (String) this.getUserInfoFromToken(token).get(key);
     }
 }

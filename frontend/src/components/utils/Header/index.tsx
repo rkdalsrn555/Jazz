@@ -6,6 +6,7 @@ import DarkSwitch from 'components/utils/DarkModeSwitch';
 import BrandLogo from 'assets/JazzLogo.png';
 import { Link } from 'react-router-dom';
 import Enlarge from 'components/Effect/Enlarge/Enlarge';
+import { useEffect } from 'react';
 
 const Header = () => {
   const location = useLocation();
@@ -20,27 +21,37 @@ const Header = () => {
     '/battle-game',
   ];
 
-  return (
-    <S.Container theme={theme}>
-      <S.Blank />
-      {blockLogoClickList.includes(location.pathname) ? (
-        <S.Logo src={BrandLogo} />
-      ) : (
-        <Enlarge>
-          <Link
-            to={'home'}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <S.Logo src={BrandLogo} />
-          </Link>
-        </Enlarge>
-      )}
+  useEffect(() => {
+    console.log(location.pathname.split('/'));
+  }, []);
 
-      <DarkSwitch />
-    </S.Container>
+  return (
+    <>
+      {location.pathname.split('/')[1] === 'battle-game' ? (
+        ''
+      ) : (
+        <S.Container theme={theme}>
+          <S.Blank />
+          {blockLogoClickList.includes(location.pathname) ? (
+            <S.Logo src={BrandLogo} />
+          ) : (
+            <Enlarge>
+              <Link
+                to={'home'}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <S.Logo src={BrandLogo} />
+              </Link>
+            </Enlarge>
+          )}
+
+          <DarkSwitch />
+        </S.Container>
+      )}
+    </>
   );
 };
 

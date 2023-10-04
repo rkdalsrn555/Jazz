@@ -5,14 +5,14 @@ export const JudgeContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1134px;
-  height: 708px;
+  width: 700px;
+  height: 500px;
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.6);
   box-shadow: 0px 0px 30px 7px #fff;
 
   & p {
-    font-size: 50px;
+    font-size: 100px;
     font-weight: 900;
     color: #fff;
   }
@@ -30,15 +30,15 @@ export const AwardContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
 
     & p {
-      font-size: 50px;
+      font-size: 70px;
     }
   }
 
   & .content {
-    height: 400px;
+    height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;

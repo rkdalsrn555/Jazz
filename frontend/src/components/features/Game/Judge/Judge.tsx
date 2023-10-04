@@ -22,7 +22,7 @@ const Judge = (props: OwnProps) => {
           <>
             {state === 'win' || state === 'draw' ? (
               <div className="award">
-                <DiamondIcon />
+                <DiamondIcon width={80} />
                 <p>{state === 'win' ? '+20' : '+5'}</p>
               </div>
             ) : (
@@ -30,7 +30,7 @@ const Judge = (props: OwnProps) => {
             )}
             <div className="content">
               <p>{state.toUpperCase()}</p>
-              {state === 'win' ? <TrophyIcon width={50} /> : ''}
+              {state === 'win' ? <TrophyIcon width={80} /> : ''}
               {state === 'lose' ? <p>😫</p> : ''}
               {state === 'draw' ? <p>😃</p> : ''}
             </div>

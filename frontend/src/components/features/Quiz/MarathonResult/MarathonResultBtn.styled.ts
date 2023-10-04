@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 
 export const MarathonResultBtn = styled.button`
-  width: 890px;
-  height: 90px;
+  width: 780px;
+  height: 60px;
   border: none;
-  border-radius: 24px;
+  border-radius: 20px;
   background: linear-gradient(
     103deg,
     #ccdcf3 0%,
@@ -16,7 +16,7 @@ export const MarathonResultBtn = styled.button`
 
   & p {
     color: #638ef3;
-    font-size: 30px;
+    font-size: 24px;
     margin: 0;
     font-weight: 700;
   }

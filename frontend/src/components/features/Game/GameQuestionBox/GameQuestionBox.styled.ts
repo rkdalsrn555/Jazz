@@ -9,8 +9,8 @@ export const QuestionContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 600px;
-  min-height: 50%;
+  width: 500px;
+  min-height: 40%;
   box-sizing: border-box;
   margin: 0 auto;
 `;
@@ -33,9 +33,9 @@ export const QuestionTitle = styled.div<{
     }
   }};
   border-radius: 24px 24px 0 0;
-  font-size: 20px;
+  font-size: 16px;
   box-sizing: border-box;
-  padding: ${(props) => (props.kind === 3 ? '46px' : '46px')};
+  padding: ${(props) => (props.kind === 3 ? '30px' : '30px')};
 `;
 
 export const QuestionContent = styled.div<{
@@ -47,7 +47,7 @@ export const QuestionContent = styled.div<{
   justify-content: center;
   border-radius: 0 0 24px 24px;
   width: 100%;
-  min-height: 20rem;
+  min-height: 17rem;
   background-color: ${(props) => {
     if (props.isCorrect !== null) {
       return props.isCorrect ? '#F4FEDA ' : '#E9CEC9';
@@ -63,6 +63,7 @@ export const AnswerIconContainer = styled.div`
   left: 0;
   right: 0;
   text-align: center;
+  opacity: 0.8;
 `;
 
 export const AnswerContaier = styled.div`
@@ -83,8 +84,8 @@ export const SubjectiveInput = styled.input`
   border: none;
   border-radius: 8px;
   text-align: center;
-  font-size: 30px;
-  padding: 15px 20px;
+  font-size: 24px;
+  padding: 13px 15px;
   box-sizing: border-box;
   caret-color: #638ef3;
   &:focus {
@@ -110,9 +111,9 @@ export const MultipleQuestionLi = styled.li<{
   background-color: #dbe8f9;
   border-radius: 8px;
   box-sizing: border-box;
-  font-size: ${(props) => (props.kind === 3 ? '16px' : '16px')};
+  font-size: ${(props) => (props.kind === 3 ? '14px' : '14px')};
   list-style: none;
-  padding: 15px 20px;
+  padding: 12px 20px;
   box-shadow: ${(props) =>
     props.active === props.answer ? '0 0 0 5px #638EF3 inset' : ''};
 `;

@@ -179,6 +179,7 @@ const MarathonPage = () => {
             correctExplanation={correctAnswer?.correctExplanation}
             wrongContent={wrongAnswer?.wrongContent}
             wrongExplanation={wrongAnswer?.wrongExplanation}
+            quizKind="marathon"
           />
         ) : (
           '퀴즈를 불러오는 중이에요'

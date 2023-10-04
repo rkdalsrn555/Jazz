@@ -32,9 +32,11 @@ import java.util.UUID;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -78,6 +80,9 @@ public class GameService {
 
     @Autowired
     private Util util;
+
+    @Autowired
+    private ZSetOperations<String, String> zSetOperations;
 
     /*
     필드 초기화 메서드
@@ -233,9 +238,13 @@ public class GameService {
         int diamond = profile.getDiamond();
         profile.setDiamond(diamond + 10);
 
-        Season season = seasonJpaRepository.findById(1).orElseThrow(() -> new NullPointerException());
-        TierId tierId = new TierId(member, season.getTierSeason());
-        Tier tier = tierJpaRepository.findById(tierId).orElseThrow(() -> new NullPointerException());
+        Season nowSeason = seasonJpaRepository.findById(1).orElseThrow(() -> new NullPointerException());
+        TierId tierId = new TierId(member, nowSeason.getTierSeason());
+        Tier tier = tierJpaRepository.findById(tierId).orElse(null);
+
+        if(tier == null){
+            tier = new Tier(tierId, 0,0,0,0);
+        }
 
         GameResultResponse gameResultResponse = new GameResultResponse();
         int temp = 0;
@@ -243,7 +252,11 @@ public class GameService {
             temp = profile.getLose();
             profile.setLose(temp + 1);
             tier.setLose(temp + 1);
-            tier.setRankPoint(tier.getRankPoint() - 5);
+            if((tier.getRankPoint() - 5) < 0){
+                tier.setRankPoint(0);
+            }else{
+                tier.setRankPoint(tier.getRankPoint() - 5);
+            }
             gameResultResponse.setResult(3);
         }
         else if(lives == 99) {
@@ -262,6 +275,8 @@ public class GameService {
 
         profileRepository.save(profile);
         tierJpaRepository.save(tier);
+
+        zSetOperations.add(util.getTierRankKeyName(),memberId, tier.getRankPoint());
 
         return gameResultResponse;
     }

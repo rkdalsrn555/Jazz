@@ -55,12 +55,13 @@ public class NewServiceImpl implements NewsService {
 
         // sse는 일단은 무조건 값을 넘겨줘야 하기 때문에 초기에 아무 값이나 넣어줘야함
         emitter.send(SseEmitter.event().name(UUID).data(enterpriseName));
-
+        // name이 식별자, json으로 보내줘?
         // 1. 레디스에 해당 기업의 뉴스 크롤링 정보가 있는지 확인하기
         if (enterpriseName.equals("김의년")) {
             // 2-1. 있다면 해당 기업의 뉴스 크롤링 정보를 리턴
             // 있다고 가정하는 입력
             // 레디스에 있는 값 sse에 담아서 보내주기
+            // 여기서 send하면 됨
             System.out.println("확인");
         } else {
             // 2-2. 없다면 해당 기업을 크롤링 하기

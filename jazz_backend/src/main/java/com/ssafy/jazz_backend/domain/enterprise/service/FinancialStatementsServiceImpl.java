@@ -55,10 +55,17 @@ public class FinancialStatementsServiceImpl implements FinancialStatementsServic
         List<Map<String, String>> codeAndEnterpriseMapList = makeCodeAndEnterpriseMapList();
         List<String> DB에안들어간회사들 = new ArrayList<>();
         List<String> DB에들어간회사들 = new ArrayList<>();
+        int i = 0;
+        int start = 1000;
+        int end = 1100;
 
         for (Map<String, String> codeAndEnterpriseMap : codeAndEnterpriseMapList) {
+
+            if(end==i) break;
+            if(i++<start) continue;
             String corpCode = codeAndEnterpriseMap.get("companyCode");
             String enterpriseName = codeAndEnterpriseMap.get("companyName");
+
 
             String API_URL =
                 "https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json?crtfc_key=3667c2b5c230812adf01b162f26db7e0fa2e4af8&corp_code="
@@ -66,19 +73,13 @@ public class FinancialStatementsServiceImpl implements FinancialStatementsServic
 
             DartApiResponseDto response = new RestTemplate().getForObject(API_URL,
                 DartApiResponseDto.class);
-            System.out.println(corpCode);
 
             // Validation of the response
             if (response == null || !"000".equals(response.getStatus())) {
-                System.out.println(response.getStatus());
-                System.out.println(enterpriseName + " 터짐");
                 DB에안들어간회사들.add(enterpriseName);
 
                 continue;
             }
-            System.out.println(response.getStatus());
-            System.out.println(enterpriseName);
-
 
             // Enterprise 엔터티에 저장
             Enterprise enterprise = new Enterprise();

@@ -6,7 +6,7 @@ export const Container = styled.div<{ theme: themeProps }>`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 10rem;
+  /* height: 14rem !important; */
   padding: 1rem;
   border-radius: 0.5rem;
   background-color: ${(props) => props.theme.bg.light};

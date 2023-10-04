@@ -30,7 +30,7 @@ const CompanySearch = () => {
     userApis
       .get(`/enterprise?enterpriseName=${debounceSearchCompany}`)
       .then((res) => {
-        // console.log(res);
+        console.log(res);
         setCompanies(res.data);
         console.log(companies);
       })
@@ -103,23 +103,25 @@ const CompanySearch = () => {
                 </S.Box>
               </S.BannerLeft>
               <S.BannerRight>
-                <S.BannerTitle>{clickedCompany.name}</S.BannerTitle>
+                <S.BannerTitle theme={theme}>
+                  {clickedCompany.name}
+                </S.BannerTitle>
                 <S.BannerContent>
                   <S.BannerContentInner>
                     <S.BannerContentTitle>총 자본</S.BannerContentTitle>
-                    <S.BannerContentContent>
+                    <S.BannerContentContent theme={theme}>
                       {clickedCompany.totalAssets}
                     </S.BannerContentContent>
                   </S.BannerContentInner>
                   <S.BannerContentInner>
                     <S.BannerContentTitle>총 부채</S.BannerContentTitle>
-                    <S.BannerContentContent>
+                    <S.BannerContentContent theme={theme}>
                       {clickedCompany.totalDebt}
                     </S.BannerContentContent>
                   </S.BannerContentInner>
                   <S.BannerContentInner>
                     <S.BannerContentTitle>총 차산</S.BannerContentTitle>
-                    <S.BannerContentContent>
+                    <S.BannerContentContent theme={theme}>
                       {clickedCompany.totalCapital}
                     </S.BannerContentContent>
                   </S.BannerContentInner>
@@ -133,7 +135,7 @@ const CompanySearch = () => {
               )} */}
             </S.InnerBannerContainer>
           ) : (
-            <S.BlankBanner>
+            <S.BlankBanner theme={theme}>
               회사를 선택하면 간략한 정보를 확인하실 수 있어요
             </S.BlankBanner>
           )}
@@ -144,7 +146,7 @@ const CompanySearch = () => {
             {clickedCompany.id !== 0 ? (
               `${clickedCompany.name} 여기에 기업 개요 들어가야 함`
             ) : (
-              <S.BlankBanner>
+              <S.BlankBanner theme={theme}>
                 회사를 선택하면 기업 개요를 확인하실 수 있어요
               </S.BlankBanner>
             )}

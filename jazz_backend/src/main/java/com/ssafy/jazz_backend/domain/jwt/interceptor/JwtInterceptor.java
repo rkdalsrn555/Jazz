@@ -28,12 +28,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
         String accessToken = request.getHeader("accessToken");
 
-        String uuid = jwtService.getInfo("account", accessToken);
-        Member member = memberRepository.findById(uuid).orElse(null);
-        if(member == null ){
-            response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
-            return false;
-        }
+
 
         // accessToken이 있고, 정상적이면 return true
         if (accessToken == null) {
@@ -42,6 +37,12 @@ public class JwtInterceptor implements HandlerInterceptor {
             return false;
         } else {
             if (jwtService.checkToken(accessToken)) {
+                String uuid = jwtService.getInfo("account", accessToken);
+                Member member = memberRepository.findById(uuid).orElse(null);
+                if(member == null ){
+                    response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
+                    return false;
+                }
                 return true;
             }
             // 401

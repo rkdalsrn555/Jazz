@@ -3,6 +3,7 @@ package com.ssafy.jazz_backend.domain.item.controller;
 import com.ssafy.jazz_backend.domain.item.dto.CharacterListResponseDto;
 import com.ssafy.jazz_backend.domain.item.dto.CharacterPaymentResponseDto;
 import com.ssafy.jazz_backend.domain.item.service.ItemService;
+import com.ssafy.jazz_backend.global.error.exception.NotEnoughDiamondException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +28,9 @@ public class ItemController {
     }
 
     @PatchMapping("/character/{itemId}")
-    public ResponseEntity<CharacterPaymentResponseDto> characterPayment(@RequestHeader("accessToken") String accessToken, @PathVariable int itemId) {
-        CharacterPaymentResponseDto characterPaymentResponseDto = itemService.takeCharacter(accessToken, itemId);
-        return new ResponseEntity<>(characterPaymentResponseDto, HttpStatus.OK);
+    public ResponseEntity<CharacterListResponseDto> characterPayment(@RequestHeader("accessToken") String accessToken, @PathVariable int itemId) throws NotEnoughDiamondException {
+        CharacterListResponseDto characterListResponseDto = itemService.takeCharacter(accessToken, itemId);
+        return new ResponseEntity<>(characterListResponseDto, HttpStatus.OK);
     }
 
 }

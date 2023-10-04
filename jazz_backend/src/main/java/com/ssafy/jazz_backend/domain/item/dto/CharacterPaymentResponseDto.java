@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CharacterPaymentResponseDto {
-    private int itemId;
+    private int id;
     private int price;
 }

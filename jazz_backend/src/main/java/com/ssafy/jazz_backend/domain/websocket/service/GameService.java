@@ -236,7 +236,6 @@ public class GameService {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new NullPointerException());
         Profile profile = profileRepository.findById(memberId).orElseThrow(() -> new NullPointerException());
         int diamond = profile.getDiamond();
-        profile.setDiamond(diamond + 10);
 
         Season nowSeason = seasonJpaRepository.findById(1).orElseThrow(() -> new NullPointerException());
         TierId tierId = new TierId(member, nowSeason.getTierSeason());
@@ -252,6 +251,7 @@ public class GameService {
             temp = profile.getLose();
             profile.setLose(temp + 1);
             tier.setLose(temp + 1);
+            profile.setDiamond(diamond + 10);
             if((tier.getRankPoint() - 5) < 0){
                 tier.setRankPoint(0);
             }else{
@@ -263,13 +263,15 @@ public class GameService {
             temp = profile.getDraw();
             profile.setDraw(temp + 1);
             tier.setDraw(temp + 1);
+            profile.setDiamond(diamond + 10);
             gameResultResponse.setResult(2);
         }
         else {
             temp = profile.getWin();
             profile.setWin(temp + 1);
             tier.setWin(temp + 1);
-            tier.setRankPoint(tier.getRankPoint() + 10);
+            profile.setDiamond(diamond + 10);
+            tier.setRankPoint(tier.getRankPoint() + 20);
             gameResultResponse.setResult(1);
         }
 

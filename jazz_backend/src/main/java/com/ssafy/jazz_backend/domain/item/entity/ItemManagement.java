@@ -1,5 +1,6 @@
 package com.ssafy.jazz_backend.domain.item.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.jazz_backend.domain.member.entity.Member;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -37,6 +38,7 @@ public class ItemManagement {
     @MapsId("member")
     @ManyToOne
     @JoinColumn(name = "member_id")
+    @JsonBackReference
     private Member member;
 
     public ItemManagement(Member member, Item item, boolean isOwn, boolean isUsed) {

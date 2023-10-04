@@ -1,9 +1,11 @@
 package com.ssafy.jazz_backend.domain.member.service.serviceImpl;
 
+import com.ssafy.jazz_backend.domain.item.entity.Item;
 import com.ssafy.jazz_backend.domain.item.entity.ItemManagement;
 import com.ssafy.jazz_backend.domain.item.repository.ItemJpaRepository;
 import com.ssafy.jazz_backend.domain.item.repository.ItemManagementJpaRepository;
 import com.ssafy.jazz_backend.domain.item.title.entity.PreTitleManagement;
+import com.ssafy.jazz_backend.domain.item.title.entity.PreTitleManagementId;
 import com.ssafy.jazz_backend.domain.item.title.entity.SuffixTitleManagement;
 import com.ssafy.jazz_backend.domain.item.title.repository.PreTitleJpaRepository;
 import com.ssafy.jazz_backend.domain.item.title.repository.PreTitleManagementJpaRepostiory;
@@ -18,6 +20,7 @@ import com.ssafy.jazz_backend.domain.member.dto.JoinMemberRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.ModifyNicknameRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.ModifyNicknameResponseDto;
+import com.ssafy.jazz_backend.domain.member.dto.MyProfileInfoResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.UserLoginRequestDto;
@@ -28,16 +31,28 @@ import com.ssafy.jazz_backend.domain.member.entity.Member;
 import com.ssafy.jazz_backend.domain.member.entity.Token;
 import com.ssafy.jazz_backend.domain.member.profile.entity.Profile;
 import com.ssafy.jazz_backend.domain.member.profile.repository.ProfileRepository;
+import com.ssafy.jazz_backend.domain.member.record.entity.Marathon;
+import com.ssafy.jazz_backend.domain.member.record.entity.MarathonId;
+import com.ssafy.jazz_backend.domain.member.record.entity.Season;
+import com.ssafy.jazz_backend.domain.member.record.entity.Tier;
+import com.ssafy.jazz_backend.domain.member.record.entity.TierId;
+import com.ssafy.jazz_backend.domain.member.record.repository.MarathonJpaRepository;
+import com.ssafy.jazz_backend.domain.member.record.repository.SeasonJpaRepository;
+import com.ssafy.jazz_backend.domain.member.record.repository.TierJpaRepository;
 import com.ssafy.jazz_backend.domain.member.repository.MemberRepository;
 import com.ssafy.jazz_backend.domain.member.repository.TokenRepository;
 import com.ssafy.jazz_backend.domain.member.service.MemberService;
+import com.ssafy.jazz_backend.domain.quiz.repository.QuizManagementRepository;
+import com.ssafy.jazz_backend.global.Util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +63,16 @@ public class MemberServiceImpl implements MemberService {
     MemberRepository memberRepository;
     @Autowired
     ProfileRepository profileRepository;
+    @Autowired
+    TierJpaRepository tierJpaRepository;
+    @Autowired
+    SeasonJpaRepository seasonJpaRepository;
+    @Autowired
+    QuizManagementRepository quizManagementRepository;
+    @Autowired
+    MarathonJpaRepository marathonJpaRepository;
+    @Autowired
+    Util util;
     @Autowired
     JwtService jwtService;
     @Autowired
@@ -365,6 +390,53 @@ public class MemberServiceImpl implements MemberService {
     public String getUUID(String accessToken) {
         Map<String, Object> tmp = jwtService.getUserInfoFromToken(accessToken);
         return (String) tmp.get("account");
+    }
+
+    @Override
+    public MyProfileInfoResponseDto getProfile(String accessToken) {
+        String userUUID = jwtService.getInfo("account", accessToken);
+        Member member = memberRepository.findById(userUUID).orElseThrow(() -> new NullPointerException());
+        Profile profile = profileRepository.findById(userUUID).orElseThrow(() -> new NullPointerException());
+        Season season = seasonJpaRepository.findById(1).orElseThrow(() -> new NullPointerException());
+        TierId tierId = new TierId(member, season.getTierSeason());
+        Tier tier = tierJpaRepository.findById(tierId).orElse(null);
+        Marathon marathon = marathonJpaRepository.findById(new MarathonId(member, season.getDailySeason(), season.getMonthlySeason())).orElse(null);
+        PreTitleManagement preTitleManagement = preTitleManagementJpaRepostiory.findByMemberIdAndIsUsed(userUUID, true).orElseThrow(() -> new NullPointerException());
+        SuffixTitleManagement suffixTitleManagement = suffixTitleManagementJpaRepostiory.findByMemberIdAndIsUsed(userUUID, true).orElseThrow(() -> new NullPointerException());
+        List<PreTitleManagement> preTitleManagementList = preTitleManagementJpaRepostiory.findAllByMemberIdAndIsOwn(userUUID, true);
+        List<SuffixTitleManagement> suffixTitleManagementList = suffixTitleManagementJpaRepostiory.findAllByMemberIdAndIsOwn(userUUID, true);
+        int itemId = itemManagementJpaRepository.findItemIdByMemberIdAndIsUsed(userUUID).orElseThrow(() -> new NullPointerException());
+        List<ItemManagement> itemList = itemManagementJpaRepository.findAllByMemberIdAndIsOwn(userUUID, true);
+        int rankPoint = 0;
+        if(tier == null) rankPoint = 0;
+        else rankPoint = tier.getRankPoint();
+        int marathonOneDay = 0;
+        if(marathon == null) marathonOneDay = 0;
+        else marathonOneDay = marathon.getQuizRecord();
+        int total = profile.getWin() + profile.getDraw() + profile.getLose();
+        if(total == 0) total = 1;
+
+        return MyProfileInfoResponseDto.builder()
+            .userUUID(userUUID)
+            .nickname(profile.getNickname())
+            .diamond(profile.getDiamond())
+            .expPoint(profile.getExpPoint())
+            .level(profile.getExpPoint() / 10 + 1)
+            .rankPoint(rankPoint)
+            .rank(util.makeRank(rankPoint))
+            .collectQuizRecord(quizManagementRepository.findCorrectQuestionById(userUUID, true).orElseThrow(() -> new NullPointerException()))
+            .winningPercentage(Math.round((profile.getWin() / total) * 100))
+            .marathonOneDay(marathonOneDay)
+            .bookmarkCnt(quizManagementRepository.countAllByMemberIdAndIsBookmark(userUUID, true).orElseThrow(() -> new NullPointerException()))
+            .takePrefixTitleId(preTitleManagement.getId().getPreTitle().getId())
+            .takePrefixContent(preTitleManagement.getId().getPreTitle().getContent())
+            .takeSuffixTitleId(suffixTitleManagement.getId().getSuffixTitle().getId())
+            .takeSuffixContent(suffixTitleManagement.getId().getSuffixTitle().getContent())
+            .ablePrefixTitleList(preTitleManagementList)
+            .ableSuffixTitleList(suffixTitleManagementList)
+            .takeCharacterId(itemId)
+            .ableCharacterList(itemList)
+            .build();
     }
 
 }

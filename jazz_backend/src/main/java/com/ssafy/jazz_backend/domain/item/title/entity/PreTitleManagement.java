@@ -1,5 +1,6 @@
 package com.ssafy.jazz_backend.domain.item.title.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.jazz_backend.domain.item.entity.Item;
 import com.ssafy.jazz_backend.domain.item.entity.ItemManagementId;
 import com.ssafy.jazz_backend.domain.member.entity.Member;
@@ -35,6 +36,7 @@ public class PreTitleManagement {
     @MapsId("member")
     @ManyToOne
     @JoinColumn(name = "member_id")
+    @JsonBackReference
     private Member member;
 
     public PreTitleManagement(Member member, PreTitle preTitle, boolean isOwn, boolean isUsed) {

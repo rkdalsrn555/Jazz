@@ -33,15 +33,18 @@ public class ExplanationServiceImpl implements ExplanationService {
         // 정답의 Explanation 찾기
         Explanation explanation = explanationRepository.findByWord(correctChoice.getContent());
 
+        String explanationDescription;
         if (explanation == null) {
-            throw new IllegalArgumentException("Explanation not found for the provided word.");
+            explanationDescription = "정답에 대한 해설이 없어요";
+        } else {
+            explanationDescription = explanation.getDescription();
         }
 
         // 응답 구성
         return ExplanationCorrectAnswerResponseDto.builder()
             .quizId(request.getQuizId())
             .correctContent(correctChoice.getContent())
-            .correctExplanation(explanation.getDescription())
+            .correctExplanation(explanationDescription)
             .build();
     }
 
@@ -59,6 +62,13 @@ public class ExplanationServiceImpl implements ExplanationService {
         Explanation correctExplanation = explanationRepository.findByWord(
             correctChoice.getContent());
 
+        String correctExplanationDescription;
+        if (correctExplanation == null) {
+            correctExplanationDescription = "정답에 대한 해설이 없어요";
+        } else {
+            correctExplanationDescription = correctExplanation.getDescription();
+        }
+
         // 사용자가 선택한 오답의 Explanation 찾기
         Explanation wrongExplanation = explanationRepository.findByWord(request.getWrongContent());
 
@@ -73,7 +83,7 @@ public class ExplanationServiceImpl implements ExplanationService {
         return ExplanationWrongAnswerResponseDto.builder()
             .quizId(request.getQuizId())
             .correctContent(correctChoice.getContent())
-            .correctExplanation(correctExplanation.getDescription())
+            .correctExplanation(correctExplanationDescription)
             .wrongContent(request.getWrongContent())
             .wrongExplanation(wrongExplanationDescription)
             .build();

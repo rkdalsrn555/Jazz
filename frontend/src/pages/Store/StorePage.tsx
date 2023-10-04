@@ -7,7 +7,7 @@ import { userApis } from 'hooks/api/userApis';
 import Modal from 'components/utils/Modal/Modal';
 
 const StorePage = () => {
-  const charactorName = ['동그리', '세모', '네모', '바위', '전사'];
+  const charactorName = ['동그리', '네모', '세모', '바위', '전사'];
   const [notOwnedCharactorList, setNotOwnedCharactorList] = useState([]);
   const [diamond, setDiamond] = useState<number>(0);
   const [isToggled, setIsToggled] = useState<boolean>(false); // 모달 창 toggle
@@ -32,10 +32,32 @@ const StorePage = () => {
     await userApis
       .patch(`/store/character/${itemId}`)
       .then((res) => {
-        console.log('구매성공!');
+        setNotOwnedCharactorList(res.data.data);
+        setDiamond(res.data.diamond);
+        setIsToggled(true);
+        setModalData({
+          data: {
+            title: '😊',
+            message: `축하합니다! ${
+              charactorName[itemId - 1]
+            }가 구매되었습니다!`,
+          },
+          yesBtnClick: () => {
+            setIsToggled(false);
+          },
+        });
       })
       .catch((err) => {
-        console.log('구매실패! 다시 시도해보세요');
+        setIsToggled(true);
+        setModalData({
+          data: {
+            title: '😜',
+            message: `다이아가 모자라요, 문제를 풀고 다이아를 모아보세요`,
+          },
+          yesBtnClick: () => {
+            setIsToggled(false);
+          },
+        });
       });
   };
 
@@ -43,7 +65,7 @@ const StorePage = () => {
     setModalData({
       data: {
         title: '😊',
-        message: `${charactorName[itemId]}를 구매하시겠습니까?`,
+        message: `${charactorName[itemId - 1]}를 구매하시겠습니까?`,
       },
       yesBtnClick: () => {
         setIsToggled(false);
@@ -68,20 +90,37 @@ const StorePage = () => {
       </S.TitleContainer>
       <S.CharactorContainer>
         {notOwnedCharactorList ? (
-          notOwnedCharactorList.map((item: any) => {
-            // 내가 가진 리스트는 못사게 회색처리해야함!
-
-            return (
-              <CharactorItem
-                charactorNumber={item.id}
-                price={item.price}
-                key={item.id}
-                clickBuyBtn={() => {
-                  setIsToggled(true);
-                  clickBuyBtn(item.id);
-                }}
-              />
-            );
+          [1, 2, 3, 4, 5].map((el) => {
+            if (
+              notOwnedCharactorList.filter((item: any) => item.id === el)
+                .length === 1
+            ) {
+              return (
+                <CharactorItem
+                  isBuy={false}
+                  charactorNumber={el}
+                  price={50}
+                  key={el}
+                  clickBuyBtn={() => {
+                    setIsToggled(true);
+                    clickBuyBtn(el);
+                  }}
+                />
+              );
+            } else {
+              return (
+                <CharactorItem
+                  isBuy={true}
+                  charactorNumber={el}
+                  price={50}
+                  key={el}
+                  clickBuyBtn={() => {
+                    setIsToggled(true);
+                    clickBuyBtn(el);
+                  }}
+                />
+              );
+            }
           })
         ) : (
           <div>상점 리스트를 로딩중입니다</div>

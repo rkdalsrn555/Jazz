@@ -6,7 +6,6 @@ import DarkSwitch from 'components/utils/DarkModeSwitch';
 import BrandLogo from 'assets/JazzLogo.png';
 import { Link } from 'react-router-dom';
 import Enlarge from 'components/Effect/Enlarge/Enlarge';
-import { useEffect } from 'react';
 
 const Header = () => {
   const location = useLocation();
@@ -20,10 +19,6 @@ const Header = () => {
     '/favorite/random-quiz',
     '/battle-game',
   ];
-
-  useEffect(() => {
-    console.log(location.pathname.split('/'));
-  }, []);
 
   return (
     <>

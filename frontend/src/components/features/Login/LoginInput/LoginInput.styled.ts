@@ -30,6 +30,17 @@ export const LoginInput = styled.input`
   }
 `;
 
+export const LoginInputContainer = styled.div`
+  position: relative;
+`;
+
+export const showPwdIcon = styled.div`
+  position: absolute;
+  top: 25%;
+  right: 6%;
+  cursor: pointer;
+`;
+
 export const ErrorMessage = styled.div<{ isError?: boolean }>`
   position: absolute;
   left: 0;

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-  width: 250px;
-  height: 500px;
+  width: 220px;
+  height: 400px;
   border: 2px solid #a3a3e1;
   border-radius: 10px;
   background-color: #fff;
@@ -13,7 +13,7 @@ export const UserCharactorContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 30px;
+  gap: 15px;
   width: 100%;
   height: 100%;
 
@@ -40,12 +40,12 @@ export const Diamond = styled.div`
 `;
 
 export const SellBtn = styled.button`
-  width: 220px;
-  height: 60px;
+  width: 200px;
+  height: 50px;
   background-color: #ff6f77;
   color: #fff;
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   border-radius: 16px;
   box-shadow:

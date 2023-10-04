@@ -52,7 +52,9 @@ const Signup = () => {
       setSuccessUserId(false);
       return;
     }
-    if (debounceCheckUserId) {
+    // 영문자로 시작하는 6~20자 영문자(소문자만 가능)
+    let reg = /^[a-z]{5,19}$/g;
+    if (reg.test(debounceCheckUserId)) {
       axios
         .get(
           `${process.env.REACT_APP_BASE_URL}/user/duplicate/${debounceCheckUserId}`
@@ -72,6 +74,9 @@ const Signup = () => {
           setErrorUserId(true);
           setSuccessUserId(false);
         });
+    } else {
+      setErrorUserId(true);
+      setSuccessUserId(false);
     }
   }, [debounceCheckUserId]);
 
@@ -171,7 +176,7 @@ const Signup = () => {
           isSuccess={successUserId}
           successMessage="올바른 아이디입니다"
           isError={errorUserId}
-          errorMessage="아이디가 중복이거나 올바르지 않습니다"
+          errorMessage="6~20자 영문자만 가능합니다"
           inputValue={userId}
           setInputValue={setUserId}
         />

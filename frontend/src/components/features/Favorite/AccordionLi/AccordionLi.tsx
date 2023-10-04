@@ -1,7 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
 import * as S from './Accordion.styled';
-import React from 'react';
 import { ReactComponent as StarIcon } from '../../../../assets/svgs/Favorite/star.svg';
 import { ReactComponent as DownArrowIcon } from '../../../../assets/svgs/Favorite/downArrow.svg';
 import { ReactComponent as TopArrowIcon } from '../../../../assets/svgs/Favorite/topArrow.svg';
@@ -23,8 +21,6 @@ const AccordionLi = (props: OwnProps) => {
     quizId,
     question,
     content,
-    kind,
-    isBookmark,
     currentOpen,
     toggleOpen,
     getFavoriteList,

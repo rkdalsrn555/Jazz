@@ -1,15 +1,13 @@
-import { Global, themeProps } from '@emotion/react';
-import { useTheme } from '@mui/material';
+import { Global } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ThemeProvider } from '@emotion/react';
 import { IsDark } from 'atoms/atoms';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { darkTheme, lightTheme } from '../../styles/ColorSystem';
 import GlobalStyle from '../../styles/GlobalStyle';
-import { BrowserRouter } from 'react-router-dom';
 import Router from 'Router';
 import { useLocation } from 'react-router-dom';
-import { useEffect, Suspense } from 'react';
+import { useEffect } from 'react';
 import Header from 'components/utils/Header/index';
 import { motion } from 'framer-motion';
 

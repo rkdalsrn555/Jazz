@@ -13,7 +13,6 @@ const Login = () => {
   const [userId, setUserId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
 
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isToggled, setIsToggled] = useState<boolean>(false); // 모달 창 toggle
   const [modalData, setModalData] = useState<{
     data: {
@@ -72,11 +71,7 @@ const Login = () => {
           inputValue={pw}
           setInputValue={setPw}
         />
-        <LoginBtn
-          content="로그인"
-          isDisabled={isDisabled}
-          handleClick={getLogin}
-        />
+        <LoginBtn content="로그인" isDisabled={false} handleClick={getLogin} />
 
         <S.signupText>
           계정이 없으시다면,

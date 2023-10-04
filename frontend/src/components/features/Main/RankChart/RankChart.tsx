@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { IsDark } from 'atoms/atoms';
+import { RankingType, userType } from 'types/types';
+import { userApis } from 'hooks/api/userApis';
 
 const RankChart = ({
   selectedRank,
@@ -13,170 +15,46 @@ const RankChart = ({
   selectedRank: String;
   theme: themeProps;
 }) => {
-  const users = [
-    {
-      nickname: 'A',
-      tier: 'Challenger1',
-      solved: 357,
-      rate: 82,
+  const userToken = localStorage.getItem('userAccessToken');
+
+  const [tierRankers, setTierRankers] = useState<RankingType[]>([]);
+  const [mmRankers, setMmRankers] = useState<RankingType[]>([]);
+  const [dmRankers, setDmRankers] = useState<RankingType[]>([]);
+  const [levelRankers, setLevelRankers] = useState<RankingType[]>([]);
+
+  const apis: string[] = [
+    `/ranking/tier`,
+    `/ranking/monthly/marathon`,
+    `/ranking/daily/marathon`,
+    `/ranking/level`,
+  ];
+
+  const orders = [
+    function (response: RankingType[]) {
+      setTierRankers(response);
     },
-    {
-      nickname: 'A',
-      tier: 'Challenger1',
-      solved: 357,
-      rate: 82,
+    function (response: RankingType[]) {
+      setMmRankers(response);
     },
-    {
-      nickname: 'A',
-      tier: 'Challenger1',
-      solved: 357,
-      rate: 82,
+    function (response: RankingType[]) {
+      setDmRankers(response);
     },
-    {
-      nickname: 'A',
-      tier: 'Challenger1',
-      solved: 357,
-      rate: 82,
-    },
-    {
-      nickname: 'A',
-      tier: 'Challenger1',
-      solved: 357,
-      rate: 82,
-    },
-    {
-      nickname: 'A',
-      tier: 'Challenger1',
-      solved: 357,
-      rate: 82,
-    },
-    {
-      nickname: 'A',
-      tier: 'Challenger1',
-      solved: 357,
-      rate: 82,
-    },
-    {
-      nickname: 'A',
-      tier: 'Challenger1',
-      solved: 357,
-      rate: 82,
-    },
-    {
-      nickname: 'A',
-      tier: 'Challenger1',
-      solved: 357,
-      rate: 82,
-    },
-    {
-      nickname: 'A',
-      tier: 'Challenger1',
-      solved: 357,
-      rate: 82,
-    },
-    {
-      nickname: 'A',
-      tier: 'Challenger1',
-      solved: 357,
-      rate: 82,
-    },
-    {
-      nickname: 'A',
-      tier: 'Challenger1',
-      solved: 357,
-      rate: 82,
+    function (response: RankingType[]) {
+      setLevelRankers(response);
     },
   ];
 
-  const tierRank = () => {
-    return users.map((e, i) => (
-      <S.RankEach theme={theme}>
-        <S.RankEachContent theme={theme} style={{ flex: 0.5 }}>
-          {i + 1}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 1.4 }}>
-          {e.nickname}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
-          {e.tier}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 1 }}>
-          {e.solved}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
-          {e.rate}%
-        </S.RankEachContent>
-      </S.RankEach>
-    ));
-  };
-
-  const dailyMarathon = () => {
-    return users.map((e, i) => (
-      <S.RankEach theme={theme}>
-        <S.RankEachContent theme={theme} style={{ flex: 0.5 }}>
-          {i + 5}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 1.4 }}>
-          {e.nickname}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
-          {e.tier}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 1 }}>
-          {e.solved}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
-          {e.rate}%
-        </S.RankEachContent>
-      </S.RankEach>
-    ));
-  };
-
-  const monthlyMarathon = () => {
-    return users.map((e, i) => (
-      <S.RankEach theme={theme}>
-        <S.RankEachContent theme={theme} style={{ flex: 0.5 }}>
-          {i + 10}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 1.4 }}>
-          {e.nickname}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
-          {e.tier}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 1 }}>
-          {e.solved}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
-          {e.rate}%
-        </S.RankEachContent>
-      </S.RankEach>
-    ));
-  };
-
-  const levelRank = () => {
-    return users.map((e, i) => (
-      <S.RankEach theme={theme}>
-        <S.RankEachContent theme={theme} style={{ flex: 0.5 }}>
-          {i + 15}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 1.4 }}>
-          {e.nickname}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
-          {e.tier}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 1 }}>
-          {e.solved}
-        </S.RankEachContent>
-        <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
-          {e.rate}%
-        </S.RankEachContent>
-      </S.RankEach>
-    ));
-  };
-
-  const [rankType, setRankType] = useState(tierRank());
+  useEffect(() => {
+    for (let i = 0; i < apis.length; i++) {
+      userApis
+        .get(apis[i])
+        .then((res: any) => {
+          console.log(res);
+          orders[i](res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [userToken]);
 
   useEffect(() => {
     setInterval(() => setRankTypeCheck(!rankTypeCheck), 1000);
@@ -187,19 +65,52 @@ const RankChart = ({
   useEffect(() => {
     switch (selectedRank) {
       case 'tier':
-        setRankType(tierRank);
+        setRankType(tierRankers);
         break;
       case 'dailyMarathon':
-        setRankType(dailyMarathon);
+        setRankType(dmRankers);
         break;
       case 'monthlyMarathon':
-        setRankType(monthlyMarathon);
+        setRankType(mmRankers);
         break;
       case 'level':
-        setRankType(levelRank);
+        setRankType(levelRankers);
         break;
     }
   }, [selectedRank, rankTypeCheck]);
+
+  const [rankType, setRankType] = useState(tierRankers);
+
+  const Rank = () => {
+    return rankType.map((e, i) => (
+      <S.RankEach theme={theme}>
+        <S.RankEachContent theme={theme} style={{ flex: 0.6 }}>
+          {i + 1}
+        </S.RankEachContent>
+        <S.RankEachContent theme={theme} style={{ flex: 1.4 }}>
+          {e.nickname}
+        </S.RankEachContent>
+        <S.RankEachContent theme={theme} style={{ flex: 0.7 }}>
+          {e.level}
+        </S.RankEachContent>
+        <S.RankEachContent theme={theme} style={{ flex: 1 }}>
+          {e.rank}
+        </S.RankEachContent>
+        <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
+          {e.winRate}%
+        </S.RankEachContent>
+        <S.RankEachContent theme={theme} style={{ flex: 0.8 }}>
+          {e.quizRecord}
+        </S.RankEachContent>
+      </S.RankEach>
+    ));
+  };
+
+  const [renderingRank, setRenderingRank] = useState(Rank());
+
+  useEffect(() => {
+    setRenderingRank(Rank());
+  }, [rankType]);
 
   return (
     <S.RankOuterContainer theme={theme}>
@@ -210,17 +121,22 @@ const RankChart = ({
         <S.RankTitle theme={theme} style={{ flex: 1.4 }}>
           닉네임
         </S.RankTitle>
-        <S.RankTitle theme={theme} style={{ flex: 0.8 }}>
-          티어
+        <S.RankTitle theme={theme} style={{ flex: 0.7 }}>
+          레벨
         </S.RankTitle>
         <S.RankTitle theme={theme} style={{ flex: 1 }}>
-          푼 문제 수
+          티어
         </S.RankTitle>
         <S.RankTitle theme={theme} style={{ flex: 0.8 }}>
-          정답률
+          승률
+        </S.RankTitle>
+        <S.RankTitle theme={theme} style={{ flex: 0.8 }}>
+          {selectedRank === 'monthlyMarathon' ? '월간 기록' : '일간 기록'}
         </S.RankTitle>
       </S.RankContainerHeader>
-      <S.RankContainerContent theme={theme}>{rankType}</S.RankContainerContent>
+      <S.RankContainerContent theme={theme}>
+        {renderingRank}
+      </S.RankContainerContent>
     </S.RankOuterContainer>
   );
 };

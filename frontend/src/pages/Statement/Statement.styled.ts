@@ -9,11 +9,12 @@ export const Container = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   min-height: calc(100vh - 5rem);
+  height: 100%;
   position: relative;
 `;
 
 export const LeftContainer = styled.div`
-  /* border: solid red; */
+  border: solid red;
   flex: 1;
   display: flex;
   flex-direction: row;
@@ -25,7 +26,7 @@ export const LeftContainer = styled.div`
   max-width: 60rem;
 `;
 
-export const PageName = styled.div`
+export const PageName = styled.div<{ theme: themeProps }>`
   /* border: solid; */
   display: flex;
   flex-direction: row;
@@ -37,9 +38,11 @@ export const PageName = styled.div`
   position: absolute;
   top: 2rem;
   left: 4.2rem;
+  color: ${(props) => props.theme.font.deep};
+  transition: all 0.2s;
 `;
 
-export const CompanyName = styled.div`
+export const CompanyName = styled.div<{ theme: themeProps }>`
   /* border: solid; */
   display: flex;
   flex-direction: row;
@@ -51,6 +54,7 @@ export const CompanyName = styled.div`
   position: absolute;
   top: 5rem;
   left: 4.2rem;
+  color: ${(props) => props.theme.font.deep};
 `;
 
 export const StatementTypeContainer = styled.div`
@@ -70,6 +74,7 @@ export const RightContainer = styled.div`
   display: flex;
   flex-direction: row;
   min-width: 50rem;
+  /* min-height: 100% !important; */
 `;
 
 export const ReturnContainer = styled.div`
@@ -77,5 +82,3 @@ export const ReturnContainer = styled.div`
   display: flex;
   width: 100%;
 `;
-
-

@@ -2,27 +2,75 @@ import * as S from './Statement.styled';
 import { themeProps } from '@emotion/react';
 import { useTheme } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { StatementType } from 'types/types';
+import { ChartDataType, StatementType, companyProps } from 'types/types';
 import StatementTypeBtn from 'components/features/Statement/StatementType/StatementTypeBtn';
 import { useEffect, useRef, useState } from 'react';
+import { userApis } from 'hooks/api/userApis';
+import Chart from 'components/features/Statement/Chart/Chart';
 
 const Statement = () => {
   const theme: themeProps = useTheme();
   // url에서 parmeter로 어떤 company 받아올건지??
   const { companyId } = useParams<{ companyId: string }>();
   // 위에 companyId 이용해서 특정 회사의 재무제표를 받아와야 함
-  // 아래는 임시 회사 임시 정보
-  // const company: companyProps = {
-  //   id: 1,
-  //   name: '삼성전자',
-  //   totalValue: 65465465,
-  //   totalSale: 654654654,
-  //   starred: true,
-  // };
+  const [company, setCompany] = useState<companyProps>({
+    id: 0,
+    name: '',
+    totalAssets: 0,
+    totalDebt: 0,
+    totalCapital: 0,
+  });
+  const [FP, setFP] = useState<string[]>([]);
+  const [CI, setCI] = useState<string[]>([]);
+  const [CF, setCF] = useState<string[]>([]);
+  const [IS, setIS] = useState<string[]>([]);
+  const [CD, setCD] = useState<ChartDataType[]>([]);
+
+  const apis: string[] = [
+    `/enterprise/info?enterpriseId=${companyId}`,
+    `/enterprise/financial-position/${companyId}`,
+    `/enterprise/comprehensive-income/${companyId}`,
+    `/enterprise/cash-flow/${companyId}`,
+    `/enterprise/income-statement/${companyId}`,
+    `/enterprise/graph?enterpriseId=${companyId}`,
+  ];
+
+  const order = [
+    function (response: companyProps) {
+      setCompany(response);
+    },
+    function (response: string[]) {
+      setFP(response);
+    },
+    function (response: string[]) {
+      setCI(response);
+    },
+    function (response: string[]) {
+      setCF(response);
+    },
+    function (response: string[]) {
+      setIS(response);
+    },
+    function (response: ChartDataType[]) {
+      setCD(response);
+    },
+  ];
+
+  useEffect(() => {
+    for (let i = 0; i < apis.length; i++) {
+      userApis
+        .get(apis[i])
+        .then((res) => {
+          console.log(res);
+          order[i](res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [companyId]);
+
   const fpRef = useRef<HTMLDivElement>(null);
   const ciRef = useRef<HTMLDivElement>(null);
   const cfRef = useRef<HTMLDivElement>(null);
-  const ceRef = useRef<HTMLDivElement>(null);
   const isRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<HTMLDivElement>(null);
 
@@ -40,10 +88,6 @@ const Statement = () => {
       ref: cfRef,
     },
     {
-      name: '자본변동표',
-      ref: ceRef,
-    },
-    {
       name: '현금흐름표',
       ref: isRef,
     },
@@ -59,28 +103,32 @@ const Statement = () => {
     // 2. 배열로 들어온 항목들 개수 구하고
     // 3. map 이용해서 테이블 만들기
     // 4. 디자인은 추후 적용
+    console.log(FP);
     return <S.ReturnContainer></S.ReturnContainer>;
   };
 
   const renderCI = () => {
+    console.log(CI);
     return <S.ReturnContainer></S.ReturnContainer>;
   };
 
   const renderCF = () => {
-    return <S.ReturnContainer></S.ReturnContainer>;
-  };
-
-  const renderCE = () => {
+    console.log(CF);
     return <S.ReturnContainer></S.ReturnContainer>;
   };
 
   const renderIS = () => {
+    console.log(IS);
     return <S.ReturnContainer></S.ReturnContainer>;
   };
 
   const renderChart = () => {
-    // 차트 그리는 라이브러리 구해서 넣어야 함
-    return <S.ReturnContainer></S.ReturnContainer>;
+    console.log(CD);
+    return (
+      <S.ReturnContainer>
+        <Chart data={CD} />
+      </S.ReturnContainer>
+    );
   };
 
   // RightContainer에 보여줄 내용 결정하는 state
@@ -88,7 +136,7 @@ const Statement = () => {
 
   // 표 종류 클릭시 처리할 함수
   const handleClickType = (type: StatementType) => {
-    console.log(type.ref.current.style);
+    // console.log(type.ref.current.style);
     StatementTypes.forEach((element) => {
       element.ref.current.style.filter = 'none';
     });
@@ -98,16 +146,13 @@ const Statement = () => {
         setRightContainerContent(renderFP);
         break;
       case '손익계산서':
-        setRightContainerContent(renderCI);
+        setRightContainerContent(renderIS);
         break;
       case '포괄손익계산서':
-        setRightContainerContent(renderCF);
-        break;
-      case '자본변동표':
-        setRightContainerContent(renderCE);
+        setRightContainerContent(renderCI);
         break;
       case '현금흐름표':
-        setRightContainerContent(renderIS);
+        setRightContainerContent(renderCF);
         break;
       case '과거 5년 차트':
         setRightContainerContent(renderChart);
@@ -133,8 +178,8 @@ const Statement = () => {
 
   return (
     <S.Container>
-      <S.PageName>기업정보</S.PageName>
-      {/* <S.CompanyName>{company.name}</S.CompanyName> */}
+      <S.PageName theme={theme}>기업정보</S.PageName>
+      <S.CompanyName theme={theme}>{company.name}</S.CompanyName>
       <S.LeftContainer>
         <S.StatementTypeContainer>
           {StatementTypes.map((type, i) => {
@@ -150,7 +195,7 @@ const Statement = () => {
           })}
         </S.StatementTypeContainer>
       </S.LeftContainer>
-      <S.RightContainer>차트 나오는 곳{rightContainerContent}</S.RightContainer>
+      <S.RightContainer>{rightContainerContent}</S.RightContainer>
     </S.Container>
   );
 };

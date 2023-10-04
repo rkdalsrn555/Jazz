@@ -25,6 +25,14 @@ type userType = {
   winningPercentage: number;
 };
 
+type RankingType = {
+  nickname: String;
+  rank: String;
+  level: number;
+  winRate: number;
+  quizRecord: number;
+};
+
 type btnProps = {
   title: string;
   content: string;
@@ -69,6 +77,30 @@ type StatementType = {
   name: string;
   ref: RefObject<HTMLDivElement>;
 };
+
+type ChartDataType = {
+  id: number;
+  income: number;
+  name: string;
+  numberPointTime: number;
+  pointTimeName: string;
+  totalAssets: number;
+  totalCapital: number;
+  totalComprehensiveIncome: number;
+  totalDebt: number;
+};
+
+type Serie = {
+  id: string;
+  color: string;
+  data: ChartCoordinateType[];
+};
+
+type ChartCoordinateType = {
+  x: string;
+  y: number;
+};
+
 type QuestionListProps = {
   quizId: number;
   question: string;

@@ -79,7 +79,6 @@ const ShortAnswerQuestionPage = () => {
           `/quiz/explanation/wrong-answer/${quizList[nowQuizNumber].quizId}?wrongContent=${wrongAnswer}`
         )
         .then((res) => {
-          console.log(res.data);
           setCorrectAnswer({
             correctContent: res.data.correctContent,
             correctExplanation: res.data.correctExplanation,

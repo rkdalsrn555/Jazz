@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useBeforeunload } from 'react-beforeunload';
 import * as S from './ShortAnswerQuestionPage.styled';
-import QuizProgressBar from 'components/features/Quiz/QuizProgressBar/QuizProgressBar';
 import { QuestionBox } from 'components/features/Quiz/QuestionBox/QuestionBox';
 import QuizButton from 'components/features/Quiz/QuizButton/QuizButton';
 import { QuestionBoxProps } from 'types/types';
@@ -10,11 +9,6 @@ import Modal from 'components/utils/Modal/Modal';
 import Enlarge from 'components/Effect/Enlarge/Enlarge';
 import FadeInOut from 'components/Effect/FadeInOut/FadeInOut';
 import { userApis } from 'hooks/api/userApis';
-
-type MarathonResult = {
-  quizId: number;
-  isCorrect: boolean;
-};
 
 const MarathonPage = () => {
   useBeforeunload((event: any) => event.preventDefault()); // 새로고침 막기
@@ -167,7 +161,12 @@ const MarathonPage = () => {
         }
       } else {
         setIsCorrect(false);
-        if (quizList[0].kind !== 3) {
+        if (quizList[0].kind === 1) {
+          await getExplanation(
+            false,
+            String(quizList[0].content[Number(ans) - 1])
+          );
+        } else if (quizList[0].kind === 2) {
           await getExplanation(false, String(ans));
         }
       }

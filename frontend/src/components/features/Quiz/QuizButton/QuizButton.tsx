@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import * as S from './QuizButton.styled';
 import { ReactComponent as HintIcon } from '../../../../assets/svgs/Quiz/bulb.svg';
 import { ReactComponent as NextIcon } from '../../../../assets/svgs/Quiz/nextTriangle.svg';

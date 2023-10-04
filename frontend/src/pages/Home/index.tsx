@@ -42,12 +42,12 @@ const Home = () => {
     destination: '/marathon',
   };
   const basicFeature: btnProps = {
-    title: '경제 기초 개념',
-    content: '경제 지식 기초를 다져봐요',
+    title: '즐겨찾기',
+    content: '즐겨찾기 문제 랜덤으로 풀기',
     color: '#CBF9FF',
     img: <S.ButtonImg src={Eye} />,
     width: '48%',
-    destination: '',
+    destination: '/favorite',
   };
   const shortAnswerQuestionFeature: btnProps = {
     title: '단답형 주관식',
@@ -284,22 +284,22 @@ const Home = () => {
     if (tierRef.current && dmRef.current && mmRef.current && levelRef.current) {
       switch (e.target.id) {
         case 'tier':
-          if (tierRef.current.style.color != 'red') {
+          if (tierRef.current.style.color !== 'red') {
             tierRef.current.style.color = 'darkgrey';
           }
           break;
         case 'dailyMarathon':
-          if (dmRef.current.style.color != 'red') {
+          if (dmRef.current.style.color !== 'red') {
             dmRef.current.style.color = 'darkgrey';
           }
           break;
         case 'monthlyMarathon':
-          if (mmRef.current.style.color != 'red') {
+          if (mmRef.current.style.color !== 'red') {
             mmRef.current.style.color = 'darkgrey';
           }
           break;
         case 'level':
-          if (levelRef.current.style.color != 'red') {
+          if (levelRef.current.style.color !== 'red') {
             levelRef.current.style.color = 'darkgrey';
           }
           break;
@@ -311,22 +311,22 @@ const Home = () => {
     if (tierRef.current && dmRef.current && mmRef.current && levelRef.current) {
       switch (e.target.id) {
         case 'tier':
-          if (tierRef.current.style.color != 'red') {
+          if (tierRef.current.style.color !== 'red') {
             tierRef.current.style.color = 'grey';
           }
           break;
         case 'dailyMarathon':
-          if (dmRef.current.style.color != 'red') {
+          if (dmRef.current.style.color !== 'red') {
             dmRef.current.style.color = 'grey';
           }
           break;
         case 'monthlyMarathon':
-          if (mmRef.current.style.color != 'red') {
+          if (mmRef.current.style.color !== 'red') {
             mmRef.current.style.color = 'grey';
           }
           break;
         case 'level':
-          if (levelRef.current.style.color != 'red') {
+          if (levelRef.current.style.color !== 'red') {
             levelRef.current.style.color = 'grey';
           }
           break;

@@ -3,7 +3,7 @@ import * as S from './ExplanationBox.styled';
 
 type OwnProps = {
   result: boolean;
-  correctContent?: string | number;
+  correctContent?: string;
   correctExplanation?: string;
   wrongContent?: string | number;
   wrongExplanation?: string;
@@ -39,7 +39,11 @@ const ExplanationBox = (props: OwnProps) => {
           </S.ExplanationContainer>
           <S.ExplanationContainer>
             <S.ExplanationTitle result={false}>
-              <h1>{wrongContent ?? '입력한 답안이 없어요'}</h1>
+              <h1>
+                {wrongContent === 'undefined' || wrongContent === ''
+                  ? '입력한 답안이 없어요'
+                  : wrongContent}
+              </h1>
               <div className="label">오답</div>
             </S.ExplanationTitle>
             <p>{wrongExplanation ?? '해당 답안은 해설이 없습니다'}</p>

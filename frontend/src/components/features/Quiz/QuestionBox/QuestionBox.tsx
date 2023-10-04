@@ -8,13 +8,8 @@ import FadeInOut from 'components/Effect/FadeInOut/FadeInOut';
 
 export const QuestionBox = (props: QuestionBoxProps) => {
   const {
-    quizId,
     question,
     content,
-    isMulti,
-    isBookmark,
-    finiancialType,
-    caseNum,
     kind,
     questionNumber,
     isJudge,
@@ -102,7 +97,7 @@ export const QuestionBox = (props: QuestionBoxProps) => {
         </S.QuestionContainer>
         {isJudge && kind !== 3 ? (
           <ExplanationBox
-            correctContent={answer}
+            correctContent={correctContent}
             correctExplanation={correctExplanation}
             wrongContent={!isCorrect ? wrongContent : ''}
             wrongExplanation={!isCorrect ? wrongExplanation : ''}

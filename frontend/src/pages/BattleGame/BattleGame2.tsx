@@ -142,17 +142,20 @@ const BattleGame = () => {
             if (msg.user1.checked && msg.user2.checked) {
               setIsJudge(false);
               setTimeout(() => {
+                setIsPlaying(false);
                 nextQuestion();
               }, 3000);
               // 유저가 정답을 맞추면 정답 3초 보여주고 바로 다음문제로 넘어가기
             } else if (msg.user1.checked && msg.winner === 'user1') {
               setIsJudge(false);
               setTimeout(() => {
+                setIsPlaying(false);
                 nextQuestion();
               }, 3000);
             } else if (msg.user2.checked && msg.winner === 'user2') {
               setIsJudge(false);
               setTimeout(() => {
+                setIsPlaying(false);
                 nextQuestion();
               }, 3000);
             }
@@ -330,10 +333,10 @@ const BattleGame = () => {
   // 다음 문제로 가는 함수
   const nextQuestion = () => {
     // setIsJudge(false);
+    // setIsPlaying(false);
     setNowQuizNumber((prev) => prev + 1);
     setIsCorrect(null);
     setAnswer('');
-    setIsPlaying(false);
     setGameMessage((prev) => {
       prev.winner = '';
       prev.user1.checked = false;
@@ -411,8 +414,6 @@ const BattleGame = () => {
 
   // 게임메세지 변경 시 마다 다시렌더링
   useEffect(() => {}, [gameMessage]);
-
-  useEffect(() => {}, [isJudge]);
   // 퀴즈 리스트 불러올때 다시 렌더링
   useEffect(() => {}, [quizList]);
 

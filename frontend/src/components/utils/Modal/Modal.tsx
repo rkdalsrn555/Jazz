@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import * as S from './Modal.styled';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 type OwnProps = {
   isToggled: boolean;

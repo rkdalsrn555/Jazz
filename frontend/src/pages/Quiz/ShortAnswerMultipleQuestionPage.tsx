@@ -131,7 +131,10 @@ const ShortAnswerMultipleQuestionPage = () => {
         setIsCorrect(false);
         await putTryQuiz();
         await patchTryQuiz(false);
-        await getExplanation(false, String(ans));
+        await getExplanation(
+          false,
+          String(quizList[nowQuizNumber].content[Number(ans) - 1])
+        );
       }
       setIsJudge(true);
       setAnswer(Number(correctAns));
@@ -148,7 +151,6 @@ const ShortAnswerMultipleQuestionPage = () => {
       .catch((err) => {
         console.log('문제를 불러오지 못했어요');
       });
-    // setQuizList(mockData);
   };
 
   const patchFavoriteQuiz = async () => {

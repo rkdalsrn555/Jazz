@@ -7,23 +7,14 @@ import FadeInOut from 'components/Effect/FadeInOut/FadeInOut';
 
 export const GameQuestionBox = (props: QuestionBoxProps) => {
   const {
-    quizId,
     question,
     content,
-    isMulti,
-    isBookmark,
-    finiancialType,
-    caseNum,
     kind,
     questionNumber,
     isJudge,
     answer,
     setAnswer,
     isCorrect,
-    correctContent,
-    correctExplanation,
-    wrongContent,
-    wrongExplanation,
   } = props;
 
   const handleChangeSubjectQuestion = (

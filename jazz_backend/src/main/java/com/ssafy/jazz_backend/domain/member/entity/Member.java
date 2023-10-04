@@ -1,5 +1,6 @@
 package com.ssafy.jazz_backend.domain.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.jazz_backend.domain.item.entity.ItemManagement;
 import com.ssafy.jazz_backend.domain.item.title.entity.PreTitleManagement;
 import com.ssafy.jazz_backend.domain.item.title.entity.SuffixTitleManagement;
@@ -45,12 +46,15 @@ public class Member extends BaseEntity {
     private Profile profile;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<ItemManagement> itemManagements;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<PreTitleManagement> preTitleManagements;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<SuffixTitleManagement> suffixTitleManagements;
 
 }

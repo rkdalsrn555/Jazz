@@ -5,10 +5,12 @@ import Enlarge from 'components/Effect/Enlarge/Enlarge';
 
 type OwnProps = {
   charactorNumber: number;
+  price: number;
+  clickBuyBtn: () => void;
 };
 
 const CharactorItem = (props: OwnProps) => {
-  const { charactorNumber } = props;
+  const { charactorNumber, price, clickBuyBtn } = props;
 
   const DrawCharactor = (charactorNumber: number) => {
     let charactor = '';
@@ -50,11 +52,11 @@ const CharactorItem = (props: OwnProps) => {
         />
         <h1>{DrawCharactor(charactorNumber).charactorName}</h1>
         <S.Diamond>
-          <p>1000</p>
+          <p>{price}</p>
           <DiamondIcon width={20} height={20} />
         </S.Diamond>
         <Enlarge>
-          <S.SellBtn>구매하기</S.SellBtn>
+          <S.SellBtn onClick={clickBuyBtn}>구매하기</S.SellBtn>
         </Enlarge>
       </S.UserCharactorContainer>
     </S.Container>

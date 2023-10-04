@@ -412,7 +412,6 @@ const BattleGame = () => {
   // 게임메세지 변경 시 마다 다시렌더링
   useEffect(() => {}, [gameMessage]);
 
-  useEffect(() => {}, [isJudge]);
   // 퀴즈 리스트 불러올때 다시 렌더링
   useEffect(() => {}, [quizList]);
 

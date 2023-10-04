@@ -34,6 +34,7 @@ const CompanyListBlock = ({ props }: { props: ChildProps }) => {
   useEffect(() => {
     props.setClickedCompany(company);
   }, [company]);
+
   return (
     <S.Container theme={theme} onClick={handleClick}>
       <S.NameContainer theme={theme}>{props.company.name}</S.NameContainer>

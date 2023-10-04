@@ -165,19 +165,8 @@ const Home = () => {
     winningPercentage: 0,
   });
 
-  useEffect(() => {
-    setGraphicData(wantedGraphicData);
-    userApis
-      .get('/user/profile')
-      .then((res) => {
-        console.log(res.data);
-        setUserInfo(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [userToken]);
-
   const calcPercent = () => {
-    const result = (360 * userInfo.winningPercentage) / 100;
+    const result = (userInfo.winningPercentage / 100) * 360;
     return result;
   };
 
@@ -191,6 +180,17 @@ const Home = () => {
   ];
   // const defaultGraphicData = [{ x: ' ', y: 0 }, { x: ' ',  y: 0 }, { y: 100 }];
   const [graphicData, setGraphicData] = useState(defaultGraphicData);
+
+  useEffect(() => {
+    setGraphicData(wantedGraphicData);
+    userApis
+      .get('/user/profile')
+      .then((res) => {
+        console.log(res.data);
+        setUserInfo(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [userToken, calcPercent()]);
 
   const profileContainerFeature: innerContainerProps = {
     title: '프로필',

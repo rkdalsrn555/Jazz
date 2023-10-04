@@ -10,8 +10,8 @@ export const Container = styled.div`
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
-  height: 100%;
-  min-height: calc(100vh - 5rem);
+  height: fit-content;
+  min-height: 620px;
   padding: 2rem;
   gap: 1rem;
 `;
@@ -21,8 +21,9 @@ export const LeftContainer = styled.div<{ theme: themeProps }>`
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-width: 40rem;
   height: calc(100vh - 10rem);
+  min-width: 30rem;
+  min-height: 35rem;
   border-radius: 0.5rem;
   padding: 2rem;
   gap: 2rem;
@@ -38,6 +39,7 @@ export const RightContainer = styled.div<{ theme: themeProps }>`
   flex-direction: column;
   height: calc(100vh - 10rem);
   min-width: fit-content;
+  min-height: 35rem;
   border-radius: 0.5rem;
   padding: 2rem;
   gap: 2rem;
@@ -125,6 +127,7 @@ export const CompanyBanner = styled.div<{ theme: themeProps }>`
   align-items: center;
   padding: 1rem;
   height: 35%;
+  min-height: 15rem;
   border-radius: 0.4rem;
   background-color: ${(props) => props.theme.bg.light};
   box-shadow: 0.5px 1px 5px 0px ${(props) => props.theme.bg.shadow};
@@ -184,7 +187,7 @@ export const BannerRight = styled.div`
   height: 100%;
 `;
 
-export const BannerTitle = styled.div`
+export const BannerTitle = styled.div<{ theme: themeProps }>`
   /* border: solid blue; */
   display: flex;
   flex-direction: row;
@@ -192,6 +195,7 @@ export const BannerTitle = styled.div`
   align-items: center;
   font-size: 1.5rem;
   font-weight: 900;
+  color: ${(props) => props.theme.font.deep};
 `;
 
 export const BannerContent = styled.div`
@@ -219,7 +223,7 @@ export const BannerContentTitle = styled.div`
   color: grey;
 `;
 
-export const BannerContentContent = styled.div`
+export const BannerContentContent = styled.div<{ theme: themeProps }>`
   /* border: solid red; */
   display: flex;
   flex-direction: row;
@@ -227,6 +231,7 @@ export const BannerContentContent = styled.div`
   align-items: center;
   font-size: 1.3rem;
   font-weight: 600;
+  color: ${(props) => props.theme.font.deep};
 `;
 
 export const StarredContainer = styled.img`
@@ -263,6 +268,7 @@ export const CompanyOutline = styled.div<{ theme: themeProps }>`
   border-radius: 0.4rem;
   font-size: 0.8rem;
   background-color: ${(props) => props.theme.bg.light};
+  color: ${(props) => props.theme.font.deep};
   box-shadow: inset 0.5px 1px 5px 0px ${(props) => props.theme.bg.shadow};
   overflow-y: scroll;
   min-width: fit-content;
@@ -302,7 +308,7 @@ export const StatementBtn = styled(motion.div)<{ theme: themeProps }>`
   transition: all 0.2s;
 `;
 
-export const BlankBanner = styled.div`
+export const BlankBanner = styled.div<{ theme: themeProps }>`
   /* border: solid red; */
   display: flex;
   flex-direction: row;

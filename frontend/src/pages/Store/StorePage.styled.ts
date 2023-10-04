@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 
 export const Container = styled.div`
   position: relative;
+  width: 100vw;
+  height: 90vh;
 `;
 
 export const TitleContainer = styled.div`
@@ -9,7 +11,7 @@ export const TitleContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-top: 5%;
+  padding-top: 3%;
 
   & h1 {
     display: flex;

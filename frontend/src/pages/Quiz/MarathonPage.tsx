@@ -95,39 +95,6 @@ const MarathonPage = () => {
       });
   };
 
-  const patchFavoriteQuiz = async () => {
-    setIsDisabled(true);
-    if (quizList) {
-      if (!quizList[0].isBookmark) {
-        await userApis
-          .patch(`/quiz/bookmark/registration`, {
-            quizId: quizList[0].quizId,
-            isBookmark: true,
-          })
-          .then((res) => {
-            quizList[0].isBookmark = res.data.isBookmark;
-            setIsDisabled(false);
-          })
-          .catch((err) => {
-            setIsDisabled(false);
-          });
-      } else {
-        await userApis
-          .patch(`/quiz/bookmark/release`, {
-            quizId: quizList[0].quizId,
-            isBookmark: false,
-          })
-          .then((res) => {
-            quizList[0].isBookmark = res.data.isBookmark;
-            setIsDisabled(false);
-          })
-          .catch((err) => {
-            setIsDisabled(false);
-          });
-      }
-    }
-  };
-
   const patchQuizResult = async () => {
     await userApis
       .patch(`/quiz/marathon/result`, {
@@ -240,15 +207,6 @@ const MarathonPage = () => {
                     },
                   });
                 }}
-              />
-            </Enlarge>
-            <Enlarge>
-              <QuizButton
-                title="즐겨찾기"
-                kind="favorite"
-                handleClick={patchFavoriteQuiz}
-                isBookmark={quizList ? quizList[0].isBookmark : false}
-                disabled={isDisabled}
               />
             </Enlarge>
             {!isCorrect ? (

@@ -499,14 +499,10 @@ const BattleGame = () => {
                   ) : (
                     '퀴즈를 불러오는 중이에요'
                   )}
-                  <Enlarge>
-                    <S.AnswerBtn onClick={checkAnswer}>
-                      정답체크하기
-                    </S.AnswerBtn>
-                  </Enlarge>
                 </div>
               )}
             </S.BattleBoard>
+
             <GameProfile
               heartCntProps={
                 gameMessage?.user1?.session === mySession.mySession
@@ -520,6 +516,13 @@ const BattleGame = () => {
             />
           </S.BattleContainer>
         </>
+      )}
+      {finish ? (
+        ''
+      ) : (
+        <Enlarge>
+          <S.AnswerBtn onClick={checkAnswer}>정답체크하기</S.AnswerBtn>
+        </Enlarge>
       )}
     </S.Container>
   );

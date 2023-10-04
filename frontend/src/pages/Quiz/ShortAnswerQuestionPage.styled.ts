@@ -6,7 +6,9 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: 100vh;
+  min-height: 400px;
+  /* height: 78vh; */
+  height: 78%;
   gap: 2rem;
 `;
 

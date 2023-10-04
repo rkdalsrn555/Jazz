@@ -132,6 +132,7 @@ type QuestionBoxProps = {
   correctExplanation?: string;
   wrongContent?: string;
   wrongExplanation?: string;
+  quizKind?: string;
 };
 
 type gameClientProfile = {

@@ -21,26 +21,32 @@ const Header = () => {
   ];
 
   return (
-    <S.Container theme={theme}>
-      <S.Blank />
-      {blockLogoClickList.includes(location.pathname) ? (
-        <S.Logo src={BrandLogo} />
+    <>
+      {location.pathname.split('/')[1] === 'battle-game' ? (
+        ''
       ) : (
-        <Enlarge>
-          <Link
-            to={'home'}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
+        <S.Container theme={theme}>
+          <S.Blank />
+          {blockLogoClickList.includes(location.pathname) ? (
             <S.Logo src={BrandLogo} />
-          </Link>
-        </Enlarge>
-      )}
+          ) : (
+            <Enlarge>
+              <Link
+                to={'home'}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <S.Logo src={BrandLogo} />
+              </Link>
+            </Enlarge>
+          )}
 
-      <DarkSwitch />
-    </S.Container>
+          <DarkSwitch />
+        </S.Container>
+      )}
+    </>
   );
 };
 

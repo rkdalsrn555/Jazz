@@ -5,11 +5,10 @@ export const ResultContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 900px;
+  max-width: 800px;
   width: 100%;
-  max-height: 700px;
-  height: 100%;
-  min-height: 500px;
+  max-height: 600px;
+  height: 80%;
   margin: 0 auto;
 `;
 
@@ -36,15 +35,13 @@ export const MarathonResultTitle = styled.div`
   & p {
     text-align: center;
     color: #ffbd3c;
-    font-size: 250px;
-    line-height: 50px;
+    font-size: 200px;
     font-weight: 700;
     line-height: 20px;
     z-index: 999;
   }
   & img {
     position: absolute;
-    top: 2%;
   }
 `;
 

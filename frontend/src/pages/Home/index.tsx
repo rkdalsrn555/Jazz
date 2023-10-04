@@ -213,7 +213,7 @@ const Home = () => {
           </S.ProfileLeft>
           <S.PieConatiner>
             <S.PieTitle theme={theme}>
-              정답률
+              승률
               <S.PieNumber>{userInfo.winningPercentage} %</S.PieNumber>
             </S.PieTitle>
             <S.Pie>

@@ -101,6 +101,15 @@ type ChartCoordinateType = {
   y: number;
 };
 
+type StatementResponseType = {
+  accountNm: string;
+  frmtrmAmount: number;
+  frmtrmNm: string;
+  ord: number;
+  sjNm: string;
+  thstrmAmount: number;
+  thstrmNm: string;
+};
 type QuestionListProps = {
   quizId: number;
   question: string;

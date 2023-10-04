@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './QuizProgress.css';
 import * as S from './QuizProgressBar.styled';
 import { motion } from 'framer-motion';

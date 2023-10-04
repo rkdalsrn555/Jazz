@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import * as S from './FavoriteTabMenu.styled';
-import { userApis } from 'hooks/api/userApis';
-import { ReactComponent as FavoriteIcon } from '../../../../assets/svgs/Quiz/star.svg';
 import AccordionLi from '../AccordionLi/AccordionLi';
 
 type Menu = {

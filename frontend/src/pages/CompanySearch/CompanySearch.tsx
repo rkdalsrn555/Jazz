@@ -88,14 +88,14 @@ const CompanySearch = () => {
           whileTap={{ scale: 1 }}
           transition={{ duration: 0.05 }}
         >
-          {clickedCompany.id != 0 ? (
+          {clickedCompany.id !== 0 ? (
             <Link to={`/statement/${clickedCompany.id}`}>
               <S.StatementBtn theme={theme}>재무제표 확인하기</S.StatementBtn>
             </Link>
           ) : null}
         </S.StatementBtnContainer>
         <S.CompanyBanner theme={theme}>
-          {clickedCompany.id != 0 ? (
+          {clickedCompany.id !== 0 ? (
             <S.InnerBannerContainer>
               <S.BannerLeft>
                 <S.Box>
@@ -141,7 +141,7 @@ const CompanySearch = () => {
         <S.CompanyOutlineContainer>
           <S.CompanyOutlineTitle theme={theme}>기업 개요</S.CompanyOutlineTitle>
           <S.CompanyOutline theme={theme}>
-            {clickedCompany.id != 0 ? (
+            {clickedCompany.id !== 0 ? (
               `${clickedCompany.name} 여기에 기업 개요 들어가야 함`
             ) : (
               <S.BlankBanner>

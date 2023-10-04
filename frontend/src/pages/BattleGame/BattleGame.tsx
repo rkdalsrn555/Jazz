@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useBeforeunload } from 'react-beforeunload';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { TempGameMessage, TempMyGameSession } from '../../atoms/atoms';
 import { TempUserGameInfo } from '../../atoms/atoms';
 import * as S from './BattleGame.styled';

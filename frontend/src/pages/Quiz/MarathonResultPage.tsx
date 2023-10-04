@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MarathonResult from 'components/features/Quiz/MarathonResult/MarathonResult';
 import MarathonResultBtn from 'components/features/Quiz/MarathonResult/MarathonResultBtn';

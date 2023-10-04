@@ -8,7 +8,7 @@ type OwnProps = {
 };
 
 const ThirtyCountDown = (props: OwnProps) => {
-  const { isPlaying, startRound, endRound } = props;
+  const { endRound } = props;
   const [num, setNum] = useState<number>(30);
 
   useEffect(() => {

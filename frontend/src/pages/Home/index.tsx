@@ -284,22 +284,22 @@ const Home = () => {
     if (tierRef.current && dmRef.current && mmRef.current && levelRef.current) {
       switch (e.target.id) {
         case 'tier':
-          if (tierRef.current.style.color != 'red') {
+          if (tierRef.current.style.color !== 'red') {
             tierRef.current.style.color = 'darkgrey';
           }
           break;
         case 'dailyMarathon':
-          if (dmRef.current.style.color != 'red') {
+          if (dmRef.current.style.color !== 'red') {
             dmRef.current.style.color = 'darkgrey';
           }
           break;
         case 'monthlyMarathon':
-          if (mmRef.current.style.color != 'red') {
+          if (mmRef.current.style.color !== 'red') {
             mmRef.current.style.color = 'darkgrey';
           }
           break;
         case 'level':
-          if (levelRef.current.style.color != 'red') {
+          if (levelRef.current.style.color !== 'red') {
             levelRef.current.style.color = 'darkgrey';
           }
           break;
@@ -311,22 +311,22 @@ const Home = () => {
     if (tierRef.current && dmRef.current && mmRef.current && levelRef.current) {
       switch (e.target.id) {
         case 'tier':
-          if (tierRef.current.style.color != 'red') {
+          if (tierRef.current.style.color !== 'red') {
             tierRef.current.style.color = 'grey';
           }
           break;
         case 'dailyMarathon':
-          if (dmRef.current.style.color != 'red') {
+          if (dmRef.current.style.color !== 'red') {
             dmRef.current.style.color = 'grey';
           }
           break;
         case 'monthlyMarathon':
-          if (mmRef.current.style.color != 'red') {
+          if (mmRef.current.style.color !== 'red') {
             mmRef.current.style.color = 'grey';
           }
           break;
         case 'level':
-          if (levelRef.current.style.color != 'red') {
+          if (levelRef.current.style.color !== 'red') {
             levelRef.current.style.color = 'grey';
           }
           break;

@@ -1,50 +1,150 @@
 import { ResponsiveLine } from '@nivo/line';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChartCoordinateType, ChartDataType, Serie } from 'types/types';
 import * as S from './Chart.styled';
 import { themeProps } from '@emotion/react';
 import { useTheme } from '@mui/material/styles';
+import { element } from 'prop-types';
 
-const Chart = ({ data }: { data: ChartDataType[] }) => {
+const Chart = ({
+  data,
+  clickedCategory,
+}: {
+  data: ChartDataType[];
+  clickedCategory: string;
+}) => {
   const theme: themeProps = useTheme();
 
-  // 총 자본 그래프
-  const totalAssetGraph = () => {
+  // 총 자본 그래프(평균 전환값)
+  const convertedTotalAssetGraph = () => {
     const Coordinate: ChartCoordinateType[] = [];
+    const avg = () => {
+      let sum = 0;
+      for (let i = 0; i < data.length; i++) {
+        const element = data[i];
+        sum += element.totalAssets;
+      }
+      console.log(sum);
+      return sum / 5;
+    };
+
     for (let i = 0; i < data.length; i++) {
       const element = data[i];
       const convertedVal = () => {
-        const length = element.totalAssets.toString().length;
-        let one = 1;
-        for (let i = 0; i < length; i++) {
-          one = one * 10;
-        }
-        return element.totalAssets / one;
+        return (element.totalAssets / avg()) * 100;
       };
       Coordinate.push({ x: element.pointTimeName, y: convertedVal() });
     }
     const returnValue: Serie = {
-      id: '총 자본',
+      id: '총 자본(평균값 대비)',
       color: 'hsl(199, 70%, 50%)',
       data: Coordinate,
     };
     return returnValue;
   };
 
-  // 총 자산 그래프
+  // 총 자산 그래프(평균 전환값)
+  const convertedTotalCapitalGraph = () => {
+    const Coordinate: ChartCoordinateType[] = [];
+    const avg = () => {
+      let sum = 0;
+      for (let i = 0; i < data.length; i++) {
+        const element = data[i];
+        sum += element.totalCapital;
+      }
+      console.log(sum);
+      return sum / 5;
+    };
+    for (let i = 0; i < data.length; i++) {
+      const element = data[i];
+      const convertedVal = () => {
+        return (element.totalCapital / avg()) * 100;
+      };
+      Coordinate.push({ x: element.pointTimeName, y: convertedVal() });
+    }
+    const returnValue: Serie = {
+      id: '총 자산(평균값 대비)',
+      color: 'hsl(117, 70%, 50%)',
+      data: Coordinate,
+    };
+    return returnValue;
+  };
+
+  // 총 포괄손익 그래프(평균 전환값)
+  const convertedTotalIncomeGraph = () => {
+    const Coordinate: ChartCoordinateType[] = [];
+
+    const avg = () => {
+      let sum = 0;
+      for (let i = 0; i < data.length; i++) {
+        const element = data[i];
+        sum += element.totalComprehensiveIncome;
+      }
+      console.log(sum);
+      return sum / 5;
+    };
+
+    for (let i = 0; i < data.length; i++) {
+      const element = data[i];
+      const convertedVal = () => {
+        return (element.totalComprehensiveIncome / avg()) * 100;
+      };
+      Coordinate.push({ x: element.pointTimeName, y: convertedVal() });
+    }
+    const returnValue: Serie = {
+      id: '총 포괄손익(평균값 대비)',
+      color: 'hsl(37.87709497206704, 70.19607843137256%, 50%)',
+      data: Coordinate,
+    };
+    return returnValue;
+  };
+
+  // 총 부채 그래프(평균 전환값)
+  const convertedTotalDebtGraph = () => {
+    const Coordinate: ChartCoordinateType[] = [];
+    const avg = () => {
+      let sum = 0;
+      for (let i = 0; i < data.length; i++) {
+        const element = data[i];
+        sum += element.totalDebt;
+      }
+      console.log(sum);
+      return sum / 5;
+    };
+    for (let i = 0; i < data.length; i++) {
+      const element = data[i];
+      const convertedVal = () => {
+        return (element.totalDebt / avg()) * 100;
+      };
+      Coordinate.push({ x: element.pointTimeName, y: convertedVal() });
+    }
+    const returnValue: Serie = {
+      id: '총 부채(평균값 대비)',
+      color: 'hsl(301.00558659217876, 70.19607843137256%, 50%)',
+      data: Coordinate,
+    };
+    return returnValue;
+  };
+
+  // 총 자산
+  const totalAssetGraph = () => {
+    const Coordinate: ChartCoordinateType[] = [];
+    for (let i = 0; i < data.length; i++) {
+      const element = data[i];
+      Coordinate.push({ x: element.pointTimeName, y: element.totalAssets });
+    }
+    const returnValue: Serie = {
+      id: '총 자본',
+      color: 'hsl(301.00558659217876, 70.19607843137256%, 50%)',
+      data: Coordinate,
+    };
+    return returnValue;
+  };
   const totalCapitalGraph = () => {
     const Coordinate: ChartCoordinateType[] = [];
     for (let i = 0; i < data.length; i++) {
       const element = data[i];
-      const convertedVal = () => {
-        const length = element.totalCapital.toString().length;
-        let one = 1;
-        for (let i = 0; i < length; i++) {
-          one *= 10;
-        }
-        return element.totalCapital / one;
-      };
-      Coordinate.push({ x: element.pointTimeName, y: convertedVal() });
+      Coordinate.push({ x: element.pointTimeName, y: element.totalCapital });
     }
     const returnValue: Serie = {
       id: '총 자산',
@@ -53,20 +153,14 @@ const Chart = ({ data }: { data: ChartDataType[] }) => {
     };
     return returnValue;
   };
-  // 총 포괄손익 그래프
   const totalIncomeGraph = () => {
     const Coordinate: ChartCoordinateType[] = [];
     for (let i = 0; i < data.length; i++) {
       const element = data[i];
-      const convertedVal = () => {
-        const length = element.totalComprehensiveIncome.toString().length;
-        let one = 1;
-        for (let i = 0; i < length; i++) {
-          one *= 10;
-        }
-        return element.totalComprehensiveIncome / one;
-      };
-      Coordinate.push({ x: element.pointTimeName, y: convertedVal() });
+      Coordinate.push({
+        x: element.pointTimeName,
+        y: element.totalComprehensiveIncome,
+      });
     }
     const returnValue: Serie = {
       id: '총 포괄손익',
@@ -75,20 +169,11 @@ const Chart = ({ data }: { data: ChartDataType[] }) => {
     };
     return returnValue;
   };
-  // 총 부채 그래프
   const totalDebtGraph = () => {
     const Coordinate: ChartCoordinateType[] = [];
     for (let i = 0; i < data.length; i++) {
       const element = data[i];
-      const convertedVal = () => {
-        const length = element.totalDebt.toString().length;
-        let one = 1;
-        for (let i = 0; i < length; i++) {
-          one *= 10;
-        }
-        return element.totalDebt / one;
-      };
-      Coordinate.push({ x: element.pointTimeName, y: convertedVal() });
+      Coordinate.push({ x: element.pointTimeName, y: element.totalDebt });
     }
     const returnValue: Serie = {
       id: '총 부채',
@@ -97,6 +182,33 @@ const Chart = ({ data }: { data: ChartDataType[] }) => {
     };
     return returnValue;
   };
+
+  const [graphData, setGraphData] = useState<Serie[]>([totalAssetGraph()]);
+
+  useEffect(() => {
+    switch (clickedCategory) {
+      case 'ta':
+        setGraphData([totalAssetGraph()]);
+        break;
+      case 'tc':
+        setGraphData([totalCapitalGraph()]);
+        break;
+      case 'ti':
+        setGraphData([totalIncomeGraph()]);
+        break;
+      case 'td':
+        setGraphData([totalDebtGraph()]);
+        break;
+      case 'avg':
+        setGraphData([
+          convertedTotalAssetGraph(),
+          convertedTotalCapitalGraph(),
+          convertedTotalIncomeGraph(),
+          convertedTotalDebtGraph(),
+        ]);
+        break;
+    }
+  }, [clickedCategory]);
 
   return (
     <S.Container theme={theme}>
@@ -121,13 +233,8 @@ const Chart = ({ data }: { data: ChartDataType[] }) => {
           },
         }}
         colors={{ scheme: 'dark2' }}
-        data={[
-          totalAssetGraph(),
-          totalCapitalGraph(),
-          totalDebtGraph(),
-          totalIncomeGraph(),
-        ]}
-        margin={{ top: 50, right: 160, bottom: 50, left: 60 }}
+        data={graphData}
+        margin={{ top: 50, right: 190, bottom: 50, left: 130 }}
         xScale={{ type: 'point' }}
         yScale={{
           type: 'linear',
@@ -143,7 +250,7 @@ const Chart = ({ data }: { data: ChartDataType[] }) => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: 'transportation',
+          legend: '',
           legendOffset: 36,
           legendPosition: 'middle',
         }}
@@ -151,7 +258,7 @@ const Chart = ({ data }: { data: ChartDataType[] }) => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: 'count',
+          legend: '',
           legendOffset: -40,
           legendPosition: 'middle',
         }}

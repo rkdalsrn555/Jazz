@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
 export const Container = styled.div<{ theme: themeProps }>`
-  border: solid 4px white;
+  /* border: solid 4px white; */
   display: flex;
-  height: 40rem;
+  height: 33rem;
   width: 100%;
 `;

@@ -2,11 +2,16 @@ import * as S from './Statement.styled';
 import { themeProps } from '@emotion/react';
 import { useTheme } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { ChartDataType, StatementType, companyProps } from 'types/types';
+import {
+  ChartDataType,
+  StatementResponseType,
+  StatementType,
+  companyProps,
+} from 'types/types';
 import StatementTypeBtn from 'components/features/Statement/StatementType/StatementTypeBtn';
 import { useEffect, useRef, useState } from 'react';
 import { userApis } from 'hooks/api/userApis';
-import Chart from 'components/features/Statement/Chart/Chart';
+import RenderChart from 'components/features/Statement/RenderChart/RenderChart';
 
 const Statement = () => {
   const theme: themeProps = useTheme();
@@ -20,10 +25,10 @@ const Statement = () => {
     totalDebt: 0,
     totalCapital: 0,
   });
-  const [FP, setFP] = useState<string[]>([]);
-  const [CI, setCI] = useState<string[]>([]);
-  const [CF, setCF] = useState<string[]>([]);
-  const [IS, setIS] = useState<string[]>([]);
+  const [FP, setFP] = useState<StatementResponseType[]>([]);
+  const [CI, setCI] = useState<StatementResponseType[]>([]);
+  const [CF, setCF] = useState<StatementResponseType[]>([]);
+  const [IS, setIS] = useState<StatementResponseType[]>([]);
   const [CD, setCD] = useState<ChartDataType[]>([]);
 
   const apis: string[] = [
@@ -39,16 +44,16 @@ const Statement = () => {
     function (response: companyProps) {
       setCompany(response);
     },
-    function (response: string[]) {
+    function (response: StatementResponseType[]) {
       setFP(response);
     },
-    function (response: string[]) {
+    function (response: StatementResponseType[]) {
       setCI(response);
     },
-    function (response: string[]) {
+    function (response: StatementResponseType[]) {
       setCF(response);
     },
-    function (response: string[]) {
+    function (response: StatementResponseType[]) {
       setIS(response);
     },
     function (response: ChartDataType[]) {
@@ -98,41 +103,84 @@ const Statement = () => {
   ];
 
   // RightContainer에 들어갈 수 있는 각각의 표를 리턴하는 함수들
-  const renderFP = () => {
-    // 1. api 통신해서 정보 받아오고
-    // 2. 배열로 들어온 항목들 개수 구하고
-    // 3. map 이용해서 테이블 만들기
-    // 4. 디자인은 추후 적용
-    console.log(FP);
-    return <S.ReturnContainer></S.ReturnContainer>;
-  };
-
-  const renderCI = () => {
-    console.log(CI);
-    return <S.ReturnContainer></S.ReturnContainer>;
-  };
-
-  const renderCF = () => {
-    console.log(CF);
-    return <S.ReturnContainer></S.ReturnContainer>;
-  };
-
-  const renderIS = () => {
-    console.log(IS);
-    return <S.ReturnContainer></S.ReturnContainer>;
-  };
-
-  const renderChart = () => {
-    console.log(CD);
+  const renderContent = (rightContainerContent: string) => {
     return (
       <S.ReturnContainer>
-        <Chart data={CD} />
+        {rightContent.length > 0 ? (
+          <>
+            <S.RightTitleContainer>
+              <S.RightTitle theme={theme}>{rightContainerContent}</S.RightTitle>
+              <S.RightSubTitle theme={theme}>
+                {rightContent[0].thstrmNm}
+              </S.RightSubTitle>
+            </S.RightTitleContainer>
+            <S.RightInnerContainer theme={theme}>
+              {rightContent.map((e, i) => {
+                return (
+                  <S.EachBlock theme={theme}>
+                    <S.BlockTitle>{e.accountNm}</S.BlockTitle>
+                    <S.BlockValue>{e.thstrmAmount}</S.BlockValue>
+                  </S.EachBlock>
+                );
+              })}
+            </S.RightInnerContainer>
+          </>
+        ) : (
+          <S.NoStatement theme={theme}>
+            <S.NoStatementTitle theme={theme}>죄송합니다.</S.NoStatementTitle>
+            <S.NoStatementContent theme={theme}>
+              해당 재무제표가 없거나 찾을 수 없습니다...😢😢
+            </S.NoStatementContent>
+          </S.NoStatement>
+        )}
       </S.ReturnContainer>
     );
   };
 
+  const [clickedCategory, setClickedCategory] = useState<string>('ta');
+
+  useEffect(() => {
+    setPlz(
+      <RenderChart
+        CD={CD}
+        setClickedCategory={setClickedCategory}
+        clickedCategory={clickedCategory}
+      />
+    );
+  }, [clickedCategory, CD]);
+
+  const [plz, setPlz] = useState(
+    <RenderChart
+      CD={CD}
+      setClickedCategory={setClickedCategory}
+      clickedCategory={clickedCategory}
+    />
+  );
+
   // RightContainer에 보여줄 내용 결정하는 state
-  const [rightContainerContent, setRightContainerContent] = useState(renderFP);
+  const [rightContainerContent, setRightContainerContent] =
+    useState('재무상태표');
+
+  const [rightContent, setRightContent] = useState<StatementResponseType[]>(FP);
+
+  useEffect(() => setRightContent(FP), [FP]);
+
+  useEffect(() => {
+    switch (rightContainerContent) {
+      case '재무상태표':
+        setRightContent(FP);
+        break;
+      case '손익계산서':
+        setRightContent(IS);
+        break;
+      case '포괄손익계산서':
+        setRightContent(CI);
+        break;
+      case '현금흐름표':
+        setRightContent(CF);
+        break;
+    }
+  }, [rightContainerContent]);
 
   // 표 종류 클릭시 처리할 함수
   const handleClickType = (type: StatementType) => {
@@ -141,23 +189,7 @@ const Statement = () => {
       element.ref.current.style.filter = 'none';
     });
     type.ref.current.style.filter = 'sepia(100%)';
-    switch (type.name) {
-      case '재무상태표':
-        setRightContainerContent(renderFP);
-        break;
-      case '손익계산서':
-        setRightContainerContent(renderIS);
-        break;
-      case '포괄손익계산서':
-        setRightContainerContent(renderCI);
-        break;
-      case '현금흐름표':
-        setRightContainerContent(renderCF);
-        break;
-      case '과거 5년 차트':
-        setRightContainerContent(renderChart);
-        break;
-    }
+    setRightContainerContent(type.name);
   };
 
   const handleHoverType = (type: StatementType) => {
@@ -195,7 +227,11 @@ const Statement = () => {
           })}
         </S.StatementTypeContainer>
       </S.LeftContainer>
-      <S.RightContainer>{rightContainerContent}</S.RightContainer>
+      <S.RightContainer>
+        {rightContainerContent === '과거 5년 차트'
+          ? plz
+          : renderContent(rightContainerContent)}
+      </S.RightContainer>
     </S.Container>
   );
 };

@@ -1,4 +1,3 @@
-import { motion, AnimatePresence } from 'framer-motion';
 import styled from '@emotion/styled';
 
 export const AccordionButtonContainer = styled.button`

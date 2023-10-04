@@ -14,11 +14,11 @@ import * as StompJs from '@stomp/stompjs';
 import { GameQuestionBox } from 'components/features/Game/GameQuestionBox/GameQuestionBox';
 import Judge from 'components/features/Game/Judge/Judge';
 import { userApis } from '../../hooks/api/userApis';
+import Enlarge from 'components/Effect/Enlarge/Enlarge';
 
 const BattleGame = () => {
   useBeforeunload((event: any) => event.preventDefault()); // 새로고침 막기
   const navigate = useNavigate();
-  const [, forceUpdate] = useState('');
   const [mySession, setMySession] = useRecoilState(TempMyGameSession); // 내 세션
   const [gameInfo, setGameInfo] = useRecoilState(TempUserGameInfo); // 게임방 아이디
   const [initGameMessage, setInitGameMessage] = useRecoilState(TempGameMessage); // 게임 메세지
@@ -78,7 +78,7 @@ const BattleGame = () => {
         currentCharactor: 1,
       },
     });
-    setGameMessage({
+    setInitGameMessage({
       session: '',
       message: '',
       messageType: '',
@@ -117,26 +117,41 @@ const BattleGame = () => {
             setQuizList([msg]);
           } else if (msg.messageType === 'GAME') {
             setGameMessage(msg);
-            // 하트가 0개이면 게임 끝내기!
+            // 둘 다 하트가 0개일 때
+            if (msg.user1.lives === 0 && msg.user2.lives === 0) {
+              setIsJudge(false);
+              setTimeout(() => {
+                setFinish(true);
+                patchResult(99);
+              }, 2000);
+            }
+
+            // 둘 중 한명의 하트가 0개이면 게임 끝내기!
             if (msg.user1.lives === 0 || msg.user2.lives === 0) {
-              setFinish(true);
-              let myLives =
-                mySession.mySession === gameMessage.user1.session
-                  ? msg.user1.lives
-                  : msg.user2.lives;
-              await patchResult(myLives);
+              setIsJudge(false);
+              setTimeout(() => {
+                setFinish(true);
+                patchResult(
+                  mySession.mySession === gameMessage.user1.session
+                    ? msg.user1.lives
+                    : msg.user2.lives
+                );
+              }, 2000);
             }
             // 유저가 둘 다 이미 정답을 체크했으면 다음으로 넘어가기
             if (msg.user1.checked && msg.user2.checked) {
+              setIsJudge(false);
               setTimeout(() => {
                 nextQuestion();
               }, 3000);
               // 유저가 정답을 맞추면 정답 3초 보여주고 바로 다음문제로 넘어가기
             } else if (msg.user1.checked && msg.winner === 'user1') {
+              setIsJudge(false);
               setTimeout(() => {
                 nextQuestion();
               }, 3000);
             } else if (msg.user2.checked && msg.winner === 'user2') {
+              setIsJudge(false);
               setTimeout(() => {
                 nextQuestion();
               }, 3000);
@@ -314,7 +329,7 @@ const BattleGame = () => {
 
   // 다음 문제로 가는 함수
   const nextQuestion = () => {
-    setIsJudge(false);
+    // setIsJudge(false);
     setNowQuizNumber((prev) => prev + 1);
     setIsCorrect(null);
     setAnswer('');
@@ -397,6 +412,7 @@ const BattleGame = () => {
   // 게임메세지 변경 시 마다 다시렌더링
   useEffect(() => {}, [gameMessage]);
 
+  useEffect(() => {}, [isJudge]);
   // 퀴즈 리스트 불러올때 다시 렌더링
   useEffect(() => {}, [quizList]);
 
@@ -484,7 +500,11 @@ const BattleGame = () => {
                   ) : (
                     '퀴즈를 불러오는 중이에요'
                   )}
-                  <S.AnswerBtn onClick={checkAnswer}>정답체크하기</S.AnswerBtn>
+                  <Enlarge>
+                    <S.AnswerBtn onClick={checkAnswer}>
+                      정답체크하기
+                    </S.AnswerBtn>
+                  </Enlarge>
                 </div>
               )}
             </S.BattleBoard>

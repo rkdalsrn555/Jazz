@@ -42,12 +42,12 @@ const Home = () => {
     destination: '/marathon',
   };
   const basicFeature: btnProps = {
-    title: '경제 기초 개념',
-    content: '경제 지식 기초를 다져봐요',
+    title: '즐겨찾기',
+    content: '즐겨찾기 문제 랜덤으로 풀기',
     color: '#CBF9FF',
     img: <S.ButtonImg src={Eye} />,
     width: '48%',
-    destination: '',
+    destination: '/favorite',
   };
   const shortAnswerQuestionFeature: btnProps = {
     title: '단답형 주관식',

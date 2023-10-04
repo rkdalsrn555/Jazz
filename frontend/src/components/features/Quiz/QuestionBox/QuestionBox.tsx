@@ -16,6 +16,7 @@ export const QuestionBox = (props: QuestionBoxProps) => {
     answer,
     setAnswer,
     isCorrect,
+    correctContent,
     correctExplanation,
     wrongContent,
     wrongExplanation,
@@ -96,7 +97,7 @@ export const QuestionBox = (props: QuestionBoxProps) => {
         </S.QuestionContainer>
         {isJudge && kind !== 3 ? (
           <ExplanationBox
-            correctContent={answer}
+            correctContent={correctContent}
             correctExplanation={correctExplanation}
             wrongContent={!isCorrect ? wrongContent : ''}
             wrongExplanation={!isCorrect ? wrongExplanation : ''}

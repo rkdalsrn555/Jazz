@@ -66,7 +66,7 @@ const FavoriteRandomQuestionPage = () => {
     } else if (!isCorrect && quizList) {
       await userApis
         .get(
-          `/quiz/explanation/wrong-answer/${quizList[0].quizId}?wrongContent=${wrongAnswer}`
+          `/quiz/explanation/wrong-answer/${quizList[nowQuizNumber].quizId}?wrongContent=${wrongAnswer}`
         )
         .then((res) => {
           console.log(res.data);
@@ -95,39 +95,6 @@ const FavoriteRandomQuestionPage = () => {
       });
   };
 
-  const patchFavoriteQuiz = async () => {
-    setIsDisabled(true);
-    if (quizList) {
-      if (!quizList[nowQuizNumber].isBookmark) {
-        await userApis
-          .patch(`/quiz/bookmark/registration`, {
-            quizId: quizList[nowQuizNumber].quizId,
-            isBookmark: true,
-          })
-          .then((res) => {
-            quizList[nowQuizNumber].isBookmark = res.data.isBookmark;
-            setIsDisabled(false);
-          })
-          .catch((err) => {
-            setIsDisabled(false);
-          });
-      } else {
-        await userApis
-          .patch(`/quiz/bookmark/release`, {
-            quizId: quizList[nowQuizNumber].quizId,
-            isBookmark: false,
-          })
-          .then((res) => {
-            quizList[nowQuizNumber].isBookmark = res.data.isBookmark;
-            setIsDisabled(false);
-          })
-          .catch((err) => {
-            setIsDisabled(false);
-          });
-      }
-    }
-  };
-
   const checkAnswer = async () => {
     if (quizList) {
       // 적은 답과 content의 내용이 일치하면 정답!
@@ -143,8 +110,20 @@ const FavoriteRandomQuestionPage = () => {
       if (ans === correctAns) {
         setIsCorrect(true);
         setAnswerCnt((prev) => prev + 1);
+        if (quizList[nowQuizNumber].kind !== 3) {
+          await getExplanation(true);
+        }
       } else {
         setIsCorrect(false);
+        if (quizList[nowQuizNumber].kind === 1) {
+          await getExplanation(
+            false,
+            String(quizList[nowQuizNumber].content[Number(ans) - 1])
+          );
+        } else if (quizList[nowQuizNumber].kind === 2) {
+          console.log(ans);
+          await getExplanation(false, String(ans));
+        }
       }
       setIsJudge(true);
       if (

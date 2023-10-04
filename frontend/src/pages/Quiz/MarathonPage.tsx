@@ -161,7 +161,12 @@ const MarathonPage = () => {
         }
       } else {
         setIsCorrect(false);
-        if (quizList[0].kind !== 3) {
+        if (quizList[0].kind === 1) {
+          await getExplanation(
+            false,
+            String(quizList[0].content[Number(ans) - 1])
+          );
+        } else if (quizList[0].kind === 2) {
           await getExplanation(false, String(ans));
         }
       }

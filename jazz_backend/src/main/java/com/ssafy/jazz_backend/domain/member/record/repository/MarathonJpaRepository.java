@@ -17,4 +17,5 @@ public interface MarathonJpaRepository extends JpaRepository<Marathon, MarathonI
     Optional<Marathon> findMarathonWithMaxQuizRecordByMonthlySeason(
         @Param("monthlySeason") Integer monthlySeason);
 
+
 }

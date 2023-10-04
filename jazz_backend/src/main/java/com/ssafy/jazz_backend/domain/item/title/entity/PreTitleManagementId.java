@@ -1,5 +1,6 @@
 package com.ssafy.jazz_backend.domain.item.title.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.jazz_backend.domain.item.entity.Item;
 import com.ssafy.jazz_backend.domain.member.entity.Member;
 import jakarta.persistence.Embeddable;
@@ -28,6 +29,7 @@ public class PreTitleManagementId implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
+    @JsonBackReference
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -38,9 +38,7 @@ export const palette = {
 
 export const darkTheme: themeProps = {
   bg: {
-    deep: palette.neutral_800,
-    // mid: '#636A7A',
-    // light: '#B7B7B7',
+    deep: 'grey',
     mid: '#212224',
     light: '#3d4147',
     shadow: 'black',
@@ -61,7 +59,7 @@ export const darkTheme: themeProps = {
 
 export const lightTheme: themeProps = {
   bg: {
-    deep: palette.pink_500,
+    deep: 'lightgrey',
     mid: '#DBE5FF',
     light: 'white',
     shadow: '#636A7A',

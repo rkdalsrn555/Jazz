@@ -13,13 +13,34 @@ export const UserCharactorContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 15px;
   width: 100%;
   height: 100%;
 
   & h1 {
     font-size: 24px;
     font-weight: 800;
+    margin-bottom: 15px;
+  }
+`;
+
+export const SoldOutCharactor = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+
+  & h1 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 15px;
+  }
+
+  & .soldOut {
+    position: absolute;
+    top: -40px;
   }
 `;
 
@@ -32,6 +53,7 @@ export const Diamond = styled.div`
   border-radius: 100px;
   background-color: #dbe5ff;
   padding: 10px 10px;
+  margin-bottom: 15px;
 
   & p {
     font-size: 20px;
@@ -39,10 +61,10 @@ export const Diamond = styled.div`
   }
 `;
 
-export const SellBtn = styled.button`
+export const SellBtn = styled.button<{ isBuy?: boolean }>`
   width: 200px;
   height: 50px;
-  background-color: #ff6f77;
+  background-color: ${(props) => (props.isBuy ? '#666' : '#ff6f77')};
   color: #fff;
   text-align: center;
   font-size: 16px;

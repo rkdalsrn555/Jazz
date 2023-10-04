@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 export const ButtonContainer = styled.button<{ kind: string }>`
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 24px;
   border: none;
   font-size: 16px;
@@ -19,6 +19,5 @@ export const ButtonContainer = styled.button<{ kind: string }>`
 
 export const ButtonTitle = styled.p`
   padding: 0;
-  margin: 0;
-  margin-top: 10px;
+  margin-top: -5px;
 `;

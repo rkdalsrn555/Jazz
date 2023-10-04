@@ -20,6 +20,7 @@ export const QuestionBox = (props: QuestionBoxProps) => {
     correctExplanation,
     wrongContent,
     wrongExplanation,
+    quizKind,
   } = props;
 
   const handleChangeSubjectQuestion = (
@@ -40,13 +41,13 @@ export const QuestionBox = (props: QuestionBoxProps) => {
 
   return (
     <FadeInOut>
-      <S.Container>
+      <S.Container quizKind={quizKind}>
         <S.QuestionContainer>
           <S.QuestionTitle
             kind={kind}
             isCorrect={isCorrect ?? null}
           >{`${questionNumber}. ${question}`}</S.QuestionTitle>
-          <S.QuestionContent isCorrect={isCorrect ?? null}>
+          <S.QuestionContent isCorrect={isCorrect ?? null} quizKind={quizKind}>
             {kind === 1 || kind === 3 ? (
               <S.MultipleQuestionUl>
                 {Array.isArray(content)

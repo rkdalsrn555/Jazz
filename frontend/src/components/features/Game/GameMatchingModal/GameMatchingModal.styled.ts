@@ -25,7 +25,6 @@ export const ModalContainer = styled(motion.div)`
   width: 70%;
   min-width: 800px;
   max-width: 800px;
-  height: 55%;
   max-height: 600px;
   box-shadow: 0px 0px 30px 7px #fff;
   border-radius: 12px;

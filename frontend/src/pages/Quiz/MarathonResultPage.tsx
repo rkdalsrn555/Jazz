@@ -13,7 +13,6 @@ const Container = styled.div`
   width: 100vw;
   height: 90vh;
   margin: 0 auto;
-  padding-top: 3%;
 `;
 
 const MarathonResultPage = () => {

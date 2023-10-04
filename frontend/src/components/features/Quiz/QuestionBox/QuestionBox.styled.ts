@@ -1,8 +1,14 @@
 import styled from '@emotion/styled';
 
-export const Container = styled.div`
+export const Container = styled.div<{ quizKind?: string }>`
   display: flex;
   gap: 30px;
+  padding-top: 3%;
+  margin-top: ${(props) => {
+    if (props.quizKind) {
+      return props.quizKind === 'marathon' ? '3%' : '3%';
+    }
+  }};
 `;
 
 export const QuestionContainer = styled.div`
@@ -10,7 +16,7 @@ export const QuestionContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 600px;
-  min-height: 50%;
+  min-height: 300px;
   box-sizing: border-box;
   margin: 0 auto;
 `;
@@ -35,11 +41,12 @@ export const QuestionTitle = styled.div<{
   border-radius: 24px 24px 0 0;
   font-size: 20px;
   box-sizing: border-box;
-  padding: ${(props) => (props.kind === 3 ? '46px' : '46px')};
+  padding: ${(props) => (props.kind === 3 ? '36px' : '36px')};
 `;
 
 export const QuestionContent = styled.div<{
   isCorrect: boolean | null;
+  quizKind?: string;
 }>`
   flex-grow: 1;
   display: flex;
@@ -47,7 +54,13 @@ export const QuestionContent = styled.div<{
   justify-content: center;
   border-radius: 0 0 24px 24px;
   width: 100%;
-  min-height: 20rem;
+  min-height: ${(props) => {
+    if (props.quizKind) {
+      return props.quizKind === 'marathon' ? '20rem' : '17rem';
+    } else {
+      return '18rem';
+    }
+  }};
   background-color: ${(props) => {
     if (props.isCorrect !== null) {
       return props.isCorrect ? '#F4FEDA ' : '#E9CEC9';
@@ -63,6 +76,7 @@ export const AnswerIconContainer = styled.div`
   left: 0;
   right: 0;
   text-align: center;
+  opacity: 0.8;
 `;
 
 export const AnswerContaier = styled.div`

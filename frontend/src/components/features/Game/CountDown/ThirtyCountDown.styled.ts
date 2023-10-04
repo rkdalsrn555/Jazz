@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 export const Container = styled.div`
   position: relative;
   width: 300px;
-  height: 150px;
 `;
 
 export const ThirtyCountDownContainer = styled.div`

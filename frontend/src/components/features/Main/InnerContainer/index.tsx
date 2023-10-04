@@ -68,6 +68,13 @@ const Inner = ({
               <Link to={'/home'}>
                 <S.EditBtn theme={theme} />
               </Link>
+              <button
+                onClick={() => {
+                  window.localStorage.clear();
+                }}
+              >
+                로그아웃
+              </button>
             </S.Title>
             <S.ProfileHeaderRight>
               <S.Bell theme={theme} />

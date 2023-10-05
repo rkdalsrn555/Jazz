@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,6 +30,8 @@ public class DictionaryServiceImpl implements DictionaryService {
 
     @Override
     public DictionaryResponseDto findWord(String word) throws JSONException {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-Type", "application/json;charset=UTF-8");
         JSONObject json = null;
         try {
             StringBuilder urlBuilder = new StringBuilder(

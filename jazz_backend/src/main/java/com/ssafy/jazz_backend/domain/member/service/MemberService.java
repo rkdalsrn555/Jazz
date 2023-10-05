@@ -7,6 +7,7 @@ import com.ssafy.jazz_backend.domain.member.dto.DuplicatedNicknameResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.ModifyCharacterRequestDto;
+import com.ssafy.jazz_backend.domain.member.dto.ModifyCharacterResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.ModifyNicknameRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.ModifyNicknameResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.MyProfileInfoResponseDto;
@@ -35,5 +36,5 @@ public interface MemberService {
 
     MyProfileInfoResponseDto getProfile(String accessToken);
 
-    int modifyCharacter(String accessToken, ModifyCharacterRequestDto modifyCharacterRequestDto);
+    ModifyCharacterResponseDto modifyCharacter(String accessToken, ModifyCharacterRequestDto modifyCharacterRequestDto);
 }

@@ -4,6 +4,7 @@ import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.DuplicatedCheckIdResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.DuplicatedNicknameRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberRequestDto;
+import com.ssafy.jazz_backend.domain.member.dto.ModifyCharacterRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.ModifyNicknameRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.MyProfileInfoResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.TokenReIssueRequestDto;
@@ -121,6 +122,12 @@ public class MemberController {
     public ResponseEntity<?> viewMyProfile(@RequestHeader("accessToken") String accessToken) {
         MyProfileInfoResponseDto myProfileInfoResponseDto = memberService.getProfile(accessToken);
         return new ResponseEntity<>(myProfileInfoResponseDto, HttpStatus.OK);
+    }
+
+    @PatchMapping("/character")
+    public ResponseEntity<?> changeCharacter(@RequestHeader("accessToken") String accessToken, @RequestBody ModifyCharacterRequestDto modifyCharacterRequestDto) {
+        int characterIdResponse = memberService.modifyCharacter(accessToken, modifyCharacterRequestDto);
+        return new ResponseEntity<>(characterIdResponse, HttpStatus.OK);
     }
 
 }

@@ -56,8 +56,8 @@ public class FinancialStatementsServiceImpl implements FinancialStatementsServic
         List<String> DB에안들어간회사들 = new ArrayList<>();
         List<String> DB에들어간회사들 = new ArrayList<>();
         int i = 0;
-        int start = 1000;
-        int end = 1100;
+        int start = 700;
+        int end = 1200;
 
         for (Map<String, String> codeAndEnterpriseMap : codeAndEnterpriseMapList) {
 

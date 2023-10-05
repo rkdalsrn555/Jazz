@@ -21,7 +21,8 @@ import { Border, VictoryPie } from 'victory';
 import { forceReRender } from '@storybook/react';
 import RankTimer from 'components/features/Main/RankTimer/RankTimer';
 import RankChart from 'components/features/Main/RankChart/RankChart';
-
+import ExpBar from 'components/features/Main/ExpBar/ExpBar';
+import QuizProgressBar from 'components/features/Quiz/QuizProgressBar/QuizProgressBar';
 const Home = () => {
   const theme: themeProps = useTheme();
   const userToken = localStorage.getItem('userAccessToken');
@@ -76,7 +77,7 @@ const Home = () => {
     destination: '/favorite',
   };
   const shortAnswerQuestionFeature: btnProps = {
-    title: '단답형 주관식',
+    title: '단어형 주관식',
     content: '일반 게임',
     color: '#FFCBCB',
     img: <S.ButtonImg src={DotMessage} />,
@@ -84,7 +85,7 @@ const Home = () => {
     destination: '/short-answer-question',
   };
   const shortAnswerChoiceFeature: btnProps = {
-    title: '단답형 객관식',
+    title: '단어형 객관식',
     content: '일반 게임',
     color: '#FFDECB',
     img: <S.ButtonImg src={Message} />,
@@ -92,7 +93,7 @@ const Home = () => {
     destination: '/short-answer-multiple-question',
   };
   const essayChoiceFeature: btnProps = {
-    title: '서술형 객관식',
+    title: '사례형 객관식',
     content: '일반 게임',
     color: '#FFF7CB',
     img: <S.ButtonImg src={Envelop} />,
@@ -137,7 +138,7 @@ const Home = () => {
   const quizContainerFeature: innerContainerProps = {
     title: '퀴즈를 풀어봐요!',
     width: '95%',
-    height: '45%',
+    height: '50%',
     minHeight: '14rem',
     minWidth: '42rem',
     backgroundColor: theme.bg.light,
@@ -155,7 +156,7 @@ const Home = () => {
   const studyContainerFeature: innerContainerProps = {
     title: '정보가 필요해요?',
     width: '95%',
-    height: '26%',
+    height: '30%',
     minHeight: '9rem',
     minWidth: '42rem',
     backgroundColor: theme.bg.light,
@@ -218,7 +219,7 @@ const Home = () => {
   const profileContainerFeature: innerContainerProps = {
     title: '프로필',
     width: '95%',
-    height: '38%',
+    height: '50%',
     minHeight: '15rem',
     minWidth: '',
     backgroundColor: theme.bg.light,
@@ -226,10 +227,16 @@ const Home = () => {
       <S.ProfileContainer>
         <S.ProfileContent>
           <S.ProfileLeft>
-            <S.ProfileLeftPrefix theme={theme}>금융 초보자</S.ProfileLeftPrefix>
-            <S.ProfileLeftTitle theme={theme}>
-              {userInfo?.nickname}
-            </S.ProfileLeftTitle>
+            <div style={{ display: 'flex', alignItems: 'baseline' }}>
+              <S.ProfileLeftPrefix theme={theme}>
+                {userInfo.takePrefixContent}
+                {userInfo.takeSuffixContent}
+              </S.ProfileLeftPrefix>
+              <span style={{ padding: '3px' }}></span>
+              <S.ProfileLeftTitle theme={theme}>
+                {`Lv.${userInfo?.level} ${userInfo?.nickname}`}
+              </S.ProfileLeftTitle>
+            </div>
             <S.Box>
               <S.ProfileLeftImg
                 src={`/assets/img/modelAsset/${
@@ -237,6 +244,7 @@ const Home = () => {
                 }`}
               />
             </S.Box>
+            <ExpBar expPoint={userInfo.expPoint} />
           </S.ProfileLeft>
           <S.PieConatiner>
             <S.PieTitle theme={theme}>
@@ -362,8 +370,8 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (tierRef.current) tierRef.current.style.color = 'red';
-  }, [tierRef]);
+    if (dmRef.current) dmRef.current.style.color = 'red';
+  }, [dmRef]);
 
   const [timerType, setTimerType] = useState('tier');
   const [rankType, setRankType] = useState('tier');
@@ -371,7 +379,7 @@ const Home = () => {
   const rankContainerFeature: innerContainerProps = {
     title: '랭크',
     width: '95%',
-    height: '55%',
+    height: '60%',
     minHeight: '15rem',
     minWidth: '',
     backgroundColor: theme.bg.light,
@@ -410,15 +418,6 @@ const Home = () => {
                   onClick={(e) => handleRankClick(e)}
                   onMouseOver={(e) => handleRankOver(e)}
                   onMouseOut={(e) => handleRankOut(e)}
-                  id="tier"
-                  ref={tierRef}
-                >
-                  티어
-                </S.RankSort>
-                <S.RankSort
-                  onClick={(e) => handleRankClick(e)}
-                  onMouseOver={(e) => handleRankOver(e)}
-                  onMouseOut={(e) => handleRankOut(e)}
                   id="dailyMarathon"
                   ref={dmRef}
                 >
@@ -441,6 +440,15 @@ const Home = () => {
                   ref={levelRef}
                 >
                   레벨
+                </S.RankSort>
+                <S.RankSort
+                  onClick={(e) => handleRankClick(e)}
+                  onMouseOver={(e) => handleRankOver(e)}
+                  onMouseOut={(e) => handleRankOut(e)}
+                  id="tier"
+                  ref={tierRef}
+                >
+                  티어
                 </S.RankSort>
               </S.RankHeaderBottom>
             </S.RankHeader>

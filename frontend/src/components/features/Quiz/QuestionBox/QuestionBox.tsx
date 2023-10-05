@@ -10,6 +10,7 @@ export const QuestionBox = (props: QuestionBoxProps) => {
   const {
     question,
     content,
+    caseNum,
     kind,
     questionNumber,
     isJudge,
@@ -53,26 +54,45 @@ export const QuestionBox = (props: QuestionBoxProps) => {
             {kind === 1 || kind === 3 ? (
               <S.MultipleQuestionUl>
                 {Array.isArray(content)
-                  ? content.map((item, index) =>
-                      isJudge ? (
-                        <S.MultipleQuestionLi
-                          key={index}
-                          kind={kind}
-                          active={index + 1}
-                          answer={Number(answer)}
-                        >{`${index + 1}. ${item}`}</S.MultipleQuestionLi>
-                      ) : (
-                        <S.MultipleQuestionLi
-                          key={index}
-                          kind={kind}
-                          active={index + 1}
-                          answer={Number(answer)}
-                          onClick={() => {
-                            handleChangeMultipleQuestion(index);
-                          }}
-                        >{`${index + 1}. ${item}`}</S.MultipleQuestionLi>
-                      )
-                    )
+                  ? content.map((item, index) => {
+                      if (isJudge) {
+                        return (
+                          <S.MultipleQuestionLi
+                            key={index}
+                            kind={kind}
+                            active={index + 1}
+                            answer={Number(answer)}
+                          >{`${index + 1}. ${item}`}</S.MultipleQuestionLi>
+                        );
+                      } else if (isHintClick) {
+                        if (index + 1 === hint || index + 1 === caseNum) {
+                          return (
+                            <S.MultipleQuestionLi
+                              key={index}
+                              kind={kind}
+                              active={index + 1}
+                              answer={Number(answer)}
+                              onClick={() => {
+                                handleChangeMultipleQuestion(index);
+                              }}
+                            >{`${index + 1}. ${item}`}</S.MultipleQuestionLi>
+                          );
+                        }
+                        return;
+                      } else {
+                        return (
+                          <S.MultipleQuestionLi
+                            key={index}
+                            kind={kind}
+                            active={index + 1}
+                            answer={Number(answer)}
+                            onClick={() => {
+                              handleChangeMultipleQuestion(index);
+                            }}
+                          >{`${index + 1}. ${item}`}</S.MultipleQuestionLi>
+                        );
+                      }
+                    })
                   : ''}
               </S.MultipleQuestionUl>
             ) : (

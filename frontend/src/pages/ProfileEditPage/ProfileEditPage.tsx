@@ -64,7 +64,6 @@ const ProfileEditPage = () => {
         setNickname(res.data.nickname);
         setCurrentCharactor(res.data.takeCharacterId);
         setAbleCharactorList(res.data.ableCharacterList);
-        console.log(res);
       })
       .catch((err) => {});
   };
@@ -173,38 +172,42 @@ const ProfileEditPage = () => {
       >
         <h1>보유한 캐릭터</h1>
         <S.CharactorListBox>
-          {ableCharactorList.map((item) => {
-            let { charactor, charactorName } = DrawCharactor(item.id.item.id);
-            if (item.used) {
-              return '';
-            } else {
-              return (
-                <Enlarge>
-                  <S.selectBox
-                    isSelected={
-                      selectCharactor === item.id.item.id ? true : false
-                    }
-                    onClick={() => {
-                      setSelectCharactor((prev) => {
-                        if (item.id.item.id === prev) {
-                          return 0;
-                        } else {
-                          return item.id.item.id;
-                        }
-                      });
-                    }}
-                  >
-                    <img
-                      src={`/assets/img/modelAsset/${charactor}`}
-                      alt="보유캐릭터"
-                      width={190}
-                    />
-                    <p>{charactorName}</p>
-                  </S.selectBox>
-                </Enlarge>
-              );
-            }
-          })}
+          {ableCharactorList.length !== 1 ? (
+            ableCharactorList.map((item) => {
+              let { charactor, charactorName } = DrawCharactor(item.id.item.id);
+              if (item.used) {
+                return '';
+              } else {
+                return (
+                  <Enlarge>
+                    <S.selectBox
+                      isSelected={
+                        selectCharactor === item.id.item.id ? true : false
+                      }
+                      onClick={() => {
+                        setSelectCharactor((prev) => {
+                          if (item.id.item.id === prev) {
+                            return 0;
+                          } else {
+                            return item.id.item.id;
+                          }
+                        });
+                      }}
+                    >
+                      <img
+                        src={`/assets/img/modelAsset/${charactor}`}
+                        alt="보유캐릭터"
+                        width={190}
+                      />
+                      <p>{charactorName}</p>
+                    </S.selectBox>
+                  </Enlarge>
+                );
+              }
+            })
+          ) : (
+            <div>보유한 캐릭터가 없습니다</div>
+          )}
         </S.CharactorListBox>
         <button onClick={selectCharactor === 0 ? () => {} : patchCharacter}>
           캐릭터 변경하기

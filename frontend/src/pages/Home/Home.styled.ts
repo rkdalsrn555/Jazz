@@ -85,7 +85,7 @@ export const RightContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 40%;
-  height: calc(100vh - 7rem);
+  height: calc(100vh - 6.5rem);
   min-width: 35rem;
   min-height: 32rem;
   gap: 1rem;
@@ -115,7 +115,7 @@ export const ProfileLeft = styled.div`
   /* border: solid black; */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 90%;
   width: 45%;
@@ -125,6 +125,7 @@ export const ProfileLeft = styled.div`
 export const ProfileLeftPrefix = styled.div<{ theme: themeProps }>`
   font-weight: 600;
   margin-top: 0.5rem;
+  padding: 0;
   color: ${(props) => props.theme.font.deep};
 `;
 
@@ -148,7 +149,6 @@ export const Box = styled.div`
   }
 `;
 export const ProfileLeftImg = styled.img`
-  border: solid green;
   border-radius: 50%;
   position: absolute;
   top: 0;

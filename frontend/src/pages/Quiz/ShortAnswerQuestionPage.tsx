@@ -336,6 +336,9 @@ const ShortAnswerQuestionPage = () => {
                 kind="hint"
                 disabled={isDisabled}
                 handleClick={() => {
+                  if (isHint) {
+                    return;
+                  }
                   setIsToggled(true);
                   setModalData({
                     data: {

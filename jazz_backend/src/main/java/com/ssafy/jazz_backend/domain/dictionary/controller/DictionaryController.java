@@ -1,5 +1,6 @@
 package com.ssafy.jazz_backend.domain.dictionary.controller;
 
+import com.ssafy.jazz_backend.domain.dictionary.dto.DictionaryResponseDto;
 import com.ssafy.jazz_backend.domain.dictionary.service.DictionaryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,8 @@ public class DictionaryController {
     private final DictionaryServiceImpl dictionaryService;
 
     @GetMapping
-    public ResponseEntity<String> getWord(@RequestHeader("accessToken") String accessToken, @RequestParam String word) {
-        String jsonStr = dictionaryService.findWord(word);
-        return new ResponseEntity<>(jsonStr, HttpStatus.OK);
+    public ResponseEntity<DictionaryResponseDto> getWord(@RequestHeader("accessToken") String accessToken, @RequestParam String word) {
+        DictionaryResponseDto dictionaryResponseDto = dictionaryService.findWord(word);
+        return new ResponseEntity<>(dictionaryResponseDto, HttpStatus.OK);
     }
 }

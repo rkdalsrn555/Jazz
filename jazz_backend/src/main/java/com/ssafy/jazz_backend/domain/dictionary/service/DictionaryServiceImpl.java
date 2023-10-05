@@ -1,11 +1,16 @@
 package com.ssafy.jazz_backend.domain.dictionary.service;
 
 import com.ssafy.jazz_backend.domain.dictionary.dto.ApiKey;
+import com.ssafy.jazz_backend.domain.dictionary.dto.DictionaryItem;
+import com.ssafy.jazz_backend.domain.dictionary.dto.DictionaryResponseDto;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
@@ -23,9 +28,8 @@ public class DictionaryServiceImpl implements DictionaryService {
     }
 
     @Override
-    public String findWord(String word) throws JSONException {
-        String jsonStr = null;
-        String result = null;
+    public DictionaryResponseDto findWord(String word) throws JSONException {
+        JSONObject json = null;
         try {
             StringBuilder urlBuilder = new StringBuilder(
                 "https://api.seibro.or.kr/openapi/service/FnTermSvc/getFinancialTermMeaning"); /*URL*/
@@ -59,16 +63,29 @@ public class DictionaryServiceImpl implements DictionaryService {
             rd.close();
             conn.disconnect();
 
-            JSONObject json = XML.toJSONObject(sb.toString());
-            jsonStr = json.toString(4);
-            System.out.println(jsonStr);
-
-            result = jsonStr.replaceAll("<[^>]*>", " ");
+            json = XML.toJSONObject(sb.toString());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return result;
+        String data = (((JSONObject) ((JSONObject) ((JSONObject)json.get("response")).get("body")).get("items")).get("item")).toString();
+        String jsonStr = data.replaceAll("<[^>]*>", " ").replaceAll("&nbsp;", "");
+        JSONArray jsonArray = new JSONArray(jsonStr);
+
+        DictionaryResponseDto dictionaryResponseDto = new DictionaryResponseDto();
+        List<DictionaryItem> list = new ArrayList<>();
+        for(int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            String jsonWord = jsonObject.get("fnceDictNm").toString();
+            String jsonMean = jsonObject.get("ksdFnceDictDescContent").toString();
+            DictionaryItem dictionaryItem = new DictionaryItem(jsonWord, jsonMean);
+            list.add(dictionaryItem);
+        }
+
+        dictionaryResponseDto.setDictionarySize(jsonArray.length());
+        dictionaryResponseDto.setDictionaryItems(list);
+
+        return dictionaryResponseDto;
     }
 }

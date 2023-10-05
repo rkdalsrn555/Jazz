@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import Notification from '@mui/icons-material/Notifications';
 import Edit from '@mui/icons-material/Edit';
 
-
 export const Container = styled.div<{
   feature: innerContainerProps;
   theme: themeProps;
@@ -112,6 +111,12 @@ export const Bell = styled(Notification)<{ theme: themeProps }>`
 `;
 
 export const EditBtn = styled(Edit)<{ theme: themeProps }>`
+  cursor: pointer;
+  margin-left: 10px;
   color: ${(props) => props.theme.font.deep};
   transition: color 0.2s;
+`;
+
+export const LogoutBtn = styled.div`
+  cursor: pointer;
 `;

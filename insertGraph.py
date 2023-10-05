@@ -16,9 +16,9 @@ print(id_list)
 ServiceKey = '3723c37f4ec023bc4e52b9a8d3da7cd50580e921'
 
 for id in id_list:
-    if id[0] < 50 : 
+    if id[0] < 0 : 
         continue
-    if id[0] == 100 : 
+    if id[0] == 50 : 
         break
 
 
@@ -57,6 +57,7 @@ for id in id_list:
 
             if  '총포괄손익' in data["account_nm"] : 
                 total_comprehensive_income = data['thstrm_amount']
+                if total_comprehensive_income == "" : total_comprehensive_income = 0
 
         
         sql = f"INSERT INTO financial_graph (point_time_name, enterprise_id, total_assets, total_debt, total_capital, income, total_comprehensive_income) VALUES ('{point_time_name}', {id[0]}, {total_assets}, {total_debt}, {total_capital}, {income}, {total_comprehensive_income});"

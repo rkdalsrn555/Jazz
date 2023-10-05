@@ -139,6 +139,47 @@ public class RankingServiceImpl implements RankingService {
         return responseDtoList;
     }
 
+    @Override
+    public void insertRedis(String accessToken) {
+        List<Member> memberList =  memberRepository.findAll();
+        Season nowSeason = seasonJpaRepository.findById(1).orElseThrow(() -> new NullPointerException("시즌 없음"));
+        for(Member member : memberList){
+            String memberId = member.getId();
+            Tier tier = tierJpaRepository.findById(new TierId(member,nowSeason.getTierSeason())).orElse(null);
+            if(tier == null){
+                zSetOperations.add(util.getTierRankKeyName(),memberId, 0);
+            }else{
+                zSetOperations.add(util.getTierRankKeyName(),memberId, tier.getRankPoint());
+            }
+            Profile profile = profileRepository.findById(memberId).orElse(null);
+            if (profile == null){
+                zSetOperations.add(util.getLevelRankKeyName(), memberId, 0);
+            }else{
+                zSetOperations.add(util.getLevelRankKeyName(), memberId, profile.getExpPoint());
+            }
+            Marathon dailyMarathon = marathonJpaRepository.findById(new MarathonId(member,nowSeason.getDailySeason(),nowSeason.getMonthlySeason())).orElse(null);
+            if(dailyMarathon == null){
+                zSetOperations.add(util.getDailyMarathonRankKeyName(),memberId, 0);
+            }else{
+                zSetOperations.add(util.getDailyMarathonRankKeyName(),memberId, dailyMarathon.getQuizRecord());
+            }
+            List<Marathon> monthlyMarathonList = marathonJpaRepository.findMarathonWithMaxQuizRecordByMonthlySeason(nowSeason.getMonthlySeason());
+            if(monthlyMarathonList.size() == 0){
+                zSetOperations.add(util.getMonthlyMarathonRankKeyName(),memberId, 0);
+            }else{
+                Marathon monthlyMarathon = monthlyMarathonList.get(0);
+                zSetOperations.add(util.getMonthlyMarathonRankKeyName(),memberId,monthlyMarathon.getQuizRecord());
+            }
+
+
+
+
+        }
+
+
+
+    }
+
     private List<MonthlyMarathonRankRedisDto> getTopTenMonthlyMarathonRanks() {
         //월간 랭킹 10명 uuid 와 record 가져옴
         Set<ZSetOperations.TypedTuple<String>> topTenMemberIds = zSetOperations.reverseRangeWithScores(

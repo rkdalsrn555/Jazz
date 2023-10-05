@@ -13,4 +13,5 @@ public interface RankingService {
     List<RankingTopTenResponseDto> getDailyMarathonRankingTopTen(String accessToken);
 
     List<RankingTopTenResponseDto> getMonthlyMarathonRankingTopTen(String accessToken);
+    void insertRedis(String accessToken);
 }

@@ -119,9 +119,9 @@
     │   │   │   │   ├── QuizProgressBar
     │   │   │   │   └── QuizResult
     │   │   │   ├── Statement
-    │   │   │   │ ├── Chart
-    │   │   │   │ ├── RenderChart
-    │   │   │   │ └── StatementType
+    │   │   │   │   ├── Chart
+    │   │   │   │   ├── RenderChart
+    │   │   │   │   └── StatementType
     │   │   │   └── Store
     │   │   │       ├── CharactorItem
     │   │   │       ├── DiamondMoney
@@ -246,6 +246,8 @@
 
 ## 팀원 소개
 ## ERD
+<img src="./document/A708_erd.png">
+
 ## 아키텍쳐
 ## API 명세서
 ## 시연

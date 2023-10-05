@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import * as S from './Modal.styled';
 import { AnimatePresence } from 'framer-motion';
 

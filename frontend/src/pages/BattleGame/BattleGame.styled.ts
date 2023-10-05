@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
+  position: relative;
   background: center/cover url('/assets/img/battleBg.png');
   width: 100vw;
   height: 100vh;
@@ -11,6 +12,17 @@ export const Container = styled.div`
   align-items: center;
   justify-content: space-around;
   gap: 2%;
+
+  & .outGame {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 100px;
+    height: 100px;
+    background-color: #d93d3d;
+    border-radius: 50%;
+    color: #fff;
+  }
 `;
 
 export const BattleContainer = styled.div`

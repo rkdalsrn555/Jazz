@@ -416,6 +416,14 @@ const BattleGame = () => {
 
   return (
     <S.Container>
+      <button
+        className="outGame"
+        onClick={() => {
+          disconnect();
+        }}
+      >
+        게임 나가기
+      </button>
       {finish ? (
         <S.ResultContainer>
           <GameProfile

@@ -132,6 +132,8 @@ type QuestionBoxProps = {
   finiancialType: number;
   caseNum?: number;
   kind: number;
+  hint?: string | number;
+  isHintClick?: boolean;
   questionNumber?: number;
   isJudge?: boolean;
   answer?: string | number;

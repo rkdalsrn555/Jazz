@@ -4,11 +4,12 @@ import com.ssafy.jazz_backend.domain.member.entity.Member;
 import com.ssafy.jazz_backend.domain.quiz.entity.Quiz;
 import com.ssafy.jazz_backend.domain.quiz.entity.QuizManagement;
 import com.ssafy.jazz_backend.domain.quiz.entity.QuizManagementId;
-import io.lettuce.core.dynamic.annotation.Param;
+
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface QuizManagementRepository extends JpaRepository<QuizManagement, QuizManagementId> {
 
@@ -22,4 +23,9 @@ public interface QuizManagementRepository extends JpaRepository<QuizManagement, 
 
     List<QuizManagement> findAllByIdMemberAndIsBookmark(Member member, Boolean isBookmark);
 
+    @Query(value = "SELECT COUNT(*) FROM quiz_management WHERE member_id = :member_id AND is_correct = :is_correct", nativeQuery = true)
+    Optional<Integer> findCorrectQuestionById(@Param("member_id") String memberId, @Param("is_correct") boolean isCorrect);
+
+    @Query(value = "SELECT COUNT(*) FROM quiz_management WHERE member_id = :member_id AND is_bookmark = :is_bookmark", nativeQuery = true)
+    Optional<Integer> countAllByMemberIdAndIsBookmark(@Param("member_id") String memberId, @Param("is_bookmark") boolean isBookmark);
 }

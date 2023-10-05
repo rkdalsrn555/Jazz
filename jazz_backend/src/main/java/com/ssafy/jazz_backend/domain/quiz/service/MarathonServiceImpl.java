@@ -103,6 +103,7 @@ public class MarathonServiceImpl implements MarathonService {
         String userUUID = jwtService.getInfo("account", accessToken);
         //uuid를 통해 member 찾음
         Member member = findMemberById(userUUID);
+
         //현재 시즌 찾음
         Season nowSeason = getNowSeason();
 
@@ -110,15 +111,17 @@ public class MarathonServiceImpl implements MarathonService {
         Marathon dailyMarathon = findMarathonByMemberAndNowSeason(member, nowSeason);
 
         //DB에서 지금 monthly 시즌 중에서 가장 높은 record를 가지고 있는 marathon을 받아옴
-        Marathon monthlyMarathon = marathonJpaRepository.findMarathonWithMaxQuizRecordByMonthlySeason(
-            nowSeason.getMonthlySeason()).orElse(null);
+        List<Marathon> monthlyMarathonList = marathonJpaRepository.findMarathonWithMaxQuizRecordByMonthlySeason(
+            nowSeason.getMonthlySeason());
+
+
 
         //monthlyMarathon이 null 인 경우 새로 만들어줌 -> 이미 dailyMarathon 을 먼저 생성했기 때문에 무조건 있을 듯
-        if (monthlyMarathon == null) {
+        if (monthlyMarathonList.size() == 0) {
             System.out.println("monthlyMarathon 이 null 인 경우");
             MarathonId marathonId = MarathonId.create(member, nowSeason.getDailySeason(),
                 nowSeason.getMonthlySeason());
-            monthlyMarathon = generateMarathon(marathonId);
+            monthlyMarathonList.add(generateMarathon(marathonId));
         }
 
         int solveCount = marathonResultRequestDto.getSolveCount();
@@ -132,7 +135,7 @@ public class MarathonServiceImpl implements MarathonService {
         }
 
         //월간 랭킹보다 solveCount 큰 경우 redis에만 저장
-        if (solveCount >= monthlyMarathon.getQuizRecord()) {
+        if (solveCount >= monthlyMarathonList.get(0).getQuizRecord()) {
             zSetOperations.add(util.getMonthlyMarathonRankKeyName(), userUUID, solveCount);
         }
 

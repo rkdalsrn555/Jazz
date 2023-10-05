@@ -87,7 +87,7 @@ public class NewServiceImpl implements NewsService {
 
         // producer 생성 => 성공
         KafkaProducer<String, String> producer = new KafkaProducer<String, String>(prop);
-        producer.send(new ProducerRecord<String, String>("test_topic_2", message));
+        producer.send(new ProducerRecord<String, String>("test_topic_3", message));
     }
 
     @KafkaListener(topics = "test_topic2", groupId = "test_kafka1")

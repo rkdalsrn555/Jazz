@@ -1,5 +1,10 @@
 package com.ssafy.jazz_backend.domain.member.dto;
 
+import com.ssafy.jazz_backend.domain.item.entity.Item;
+import com.ssafy.jazz_backend.domain.item.entity.ItemManagement;
+import com.ssafy.jazz_backend.domain.item.title.entity.PreTitle;
+import com.ssafy.jazz_backend.domain.item.title.entity.PreTitleManagement;
+import com.ssafy.jazz_backend.domain.item.title.entity.SuffixTitleManagement;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,9 +27,8 @@ public class MyProfileInfoResponseDto {
     private String takePrefixContent;
     private int takeSuffixTitleId;
     private String takeSuffixContent;
-    private List<String> ablePrefixTitleList;
-    private List<String> ableSuffixTitleList;
+    private List<PreTitleManagement> ablePrefixTitleList;
+    private List<SuffixTitleManagement> ableSuffixTitleList;
     private int takeCharacterId;
-    private List<Integer> ableCharacterList;
-    private int mailCnt;
+    private List<ItemManagement> ableCharacterList;
 }

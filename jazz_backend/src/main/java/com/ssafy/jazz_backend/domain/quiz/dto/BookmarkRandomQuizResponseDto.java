@@ -22,4 +22,5 @@ public class BookmarkRandomQuizResponseDto {
     Boolean isBookmark;
     int financialType;
     int kind;
+    String hint;
 }

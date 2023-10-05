@@ -17,12 +17,10 @@ import Shop from 'assets/img/icons8-shop-64.png';
 import ProfileInfo from 'components/features/Main/ProfileInfo/ProfileInfo';
 import GameMatchingModal from 'components/features/Game/GameMatchingModal/GameMatchingModal';
 import { userApis } from 'hooks/api/userApis';
-import { Border, VictoryPie } from 'victory';
-import { forceReRender } from '@storybook/react';
+import { VictoryPie } from 'victory';
 import RankTimer from 'components/features/Main/RankTimer/RankTimer';
 import RankChart from 'components/features/Main/RankChart/RankChart';
 import ExpBar from 'components/features/Main/ExpBar/ExpBar';
-import QuizProgressBar from 'components/features/Quiz/QuizProgressBar/QuizProgressBar';
 import BronzeTier from '../../assets/img/Tier/bronze.png';
 const Home = () => {
   const theme: themeProps = useTheme();
@@ -379,8 +377,8 @@ const Home = () => {
     if (dmRef.current) dmRef.current.style.color = 'red';
   }, [dmRef]);
 
-  const [timerType, setTimerType] = useState('tier');
-  const [rankType, setRankType] = useState('tier');
+  const [timerType, setTimerType] = useState('dailyMarathon');
+  const [rankType, setRankType] = useState('dailyMarathon');
 
   const rankContainerFeature: innerContainerProps = {
     title: '랭크',

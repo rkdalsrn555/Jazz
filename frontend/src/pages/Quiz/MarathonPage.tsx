@@ -134,7 +134,7 @@ const MarathonPage = () => {
         }
       }
       setIsJudge(true);
-      if (quizList[0].content.length === 1) {
+      if (quizList[0].kind === 2) {
         setAnswer(quizList[0].content[0]);
       } else {
         setAnswer(Number(quizList[0].caseNum));

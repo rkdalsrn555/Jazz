@@ -51,16 +51,17 @@ const Header = () => {
               </Link>
             </Enlarge>
           )}
-
-          <S.LogoutBtn
-            onClick={() => {
-              window.localStorage.clear();
-              logout();
-            }}
-          >
-            <img src={LogoutIcon} alt="로그아웃" width={20} />
-          </S.LogoutBtn>
-          <DarkSwitch />
+          <S.IconContainer>
+            <DarkSwitch />
+            <S.LogoutBtn
+              onClick={() => {
+                window.localStorage.clear();
+                logout();
+              }}
+            >
+              <img src={LogoutIcon} alt="로그아웃" width={20} />
+            </S.LogoutBtn>
+          </S.IconContainer>
         </S.Container>
       )}
     </>

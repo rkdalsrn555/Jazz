@@ -96,7 +96,6 @@ const GameMatchingModal = (props: OwnProps) => {
           }, 2000);
         })
         .catch((err) => {
-          alert('매칭에 실패하였습니다. 다시 게임 대전을 신청해주세요');
           closeModal();
         });
     }

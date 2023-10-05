@@ -28,7 +28,8 @@ export const CharactorBox = styled.div`
 `;
 
 export const ProfileContainer = styled.div`
-  width: 100%;
+  max-width: 450px;
+  height: 390px;
   background-color: #fff;
   border-radius: 8px;
   padding: 20px 40px;
@@ -94,6 +95,8 @@ export const LabelContainer = styled.div<{ isDisabled: boolean }>`
 `;
 
 export const CharactorListContaier = styled.div<{ isDisabled: boolean }>`
+  min-width: 500px;
+  text-align: center;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -116,10 +119,10 @@ export const CharactorListContaier = styled.div<{ isDisabled: boolean }>`
 
 export const CharactorListBox = styled.div`
   cursor: pointer;
-  width: 70%;
+  width: 100%;
   display: flex;
-  /* flex-wrap: wrap; */
-  justify-content: flex-start;
+  text-align: center;
+  justify-content: center;
   gap: 10px;
 
   & p {
@@ -129,6 +132,11 @@ export const CharactorListBox = styled.div`
     bottom: 10px;
     left: 0;
     right: 0;
+  }
+
+  & .noExist {
+    width: 100%;
+    text-align: center;
   }
 `;
 

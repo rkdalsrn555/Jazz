@@ -26,3 +26,10 @@ export const Logo = styled.img`
 export const LogoutBtn = styled.div`
   cursor: pointer;
 `;
+
+export const IconContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+`;

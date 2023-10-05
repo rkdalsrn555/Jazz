@@ -11,9 +11,8 @@ export const BtnBox = styled.div`
   align-items: center;
   width: fit-content;
   gap: 0.2rem;
-  width: 20%;
   /* padding-top: 3rem; */
-  padding-right: 3rem;
+  padding-right: 1rem;
 `;
 
 export const LightModeIconStyled = styled(LightModeIcon)<{ theme: themeProps }>`

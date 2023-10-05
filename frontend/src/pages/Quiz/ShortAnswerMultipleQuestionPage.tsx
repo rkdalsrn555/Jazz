@@ -49,6 +49,8 @@ const ShortAnswerMultipleQuestionPage = () => {
     noBtnClick?: () => void | null;
     yesBtnClick?: () => void | null;
   }>({ data: { title: '', message: '' } });
+  // 힌트 클릭했는지?
+  const [isHint, setIsHint] = useState<boolean>(false);
 
   // 다음 문제로 가는 함수
   const nextQuestion = () => {
@@ -58,6 +60,7 @@ const ShortAnswerMultipleQuestionPage = () => {
     setAnswer('');
     setCorrectAnswer(null);
     setWrongAnswer(null);
+    setIsHint(false);
   };
 
   const getExplanation = async (isCorrect: boolean, wrongAnswer?: string) => {
@@ -231,7 +234,8 @@ const ShortAnswerMultipleQuestionPage = () => {
             setAnswer={setAnswer}
             isCorrect={isCorrect}
             isJudge={isJudge}
-            isHintClick={false}
+            hint={quizList[nowQuizNumber].hint}
+            isHintClick={isHint}
             correctContent={correctAnswer?.correctContent}
             correctExplanation={correctAnswer?.correctExplanation}
             wrongContent={wrongAnswer?.wrongContent}
@@ -324,7 +328,30 @@ const ShortAnswerMultipleQuestionPage = () => {
               />
             </Enlarge>
             <Enlarge>
-              <QuizButton title="힌트보기" kind="hint" disabled={isDisabled} />
+              <QuizButton
+                title="힌트보기"
+                kind="hint"
+                disabled={isDisabled}
+                handleClick={() => {
+                  if (isHint) {
+                    return;
+                  }
+                  setIsToggled(true);
+                  setModalData({
+                    data: {
+                      title: '🤔',
+                      message: '힌트를 보시겠어요?',
+                    },
+                    yesBtnClick: () => {
+                      setIsToggled(false);
+                      setIsHint(true);
+                    },
+                    noBtnClick: () => {
+                      setIsToggled(false);
+                    },
+                  });
+                }}
+              />
             </Enlarge>
             <Enlarge>
               <QuizButton

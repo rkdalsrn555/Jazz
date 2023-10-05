@@ -39,7 +39,7 @@ public class ItemServiceImpl implements ItemService{
             itemList.add(itemManagementList.get(i).getId().getItem());
         }
         int diamond = profileRepository.findById(memberUUID).orElseThrow(() -> new NullPointerException()).getDiamond();
-        return new CharacterListResponseDto(list, diamond);
+        return new CharacterListResponseDto(itemList, diamond);
     }
 
     @Override

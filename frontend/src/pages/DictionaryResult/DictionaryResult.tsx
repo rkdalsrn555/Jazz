@@ -60,6 +60,12 @@ const DictionaryResult = () => {
     callback: (res) => {},
   });
 
+  const getDictionary = async () => {
+    await userApis.get(`/dictionary?word=${searchWord}`).then((res) => {
+      console.log(res);
+    });
+  };
+
   const getTest = () => {
     axios
       .get(
@@ -105,9 +111,10 @@ const DictionaryResult = () => {
   };
 
   useEffect(() => {
+    getDictionary();
+    // getTest();
     // jsonNow();
     // getDefinition();
-    getTest();
     //   const rawContent = data.data.response.body.items.item[0];
     //   console.log(rawContent);
     //   const decodedContent = iconv.decode(rawContent, 'euc-kr');

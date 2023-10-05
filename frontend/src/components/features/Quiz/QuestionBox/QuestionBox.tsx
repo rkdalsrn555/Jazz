@@ -65,7 +65,10 @@ export const QuestionBox = (props: QuestionBoxProps) => {
                           >{`${index + 1}. ${item}`}</S.MultipleQuestionLi>
                         );
                       } else if (isHintClick) {
-                        if (index + 1 === hint || index + 1 === caseNum) {
+                        if (
+                          index + 1 === Number(hint) ||
+                          index + 1 === caseNum
+                        ) {
                           return (
                             <S.MultipleQuestionLi
                               key={index}

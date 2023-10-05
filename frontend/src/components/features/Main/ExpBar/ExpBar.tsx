@@ -36,7 +36,7 @@ const ExpBar = (props: OwnProps) => {
       <motion.div
         className="bar"
         animate={{
-          width: `${expPoint * 10}%`,
+          width: `${expPoint}%`,
         }}
       ></motion.div>
     </ExpBarContainer>

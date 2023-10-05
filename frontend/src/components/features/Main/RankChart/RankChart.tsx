@@ -49,10 +49,9 @@ const RankChart = ({
       userApis
         .get(apis[i])
         .then((res: any) => {
-          console.log(res);
           orders[i](res.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {});
     }
   }, [userToken]);
 

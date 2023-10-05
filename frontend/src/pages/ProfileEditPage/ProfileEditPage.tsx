@@ -13,34 +13,6 @@ type AbleCharactorList = {
   used: boolean;
 }[];
 
-const DrawCharactor = (charactorNumber: number) => {
-  let charactor = '';
-  let charactorName = '';
-  switch (charactorNumber) {
-    case 1:
-      charactor = 'circle.png';
-      charactorName = '동그리';
-      break;
-    case 2:
-      charactor = 'rectangle.png';
-      charactorName = '네모';
-      break;
-    case 3:
-      charactor = 'triangle.png';
-      charactorName = '세모';
-      break;
-    case 4:
-      charactor = 'rock.png';
-      charactorName = '바위';
-      break;
-    case 5:
-      charactor = 'warrier.png';
-      charactorName = '전사';
-      break;
-  }
-  return { charactor, charactorName };
-};
-
 const ProfileEditPage = () => {
   //   useBeforeunload((event: any) => event.preventDefault());
   const [ableCharactorList, setAbleCharactorList] = useState<AbleCharactorList>(
@@ -56,6 +28,34 @@ const ProfileEditPage = () => {
   const [errorNickname, setErrorNickname] = useState<boolean>(false);
   const [completeChange, setCompleteChange] = useState<boolean>(false);
 
+  const DrawCharactor = (charactorNumber: number) => {
+    let charactor = '';
+    let charactorName = '';
+    switch (charactorNumber) {
+      case 1:
+        charactor = 'circle.png';
+        charactorName = '동그리';
+        break;
+      case 2:
+        charactor = 'rectangle.png';
+        charactorName = '네모';
+        break;
+      case 3:
+        charactor = 'triangle.png';
+        charactorName = '세모';
+        break;
+      case 4:
+        charactor = 'rock.png';
+        charactorName = '바위';
+        break;
+      case 5:
+        charactor = 'warrier.png';
+        charactorName = '전사';
+        break;
+    }
+    return { charactor, charactorName };
+  };
+
   const getUserInfo = async () => {
     await userApis
       .get('/user/profile')
@@ -64,9 +64,9 @@ const ProfileEditPage = () => {
         setNickname(res.data.nickname);
         setCurrentCharactor(res.data.takeCharacterId);
         setAbleCharactorList(res.data.ableCharacterList);
-        console.log(res.data.ableCharacterList);
+        console.log(res);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   };
 
   const patchNickname = async () => {
@@ -81,6 +81,19 @@ const ProfileEditPage = () => {
         setTimeout(() => {
           setCompleteChange(false);
         }, 1500);
+      })
+      .catch((err) => {});
+  };
+
+  const patchCharacter = async () => {
+    await userApis
+      .patch(`/user/character`, {
+        characterId: selectCharactor,
+      })
+      .then((res) => {
+        setCurrentCharactor(res.data.characterId);
+        setAbleCharactorList(res.data.ableCharacterList);
+        setSelectCharactor(0);
       })
       .catch((err) => {});
   };
@@ -162,7 +175,6 @@ const ProfileEditPage = () => {
         <S.CharactorListBox>
           {ableCharactorList.map((item) => {
             let { charactor, charactorName } = DrawCharactor(item.id.item.id);
-            console.log(item.id);
             if (item.used) {
               return '';
             } else {
@@ -194,7 +206,9 @@ const ProfileEditPage = () => {
             }
           })}
         </S.CharactorListBox>
-        <button>캐릭터 변경하기</button>
+        <button onClick={selectCharactor === 0 ? () => {} : patchCharacter}>
+          캐릭터 변경하기
+        </button>
       </S.CharactorListContaier>
     </S.Container>
   );

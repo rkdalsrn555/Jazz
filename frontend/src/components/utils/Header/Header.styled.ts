@@ -22,3 +22,14 @@ export const Logo = styled.img`
   /* border: solid green; */
   height: 3rem;
 `;
+
+export const LogoutBtn = styled.div`
+  cursor: pointer;
+`;
+
+export const IconContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+`;

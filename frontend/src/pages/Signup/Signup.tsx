@@ -87,7 +87,10 @@ const Signup = () => {
       setSuccessNickname(false);
       return;
     }
-    if (debounceCheckNickname) {
+    // 2자 이상 16자 이하, 영어 또는 숫자 또는 한글로 구성
+    // 특이사항 : 한글 초성 및 모음은 허가하지 않는다.
+    let reg = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
+    if (reg.test(debounceCheckNickname)) {
       axios
         .get(
           `${process.env.REACT_APP_BASE_URL}/user/nickname/${debounceCheckNickname}`
@@ -186,7 +189,7 @@ const Signup = () => {
           isSuccess={successPw}
           successMessage="올바른 비밀번호입니다"
           isError={errorPw}
-          errorMessage="비밀번호는 네자리 이상이어야 합니다"
+          errorMessage="영문 숫자 조합 4자리 이상이어야 합니다"
           inputValue={pw}
           setInputValue={setPw}
         />

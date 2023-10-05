@@ -6,10 +6,19 @@ import DarkSwitch from 'components/utils/DarkModeSwitch';
 import BrandLogo from 'assets/JazzLogo.png';
 import { Link } from 'react-router-dom';
 import Enlarge from 'components/Effect/Enlarge/Enlarge';
+import LogoutIcon from '../../../assets/img/Login/logoutIcon.png';
+import { userApis } from 'hooks/api/userApis';
 
 const Header = () => {
   const location = useLocation();
   const theme: themeProps = useTheme();
+
+  const logout = () => {
+    userApis
+      .post(`/user/logout`)
+      .then((res) => {})
+      .catch((err) => {});
+  };
 
   const blockLogoClickList = [
     '/short-answer-question',
@@ -42,8 +51,17 @@ const Header = () => {
               </Link>
             </Enlarge>
           )}
-
-          <DarkSwitch />
+          <S.IconContainer>
+            <DarkSwitch />
+            <S.LogoutBtn
+              onClick={() => {
+                window.localStorage.clear();
+                logout();
+              }}
+            >
+              <img src={LogoutIcon} alt="로그아웃" width={20} />
+            </S.LogoutBtn>
+          </S.IconContainer>
         </S.Container>
       )}
     </>

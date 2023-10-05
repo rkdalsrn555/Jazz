@@ -21,6 +21,8 @@ export const QuestionBox = (props: QuestionBoxProps) => {
     wrongContent,
     wrongExplanation,
     quizKind,
+    hint,
+    isHintClick,
   } = props;
 
   const handleChangeSubjectQuestion = (
@@ -83,6 +85,7 @@ export const QuestionBox = (props: QuestionBoxProps) => {
                     onChange={(e) => {
                       handleChangeSubjectQuestion(e);
                     }}
+                    placeholder={isHintClick && hint ? String(hint) : ''}
                   />
                 )}
               </>

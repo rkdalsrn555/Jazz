@@ -63,7 +63,6 @@ const BattleGame = () => {
   // 연결끊기
   const disconnect = () => {
     client.current.deactivate();
-    console.log('웹소켓 연결이 끊어졌습니다');
     setMySession({ mySession: '' });
     setGameInfo({
       gameRoomId: '',
@@ -417,6 +416,14 @@ const BattleGame = () => {
 
   return (
     <S.Container>
+      <button
+        className="outGame"
+        onClick={() => {
+          disconnect();
+        }}
+      >
+        게임 나가기
+      </button>
       {finish ? (
         <S.ResultContainer>
           <GameProfile

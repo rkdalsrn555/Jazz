@@ -27,7 +27,6 @@ userApis.interceptors.request.use(
   },
   // onFullfilled가 실행되었을 때 에러가 나면 실행될 처리함수
   (error) => {
-    console.log('request가 정상적으로 보내지지 않았습니다.');
     Promise.reject(error);
   }
 );
@@ -86,7 +85,5 @@ async function postRefreshToken() {
     } else {
       return false;
     }
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 }

@@ -20,6 +20,8 @@ const ShortAnswerQuestionPage = () => {
   const [nowQuizNumber, setNowQuizNumber] = useState<number>(0);
   // 퀴즈 리스트 (10개)
   const [quizList, setQuizList] = useState<QuestionBoxProps[] | null>(null);
+  // 힌트 클릭했는지?
+  const [isHint, setIsHint] = useState<boolean>(false);
   // 정답 체크중일때의 상태
   const [isJudge, setIsJudge] = useState<boolean>(false);
   // 정답 개수 세기
@@ -58,6 +60,7 @@ const ShortAnswerQuestionPage = () => {
     setAnswer('');
     setCorrectAnswer(null);
     setWrongAnswer(null);
+    setIsHint(false);
   };
 
   const getExplanation = async (isCorrect: boolean, wrongAnswer?: string) => {
@@ -148,12 +151,8 @@ const ShortAnswerQuestionPage = () => {
       .get('/quiz/2')
       .then((res) => {
         setQuizList(res.data);
-        console.log(res.data);
       })
-      .catch((err) => {
-        console.log('문제를 불러오지 못했어요');
-      });
-    // setQuizList(mockData);
+      .catch((err) => {});
   };
 
   const patchFavoriteQuiz = async () => {
@@ -238,6 +237,8 @@ const ShortAnswerQuestionPage = () => {
             setAnswer={setAnswer}
             isCorrect={isCorrect}
             isJudge={isJudge}
+            hint={quizList[nowQuizNumber].hint}
+            isHintClick={isHint}
             correctContent={correctAnswer?.correctContent}
             correctExplanation={correctAnswer?.correctExplanation}
             wrongContent={wrongAnswer?.wrongContent}
@@ -306,7 +307,51 @@ const ShortAnswerQuestionPage = () => {
         ) : (
           <S.ButtonContainer isJudge={false}>
             <Enlarge>
-              <QuizButton title="힌트보기" kind="hint" disabled={isDisabled} />
+              <QuizButton
+                title="그만풀기"
+                kind="stop"
+                disabled={isDisabled}
+                handleClick={() => {
+                  setIsToggled(true);
+                  setModalData({
+                    data: {
+                      title: '😥',
+                      message:
+                        '문제를 그만 풀면 경험치를 얻을 수 없어요. 그래도 그만 푸시겠어요?',
+                    },
+                    yesBtnClick: () => {
+                      setIsToggled(false);
+                      navigate('/home');
+                    },
+                    noBtnClick: () => {
+                      setIsToggled(false);
+                    },
+                  });
+                }}
+              />
+            </Enlarge>
+            <Enlarge>
+              <QuizButton
+                title="힌트보기"
+                kind="hint"
+                disabled={isDisabled}
+                handleClick={() => {
+                  setIsToggled(true);
+                  setModalData({
+                    data: {
+                      title: '🤔',
+                      message: '힌트를 보시겠어요?',
+                    },
+                    yesBtnClick: () => {
+                      setIsToggled(false);
+                      setIsHint(true);
+                    },
+                    noBtnClick: () => {
+                      setIsToggled(false);
+                    },
+                  });
+                }}
+              />
             </Enlarge>
             <Enlarge>
               <QuizButton

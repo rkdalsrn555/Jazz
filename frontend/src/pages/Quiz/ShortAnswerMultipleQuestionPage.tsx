@@ -79,7 +79,6 @@ const ShortAnswerMultipleQuestionPage = () => {
           `/quiz/explanation/wrong-answer/${quizList[nowQuizNumber].quizId}?wrongContent=${wrongAnswer}`
         )
         .then((res) => {
-          console.log(res.data);
           setCorrectAnswer({
             correctContent: res.data.correctContent,
             correctExplanation: res.data.correctExplanation,
@@ -146,11 +145,8 @@ const ShortAnswerMultipleQuestionPage = () => {
       .get('/quiz/1')
       .then((res) => {
         setQuizList(res.data);
-        console.log(res.data);
       })
-      .catch((err) => {
-        console.log('문제를 불러오지 못했어요');
-      });
+      .catch((err) => {});
   };
 
   const patchFavoriteQuiz = async () => {
@@ -235,6 +231,7 @@ const ShortAnswerMultipleQuestionPage = () => {
             setAnswer={setAnswer}
             isCorrect={isCorrect}
             isJudge={isJudge}
+            isHintClick={false}
             correctContent={correctAnswer?.correctContent}
             correctExplanation={correctAnswer?.correctExplanation}
             wrongContent={wrongAnswer?.wrongContent}
@@ -302,6 +299,30 @@ const ShortAnswerMultipleQuestionPage = () => {
           </S.ButtonContainer>
         ) : (
           <S.ButtonContainer isJudge={false}>
+            <Enlarge>
+              <QuizButton
+                title="그만풀기"
+                kind="stop"
+                disabled={isDisabled}
+                handleClick={() => {
+                  setIsToggled(true);
+                  setModalData({
+                    data: {
+                      title: '😥',
+                      message:
+                        '문제를 그만 풀면 경험치를 얻을 수 없어요. 그래도 그만 푸시겠어요?',
+                    },
+                    yesBtnClick: () => {
+                      setIsToggled(false);
+                      navigate('/home');
+                    },
+                    noBtnClick: () => {
+                      setIsToggled(false);
+                    },
+                  });
+                }}
+              />
+            </Enlarge>
             <Enlarge>
               <QuizButton title="힌트보기" kind="hint" disabled={isDisabled} />
             </Enlarge>

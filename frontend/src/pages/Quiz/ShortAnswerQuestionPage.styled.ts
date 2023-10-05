@@ -14,5 +14,5 @@ export const Container = styled.div`
 
 export const ButtonContainer = styled.div<{ isJudge: boolean }>`
   display: flex;
-  gap: ${(props) => (props.isJudge ? '24px' : '110px')};
+  gap: ${(props) => (props.isJudge ? '24px' : '24px')};
 `;

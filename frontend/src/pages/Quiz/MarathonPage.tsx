@@ -69,7 +69,6 @@ const MarathonPage = () => {
           `/quiz/explanation/wrong-answer/${quizList[0].quizId}?wrongContent=${wrongAnswer}`
         )
         .then((res) => {
-          console.log(res.data);
           setCorrectAnswer({
             correctContent: res.data.correctContent,
             correctExplanation: res.data.correctExplanation,
@@ -88,11 +87,8 @@ const MarathonPage = () => {
       .get('/quiz/marathon')
       .then((res) => {
         setQuizList([res.data]);
-        console.log([res.data]);
       })
-      .catch((err) => {
-        console.log('문제를 불러오지 못했어요');
-      });
+      .catch((err) => {});
   };
 
   const patchQuizResult = async () => {
@@ -232,6 +228,30 @@ const MarathonPage = () => {
           </S.ButtonContainer>
         ) : (
           <S.ButtonContainer isJudge={false}>
+            <Enlarge>
+              <QuizButton
+                title="그만풀기"
+                kind="stop"
+                disabled={isDisabled}
+                handleClick={() => {
+                  setIsToggled(true);
+                  setModalData({
+                    data: {
+                      title: '😥',
+                      message:
+                        '문제를 그만 풀면 경험치를 얻을 수 없어요. 그래도 그만 푸시겠어요?',
+                    },
+                    yesBtnClick: () => {
+                      setIsToggled(false);
+                      navigate('/home');
+                    },
+                    noBtnClick: () => {
+                      setIsToggled(false);
+                    },
+                  });
+                }}
+              />
+            </Enlarge>
             <Enlarge>
               <QuizButton
                 title="채점하기"

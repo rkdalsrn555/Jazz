@@ -112,7 +112,7 @@ public class MarathonServiceImpl implements MarathonService {
 
         //DB에서 지금 monthly 시즌 중에서 가장 높은 record를 가지고 있는 marathon을 받아옴
         List<Marathon> monthlyMarathonList = marathonJpaRepository.findMarathonWithMaxQuizRecordByMonthlySeason(
-            nowSeason.getMonthlySeason());
+            nowSeason.getMonthlySeason(),userUUID);
 
 
 

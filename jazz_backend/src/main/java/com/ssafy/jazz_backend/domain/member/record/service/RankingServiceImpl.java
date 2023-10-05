@@ -20,6 +20,7 @@ import com.ssafy.jazz_backend.domain.member.record.repository.TierJpaRepository;
 import com.ssafy.jazz_backend.domain.member.repository.MemberRepository;
 import com.ssafy.jazz_backend.global.Util;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -163,11 +164,24 @@ public class RankingServiceImpl implements RankingService {
             }else{
                 zSetOperations.add(util.getDailyMarathonRankKeyName(),memberId, dailyMarathon.getQuizRecord());
             }
-            List<Marathon> monthlyMarathonList = marathonJpaRepository.findMarathonWithMaxQuizRecordByMonthlySeason(nowSeason.getMonthlySeason());
+
+            List<Marathon> monthlyMarathonList = marathonJpaRepository.findMarathonWithMaxQuizRecordByMonthlySeason(nowSeason.getMonthlySeason(),memberId);
+            for(Marathon m : monthlyMarathonList){
+                System.out.println(member.getUserId());
+                System.out.println(m);
+            }
+
             if(monthlyMarathonList.size() == 0){
+                System.out.println(" ###################### monthlyMarathonList size가 0 ");
+
+                System.out.println(member.getUserId());
+
                 zSetOperations.add(util.getMonthlyMarathonRankKeyName(),memberId, 0);
             }else{
                 Marathon monthlyMarathon = monthlyMarathonList.get(0);
+                System.out.println(" ###################### monthlyMarathonList size가 이 아님 ");
+                System.out.println(member.getUserId());
+
                 zSetOperations.add(util.getMonthlyMarathonRankKeyName(),memberId,monthlyMarathon.getQuizRecord());
             }
 

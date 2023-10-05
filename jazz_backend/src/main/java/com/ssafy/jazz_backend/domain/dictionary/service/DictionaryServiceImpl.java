@@ -25,13 +25,14 @@ public class DictionaryServiceImpl implements DictionaryService {
     @Override
     public String findWord(String word) throws JSONException {
         String jsonStr = null;
+        String result = null;
         try {
             StringBuilder urlBuilder = new StringBuilder(
                 "https://api.seibro.or.kr/openapi/service/FnTermSvc/getFinancialTermMeaning"); /*URL*/
             urlBuilder.append(
                 "?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + API_KEY.getApiKey()); /*Service Key*/
             urlBuilder.append(
-                "&" + URLEncoder.encode("term", "UTF-8") + "=" + URLEncoder.encode(word,
+                "&" + URLEncoder.encode("term", "UTF-8") + "=" + URLEncoder.encode(word.trim(),
                     "UTF-8")); /*LIKE 검색*/
 //            urlBuilder.append(
 //                "&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("00",
@@ -61,10 +62,13 @@ public class DictionaryServiceImpl implements DictionaryService {
             JSONObject json = XML.toJSONObject(sb.toString());
             jsonStr = json.toString(4);
             System.out.println(jsonStr);
+
+            result = jsonStr.replaceAll("<[^>]*>", " ");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return jsonStr;
+        return result;
     }
 }

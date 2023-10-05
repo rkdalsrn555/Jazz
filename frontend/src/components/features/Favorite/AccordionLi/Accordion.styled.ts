@@ -77,6 +77,7 @@ export const FavoriteLiContainer = styled.div`
 
     & div {
       width: 20%;
+      cursor: pointer;
     }
 
     & h1 {

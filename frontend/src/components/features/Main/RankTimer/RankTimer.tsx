@@ -1,7 +1,5 @@
 import { themeProps } from '@emotion/react';
 import * as S from './RankTimer.styled';
-import { useTheme } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 const RankTimer = ({

@@ -22,4 +22,5 @@ public class SubjectiveQuizResponseDto {
     Boolean isBookmark;
     int financialType;
     int kind;
+    String hint;
 }

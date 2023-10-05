@@ -58,7 +58,9 @@ const FavoriteRandomQuestionPage = () => {
   const getExplanation = async (isCorrect: boolean, wrongAnswer?: string) => {
     if (isCorrect && quizList) {
       await userApis
-        .get(`/quiz/explanation/correct-answer/${quizList[0].quizId}`)
+        .get(
+          `/quiz/explanation/correct-answer/${quizList[nowQuizNumber].quizId}`
+        )
         .then((res) => {
           setCorrectAnswer({
             correctContent: res.data.correctContent,

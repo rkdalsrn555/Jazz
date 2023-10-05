@@ -92,6 +92,22 @@ public class RankingController {
         }
 
     }
+    @GetMapping
+    private ResponseEntity<?> insertRedis(
+        @RequestHeader String accessToken) {
+        try {
+              rankingService.insertRedis(accessToken);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            log.info("에러 발생 : " + e.getMessage());
+            return new ResponseEntity<>(Collections.singletonList(e.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+    }
+
 
 
 }

@@ -249,5 +249,9 @@
 <img src="./document/A708_erd.png">
 
 ## 아키텍쳐
+<img src="./document/A708_architecture.png">
+
 ## API 명세서
+
 ## 시연
+

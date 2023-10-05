@@ -423,7 +423,7 @@ public class MemberServiceImpl implements MemberService {
             .userUUID(userUUID)
             .nickname(profile.getNickname())
             .diamond(profile.getDiamond())
-            .expPoint(profile.getExpPoint())
+            .expPoint(profile.getExpPoint() % 10)
             .level(profile.getExpPoint() / 10 + 1)
             .rankPoint(rankPoint)
             .rank(util.makeRank(rankPoint))

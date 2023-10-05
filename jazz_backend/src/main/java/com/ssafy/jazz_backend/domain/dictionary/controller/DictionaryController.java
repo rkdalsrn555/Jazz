@@ -18,7 +18,7 @@ public class DictionaryController {
 
     private final DictionaryServiceImpl dictionaryService;
 
-    @GetMapping
+    @GetMapping(produces = "application/json;charset=UTF-8")
     public ResponseEntity<DictionaryResponseDto> getWord(@RequestHeader("accessToken") String accessToken, @RequestParam String word) {
         DictionaryResponseDto dictionaryResponseDto = dictionaryService.findWord(word);
         return new ResponseEntity<>(dictionaryResponseDto, HttpStatus.OK);

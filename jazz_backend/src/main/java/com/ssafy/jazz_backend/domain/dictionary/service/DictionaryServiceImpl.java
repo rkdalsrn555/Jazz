@@ -47,7 +47,7 @@ public class DictionaryServiceImpl implements DictionaryService {
             URL url = new URL(urlBuilder.toString());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
-            conn.setRequestProperty("Content-type", "application/json");
+            conn.setRequestProperty("Content-type", "application/json; charset=UTF-8");
             System.out.println("Response code: " + conn.getResponseCode());
             BufferedReader rd;
             if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {

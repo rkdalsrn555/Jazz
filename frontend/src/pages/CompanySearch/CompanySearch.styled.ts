@@ -183,7 +183,7 @@ export const BannerRight = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  min-width: 23rem;
+  min-width: 27rem;
   height: 100%;
 `;
 
@@ -201,17 +201,20 @@ export const BannerTitle = styled.div<{ theme: themeProps }>`
 export const BannerContent = styled.div`
   /* border: solid red; */
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
+  min-width: fit-content;
+  gap: 1rem;
 `;
 
 export const BannerContentInner = styled.div`
   /* border: solid black; */
   display: flex;
-  flex-direction: column;
-  width: 33%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   gap: 1rem;
-  margin-top: 1rem;
+  min-width: fit-content;
 `;
 
 export const BannerContentTitle = styled.div`
@@ -221,16 +224,19 @@ export const BannerContentTitle = styled.div`
   justify-content: center;
   align-items: center;
   color: grey;
+  min-width: 5rem;
 `;
 
 export const BannerContentContent = styled.div<{ theme: themeProps }>`
   /* border: solid red; */
-  display: flex;
+  display: inline-block;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  text-align: center;
   font-size: 1.3rem;
   font-weight: 600;
+  min-width: 20rem;
   color: ${(props) => props.theme.font.deep};
 `;
 

@@ -23,6 +23,7 @@ import Error404 from 'components/utils/Error/Error404';
 import ProfileEditPage from 'pages/ProfileEditPage/ProfileEditPage';
 import { themeProps } from '@emotion/react';
 import { useTheme } from '@mui/material';
+import { Suspense } from 'react';
 
 const PrivatePath = [
   { path: '/', component: <Home /> },

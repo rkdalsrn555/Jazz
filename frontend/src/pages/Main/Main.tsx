@@ -7,16 +7,12 @@ import { darkTheme, lightTheme } from '../../styles/ColorSystem';
 import GlobalStyle from '../../styles/GlobalStyle';
 import Router from 'Router';
 import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 import Header from 'components/utils/Header/index';
 import { motion } from 'framer-motion';
 
 function Main() {
   const isDark = useRecoilValue(IsDark);
   const location = useLocation();
-  useEffect(() => {
-    // console.log('다크모드 여부', isDark);
-  }, []);
 
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>

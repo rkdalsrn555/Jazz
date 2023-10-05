@@ -30,7 +30,6 @@ const Login = () => {
         pw: pw,
       })
       .then((res) => {
-        console.log(res);
         window.localStorage.setItem('userAccessToken', res.data.accessToken);
         window.localStorage.setItem('userRefreshToken', res.data.refreshToken);
         navigate('/');

@@ -50,19 +50,14 @@ const DictionaryResult = () => {
   const getDefinition = async () => {
     await jsonp(
       `openapi/service/FnTermSvc/getFinancialTermMeaning?serviceKey=r4nr%2BOHhRKhV2p9x4wWuxWYt01cfJaDJwuuTY36rRa%2FFDbQ3i%2BljBAUvLlX0Th0BFs97KYUWD1J4Jgdq%2B3UkKw%3D%3D&term=기`,
-      (err, data) => {
-        console.log(data);
-      }
+      (err, data) => {}
     );
   };
 
   const jsonNow = useJsonP({
     url: 'openapi/service/FnTermSvc/getFinancialTermMeaning?serviceKey=r4nr%2BOHhRKhV2p9x4wWuxWYt01cfJaDJwuuTY36rRa%2FFDbQ3i%2BljBAUvLlX0Th0BFs97KYUWD1J4Jgdq%2B3UkKw%3D%3D&term=기',
     id: '',
-    callback: (res) => {
-      console.log(res);
-      console.log('왜 안되지');
-    },
+    callback: (res) => {},
   });
 
   const getTest = () => {
@@ -106,16 +101,13 @@ const DictionaryResult = () => {
           setData(returnData());
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
     // jsonNow();
     // getDefinition();
     getTest();
-    console.log(searchWord);
     //   const rawContent = data.data.response.body.items.item[0];
     //   console.log(rawContent);
     //   const decodedContent = iconv.decode(rawContent, 'euc-kr');

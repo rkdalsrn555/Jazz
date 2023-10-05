@@ -24,7 +24,6 @@ const Chart = ({
         const element = data[i];
         sum += element.totalAssets;
       }
-      console.log(sum);
       return sum / 5;
     };
 
@@ -52,7 +51,6 @@ const Chart = ({
         const element = data[i];
         sum += element.totalCapital;
       }
-      console.log(sum);
       return sum / 5;
     };
     for (let i = 0; i < data.length; i++) {
@@ -80,7 +78,6 @@ const Chart = ({
         const element = data[i];
         sum += element.totalComprehensiveIncome;
       }
-      console.log(sum);
       return sum / 5;
     };
 
@@ -108,7 +105,6 @@ const Chart = ({
         const element = data[i];
         sum += element.totalDebt;
       }
-      console.log(sum);
       return sum / 5;
     };
     for (let i = 0; i < data.length; i++) {

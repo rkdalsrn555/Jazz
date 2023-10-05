@@ -116,7 +116,3 @@ export const EditBtn = styled(Edit)<{ theme: themeProps }>`
   color: ${(props) => props.theme.font.deep};
   transition: color 0.2s;
 `;
-
-export const LogoutBtn = styled.div`
-  cursor: pointer;
-`;

@@ -38,11 +38,11 @@ const FavoritePage = () => {
       setMenuArr([
         {
           name: '단어형 주관식',
-          content: [...res.data.filter((item: Content) => item.kind === 1)],
+          content: [...res.data.filter((item: Content) => item.kind === 2)],
         },
         {
           name: '단어형 객관식',
-          content: [...res.data.filter((item: Content) => item.kind === 2)],
+          content: [...res.data.filter((item: Content) => item.kind === 1)],
         },
         {
           name: '사례형 객관식',

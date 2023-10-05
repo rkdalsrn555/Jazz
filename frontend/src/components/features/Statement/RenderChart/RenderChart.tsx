@@ -16,11 +16,9 @@ const RenderChart = ({
 }) => {
   const theme: themeProps = useTheme();
 
-  console.log(CD);
   const [emitting, setEmitting] = useState<string>('ta');
   const handleClick = (category: string) => {
     setEmitting(category);
-    console.log('자식 클릭 핸들링 ', category);
   };
   useEffect(() => {
     setClickedCategory(emitting);

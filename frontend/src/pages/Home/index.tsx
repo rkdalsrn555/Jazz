@@ -188,10 +188,9 @@ const Home = () => {
     userApis
       .get('/user/profile')
       .then((res) => {
-        console.log(res.data);
         setUserInfo(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }, [userToken, calcPercent()]);
 
   const DrawCharactor = (charactorNumber: number) => {

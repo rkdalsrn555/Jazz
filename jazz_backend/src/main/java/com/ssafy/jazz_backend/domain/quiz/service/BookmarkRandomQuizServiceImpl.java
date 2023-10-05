@@ -12,6 +12,7 @@ import com.ssafy.jazz_backend.domain.quiz.service.BookmarkRandomQuizService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,10 +56,21 @@ public class BookmarkRandomQuizServiceImpl implements BookmarkRandomQuizService 
 
             int caseNumIndex = 0;
 
+            String hint = "";
+
             if (isMulti) {
                 String correctAnswer = contents.get(0);
                 Collections.shuffle(contents);
                 caseNumIndex = contents.indexOf(correctAnswer);
+
+                int hintIndex;
+                do {
+                    hintIndex = new Random().nextInt(contents.size());
+                } while (hintIndex == caseNumIndex);
+                hint = String.valueOf(hintIndex + 1);
+            } else {
+                Choice hintChoice = choiceRepository.findByQuizAndIdCaseNum(quiz, 5);
+                hint = hintChoice != null ? hintChoice.getContent() : "";
             }
 
             BookmarkRandomQuizResponseDto dto = BookmarkRandomQuizResponseDto.builder()
@@ -70,6 +82,7 @@ public class BookmarkRandomQuizServiceImpl implements BookmarkRandomQuizService 
                 .isBookmark(qm.getIsBookmark())
                 .financialType(quiz.getFinancialType())
                 .kind(quiz.getKind())
+                .hint(hint)
                 .build();
 
             responseList.add(dto);

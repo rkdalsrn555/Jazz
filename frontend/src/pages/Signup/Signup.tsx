@@ -116,7 +116,7 @@ const Signup = () => {
       return;
     }
     // 영문 숫자 조합 4자리 이상
-    let reg = /^[0-9a-z]+$/;
+    let reg = /^[a-zA-Z\\d`~!@#$%^&*()-_=+]{4,20}$/;
     if (reg.test(debouncePw)) {
       setErrorPw(false);
       setSuccessPw(true);
@@ -186,7 +186,7 @@ const Signup = () => {
           isSuccess={successPw}
           successMessage="올바른 비밀번호입니다"
           isError={errorPw}
-          errorMessage="비밀번호는 영문, 숫자포함 네자리 이상이어야 합니다"
+          errorMessage="비밀번호는 네자리 이상이어야 합니다"
           inputValue={pw}
           setInputValue={setPw}
         />

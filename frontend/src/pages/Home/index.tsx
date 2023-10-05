@@ -25,12 +25,38 @@ import RankChart from 'components/features/Main/RankChart/RankChart';
 const Home = () => {
   const theme: themeProps = useTheme();
   const userToken = localStorage.getItem('userAccessToken');
+  // 사용자 정보 api로 받아와야 함
+  const [userInfo, setUserInfo] = useState<userType>({
+    ableCharacterList: 0,
+    ablePrefixTitleList: '',
+    ableSuffixTitleList: '',
+    bookmarkCnt: 0,
+    collectQuizRecord: 0,
+    diamond: 0,
+    expPoint: 0,
+    level: 0,
+    mailCnt: 0,
+    marathonOneDay: 0,
+    nickname: '',
+    rank: '',
+    rankPoint: 0,
+    takeCharacterId: 0,
+    takePrefixContent: '',
+    takePrefixTitleId: 0,
+    takeSuffixContent: '',
+    takeSuffixTitleId: 0,
+    userUUID: '',
+    winningPercentage: 0,
+  });
 
   ///////////////////////게임 매칭시 나타나는 모달//////////////////////////
   const [isToggled, setIsToggled] = useState<boolean>(false);
   const gameMatchingModalFeature = {
     isToggled: isToggled,
     closeModal: () => setIsToggled(false),
+    level: userInfo.level,
+    nickname: userInfo.nickname,
+    currentCharactor: userInfo.takeCharacterId,
   };
   ///////////////////////////////////////////////////////////////
   const marathonFeature: btnProps = {
@@ -141,30 +167,6 @@ const Home = () => {
     ),
   };
 
-  // 사용자 정보 api로 받아와야 함
-  const [userInfo, setUserInfo] = useState<userType>({
-    ableCharacterList: 0,
-    ablePrefixTitleList: '',
-    ableSuffixTitleList: '',
-    bookmarkCnt: 0,
-    collectQuizRecord: 0,
-    diamond: 0,
-    expPoint: 0,
-    level: 0,
-    mailCnt: 0,
-    marathonOneDay: 0,
-    nickname: '',
-    rank: '',
-    rankPoint: 0,
-    takeCharacterId: 0,
-    takePrefixContent: '',
-    takePrefixTitleId: 0,
-    takeSuffixContent: '',
-    takeSuffixTitleId: 0,
-    userUUID: '',
-    winningPercentage: 0,
-  });
-
   const calcPercent = () => {
     const result = (userInfo.winningPercentage / 100) * 360;
     return result;
@@ -192,6 +194,28 @@ const Home = () => {
       .catch((err) => console.log(err));
   }, [userToken, calcPercent()]);
 
+  const DrawCharactor = (charactorNumber: number) => {
+    let charactor = '';
+    switch (charactorNumber) {
+      case 1:
+        charactor = 'circle.png';
+        break;
+      case 2:
+        charactor = 'rectangle.png';
+        break;
+      case 3:
+        charactor = 'triangle.png';
+        break;
+      case 4:
+        charactor = 'rock.png';
+        break;
+      case 5:
+        charactor = 'warrier.png';
+        break;
+    }
+    return { charactor };
+  };
+
   const profileContainerFeature: innerContainerProps = {
     title: '프로필',
     width: '95%',
@@ -208,7 +232,11 @@ const Home = () => {
               {userInfo?.nickname}
             </S.ProfileLeftTitle>
             <S.Box>
-              <S.ProfileLeftImg />
+              <S.ProfileLeftImg
+                src={`/assets/img/modelAsset/${
+                  DrawCharactor(userInfo.takeCharacterId).charactor
+                }`}
+              />
             </S.Box>
           </S.ProfileLeft>
           <S.PieConatiner>

@@ -20,6 +20,7 @@ import FavoriteRandomQuestionPage from 'pages/Quiz/FavoriteRandomQuestionPage';
 import FavoriteRandomQuizResult from 'pages/Quiz/FavoriteRandomQuizResult';
 import StorePage from 'pages/Store/StorePage';
 import Error404 from 'components/utils/Error/Error404';
+import ProfileEditPage from 'pages/ProfileEditPage/ProfileEditPage';
 import { themeProps } from '@emotion/react';
 import { useTheme } from '@mui/material';
 
@@ -52,6 +53,10 @@ const PrivatePath = [
   {
     path: '/store',
     component: <StorePage />,
+  },
+  {
+    path: 'profile-edit',
+    component: <ProfileEditPage />,
   },
 ];
 

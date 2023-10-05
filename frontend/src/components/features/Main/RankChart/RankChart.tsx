@@ -1,11 +1,7 @@
 import { themeProps } from '@emotion/react';
 import * as S from './RankChart.styled';
-import { useTheme } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { IsDark } from 'atoms/atoms';
-import { RankingType, userType } from 'types/types';
+import { RankingType } from 'types/types';
 import { userApis } from 'hooks/api/userApis';
 
 const RankChart = ({
@@ -24,8 +20,8 @@ const RankChart = ({
 
   const apis: string[] = [
     `/ranking/tier`,
-    `/ranking/monthly/marathon`,
     `/ranking/daily/marathon`,
+    `/ranking/monthly/marathon`,
     `/ranking/level`,
   ];
 

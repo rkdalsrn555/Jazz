@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,9 +75,20 @@ public class QuizServiceImpl implements QuizService {
         // 선택사항을 셔플
         Collections.shuffle(contentList);
 
+
         // 셔플된 선택사항 목록에서 정답 선택사항의 위치 찾기
         int answerIndex = contentList.indexOf(answer);
+
+        int hintIndex;
+        do {
+            hintIndex = new Random().nextInt(contentList.size());
+        } while (hintIndex == answerIndex);
+
+        quizMap.put("hint", hintIndex + 1);
+
         quizMap.put("caseNum", answerIndex + 1);
+
+
 
         // 셔플된 선택사항 목록과 추가 정보를 맵에 추가
         quizMap.put("content", contentList);

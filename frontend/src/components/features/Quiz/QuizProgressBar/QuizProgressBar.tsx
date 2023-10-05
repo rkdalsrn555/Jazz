@@ -12,8 +12,6 @@ type OwnProps = {
 const QuizProgressBar = (props: OwnProps) => {
   const { questionCnt, gauge, nowQuestionNumber } = props;
 
-  useEffect(() => {});
-
   return (
     <S.ProgressBarContainer>
       <motion.div

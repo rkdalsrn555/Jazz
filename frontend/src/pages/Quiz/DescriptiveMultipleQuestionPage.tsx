@@ -39,6 +39,8 @@ const DescriptiveMultipleQuestionPage = () => {
     noBtnClick?: () => void | null;
     yesBtnClick?: () => void | null;
   }>({ data: { title: '', message: '' } });
+  // 힌트 클릭했는지?
+  const [isHint, setIsHint] = useState<boolean>(false);
 
   // 다음 문제로 가는 함수
   const nextQuestion = () => {
@@ -46,6 +48,7 @@ const DescriptiveMultipleQuestionPage = () => {
     setNowQuizNumber((prev) => prev + 1);
     setIsCorrect(null);
     setAnswer('');
+    setIsHint(false);
   };
 
   const putTryQuiz = async () => {
@@ -183,7 +186,8 @@ const DescriptiveMultipleQuestionPage = () => {
             setAnswer={setAnswer}
             isCorrect={isCorrect}
             isJudge={isJudge}
-            isHintClick={false}
+            hint={quizList[nowQuizNumber].hint}
+            isHintClick={isHint}
           />
         ) : (
           '퀴즈를 불러오는 중이에요'
@@ -272,7 +276,30 @@ const DescriptiveMultipleQuestionPage = () => {
               />
             </Enlarge>
             <Enlarge>
-              <QuizButton title="힌트보기" kind="hint" disabled={isDisabled} />
+              <QuizButton
+                title="힌트보기"
+                kind="hint"
+                disabled={isDisabled}
+                handleClick={() => {
+                  if (isHint) {
+                    return;
+                  }
+                  setIsToggled(true);
+                  setModalData({
+                    data: {
+                      title: '🤔',
+                      message: '힌트를 보시겠어요?',
+                    },
+                    yesBtnClick: () => {
+                      setIsToggled(false);
+                      setIsHint(true);
+                    },
+                    noBtnClick: () => {
+                      setIsToggled(false);
+                    },
+                  });
+                }}
+              />
             </Enlarge>
             <Enlarge>
               <QuizButton

@@ -25,6 +25,7 @@ const StorePage = () => {
     await userApis.get(`/store`).then((res) => {
       setNotOwnedCharactorList(res.data.data);
       setDiamond(res.data.diamond);
+      console.log(res.data.data);
     });
   };
 

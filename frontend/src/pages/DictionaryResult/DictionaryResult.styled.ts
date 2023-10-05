@@ -35,6 +35,12 @@ export const ResultContainer = styled.div`
   /* border: solid blue; */
   flex: 3;
   width: 80%;
+
+  & .noSearchResult {
+    width: 100%;
+    padding-top: 10%;
+    text-align: center;
+  }
 `;
 
 export const ResultInnerContainer = styled.div<{ theme: themeProps }>`

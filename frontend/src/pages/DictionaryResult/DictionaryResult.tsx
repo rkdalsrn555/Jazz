@@ -61,9 +61,38 @@ const DictionaryResult = () => {
   });
 
   const getDictionary = async () => {
-    await userApis.get(`/dictionary?word=${searchWord}`).then((res) => {
-      console.log(res);
-    });
+    await userApis
+      .get(`/dictionary?word=${searchWord}`)
+      .then((res) => {
+        const response: any[] = res.data.dictionaryItems;
+        if (response.length) {
+          return setData(
+            <S.ReturnContainer>
+              {response.map((e, i) => {
+                return (
+                  <S.InnerReturnContainer theme={theme}>
+                    <S.Word>{e.word}</S.Word>
+                    <S.Definition>{e.mean}</S.Definition>
+                  </S.InnerReturnContainer>
+                );
+              })}
+            </S.ReturnContainer>
+          );
+        } else {
+          setData(
+            <S.ResultContainer>
+              <p className="noSearchResult">검색 결과가 없습니다😱😱</p>
+            </S.ResultContainer>
+          );
+        }
+      })
+      .catch((err) => {
+        setData(
+          <S.ResultContainer>
+            <p className="noSearchResult">검색 결과가 없습니다😱😱</p>
+          </S.ResultContainer>
+        );
+      });
   };
 
   const getTest = () => {

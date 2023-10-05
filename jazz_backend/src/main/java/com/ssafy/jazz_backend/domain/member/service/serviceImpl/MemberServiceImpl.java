@@ -2,6 +2,7 @@ package com.ssafy.jazz_backend.domain.member.service.serviceImpl;
 
 import com.ssafy.jazz_backend.domain.item.entity.Item;
 import com.ssafy.jazz_backend.domain.item.entity.ItemManagement;
+import com.ssafy.jazz_backend.domain.item.entity.ItemManagementId;
 import com.ssafy.jazz_backend.domain.item.repository.ItemJpaRepository;
 import com.ssafy.jazz_backend.domain.item.repository.ItemManagementJpaRepository;
 import com.ssafy.jazz_backend.domain.item.title.entity.PreTitleManagement;
@@ -18,6 +19,7 @@ import com.ssafy.jazz_backend.domain.member.dto.DuplicatedNicknameRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.DuplicatedNicknameResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.JoinMemberResponseDto;
+import com.ssafy.jazz_backend.domain.member.dto.ModifyCharacterRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.ModifyNicknameRequestDto;
 import com.ssafy.jazz_backend.domain.member.dto.ModifyNicknameResponseDto;
 import com.ssafy.jazz_backend.domain.member.dto.MyProfileInfoResponseDto;
@@ -437,6 +439,27 @@ public class MemberServiceImpl implements MemberService {
             .takeCharacterId(itemId)
             .ableCharacterList(itemList)
             .build();
+    }
+
+    @Override
+    public int modifyCharacter(String accessToken, ModifyCharacterRequestDto modifyCharacterRequestDto) {
+        String userUUID = jwtService.getInfo("account", accessToken);
+        Member member = memberRepository.findById(userUUID).orElseThrow(() -> new NullPointerException());
+        int currentCharacter = itemManagementJpaRepository.findItemIdByMemberIdAndIsUsed(userUUID).orElseThrow(() -> new NullPointerException());
+        Item currentItem = itemJpaRepository.findById(currentCharacter).orElseThrow(() -> new NullPointerException());
+        ItemManagementId currentItemManagementId = new ItemManagementId(member, currentItem);
+        ItemManagement currentItemManagement = itemManagementJpaRepository.findById(currentItemManagementId).orElseThrow(() -> new NullPointerException());
+        Item newItem = itemJpaRepository. findById(modifyCharacterRequestDto.getCharacterId()).orElseThrow(() -> new NullPointerException());
+        ItemManagementId newItemManagementId = new ItemManagementId(member, newItem);
+        ItemManagement newItemManagement = itemManagementJpaRepository.findById(newItemManagementId).orElseThrow(() -> new NullPointerException());
+
+        currentItemManagement.setUsed(false);
+        newItemManagement.setUsed(true);
+
+        itemManagementJpaRepository.save(currentItemManagement);
+        itemManagementJpaRepository.save(newItemManagement);
+
+        return modifyCharacterRequestDto.getCharacterId();
     }
 
 }

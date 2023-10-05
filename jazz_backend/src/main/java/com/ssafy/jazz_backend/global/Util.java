@@ -35,13 +35,13 @@ public class Util {
     public int makeLevel(int expPoint) {
         //일단 레벨 경험치 100 쌓으면 1업
         //1레벨 부터 시작
-        return (expPoint / 100) + 1;
+        return (expPoint / 10) + 1;
     }
 
     //현재 경험치
     public int makeExp(int expPoint) {
         //일단 현재 경험치 출력
-        return expPoint % 100;
+        return expPoint % 10;
     }
 
     public int makeWinRate(int win, int draw, int lose) {

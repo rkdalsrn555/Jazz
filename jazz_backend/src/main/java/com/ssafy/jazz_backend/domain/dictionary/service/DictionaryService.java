@@ -1,5 +1,7 @@
 package com.ssafy.jazz_backend.domain.dictionary.service;
 
+import com.ssafy.jazz_backend.domain.dictionary.dto.DictionaryResponseDto;
+
 public interface DictionaryService {
-    String findWord(String word);
+    DictionaryResponseDto findWord(String word);
 }

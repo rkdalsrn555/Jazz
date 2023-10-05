@@ -23,4 +23,5 @@ public class ObjectiveQuizResponseDto {
     boolean isBookmark;
     int financialType;
     int kind;
+    int hint;
 }

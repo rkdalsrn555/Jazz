@@ -100,6 +100,8 @@ public class QuizServiceImpl implements QuizService {
         List<Quiz> quizzes = quizRepository.findRandomQuizzesByKind(2);  // kind=2인 문제를 가져옴
         List<SubjectiveQuizResponseDto> responseList = new ArrayList<>();
 
+
+
         for (Quiz quiz : quizzes) {
             // 주관식 문제의 경우 보기는 1개만 있으므로, 첫 번째 보기의 content를 가져옴
             String content = quiz.getCases().stream()
@@ -108,16 +110,23 @@ public class QuizServiceImpl implements QuizService {
                 .map(Choice::getContent)
                 .orElse(null);  // 혹시나 해당하는 case가 없을 때를 위한 fallback
 
-            SubjectiveQuizResponseDto dto = new SubjectiveQuizResponseDto();
-            dto.setQuizId(quiz.getId());
-            dto.setQuestion(quiz.getQuestion());
-            dto.setContent(Collections.singletonList(content));
-            dto.setCaseNum(1);
-            dto.setIsMulti(false);  // 항상 false로 설정
-            dto.setKind(quiz.getKind());
-            dto.setFinancialType((quiz.getFinancialType()));
+            String hint = quiz.getCases().stream()
+                .filter(c -> c.getId().getCaseNum() == 5)
+                .findFirst()
+                .map(Choice::getContent)
+                .orElse(null);
 
-            responseList.add(dto);
+            SubjectiveQuizResponseDto dto = new SubjectiveQuizResponseDto();
+                dto.setQuizId(quiz.getId());
+                dto.setQuestion(quiz.getQuestion());
+                dto.setContent(Collections.singletonList(content));
+                dto.setCaseNum(1);
+                dto.setIsMulti(false);  // 항상 false로 설정
+                dto.setKind(quiz.getKind());
+                dto.setFinancialType((quiz.getFinancialType()));
+                dto.setHint(hint);
+
+                responseList.add(dto);
         }
 
         return responseList;

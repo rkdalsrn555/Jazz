@@ -91,7 +91,8 @@ const ProfileEditPage = () => {
         characterId: selectCharactor,
       })
       .then((res) => {
-        setCurrentCharactor(res.data);
+        setCurrentCharactor(res.data.characterId);
+        setAbleCharactorList(res.data.ableCharacterList);
         setSelectCharactor(0);
       })
       .catch((err) => {});

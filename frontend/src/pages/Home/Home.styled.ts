@@ -138,24 +138,53 @@ export const ProfileLeftTitle = styled.div<{ theme: themeProps }>`
 
 export const Box = styled.div`
   /* border: solid red; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   position: relative;
-  width: 45%;
+  margin: 0 auto;
+  width: 100%;
   max-width: 7rem;
-  /* background-color: skyblue; */
   &::after {
     display: block;
     content: '';
     padding-bottom: 100%;
   }
 `;
+
+export const TierContainer = styled.div`
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+`;
+
+export const TierImg = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 100%;
+
+  & img {
+    position: absolute;
+    top: -18%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+`;
+
 export const ProfileLeftImg = styled.img`
   border-radius: 50%;
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background-color: #fff;
 `;
 
 export const ProfileRight = styled.div`

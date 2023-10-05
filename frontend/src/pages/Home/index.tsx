@@ -23,6 +23,7 @@ import RankTimer from 'components/features/Main/RankTimer/RankTimer';
 import RankChart from 'components/features/Main/RankChart/RankChart';
 import ExpBar from 'components/features/Main/ExpBar/ExpBar';
 import QuizProgressBar from 'components/features/Quiz/QuizProgressBar/QuizProgressBar';
+import BronzeTier from '../../assets/img/Tier/bronze.png';
 const Home = () => {
   const theme: themeProps = useTheme();
   const userToken = localStorage.getItem('userAccessToken');
@@ -237,13 +238,18 @@ const Home = () => {
                 {`Lv.${userInfo?.level} ${userInfo?.nickname}`}
               </S.ProfileLeftTitle>
             </div>
-            <S.Box>
-              <S.ProfileLeftImg
-                src={`/assets/img/modelAsset/${
-                  DrawCharactor(userInfo.takeCharacterId).charactor
-                }`}
-              />
-            </S.Box>
+            <S.TierContainer>
+              <S.TierImg>
+                <img src={BronzeTier} alt="브론즈" width={250} />
+              </S.TierImg>
+              <S.Box>
+                <S.ProfileLeftImg
+                  src={`/assets/img/modelAsset/${
+                    DrawCharactor(userInfo.takeCharacterId).charactor
+                  }`}
+                />
+              </S.Box>
+            </S.TierContainer>
             <ExpBar expPoint={userInfo.expPoint} />
           </S.ProfileLeft>
           <S.PieConatiner>

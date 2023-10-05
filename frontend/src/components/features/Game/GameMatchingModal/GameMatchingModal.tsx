@@ -31,10 +31,13 @@ type Clients = {
 type OwnProps = {
   isToggled: boolean;
   closeModal: () => void;
+  nickname: string;
+  level: number;
+  currentCharactor: number;
 };
 
 const GameMatchingModal = (props: OwnProps) => {
-  const { isToggled, closeModal } = props;
+  const { isToggled, closeModal, nickname, level, currentCharactor } = props;
   // const Me = useRecoilValue(UserInfo);
   const [isMatching, setIsMatching] = useState<boolean>(false);
   const setTempMySession = useSetRecoilState(TempMyGameSession);
@@ -112,8 +115,8 @@ const GameMatchingModal = (props: OwnProps) => {
             exit={{ y: 100, opacity: 0 }}
           >
             <CloseIcon
-              onClick={() => {
-                cancleMatching()
+              onClick={async () => {
+                await cancleMatching()
                   .then((res) => {
                     closeModal();
                   })
@@ -126,10 +129,10 @@ const GameMatchingModal = (props: OwnProps) => {
             ></CloseIcon>
             <S.ModalContent>
               <MatchingProfile
-                level={gameInfo.me.level}
-                nickname={gameInfo.me.nickname}
+                level={level}
+                nickname={nickname}
                 // @ts-ignore
-                currentCharactor={gameInfo.me.currentCharactor}
+                currentCharactor={currentCharactor}
               ></MatchingProfile>
               <div className="battleIcon">
                 <img src={VsImg} alt="대결" width={100} />

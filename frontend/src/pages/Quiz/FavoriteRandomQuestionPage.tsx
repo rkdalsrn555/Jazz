@@ -69,7 +69,6 @@ const FavoriteRandomQuestionPage = () => {
           `/quiz/explanation/wrong-answer/${quizList[nowQuizNumber].quizId}?wrongContent=${wrongAnswer}`
         )
         .then((res) => {
-          console.log(res.data);
           setCorrectAnswer({
             correctContent: res.data.correctContent,
             correctExplanation: res.data.correctExplanation,
@@ -88,11 +87,8 @@ const FavoriteRandomQuestionPage = () => {
       .get('/bookmark/random')
       .then((res) => {
         setQuizList(res.data);
-        console.log(res.data);
       })
-      .catch((err) => {
-        console.log('문제를 불러오지 못했어요');
-      });
+      .catch((err) => {});
   };
 
   const checkAnswer = async () => {
@@ -121,7 +117,6 @@ const FavoriteRandomQuestionPage = () => {
             String(quizList[nowQuizNumber].content[Number(ans) - 1])
           );
         } else if (quizList[nowQuizNumber].kind === 2) {
-          console.log(ans);
           await getExplanation(false, String(ans));
         }
       }

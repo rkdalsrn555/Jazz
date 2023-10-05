@@ -79,7 +79,6 @@ const ShortAnswerMultipleQuestionPage = () => {
           `/quiz/explanation/wrong-answer/${quizList[nowQuizNumber].quizId}?wrongContent=${wrongAnswer}`
         )
         .then((res) => {
-          console.log(res.data);
           setCorrectAnswer({
             correctContent: res.data.correctContent,
             correctExplanation: res.data.correctExplanation,
@@ -146,11 +145,8 @@ const ShortAnswerMultipleQuestionPage = () => {
       .get('/quiz/1')
       .then((res) => {
         setQuizList(res.data);
-        console.log(res.data);
       })
-      .catch((err) => {
-        console.log('문제를 불러오지 못했어요');
-      });
+      .catch((err) => {});
   };
 
   const patchFavoriteQuiz = async () => {

@@ -33,7 +33,5 @@ export default function MoneyFormatter(input: number) {
 
   const returnVal = moneyFormat(input);
 
-  console.log(returnVal);
-
   return returnVal;
 }

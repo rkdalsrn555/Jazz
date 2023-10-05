@@ -26,10 +26,9 @@ const CompanyListBlock = ({ props }: { props: ChildProps }) => {
     userApis
       .get(`/enterprise/info?enterpriseId=${props.company.id}`)
       .then((res) => {
-        console.log(res);
         setCompany(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   };
   useEffect(() => {
     props.setClickedCompany(company);

@@ -64,9 +64,8 @@ const ProfileEditPage = () => {
         setNickname(res.data.nickname);
         setCurrentCharactor(res.data.takeCharacterId);
         setAbleCharactorList(res.data.ableCharacterList);
-        console.log(res.data.ableCharacterList);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   };
 
   const patchNickname = async () => {
@@ -162,7 +161,6 @@ const ProfileEditPage = () => {
         <S.CharactorListBox>
           {ableCharactorList.map((item) => {
             let { charactor, charactorName } = DrawCharactor(item.id.item.id);
-            console.log(item.id);
             if (item.used) {
               return '';
             } else {

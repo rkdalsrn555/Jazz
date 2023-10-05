@@ -69,7 +69,6 @@ const MarathonPage = () => {
           `/quiz/explanation/wrong-answer/${quizList[0].quizId}?wrongContent=${wrongAnswer}`
         )
         .then((res) => {
-          console.log(res.data);
           setCorrectAnswer({
             correctContent: res.data.correctContent,
             correctExplanation: res.data.correctExplanation,
@@ -88,11 +87,8 @@ const MarathonPage = () => {
       .get('/quiz/marathon')
       .then((res) => {
         setQuizList([res.data]);
-        console.log([res.data]);
       })
-      .catch((err) => {
-        console.log('문제를 불러오지 못했어요');
-      });
+      .catch((err) => {});
   };
 
   const patchQuizResult = async () => {

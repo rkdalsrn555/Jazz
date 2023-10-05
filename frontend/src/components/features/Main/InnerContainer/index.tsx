@@ -13,7 +13,6 @@ import { VictoryPie } from 'victory';
 import { forceReRender } from '@storybook/react';
 import RankChart from '../RankChart/RankChart';
 import { userApis } from 'hooks/api/userApis';
-import LogoutIcon from '../../../../assets/img/Login/logoutIcon.png';
 
 const Inner = ({
   feature,
@@ -53,10 +52,9 @@ const Inner = ({
     userApis
       .get('/user/profile')
       .then((res) => {
-        console.log(res.data);
         setUserInfo(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }, [userToken]);
 
   return (
@@ -71,13 +69,6 @@ const Inner = ({
               </Link>
             </S.Title>
             <S.ProfileHeaderRight>
-              <S.LogoutBtn
-                onClick={() => {
-                  window.localStorage.clear();
-                }}
-              >
-                <img src={LogoutIcon} alt="로그아웃" width={20} />
-              </S.LogoutBtn>
               <S.Bell theme={theme} />
               <S.DiamondContainer theme={theme}>
                 {/* 다이아개수 받아와서 넣어야 될 자리 */}

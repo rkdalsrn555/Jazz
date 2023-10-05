@@ -67,10 +67,9 @@ const Statement = () => {
       userApis
         .get(apis[i])
         .then((res) => {
-          console.log(res);
           order[i](res.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {});
     }
   }, [companyId]);
 
@@ -192,7 +191,6 @@ const Statement = () => {
 
   // 표 종류 클릭시 처리할 함수
   const handleClickType = (type: StatementType) => {
-    // console.log(type.ref.current.style);
     StatementTypes.forEach((element) => {
       element.ref.current.style.filter = 'none';
     });

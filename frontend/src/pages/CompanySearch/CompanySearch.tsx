@@ -27,17 +27,12 @@ const CompanySearch = () => {
   };
 
   useEffect(() => {
-    console.log(debounceSearchCompany);
     userApis
       .get(`/enterprise?enterpriseName=${debounceSearchCompany}`)
       .then((res) => {
-        console.log(res);
         setCompanies(res.data);
-        console.log(companies);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, [debounceSearchCompany]);
 
   const [clickedCompany, setClickedCompany] = useState<companyProps>({
@@ -48,9 +43,7 @@ const CompanySearch = () => {
     totalCapital: 0,
   });
 
-  useEffect(() => {
-    console.log(clickedCompany);
-  }, [clickedCompany]);
+  useEffect(() => {}, [clickedCompany]);
 
   return (
     <S.Container>

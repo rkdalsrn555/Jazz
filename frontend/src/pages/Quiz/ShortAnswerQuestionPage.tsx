@@ -148,11 +148,8 @@ const ShortAnswerQuestionPage = () => {
       .get('/quiz/2')
       .then((res) => {
         setQuizList(res.data);
-        console.log(res.data);
       })
-      .catch((err) => {
-        console.log('문제를 불러오지 못했어요');
-      });
+      .catch((err) => {});
     // setQuizList(mockData);
   };
 

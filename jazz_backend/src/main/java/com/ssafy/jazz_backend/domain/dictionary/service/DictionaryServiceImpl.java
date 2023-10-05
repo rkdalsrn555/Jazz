@@ -29,7 +29,6 @@ public class DictionaryServiceImpl implements DictionaryService {
 
     @Override
     public DictionaryResponseDto findWord(String word) throws JSONException {
-        String result = null;
         JSONObject json = null;
         try {
             StringBuilder urlBuilder = new StringBuilder(
@@ -66,20 +65,13 @@ public class DictionaryServiceImpl implements DictionaryService {
 
             json = XML.toJSONObject(sb.toString());
 
-//            result = jsonStr.replaceAll("<[^>]*>", " ");
-
-//            System.out.println(result);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         String data = (((JSONObject) ((JSONObject) ((JSONObject)json.get("response")).get("body")).get("items")).get("item")).toString();
         String jsonStr = data.replaceAll("<[^>]*>", " ").replaceAll("&nbsp;", "");
-        System.out.println(jsonStr);
         JSONArray jsonArray = new JSONArray(jsonStr);
-//        int totalCount = Integer.parseInt( ( ((JSONObject) ((JSONObject)json.get("response")).get("body")).get("totalCount")).toString() );
-//        System.out.println(totalCount);
 
         DictionaryResponseDto dictionaryResponseDto = new DictionaryResponseDto();
         List<DictionaryItem> list = new ArrayList<>();
@@ -88,7 +80,6 @@ public class DictionaryServiceImpl implements DictionaryService {
             String jsonWord = jsonObject.get("fnceDictNm").toString();
             String jsonMean = jsonObject.get("ksdFnceDictDescContent").toString();
             DictionaryItem dictionaryItem = new DictionaryItem(jsonWord, jsonMean);
-            System.out.println(dictionaryItem.toString());
             list.add(dictionaryItem);
         }
 

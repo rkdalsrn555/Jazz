@@ -22,4 +22,5 @@ public class CaseObjectiveQuizResponseDto {
     boolean isMulti;
     boolean isBookmark;
     int kind;
+    int hint;
 }

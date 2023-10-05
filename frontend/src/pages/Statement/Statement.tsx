@@ -12,6 +12,7 @@ import StatementTypeBtn from 'components/features/Statement/StatementType/Statem
 import { useEffect, useRef, useState } from 'react';
 import { userApis } from 'hooks/api/userApis';
 import RenderChart from 'components/features/Statement/RenderChart/RenderChart';
+import MoneyFormatter from 'hooks/MoneyFormatter';
 
 const Statement = () => {
   const theme: themeProps = useTheme();
@@ -119,7 +120,14 @@ const Statement = () => {
                 return (
                   <S.EachBlock theme={theme}>
                     <S.BlockTitle>{e.accountNm}</S.BlockTitle>
-                    <S.BlockValue>{e.thstrmAmount}</S.BlockValue>
+                    <S.BlockValue>
+                      {e.thstrmAmount > 0
+                        ? MoneyFormatter(e.thstrmAmount)
+                        : e.thstrmAmount < 0
+                        ? MoneyFormatter(e.thstrmAmount * -1)
+                        : 0}
+                      (원)
+                    </S.BlockValue>
                   </S.EachBlock>
                 );
               })}

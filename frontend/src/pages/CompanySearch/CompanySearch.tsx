@@ -12,6 +12,7 @@ import { click } from '@testing-library/user-event/dist/click';
 import useDebounce from 'hooks/useDebounce';
 import axios from 'axios';
 import { userApis } from 'hooks/api/userApis';
+import MoneyFormatter from 'hooks/MoneyFormatter';
 
 const CompanySearch = () => {
   const theme: themeProps = useTheme();
@@ -110,19 +111,19 @@ const CompanySearch = () => {
                   <S.BannerContentInner>
                     <S.BannerContentTitle>총 자본</S.BannerContentTitle>
                     <S.BannerContentContent theme={theme}>
-                      {clickedCompany.totalAssets}
+                      {MoneyFormatter(clickedCompany.totalAssets)}원
                     </S.BannerContentContent>
                   </S.BannerContentInner>
                   <S.BannerContentInner>
                     <S.BannerContentTitle>총 부채</S.BannerContentTitle>
                     <S.BannerContentContent theme={theme}>
-                      {clickedCompany.totalDebt}
+                      {MoneyFormatter(clickedCompany.totalDebt)}원
                     </S.BannerContentContent>
                   </S.BannerContentInner>
                   <S.BannerContentInner>
                     <S.BannerContentTitle>총 차산</S.BannerContentTitle>
                     <S.BannerContentContent theme={theme}>
-                      {clickedCompany.totalCapital}
+                      {MoneyFormatter(clickedCompany.totalCapital)}원
                     </S.BannerContentContent>
                   </S.BannerContentInner>
                 </S.BannerContent>

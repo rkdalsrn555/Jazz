@@ -259,6 +259,7 @@
 <img src="./document/A708_architecture.png">
 
 ## :pushpin: API 명세서
+<img src="./document/A708_ApiDocs.png">
 
 ## :clapper: 시연
 ### 회원가입

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import * as S from './StorePage.styled';
 import CharactorItem from 'components/features/Store/CharactorItem/CharactorItem';
 import DiamondMoney from 'components/features/Store/DiamondMoney/DiamondMoney';
-import SlotMachineBtn from 'components/features/Store/SlotMachineBtn/SlotMachineBtn';
 import { userApis } from 'hooks/api/userApis';
 import Modal from 'components/utils/Modal/Modal';
 
@@ -127,7 +126,6 @@ const StorePage = () => {
           <div>상점 리스트를 로딩중입니다</div>
         )}
       </S.CharactorContainer>
-      <SlotMachineBtn />
     </S.Container>
   );
 };

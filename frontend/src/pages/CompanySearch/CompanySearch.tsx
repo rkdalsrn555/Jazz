@@ -13,6 +13,7 @@ import useDebounce from 'hooks/useDebounce';
 import axios from 'axios';
 import { userApis } from 'hooks/api/userApis';
 import MoneyFormatter from 'hooks/MoneyFormatter';
+import jazzLogo from '../../assets/img/jazzLogo.png';
 
 const CompanySearch = () => {
   const theme: themeProps = useTheme();
@@ -93,7 +94,7 @@ const CompanySearch = () => {
             <S.InnerBannerContainer>
               <S.BannerLeft>
                 <S.Box>
-                  <S.BannerLogo src="" />
+                  <S.BannerLogo src={jazzLogo} />
                 </S.Box>
               </S.BannerLeft>
               <S.BannerRight>
@@ -138,7 +139,7 @@ const CompanySearch = () => {
           <S.CompanyOutlineTitle theme={theme}>기업 개요</S.CompanyOutlineTitle>
           <S.CompanyOutline theme={theme}>
             {clickedCompany.id !== 0 ? (
-              `${clickedCompany.name} 여기에 기업 개요 들어가야 함`
+              `${clickedCompany.name} 기업 개요`
             ) : (
               <S.BlankBanner theme={theme}>
                 회사를 선택하면 기업 개요를 확인하실 수 있어요

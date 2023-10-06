@@ -246,6 +246,12 @@
 
 
 ## :family: 팀원 소개
+- Backend
+<img src="./media/team_backend.png">
+
+- Frontend
+<img src="./media/team_frontend.png">
+
 ## :pushpin: ERD
 <img src="./document/A708_erd.png">
 
